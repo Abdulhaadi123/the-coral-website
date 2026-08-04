@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: #111827;
+  background: #ffffff;
+  font-family: var(--font-bricolage), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Hover Gradient specified by User */
+.btn-hover-gradient {
+  transition: all 0.4s ease-in-out;
+  background-size: 200% auto;
+}
+
+.btn-hover-gradient:hover {
+  background: linear-gradient(90deg, #5E9738 0%, #9FE66F 50.48%, #32CEC6 100%) !important;
+  background-size: 100% auto;
+  box-shadow: 0 10px 25px -5px rgba(50, 206, 198, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Soft Mesh Gradient background for What We Do Section */
+.what-we-do-bg {
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(167, 240, 118, 0.9) 0%, transparent 50%),
+    radial-gradient(circle at 85% 15%, rgba(102, 238, 220, 0.85) 0%, transparent 45%),
+    radial-gradient(circle at 50% 60%, rgba(135, 245, 180, 0.9) 0%, transparent 60%),
+    linear-gradient(135deg, #B2F885 0%, #76F5CD 50%, #70F3E6 100%);
+  background-size: 100% 100%;
+}
+
+/* Custom scrollbar for gallery */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Exact Figma Text Gradient */
+.text-gradient-figma {
+  background: linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Carousel card fade-in — triggered on key change so cards never disappear */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.45s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+}
+

@@ -1,0 +1,95 @@
+import React from 'react';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
+import {
+  IconStrategyChart,
+  IconVerifiedBadge,
+  IconGlobalTeam,
+  IconSmileyFace,
+} from '@/components/icons/Icons';
+
+export const WhyChooseUsSection: React.FC = () => {
+  return (
+    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 px-6 sm:px-12 lg:px-16 text-[#111827]">
+      <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+
+        {/* Title & Subtitle */}
+        <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#111827] mb-3">
+          Why Choose The Coral Room?
+        </h2>
+        <p className="text-base sm:text-lg text-gray-700 font-medium mb-16">
+          One team. Clear direction. Better digital growth
+        </p>
+
+        {/* 4 Feature Columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 w-full mb-16 text-center">
+
+          {/* Feature 1 */}
+          <div className="flex flex-col items-center p-4">
+            <div className="w-14 h-14 mb-6 text-[#111827] flex items-center justify-center">
+              <IconStrategyChart />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Strategy-led from day one</h3>
+            <p className="text-xs sm:text-sm text-gray-700 max-w-xs">
+              Every project starts with clarity, not guesswork.
+            </p>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex flex-col items-center p-4">
+            <div className="w-14 h-14 mb-6 text-[#111827] flex items-center justify-center">
+              <IconVerifiedBadge />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Brand, web, and marketing in one place</h3>
+            <p className="text-xs sm:text-sm text-gray-700 max-w-xs">
+              No scattered teams. No broken handovers.
+            </p>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="flex flex-col items-center p-4">
+            <div className="w-14 h-14 mb-6 text-[#111827] flex items-center justify-center">
+              <IconGlobalTeam />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Global delivery, fast communication</h3>
+            <p className="text-xs sm:text-sm text-gray-700 max-w-xs">
+              Teams in the US, Canada, and Pakistan.
+            </p>
+          </div>
+
+          {/* Feature 4 */}
+          <div className="flex flex-col items-center p-4">
+            <div className="w-14 h-14 mb-6 text-[#111827] flex items-center justify-center">
+              <IconSmileyFace />
+            </div>
+            <h3 className="text-lg font-bold mb-2">Trusted by growing clients</h3>
+            <p className="text-xs sm:text-sm text-gray-700 max-w-xs">
+              Helping brands improve how they look, sell, and scale.
+            </p>
+          </div>
+
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          <Link href="/book-a-call" className="btn-hover-gradient group px-7 py-3.5 rounded-full bg-[#9FE66F] text-[#111827] font-semibold text-sm sm:text-base flex items-center gap-3 shadow-md hover:text-white transition-all duration-300">
+            <span>Book a Discovery Call</span>
+            <span className="w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/20 flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
+
+          <Link href="/fourth-dimension-framework" className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-[#111827] hover:underline group">
+            <span>Explore Our Services</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center group-hover:bg-[#111827] group-hover:text-white transition-all duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </Link>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default WhyChooseUsSection;

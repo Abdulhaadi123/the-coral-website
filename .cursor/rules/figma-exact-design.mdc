@@ -1,0 +1,27 @@
+---
+description: Figma screenshot workflow — collect all assets/specs before coding
+alwaysApply: true
+---
+
+# Figma Exact Design Workflow
+
+When the user shares a Figma screenshot/image to implement a section:
+
+## Do NOT start coding immediately
+
+First collect everything needed for an **exact** match. Ask the user for missing items before writing UI code.
+
+## Always request (if not already provided)
+
+1. **Images / assets** — every logo, photo, icon, 3D graphic, video, or decorative asset visible in the Figma frame (export as PNG/SVG/WebP). Do not invent placeholders when real assets exist in Figma.
+2. **Colors** — exact hex/rgba for backgrounds, text, accents, borders, gradients (stops + angles).
+3. **Typography** — font family, weight, size, line-height, letter-spacing for each text style in the frame.
+4. **Spacing & layout** — padding, gaps, max-width, column ratios, alignment, overflow/breakout behavior.
+5. **Effects** — shadows, blurs, radius, opacity, blend modes, hover/pressed states if shown.
+6. **Interactive states** — buttons/links hover, focus, and any secondary CTAs in the frame.
+
+## Direct User Image Copy Workflow
+
+- Whenever the user uploads or attaches an image asset in chat, directly copy the exact uploaded image file into `public/images/` (e.g. `public/images/fourth-dimension-graphic.png`).
+- Link and render that exact copied image asset directly in the corresponding UI section/component.
+- Always use the user's exact uploaded file rather than generic or placeholder assets.
