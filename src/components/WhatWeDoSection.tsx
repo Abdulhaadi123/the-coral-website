@@ -17,7 +17,10 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, description, serviceName, href = '#' }) => {
   return (
-    <div className="flex flex-col justify-between h-full p-2 sm:p-4 rounded-xl transition-all duration-300 hover:translate-y-[-4px] hover:bg-white/10">
+    <Link 
+      href={href}
+      className="flex flex-col justify-between h-full p-4 sm:p-5 rounded-2xl bg-white/40 hover:bg-white/70 backdrop-blur-sm border border-black/5 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-md cursor-pointer group block"
+    >
       <div className="flex-1 flex flex-col justify-start">
         {/* Icon Image */}
         <div className="w-12 h-12 flex items-center justify-start mb-4">
@@ -26,12 +29,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
             alt={altText} 
             width={44} 
             height={44} 
-            className="object-contain"
+            className="object-contain group-hover:scale-105 transition-transform duration-300"
           />
         </div>
         
         {/* Title */}
-        <h3 className="text-xl font-bold text-[#111827] mb-2">{title}</h3>
+        <h3 className="text-xl font-bold text-[#111827] mb-2 group-hover:text-[#21A0A3] transition-colors">{title}</h3>
         
         {/* Description */}
         <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed mb-6 font-normal">
@@ -41,19 +44,16 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
 
       {/* Action Link with last word bold & aligned baseline */}
       <div className="pt-2">
-        <Link 
-          href={href} 
-          className="inline-flex items-center gap-1.5 text-xs text-[#111827] hover:underline group"
-        >
+        <span className="inline-flex items-center gap-1.5 text-xs text-[#111827]">
           <span className="font-normal text-gray-800">
             Learn more about <strong className="font-bold text-[#111827]">{serviceName}</strong>
           </span>
           <span className="w-5 h-5 rounded-full border border-[#111827] flex items-center justify-center text-[10px] group-hover:bg-[#111827] group-hover:text-white transition-all duration-300 shrink-0">
             <ArrowRight className="w-3 h-3" />
           </span>
-        </Link>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

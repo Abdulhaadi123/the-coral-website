@@ -63,9 +63,10 @@ export const JournalSection: React.FC = () => {
         {/* 3 Journal Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {posts.map((post) => (
-            <article 
+            <Link 
               key={post.id}
-              className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group"
+              href="/marketing"
+              className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group block cursor-pointer"
             >
               {/* Card Image */}
               <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
@@ -103,15 +104,12 @@ export const JournalSection: React.FC = () => {
                 </div>
 
                 {/* Read More Link */}
-                <Link 
-                  href="/marketing" 
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-800 hover:text-black group-hover:translate-x-1 transition-all duration-200"
-                >
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-800 group-hover:text-[#21A0A3] group-hover:translate-x-1 transition-all duration-200">
                   <span>Read more</span>
                   <ChevronRight className="w-4 h-4" />
-                </Link>
+                </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 

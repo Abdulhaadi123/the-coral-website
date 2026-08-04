@@ -43,9 +43,10 @@ export const FeaturedWorkSection: React.FC = () => {
         {/* Project cards */}
         <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           {visible.map((project) => (
-            <article
+            <Link
               key={`${project.name}-${active}`}
-              className="relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] animate-fade-in"
+              href={`/portfolio/${project.slug}`}
+              className="relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] animate-fade-in block cursor-pointer"
             >
               <Image
                 src={project.image}
@@ -64,15 +65,12 @@ export const FeaturedWorkSection: React.FC = () => {
               </div>
 
               <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-10">
-                <Link
-                  href={`/portfolio/${project.slug}`}
-                  className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#21A0A3] transition-colors duration-300"
-                >
+                <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold group-hover:bg-white group-hover:text-[#21A0A3] transition-colors duration-300">
                   <span>View project</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 

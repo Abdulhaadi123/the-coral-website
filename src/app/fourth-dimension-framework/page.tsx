@@ -353,39 +353,45 @@ export default function FourthDimensionFrameworkPage() {
                 title: 'JI Beach',
                 category: 'Website',
                 img: '/images/recent-work/ji-beach.webp',
+                slug: 'vision-school-website',
               },
               {
                 title: 'Nemo Restaurant',
                 category: 'Website',
                 img: '/images/recent-work/nemo-restaurant.webp',
+                slug: 'cookie-co-brand-identity',
               },
               {
                 title: 'The First Group',
                 category: 'Hospitality Website',
                 img: '/images/recent-work/the-first-group.webp',
+                slug: 'the-vertical-launch',
               },
               {
                 title: 'Cloud Spaces',
                 category: 'Website',
                 img: '/images/recent-work/cloud-spaces.webp',
+                slug: 'space-social-media',
               },
-            ].map(({ title, category, img }) => (
-              <StaggerItem
-                key={title}
-                className="group relative rounded-2xl overflow-hidden bg-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all flex flex-col"
-              >
-                <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img}
-                    alt={title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 flex flex-col gap-0.5 bg-white">
-                  <h3 className="font-bold text-sm text-[#111827]">{title}</h3>
-                  <p className="text-xs text-gray-400 font-medium">{category}</p>
-                </div>
+            ].map(({ title, category, img, slug }) => (
+              <StaggerItem key={title}>
+                <Link
+                  href={`/portfolio/${slug}`}
+                  className="group relative rounded-2xl overflow-hidden bg-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all flex flex-col block cursor-pointer"
+                >
+                  <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={img}
+                      alt={title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-4 flex flex-col gap-0.5 bg-white">
+                    <h3 className="font-bold text-sm text-[#111827] group-hover:text-[#78B249] transition-colors">{title}</h3>
+                    <p className="text-xs text-gray-400 font-medium">{category}</p>
+                  </div>
+                </Link>
               </StaggerItem>
             ))}
           </StaggerContainer>
