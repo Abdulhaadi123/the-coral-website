@@ -75,10 +75,11 @@ const testimonials = [
 
 export const ClientTestimonialsSection: React.FC = () => {
   const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = 5;
 
-  const prev = () => setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1));
-  const next = () => setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1));
+  const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1)); };
+  const next = () => { setDirection('next'); setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1)); };
 
   // Compute 3 visible cards starting from active index
   const visible = [
@@ -90,7 +91,7 @@ export const ClientTestimonialsSection: React.FC = () => {
   return (
     <section className="w-full bg-[#F5F6F7] pt-16 sm:pt-20 pb-16 sm:pb-20">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] tracking-tight max-w-2xl">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] tracking-tight max-w-2xl">
           What Our Clients Say
         </h2>
         <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed max-w-2xl">
@@ -101,7 +102,10 @@ export const ClientTestimonialsSection: React.FC = () => {
         {/* Testimonial cards - smooth transition */}
         <div className="mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-12">
           {visible.map((item, idx) => (
-            <article key={`${item.name}-${active}-${idx}`} className="flex flex-col animate-fade-in">
+            <article
+              key={`${item.name}-${active}-${idx}`}
+              className={`flex flex-col ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+            >
               <div className="flex items-center gap-1 text-[#111827]">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />

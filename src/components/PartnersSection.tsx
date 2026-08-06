@@ -2,49 +2,66 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { FadeIn } from '@/components/Animated';
 
 const partners = [
-  { name: 'ELOVIRA', src: '/images/partners/elovira.webp', width: 140, height: 84 },
-  { name: 'Holix', src: '/images/partners/holix.webp', width: 130, height: 78 },
-  { name: 'ASCENT', src: '/images/partners/ascent.webp', width: 110, height: 84 },
-  { name: 'MOCHAE', src: '/images/partners/mochae.webp', width: 120, height: 84 },
-  { name: 'Crewtix', src: '/images/partners/crewtix.webp', width: 140, height: 60 },
-  { name: 'SPACE™', src: '/images/partners/space.webp', width: 150, height: 60 },
+  { name: 'ELOVIRA', src: '/images/partners/elovira.webp', width: 76, height: 36 },
+  { name: 'Holix', src: '/images/partners/holix.webp', width: 106, height: 36 },
+  { name: 'ASCENT', src: '/images/partners/ascent.webp', width: 65, height: 36 },
+  { name: 'MOCHAE', src: '/images/partners/mochae.webp', width: 65, height: 36 },
+  { name: 'Crewtix', src: '/images/partners/crewtix.webp', width: 120, height: 26 },
+  { name: 'SPACE™', src: '/images/partners/space.webp', width: 120, height: 28 },
+  { name: 'Ronin', src: '/images/partners/ronin.webp', width: 120, height: 25 },
+  { name: 'Evee', src: '/images/partners/evee.webp', width: 120, height: 36 },
+  { name: 'The Vertical', src: '/images/partners/the-vertical.webp', width: 65, height: 36 },
+  { name: 'Nimertech', src: '/images/partners/nimertech.webp', width: 100, height: 36 },
+  { name: 'Noura', src: '/images/partners/noura.webp', width: 120, height: 26 },
+  { name: 'Dexterz', src: '/images/partners/dexterz.webp', width: 120, height: 32 },
+  { name: 'Finora', src: '/images/partners/finora.webp', width: 120, height: 35 },
+  { name: 'Finlo', src: '/images/partners/finlo.webp', width: 120, height: 32 },
+  { name: 'Liviq', src: '/images/partners/liviq.webp', width: 120, height: 30 },
 ];
+
+// Duplicate for seamless infinite loop
+const allPartners = [...partners, ...partners];
 
 export const PartnersSection: React.FC = () => {
   return (
-    <section className="w-full pt-16 pb-0 bg-white">
-      <FadeIn direction="up" className="max-w-6xl mx-auto px-6 sm:px-12 mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100/80 text-gray-700 text-xs font-semibold mb-6 shadow-sm">
+    <section className="w-full bg-white pt-14 pb-0">
+      {/* Heading — reduced side padding */}
+      <FadeIn direction="up" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100/80 text-gray-700 text-xs font-semibold mb-5 shadow-sm">
           <span className="w-2.5 h-2.5 rounded-full bg-[#9FE66F] animate-pulse"></span>
           <span>Makes an Impact</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl font-bold text-[#111827] leading-[1.18] max-w-3xl">
+        <h2 className="text-3xl sm:text-5xl font-semibold text-[#111827] leading-[1.18] max-w-3xl">
           Our trusted partners who collaborate with us to create meaningful digital experiences
         </h2>
       </FadeIn>
 
-      {/* Gradient Logo Banner */}
-      <div className="w-full py-7 sm:py-9 bg-gradient-to-r from-[#85E868] via-[#4BD896] to-[#32CEC6]">
-        <StaggerContainer className="max-w-7xl mx-auto px-6 sm:px-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-6">
-          {partners.map((partner) => (
-            <StaggerItem
-              key={partner.name}
-              className="relative flex items-center justify-center h-12 sm:h-14 shrink-0 hover:scale-105 transition-transform duration-300"
+      {/* Full-bleed green marquee strip — no rounded corners, no side padding */}
+      <div
+        className="w-full py-6 sm:py-8 overflow-hidden"
+        style={{ background: 'linear-gradient(90deg, #85E868 0%, #4BD896 50%, #32CEC6 100%)' }}
+      >
+        <div className="flex items-center gap-14 sm:gap-18 animate-marquee whitespace-nowrap pr-14 sm:pr-18">
+          {allPartners.map((partner, idx) => (
+            <div
+              key={`${partner.name}-${idx}`}
+              className="inline-flex items-center justify-center shrink-0 hover:scale-105 transition-transform duration-300"
+              style={{ height: '40px' }}
             >
               <Image
                 src={partner.src}
                 alt={partner.name}
                 width={partner.width}
                 height={partner.height}
-                className="h-10 sm:h-12 w-auto max-w-[140px] object-contain"
+                className="h-full w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
               />
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );

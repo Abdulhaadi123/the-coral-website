@@ -7,13 +7,18 @@ import { FadeIn } from '@/components/Animated';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="w-full max-w-5xl mx-auto px-6 sm:px-12 pt-12 pb-16 flex flex-col items-start">
+    <section className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 flex flex-col items-start">
       <FadeIn direction="up">
-        {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#111827] leading-[1.1] max-w-4xl">
-          Digital experiences built to be{' '}
+        {/* Main Headline — always 2 lines at every screen size */}
+        <h1
+          className="font-semibold tracking-tight text-[#111827] leading-[1.15]"
+          style={{ fontSize: 'clamp(1.75rem, 5vw, 4.75rem)' }}
+        >
+          <span className="block whitespace-nowrap">
+            Digital experiences built to be
+          </span>
           <span
-            className="block sm:inline font-bold"
+            className="block whitespace-nowrap"
             style={{
               background: 'linear-gradient(90deg, #467923 0%, #A7F076 53%, #00C0E8 97%)',
               WebkitBackgroundClip: 'text',

@@ -9,7 +9,7 @@ export const BrandStatementSection: React.FC = () => {
         
         {/* Left Column: Headline & CTA */}
         <div className="lg:col-span-6 flex flex-col items-start">
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#111827] leading-[1.15] tracking-tight max-w-xl">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-[#111827] leading-[1.15] tracking-tight max-w-xl">
             Not every brand needs us. The right ones know why they do.
           </h2>
 

@@ -19,7 +19,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
   return (
     <Link 
       href={href}
-      className="flex flex-col justify-between h-full p-4 sm:p-5 rounded-2xl bg-white/40 hover:bg-white/70 backdrop-blur-sm border border-black/5 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-md cursor-pointer group block"
+      className="flex flex-col justify-between h-full p-2 sm:p-3 transition-all duration-300 hover:translate-y-[-4px] cursor-pointer group block"
     >
       <div className="flex-1 flex flex-col justify-start">
         {/* Icon Image */}
@@ -59,7 +59,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
 
 export const WhatWeDoSection: React.FC = () => {
   return (
-    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 px-6 sm:px-12 md:px-16 mt-12 rounded-t-[2.5rem]">
+    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 px-4 sm:px-6 lg:px-8 mt-12">
       <div className="max-w-6xl mx-auto">
         {/* Top Header Content */}
         <FadeIn direction="up" className="mb-16">
@@ -67,7 +67,7 @@ export const WhatWeDoSection: React.FC = () => {
             WHAT WE DO
           </span>
 
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#111827] leading-[1.15] max-w-3xl mb-8">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-[#111827] leading-[1.15] max-w-3xl mb-8">
             Brand, web, and marketing built around one goal: growth
           </h2>
 

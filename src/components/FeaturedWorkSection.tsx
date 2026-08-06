@@ -23,10 +23,11 @@ const projects = [
 
 export const FeaturedWorkSection: React.FC = () => {
   const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = 7;
 
-  const prev = () => setActive((i) => (i === 0 ? projects.length - 1 : i - 1));
-  const next = () => setActive((i) => (i === projects.length - 1 ? 0 : i + 1));
+  const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? projects.length - 1 : i - 1)); };
+  const next = () => { setDirection('next'); setActive((i) => (i === projects.length - 1 ? 0 : i + 1)); };
 
   // Show two cards starting from active (wrap)
   const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
@@ -35,7 +36,7 @@ export const FeaturedWorkSection: React.FC = () => {
     <section className="w-full bg-[#21A0A3] pt-14 sm:pt-20 pb-0">
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <FadeIn direction="up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
             Featured Work
           </h2>
         </FadeIn>
@@ -46,7 +47,7 @@ export const FeaturedWorkSection: React.FC = () => {
             <Link
               key={`${project.name}-${active}`}
               href={`/portfolio/${project.slug}`}
-              className="relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] animate-fade-in block cursor-pointer"
+              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] block cursor-pointer ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
               <Image
                 src={project.image}
@@ -117,10 +118,10 @@ export const FeaturedWorkSection: React.FC = () => {
           href="/portfolio"
           className="group mt-8 sm:mt-10 mb-10 sm:mb-14 w-full bg-[#A7F176] rounded-2xl px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between hover:brightness-95 transition-all block"
         >
-          <span className="text-base sm:text-xl font-semibold text-[#111827]">
+          <span className="text-base sm:text-xl font-semibold text-[#111827] group-hover:font-bold transition-all duration-200">
             Explore more of our work
           </span>
-          <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#111827] text-white flex items-center justify-center shrink-0">
+          <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#111827] text-[#111827] group-hover:bg-[#111827] group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
             <ArrowRight className="w-4 h-4" />
           </span>
         </Link>

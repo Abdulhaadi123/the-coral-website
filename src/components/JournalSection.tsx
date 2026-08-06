@@ -47,7 +47,7 @@ export const JournalSection: React.FC = () => {
         {/* Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           {/* Section Title with Gradient Branding */}
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#111827]">
+          <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827]">
             <span className="text-[#85E868]">The </span>
             <span className="text-[#9FE66F]">Coral </span>
             <span className="text-[#32CEC6]">Room </span>
@@ -93,7 +93,7 @@ export const JournalSection: React.FC = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg sm:text-xl font-bold text-[#111827] leading-snug mb-3 group-hover:text-[#21A0A3] transition-colors duration-200">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#111827] leading-snug mb-3 group-hover:text-[#21A0A3] transition-colors duration-200">
                     {post.title}
                   </h3>
 
