@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
 import { IconLayersStep } from '@/components/icons/Icons';
@@ -16,21 +17,8 @@ export default function BookACallPage() {
         {/* ── LEFT COLUMN: White Background + Menu Icon + Form ── */}
         <div className="w-full lg:w-1/2 bg-white px-6 sm:px-10 lg:px-16 pt-8 pb-16 flex flex-col justify-between">
           
-          {/* Top Left Menu Icon */}
-          <div className="mb-8">
-            <button
-              aria-label="Open Menu"
-              className="text-[#111827] hover:opacity-70 transition-opacity p-1"
-            >
-              <svg width="26" height="26" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="25" width="8" height="8" rx="4" fill="currentColor"/>
-                <rect width="23" height="8" rx="4" fill="currentColor"/>
-                <rect y="12" width="16" height="9" rx="4.5" fill="currentColor"/>
-                <rect x="17" y="12" width="16" height="9" rx="4.5" fill="currentColor"/>
-                <rect y="24.8852" width="33" height="8.11475" rx="4.05738" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
+          {/* Header with working hamburger sidebar */}
+          <Header />
 
           {/* Form Content */}
           <FadeIn direction="up" className="max-w-lg mx-auto lg:mx-0 w-full my-auto">
