@@ -72,9 +72,9 @@ export const WhyChooseUsSection: React.FC = () => {
 
         {/* Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-6">
-          <Link href="/book-a-call" className="group px-7 py-3.5 rounded-full bg-[#9FE66F] text-[#111827] font-semibold text-sm sm:text-base flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300">
+          <Link href="/book-a-call" className="group px-7 py-3.5 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm sm:text-base flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300">
             <span>Book a Discovery Call</span>
-            <span className="w-6 h-6 rounded-full bg-black/10 group-hover:bg-[#111827] group-hover:text-white flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center group-hover:bg-[#111827] group-hover:text-white group-hover:rotate-45 transition-all duration-300">
               <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </Link>

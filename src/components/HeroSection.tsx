@@ -7,13 +7,10 @@ import { FadeIn } from '@/components/Animated';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 flex flex-col items-start">
+    <section className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16 flex flex-col items-start">
       <FadeIn direction="up">
-        {/* Main Headline — always 2 lines at every screen size */}
-        <h1
-          className="font-semibold tracking-tight text-[#111827] leading-[1.15]"
-          style={{ fontSize: 'clamp(1.75rem, 5vw, 4.75rem)' }}
-        >
+        {/* Main Headline — exact 2 lines with refined Figma sizing */}
+        <h1 className="font-semibold tracking-tight text-[#111827] leading-[1.18] text-3xl sm:text-4xl md:text-5xl lg:text-[52px]">
           <span className="block whitespace-nowrap">
             Digital experiences built to be
           </span>

@@ -5,21 +5,20 @@ import Image from 'next/image';
 import { FadeIn } from '@/components/Animated';
 
 const partners = [
-  { name: 'ELOVIRA', src: '/images/partners/elovira.webp', width: 140, height: 84 },
-  { name: 'Holix', src: '/images/partners/holix.webp', width: 130, height: 78 },
-  { name: 'ASCENT', src: '/images/partners/ascent.webp', width: 110, height: 84 },
-  { name: 'MOCHAE', src: '/images/partners/mochae.webp', width: 120, height: 84 },
-  { name: 'Crewtix', src: '/images/partners/crewtix.webp', width: 140, height: 60 },
-  { name: 'SPACE™', src: '/images/partners/space.webp', width: 150, height: 60 },
-  { name: 'Ronin', src: '/images/partners/ronin.webp', width: 130, height: 60 },
-  { name: 'Evee', src: '/images/partners/evee.webp', width: 130, height: 60 },
-  { name: 'The Vertical', src: '/images/partners/the-vertical.webp', width: 140, height: 60 },
-  { name: 'Nimertech', src: '/images/partners/nimertech.webp', width: 140, height: 60 },
-  { name: 'Noura', src: '/images/partners/noura.webp', width: 130, height: 60 },
-  { name: 'Dexterz', src: '/images/partners/dexterz.webp', width: 130, height: 60 },
-  { name: 'Finora', src: '/images/partners/finora.webp', width: 130, height: 60 },
-  { name: 'Finlo', src: '/images/partners/finlo.webp', width: 130, height: 60 },
-  { name: 'Liviq', src: '/images/partners/liviq.webp', width: 130, height: 60 },
+  { name: 'ELOVIRA',      src: '/images/partners/elovira.webp',      width: 183, height: 110 },
+  { name: 'Holix',        src: '/images/partners/holix.webp',        width: 183, height: 110 },
+  { name: 'ASCENT',       src: '/images/partners/ascent.webp',       width: 183, height: 110 },
+  { name: 'MOCHAE',       src: '/images/partners/mochae.webp',       width: 183, height: 110 },
+  { name: 'Crewtix',      src: '/images/partners/crewtix.webp',      width: 183, height: 110 },
+  { name: 'SPACE',        src: '/images/partners/space.webp',        width: 183, height: 110 },
+  { name: 'Nimertech',    src: '/images/partners/nimertech.webp',    width: 183, height: 110 },
+  { name: 'The Vertical', src: '/images/partners/the-vertical.webp', width: 183, height: 110 },
+  { name: 'Evee',         src: '/images/partners/evee.webp',         width: 183, height: 110 },
+  { name: 'Finlo',        src: '/images/partners/finlo.webp',        width: 183, height: 110 },
+  { name: 'Finora',       src: '/images/partners/finora.webp',       width: 183, height: 110 },
+  { name: 'Dexterz',      src: '/images/partners/dexterz.webp',      width: 183, height: 110 },
+  { name: 'Noura',        src: '/images/partners/noura.webp',        width: 183, height: 110 },
+  { name: 'Ronin',        src: '/images/partners/ronin.webp',        width: 183, height: 110 },
 ];
 
 // Duplicate for seamless infinite loop
@@ -42,10 +41,10 @@ export const PartnersSection: React.FC = () => {
 
       {/* Full-bleed green marquee strip — no rounded corners, no side padding */}
       <div
-        className="w-full py-6 sm:py-8 overflow-hidden"
+        className="w-full py-5 sm:py-6 overflow-hidden"
         style={{ background: 'linear-gradient(90deg, #85E868 0%, #4BD896 50%, #32CEC6 100%)' }}
       >
-        <div className="flex items-center gap-16 sm:gap-20 animate-marquee whitespace-nowrap pr-16 sm:pr-20">
+        <div className="flex items-center gap-14 sm:gap-18 animate-marquee whitespace-nowrap pr-14 sm:pr-18">
           {allPartners.map((partner, idx) => (
             <div
               key={`${partner.name}-${idx}`}
@@ -56,7 +55,7 @@ export const PartnersSection: React.FC = () => {
                 alt={partner.name}
                 width={partner.width}
                 height={partner.height}
-                className="h-5 sm:h-7 w-auto max-w-[90px] object-contain"
+                className="h-7 sm:h-9 w-auto max-w-[130px] object-contain hover:scale-105 transition-transform duration-300"
               />
             </div>
           ))}

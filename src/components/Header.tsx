@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
   return (
     <>
       {/* ── Top Header Bar ── */}
-      <header className="w-full max-w-7xl mx-auto px-6 sm:px-12 pt-8 pb-4 flex items-center justify-between relative z-30">
+      <header className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 flex items-center justify-between relative z-30">
 
         {/* Hamburger */}
         <button
