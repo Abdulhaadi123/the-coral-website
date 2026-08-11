@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import FooterSection from '@/components/FooterSection';
+import { ArrowUpRight } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
 import { IconLayersStep } from '@/components/icons/Icons';
 
@@ -17,13 +17,13 @@ export default function BookACallPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-white overflow-x-hidden">
-      <div className="flex flex-col lg:flex-row flex-1 min-h-screen">
+    <main className="min-h-screen flex flex-col bg-white overflow-x-hidden relative">
+      <Header />
 
-        {/* ── LEFT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-white px-6 sm:px-10 lg:px-16 pt-8 pb-16 flex flex-col justify-between">
+      <div className="flex flex-col lg:flex-row flex-1">
 
-          <Header />
+        {/* ── LEFT COLUMN (Form) — Vertically aligned with Hamburger icon ── */}
+        <div className="w-full lg:w-1/2 bg-white px-8 sm:px-16 lg:px-24 pt-4 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */
@@ -75,7 +75,7 @@ export default function BookACallPage() {
             </div>
           ) : (
             /* ── FORM STATE ── */
-            <FadeIn direction="up" className="max-w-lg mx-auto lg:mx-0 w-full my-auto">
+            <FadeIn direction="up" className="max-w-xl mx-auto lg:mx-0 w-full my-auto">
               <h1 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3">
                 Book a Discovery Call
               </h1>
@@ -186,9 +186,12 @@ export default function BookACallPage() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="btn-hover-gradient self-start mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#111827] text-white font-semibold text-sm hover:opacity-90 transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                  className="group self-start mt-2 inline-flex items-center gap-3 px-7 py-3 rounded-full bg-[#111827] text-white font-semibold text-sm hover:bg-[#111827]/90 transition-all duration-300 shadow-md hover:scale-105 active:scale-95"
                 >
-                  Submit →
+                  <span>Submit</span>
+                  <span className="w-6 h-6 rounded-full border border-white flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+                  </span>
                 </button>
 
               </form>
@@ -199,21 +202,7 @@ export default function BookACallPage() {
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-6 sm:px-10 lg:px-16 pt-8 pb-16 flex flex-col justify-between">
-
-          <div className="flex justify-end mb-12">
-            <Link href="/" className="cursor-pointer">
-              <Image
-                src="/images/logo.png"
-                alt="The Coral Room"
-                width={135}
-                height={54}
-                priority
-                style={{ width: 'auto', height: '36px' }}
-                className="object-contain"
-              />
-            </Link>
-          </div>
+        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-24 pt-8 pb-16 flex flex-col justify-between">
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 max-w-xl mx-auto lg:mx-0 my-auto">
             {[
@@ -256,7 +245,36 @@ export default function BookACallPage() {
 
       </div>
 
-      <FooterSection />
+      {/* ── FIGMA CUSTOM DARK FOOTER FOR BOOK A CALL PAGE ── */}
+      <section className="w-full px-4 sm:px-8 pb-8 pt-6 bg-white">
+        <div className="max-w-7xl mx-auto bg-[#202020] rounded-[32px] sm:rounded-[40px] px-8 sm:px-16 lg:px-20 pt-12 sm:pt-16 pb-8 flex flex-col justify-between min-h-[360px] relative overflow-hidden shadow-2xl">
+          
+          {/* Massive "the coral room." Logo Banner */}
+          <div className="w-full flex justify-center items-center my-auto py-6">
+            <Image
+              src="/images/the-coral-room-footer-logo.webp"
+              alt="the coral room."
+              width={1400}
+              height={300}
+              priority
+              className="w-full h-auto max-h-[160px] sm:max-h-[220px] object-contain brightness-200 opacity-30 hover:opacity-50 transition-opacity duration-500"
+            />
+          </div>
+
+          {/* Bottom Divider & Row matching Figma */}
+          <div className="w-full border-t border-white/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-gray-400 font-medium">
+            <a
+              href="mailto:dronexia@youremail.com"
+              className="underline hover:text-white transition-colors cursor-pointer"
+            >
+              dronexia@youremail.com
+            </a>
+            <span className="text-gray-400">Ready to get started?</span>
+          </div>
+
+        </div>
+      </section>
+
     </main>
   );
 }

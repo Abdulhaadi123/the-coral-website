@@ -81,7 +81,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
         </div>
       ) : (
         /* Fallback view if no full vertical image is uploaded yet */
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 py-16 text-center">
+        <div className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">{project.title}</h1>
           <p className="text-gray-500 text-sm max-w-xl mx-auto mb-12">
             Full case study layout image for this project will be uploaded soon.

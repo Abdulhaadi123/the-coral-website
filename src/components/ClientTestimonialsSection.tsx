@@ -90,8 +90,8 @@ export const ClientTestimonialsSection: React.FC = () => {
 
   return (
     <section className="w-full bg-[#F5F6F7] pt-16 sm:pt-20 pb-16 sm:pb-20">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] tracking-tight max-w-2xl">
+      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] tracking-tight max-w-2xl" style={{ lineHeight: '1.10' }}>
           What Our Clients Say
         </h2>
         <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed max-w-2xl">

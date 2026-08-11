@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
@@ -55,8 +56,8 @@ export default function MarketingCampaignsPage() {
       <Header />
 
       {/* ── Hero Section ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-12 pt-16 sm:pt-24">
-        <FadeIn direction="up">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 sm:pt-24">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           {/* Heading */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-6">
             We create marketing{' '}
@@ -94,8 +95,8 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── 3-col Info Cards ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-12 py-12 sm:py-16">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-12 sm:py-16">
+        <StaggerContainer className="pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {infoCards.map(({ title, desc }) => (
             <StaggerItem key={title}>
               <div
@@ -111,7 +112,8 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── We Can Help You With ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-12 pb-16 sm:pb-24">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pb-16 sm:pb-24">
+        <div className="pl-10 sm:pl-11 lg:pl-11">
 
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 leading-tight">
@@ -171,12 +173,12 @@ export default function MarketingCampaignsPage() {
           </div>
 
         </div>
-
+        </div>
       </section>
 
       {/* ── Full-Journey Marketing (#F5F7FA BG) ── */}
-      <section className="w-full bg-[#F5F7FA] py-16 sm:py-24 px-6 sm:px-12 my-12">
-        <FadeIn direction="up" className="max-w-6xl mx-auto flex flex-col items-center">
+      <section className="w-full bg-[#F5F7FA] py-16 sm:py-24 px-8 sm:px-16 lg:px-24 my-12">
+        <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col items-center">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] text-center mb-3">
             Full-Journey Marketing
@@ -190,32 +192,44 @@ export default function MarketingCampaignsPage() {
 
             {/* Stepper Circles with Gradient Connecting Line */}
             <div className="relative flex justify-between items-center max-w-5xl mx-auto mb-10 px-4 sm:px-8">
-              {/* Line behind icons — hidden on mobile */}
-              <div className="hidden sm:block absolute left-12 right-12 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-[#14B8A6] via-[#84CC16] via-[#A855F7] to-[#EC4899] z-0" />
+              {/* Line behind icons — clean static line matching Figma */}
+              <div className="hidden sm:block absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[2px] bg-[#E2E8F0] z-0" />
 
-              {/* Step 1 Circle */}
-              <div className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#14B8A6] text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+              {/* Step 1 Circle (#21A0A3) */}
+              <div
+                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                style={{ backgroundColor: '#21A0A3' }}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
                 </svg>
               </div>
 
-              {/* Step 2 Circle */}
-              <div className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#84CC16] text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+              {/* Step 2 Circle (#8BD35C) */}
+              <div
+                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                style={{ backgroundColor: '#8BD35C' }}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
                 </svg>
               </div>
 
-              {/* Step 3 Circle */}
-              <div className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#A855F7] text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+              {/* Step 3 Circle (#BF00FF) */}
+              <div
+                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                style={{ backgroundColor: '#BF00FF' }}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
               </div>
 
-              {/* Step 4 Circle */}
-              <div className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#EC4899] text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+              {/* Step 4 Circle (#FF008C) */}
+              <div
+                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                style={{ backgroundColor: '#FF008C' }}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" />
                 </svg>
@@ -263,7 +277,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Building Your Inbound Foundation (#A7F176 Green Card) ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-12 py-10 sm:py-16">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-10 sm:py-16">
         <FadeIn direction="up">
           <div className="w-full bg-[#A7F176] rounded-3xl p-8 sm:p-14">
             
@@ -330,7 +344,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 px-6 sm:px-12 relative overflow-hidden">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn attention into qualified leads?
@@ -340,9 +354,12 @@ export default function MarketingCampaignsPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 duration-200"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Start a Strategy Call
+            <span>Start a Strategy Call</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

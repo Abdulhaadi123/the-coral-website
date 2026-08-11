@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
@@ -12,8 +13,8 @@ export default function FourthDimensionFrameworkPage() {
       <Header />
 
       {/* ── Hero Section ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 sm:px-12 pt-14 sm:pt-20 pb-12">
-        <FadeIn direction="up">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-14 sm:pt-20 pb-12">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           {/* Muted Label */}
           <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
             INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
@@ -49,9 +50,12 @@ export default function FourthDimensionFrameworkPage() {
           {/* CTA Button */}
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm hover:text-white transition-all shadow-sm hover:scale-105 active:scale-95 duration-200"
+            className="btn-hover-gradient group inline-flex items-center gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Book a Discovery Call →
+            <span>Book a Discovery Call</span>
+            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
           </Link>
         </FadeIn>
 
@@ -61,15 +65,15 @@ export default function FourthDimensionFrameworkPage() {
           <img
             src="/images/fourth-dimension-framework.webp"
             alt="The Fourth Dimension Framework Diagram — Discover, Define, Develop, and Drive stages"
-            className="w-full max-w-5xl h-auto object-contain hover:scale-[1.01] transition-transform duration-500"
+            className="w-full max-w-5xl h-auto object-contain drop-shadow-sm"
           />
         </ScaleIn>
 
       </section>
 
       {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
-      <section className="w-full bg-white py-16 sm:py-24 px-6 sm:px-12">
-        <div className="max-w-6xl mx-auto flex flex-col gap-20 sm:gap-28">
+      <section className="w-full bg-white py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11 flex flex-col gap-20 sm:gap-28">
           
           {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
           <FadeIn direction="up">
@@ -98,13 +102,12 @@ export default function FourthDimensionFrameworkPage() {
                   </h3>
                   <div className="flex flex-col gap-4">
                     <p>
-                      Most digital projects struggle because the work happens in pieces. The brand says one
-                      thing, the website does another, and the marketing has no clear path to follow.
+                      Digital projects often fail when work happens in isolation — design without strategy,
+                      development without SEO, or marketing without a working platform.
                     </p>
                     <p>
-                      Fourth Dimension™ brings everything into alignment before the work moves forward. It helps us
-                      understand the business, define the direction, build with purpose, and keep improving after
-                      launch.
+                      Fourth Dimension™ connects every stage so the identity, structure, code, search
+                      visibility, and marketing support each other.
                     </p>
                   </div>
                 </div>
@@ -114,7 +117,7 @@ export default function FourthDimensionFrameworkPage() {
 
           {/* Part 2: What Makes Our Approach Different */}
           <FadeIn direction="up">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t border-gray-100 pt-16 sm:pt-20">
               {/* Left Title */}
               <div className="lg:col-span-5">
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24">
@@ -169,7 +172,7 @@ export default function FourthDimensionFrameworkPage() {
       <section className="w-full pt-16 sm:pt-24">
         
         {/* Section Header */}
-        <FadeIn direction="up" className="max-w-6xl mx-auto px-6 sm:px-12 mb-12 sm:mb-16">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pl-10 sm:pl-11 lg:pl-11 mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3 leading-tight">
             The Four Stages of Fourth Dimension™
           </h2>
@@ -254,10 +257,10 @@ export default function FourthDimensionFrameworkPage() {
             <FadeIn
               key={title}
               direction="up"
-              className="w-full px-6 sm:px-12 py-16 sm:py-24 text-white"
+              className="w-full px-8 sm:px-16 lg:px-24 py-16 sm:py-24 text-white"
               style={{ backgroundColor: bg }}
             >
-              <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
                 
                 {/* Left Column — Large Title */}
                 <div className="lg:col-span-5 flex flex-col gap-2">
@@ -299,8 +302,8 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
-      <section className="w-full bg-white py-20 sm:py-28 px-6 sm:px-12">
-        <FadeIn direction="up" className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <section className="w-full bg-white py-20 sm:py-28 px-8 sm:px-16 lg:px-24">
+        <FadeIn direction="up" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col items-start gap-6">
@@ -329,8 +332,8 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
-      <section className="w-full bg-[#F8FAFC] py-16 sm:py-24 px-6 sm:px-12 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto">
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-24 px-8 sm:px-16 lg:px-24 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto">
           
           {/* Header */}
           <FadeIn direction="up" className="flex items-center justify-between mb-10">
@@ -339,7 +342,7 @@ export default function FourthDimensionFrameworkPage() {
             </h2>
             <Link
               href="/portfolio"
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-700 hover:text-black transition-colors"
+              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-transparent text-xs sm:text-sm font-semibold text-gray-700 hover:text-black hover:border-gray-300 transition-all duration-200"
             >
               <span>View all projects</span>
               <span>↗</span>
@@ -350,28 +353,28 @@ export default function FourthDimensionFrameworkPage() {
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
               {
-                title: 'JI Beach',
-                category: 'Website',
-                img: '/images/recent-work/ji-beach.webp',
-                slug: 'vision-school-website',
+                title: 'Elovira Packaging',
+                category: 'Branding',
+                img: '/images/featured/elovira.webp',
+                slug: 'elovira-packaging',
               },
               {
-                title: 'Nemo Restaurant',
-                category: 'Website',
-                img: '/images/recent-work/nemo-restaurant.webp',
-                slug: 'cookie-co-brand-identity',
+                title: 'Mochae Brand Identity',
+                category: 'Branding',
+                img: '/images/featured/mochae.webp',
+                slug: 'mochae-brand-identity',
               },
               {
-                title: 'The First Group',
-                category: 'Hospitality Website',
-                img: '/images/recent-work/the-first-group.webp',
+                title: 'Omnix Project Management',
+                category: 'Development',
+                img: '/images/portfolio/Rectangle 504 (16).webp',
+                slug: 'omnix-project-management',
+              },
+              {
+                title: 'V3 Launch Campaign',
+                category: 'Marketing',
+                img: '/images/portfolio/Rectangle 504 (18).webp',
                 slug: 'the-vertical-launch',
-              },
-              {
-                title: 'Cloud Spaces',
-                category: 'Website',
-                img: '/images/recent-work/cloud-spaces.webp',
-                slug: 'space-social-media',
               },
             ].map(({ title, category, img, slug }) => (
               <StaggerItem key={title}>

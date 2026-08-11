@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function OptimisationPage() {
   return (
@@ -15,18 +15,28 @@ export default function OptimisationPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-12 pt-12 pb-16 w-full">
-        <FadeIn direction="up">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           {/* Tag / Category */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
             OPTIMISATION
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8">
+          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
             Website performance that{' '}
-            <span className="text-gradient-figma">
-              turns more traffic into customers
+            <span className="block sm:inline">
+              turns{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                more traffic into customers
+              </span>
             </span>
           </h1>
 
@@ -38,11 +48,19 @@ export default function OptimisationPage() {
       </section>
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-12 w-full relative overflow-hidden">
+      <section
+        className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-28 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 w-full relative"
+        style={{
+          background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
+        }}
+      >
         
-        {/* Google "G" Logo - centered, blurred */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
-          <div className="relative w-[280px] h-[280px] sm:w-[420px] sm:h-[420px] lg:w-[560px] lg:h-[560px] select-none" style={{ filter: 'blur(10px) saturate(1.1)', opacity: 0.75 }}>
+        {/* Google "G" Logo - G shape clearly visible, 8px blur, blue arm behind center-right cards */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0" style={{ transform: 'translateY(4%)' }}>
+          <div
+            className="relative w-[340px] h-[340px] sm:w-[500px] sm:h-[500px] lg:w-[640px] lg:h-[640px] select-none"
+            style={{ filter: 'blur(8px) saturate(1.3)', opacity: 0.9 }}
+          >
             <svg viewBox="0 0 24 24" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <path fill="#448AFF" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.9h6.69c-.29 1.5-1.14 2.76-2.4 3.61l3.7 2.87c2.17-2 3.75-4.94 3.75-8.31z"/>
               <path fill="#43A047" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.7-2.87c-1.03.69-2.35 1.1-4.23 1.1-3.26 0-6.01-2.2-7-5.15l-3.83 2.97C3.12 21.3 7.23 24 12 24z"/>
@@ -53,31 +71,37 @@ export default function OptimisationPage() {
         </div>
 
         {/* 3 Metric Cards Grid */}
-        <StaggerContainer className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center max-w-5xl mx-auto my-8">
+        <StaggerContainer className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center max-w-5xl mx-auto">
           
-          {/* Card 1: Conversions (Left) */}
-          <StaggerItem className="bg-white/60 backdrop-blur-md border border-white/40 rounded-3xl p-8 sm:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.05)] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+          {/* Card 1: Conversions (Left — warm tint from yellow segment) */}
+          <StaggerItem className="bg-white/75 backdrop-blur-xl border border-white/60 rounded-[28px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
             <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">Conversions</h3>
-            <p className="text-xs sm:text-sm text-gray-600 mb-12">We test what works</p>
-            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight">
+            <p className="text-xs sm:text-sm text-gray-500 font-medium">We test what works</p>
+            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-10 sm:mt-14">
               +27%
             </div>
           </StaggerItem>
 
-          {/* Card 2: Visibility (Center - Featured) */}
-          <StaggerItem className="bg-white/90 backdrop-blur-lg border border-white/60 rounded-3xl p-8 sm:p-12 shadow-[0_16px_48px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-xl">
+          {/* Card 2: Visibility (Center — blue tint from G's blue arm) */}
+          <StaggerItem
+            className="backdrop-blur-2xl border border-white/80 rounded-[28px] p-8 sm:p-11 shadow-[0_25px_60px_rgba(68,138,255,0.12)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
+            style={{ background: 'rgba(220, 232, 255, 0.55)' }}
+          >
             <h3 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">Visibility</h3>
-            <p className="text-xs sm:text-sm text-gray-600 mb-14">We help people find you</p>
-            <div className="text-5xl sm:text-6xl font-extrabold text-[#111827] tracking-tight">
+            <p className="text-xs sm:text-sm text-gray-500 font-medium">We help people find you</p>
+            <div className="text-5xl sm:text-6xl font-extrabold text-[#111827] tracking-tight mt-12 sm:mt-16">
               +42%
             </div>
           </StaggerItem>
 
-          {/* Card 3: User Testing (Right) */}
-          <StaggerItem className="bg-white/65 backdrop-blur-md border border-white/45 rounded-3xl p-8 sm:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.05)] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+          {/* Card 3: User Testing (Right — subtle blue tint matching Figma) */}
+          <StaggerItem
+            className="backdrop-blur-xl border border-white/60 rounded-[28px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(68,138,255,0.08)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+            style={{ background: 'rgba(225, 234, 255, 0.50)' }}
+          >
             <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">User Testing</h3>
-            <p className="text-xs sm:text-sm text-gray-600 mb-12">We detect what is frustrating users</p>
-            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight">
+            <p className="text-xs sm:text-sm text-gray-500 font-medium">We detect what is frustrating users</p>
+            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-10 sm:mt-14">
               +25%
             </div>
           </StaggerItem>
@@ -86,9 +110,9 @@ export default function OptimisationPage() {
 
       </section>
 
-      {/* Lower Content Section */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full">
-        <FadeIn direction="up">
+      {/* Lower Content Section — increased top spacing above heading */}
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-28 pb-20 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-28 w-full">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
             <div className="md:col-span-5">
               <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight">
@@ -106,7 +130,7 @@ export default function OptimisationPage() {
 
       {/* ── Services Grid Section ── */}
       <section className="w-full bg-[#F4F5F7] py-16 sm:py-20">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16">
+        <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16">
 
           {/* Left: Section Title */}
           <FadeIn direction="up" className="md:col-span-4">
@@ -149,7 +173,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Small Fixes Section ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
 
@@ -188,7 +212,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── 4 Icon Cards Section ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-12 lg:py-16 w-full">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-10">
           {[
             {
@@ -222,7 +246,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: 4th Dimension Graphic */}
@@ -251,21 +275,21 @@ export default function OptimisationPage() {
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
               >
                 <span>Learn more about Fourth Dimension™</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0">
-                  <ArrowRight className="w-3.5 h-3.5" />
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
 
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
               >
                 <span>Book a Discovery Call</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0">
-                  <ArrowRight className="w-3.5 h-3.5" />
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
             </div>
@@ -275,7 +299,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Call To Action Banner Section ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-6 sm:px-12 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
             Not sure why your website is underperforming?
@@ -285,9 +309,12 @@ export default function OptimisationPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient mt-2 inline-flex items-center justify-center px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Book a Website Audit
+            <span>Book a Website Audit</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

@@ -63,7 +63,7 @@ export default function SeoSearchVisibilityPage() {
           <Header dark />
         </div>
 
-        <FadeIn direction="up" className="relative z-10 max-w-4xl mx-auto sm:mx-0">
+        <FadeIn direction="up" className="relative z-10 max-w-4xl mx-auto sm:mx-0 pl-10 sm:pl-11 lg:pl-11">
           {/* Tag */}
           <span className="text-xs font-bold tracking-widest uppercase text-white/60 block mb-5">
             SEO &amp; SEARCH VISIBILITY
@@ -86,7 +86,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── How We Approach SEO ── */}
       <section className="w-full bg-white py-20 sm:py-28 px-6 sm:px-12 border-b border-gray-100">
-        <FadeIn direction="up" className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <FadeIn direction="up" className="max-w-6xl mx-auto pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left Title */}
           <div className="md:col-span-5">
             <h2 className="text-3xl sm:text-5xl font-bold text-[#111827] leading-tight sticky top-24">
@@ -113,7 +113,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── SEO & Search Visibility Services (Green Mesh Gradient BG) ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 px-6 sm:px-12 relative">
-        <div className="max-w-6xl mx-auto relative z-10">
+        <div className="max-w-6xl mx-auto pl-10 sm:pl-11 lg:pl-11 relative z-10">
           <FadeIn direction="up" className="mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] text-center">
               SEO &amp; Search Visibility Services
@@ -224,9 +224,12 @@ export default function SeoSearchVisibilityPage() {
 
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Book an SEO Audit
+            <span>Book an SEO Audit</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

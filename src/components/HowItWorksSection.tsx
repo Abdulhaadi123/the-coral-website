@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -31,12 +30,18 @@ const steps = [
     title: 'We Shape the Plan',
     desc: 'We refine the priorities, ask the right questions, and agree on the best way forward before anything is signed.',
     icon: (
-      <Image
-        src="/images/vaadin_handshake.webp"
-        alt="We Shape the Plan icon"
-        width={40}
-        height={40}
-        className="w-10 h-10 object-contain brightness-0 invert [filter:brightness(0)_invert(1)_sepia(1)_saturate(500%)_hue-rotate(45deg)]"
+      <div
+        className="w-10 h-10 bg-[#A7F176]"
+        style={{
+          WebkitMaskImage: "url('/images/vaadin_handshake.webp')",
+          maskImage: "url('/images/vaadin_handshake.webp')",
+          WebkitMaskSize: 'contain',
+          maskSize: 'contain',
+          WebkitMaskRepeat: 'no-repeat',
+          maskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          maskPosition: 'center',
+        }}
       />
     ),
   },
@@ -45,12 +50,18 @@ const steps = [
     title: 'We Start the Work',
     desc: 'Once the proposal is approved, we move ahead with a defined scope, shared responsibilities, and a focused plan of action.',
     icon: (
-      <Image
-        src="/images/icon.webp"
-        alt="We Start the Work icon"
-        width={40}
-        height={40}
-        className="w-10 h-10 object-contain brightness-0 invert [filter:brightness(0)_invert(1)_sepia(1)_saturate(500%)_hue-rotate(45deg)]"
+      <div
+        className="w-10 h-10 bg-[#A7F176]"
+        style={{
+          WebkitMaskImage: "url('/images/icon.webp')",
+          maskImage: "url('/images/icon.webp')",
+          WebkitMaskSize: 'contain',
+          maskSize: 'contain',
+          WebkitMaskRepeat: 'no-repeat',
+          maskRepeat: 'no-repeat',
+          WebkitMaskPosition: 'center',
+          maskPosition: 'center',
+        }}
       />
     ),
   },
@@ -88,59 +99,53 @@ export const HowItWorksSection: React.FC = () => {
   const lineHeight = `${scrollProgress * 100}%`;
 
   return (
-    // Tall wrapper — gives scroll space (300vh total, 200vh of scroll distance)
     <div ref={wrapperRef} style={{ height: '340vh' }} className="relative">
 
-      {/* Sticky container — locks to viewport while user scrolls wrapper */}
       <div className="sticky top-0 h-screen overflow-hidden w-full bg-[#21A0A3] text-white flex items-stretch">
-        <div className="max-w-[1400px] mx-auto w-full px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div className="max-w-7xl mx-auto w-full px-8 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-0">
 
-          {/* ── LEFT: heading + CTA — truly fixed, never moves ── */}
-          <div className="lg:col-span-5 flex flex-col justify-center py-16">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight text-white">
+          <div className="lg:col-span-5 flex flex-col justify-start pt-16 sm:pt-20 pb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
               How It Works
             </h2>
 
-            <p className="mt-6 text-base sm:text-lg text-teal-100/90 leading-relaxed max-w-md">
+            <p className="mt-4 text-sm sm:text-base text-white/80 leading-relaxed max-w-xs font-normal">
               Not sure what your digital presence needs next? We help you find the right starting point before the work begins.
             </p>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group px-7 py-3.5 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center gap-3 shadow-md hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+                className="group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <span>Book a Discovery Call</span>
-                <span className="w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/20 flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
                 </span>
               </Link>
             </div>
           </div>
 
-          {/* ── RIGHT: steps scroll upward via translateY ── */}
           <div className="lg:col-span-7 relative overflow-hidden">
             <div
               ref={stepsRef}
-              className="pl-6 sm:pl-10 py-16 will-change-transform"
+              className="pl-6 sm:pl-10 pt-16 sm:pt-20 pb-16 will-change-transform relative"
               style={{
                 transform: `translateY(${translateY}px)`,
                 transition: 'transform 0.05s linear',
               }}
             >
-              {/* Background grey line */}
-              <div className="absolute left-[23px] sm:left-[31px] top-16 bottom-16 w-[2px] bg-white/25 rounded-full" />
+              <div className="absolute left-[23px] sm:left-[31px] top-16 sm:top-20 bottom-12 w-[2px] bg-white/25 rounded-full" />
 
-              {/* Animated lime-green fill line */}
               <div
-                className="absolute left-[23px] sm:left-[31px] top-16 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176]"
+                className="absolute left-[23px] sm:left-[31px] top-16 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176]"
                 style={{
                   height: lineHeight,
                   transition: 'height 0.05s linear',
                 }}
               />
 
-              <div className="flex flex-col gap-14 sm:gap-20">
+              <div className="flex flex-col gap-8 sm:gap-10 pt-16 sm:pt-20">
                 {steps.map((item, index) => {
                   const stepThreshold = index / (steps.length - 1);
                   const isActive = scrollProgress >= stepThreshold * 0.85;

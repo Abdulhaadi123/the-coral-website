@@ -10,16 +10,9 @@ interface HeaderProps {
   dark?: boolean;
 }
 
-const topLinks = [
-  { label: 'Home',             href: '/' },
-  { label: 'Fourth Dimension™', href: '/fourth-dimension-framework' },
-  { label: 'Portfolio',        href: '/portfolio' },
-  { label: 'Book a Call',      href: '/book-a-call' },
-];
-
 const solutionLinks = [
   { label: 'Design',                  href: '/design' },
-  { label: 'Website',                 href: '/development' },
+  { label: 'Development',             href: '/development' },
   { label: 'Optimisation',            href: '/optimisation' },
   { label: 'Marketing',               href: '/marketing' },
   { label: 'Marketing Campaigns',     href: '/marketing-campaigns' },
@@ -45,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
   return (
     <>
       {/* ── Top Header Bar ── */}
-      <header className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 flex items-center justify-between relative z-30">
+      <header className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-8 pb-4 flex items-center justify-between relative z-30">
 
         {/* Hamburger */}
         <button
@@ -90,24 +83,24 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
       {/* ── Backdrop ── */}
       <div
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden="true"
       />
 
-      {/* ── Slide-Out Sidebar (original dark design) ── */}
+      {/* ── Slide-Out Sidebar (Clean White Design) ── */}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-[320px] sm:w-[360px] bg-[#0a0a0a] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-50 h-full w-[320px] sm:w-[360px] bg-white flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
         aria-label="Navigation Sidebar"
       >
         {/* Sidebar Top — Logo + Close */}
-        <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-white/10">
+        <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-gray-100">
           <Link href="/" onClick={() => setOpen(false)}>
             <Image
-              src="/images/logo-white.png"
+              src="/images/logo.png"
               alt="The Coral Room"
               width={135}
               height={54}
@@ -118,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           <button
             onClick={() => setOpen(false)}
             aria-label="Close Menu"
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors duration-200 cursor-pointer"
+            className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-[#111827] transition-colors duration-200 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -132,11 +125,11 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             href="/"
             onClick={() => setOpen(false)}
             className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              pathname === '/' ? 'bg-[#9FE66F]/15 text-[#9FE66F]' : 'text-gray-300 hover:bg-white/8 hover:text-white'
+              pathname === '/' ? 'bg-[#78B249]/15 text-[#467923]' : 'text-gray-700 hover:bg-gray-100 hover:text-[#111827]'
             }`}
           >
             <span>Home</span>
-            {pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-[#9FE66F] shrink-0" />}
+            {pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
           </Link>
 
           {/* Fourth Dimension */}
@@ -144,11 +137,11 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             href="/fourth-dimension-framework"
             onClick={() => setOpen(false)}
             className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              pathname === '/fourth-dimension-framework' ? 'bg-[#9FE66F]/15 text-[#9FE66F]' : 'text-gray-300 hover:bg-white/8 hover:text-white'
+              pathname === '/fourth-dimension-framework' ? 'bg-[#78B249]/15 text-[#467923]' : 'text-gray-700 hover:bg-gray-100 hover:text-[#111827]'
             }`}
           >
             <span>Fourth Dimension™</span>
-            {pathname === '/fourth-dimension-framework' && <span className="w-1.5 h-1.5 rounded-full bg-[#9FE66F] shrink-0" />}
+            {pathname === '/fourth-dimension-framework' && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
           </Link>
 
           {/* Solutions Accordion */}
@@ -157,8 +150,8 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
               onClick={() => setSolutionsOpen(!solutionsOpen)}
               className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer w-full text-left ${
                 solutionLinks.some(l => pathname === l.href)
-                  ? 'bg-[#9FE66F]/15 text-[#9FE66F]'
-                  : 'text-gray-300 hover:bg-white/8 hover:text-white'
+                  ? 'bg-[#78B249]/15 text-[#467923]'
+                  : 'text-gray-700 hover:bg-gray-100 hover:text-[#111827]'
               }`}
             >
               <span>Solutions</span>
@@ -170,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             {/* Solutions Sub-items */}
             <div
               className={`flex flex-col overflow-hidden transition-all duration-300 ease-in-out ${
-                solutionsOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+                solutionsOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
               {solutionLinks.map(({ label, href }) => (
@@ -180,12 +173,12 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
                   onClick={() => setOpen(false)}
                   className={`flex items-center justify-between pl-8 pr-4 py-2.5 rounded-xl text-sm transition-all duration-200 ${
                     pathname === href
-                      ? 'text-[#9FE66F] font-semibold'
-                      : 'text-gray-400 hover:text-white font-medium'
+                      ? 'text-[#467923] font-bold'
+                      : 'text-gray-600 hover:text-[#111827] font-medium'
                   }`}
                 >
                   <span>{label}</span>
-                  {pathname === href && <span className="w-1.5 h-1.5 rounded-full bg-[#9FE66F] shrink-0" />}
+                  {pathname === href && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
                 </Link>
               ))}
             </div>
@@ -196,38 +189,28 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             href="/portfolio"
             onClick={() => setOpen(false)}
             className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              pathname === '/portfolio' ? 'bg-[#9FE66F]/15 text-[#9FE66F]' : 'text-gray-300 hover:bg-white/8 hover:text-white'
+              pathname === '/portfolio' ? 'bg-[#78B249]/15 text-[#467923]' : 'text-gray-700 hover:bg-gray-100 hover:text-[#111827]'
             }`}
           >
             <span>Portfolio</span>
-            {pathname === '/portfolio' && <span className="w-1.5 h-1.5 rounded-full bg-[#9FE66F] shrink-0" />}
+            {pathname === '/portfolio' && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
           </Link>
 
-          {/* Book a Call */}
-          <Link
-            href="/book-a-call"
-            onClick={() => setOpen(false)}
-            className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              pathname === '/book-a-call' ? 'bg-[#9FE66F]/15 text-[#9FE66F]' : 'text-gray-300 hover:bg-white/8 hover:text-white'
-            }`}
-          >
-            <span>Book a Call</span>
-            {pathname === '/book-a-call' && <span className="w-1.5 h-1.5 rounded-full bg-[#9FE66F] shrink-0" />}
-          </Link>
+
 
         </nav>
 
         {/* Sidebar Bottom — CTA */}
-        <div className="px-8 py-8 border-t border-white/10">
+        <div className="px-8 py-8 border-t border-gray-100">
           <Link
             href="/book-a-call"
             onClick={() => setOpen(false)}
-            className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm text-[#111827] transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-95"
+            className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm text-[#111827] transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-95 shadow-sm"
             style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #9FE66F 100%)' }}
           >
             Book a Discovery Call
           </Link>
-          <p className="text-center text-[11px] text-gray-600 mt-4">
+          <p className="text-center text-[11px] text-gray-400 mt-4">
             © {new Date().getFullYear()} The Coral Room. All rights reserved.
           </p>
         </div>

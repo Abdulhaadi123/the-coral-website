@@ -10,11 +10,11 @@ import {
 
 export const WhyChooseUsSection: React.FC = () => {
   return (
-    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 px-6 sm:px-12 lg:px-16 text-[#111827]">
-      <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 text-[#111827]">
+      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 flex flex-col items-center text-center">
 
         {/* Title & Subtitle */}
-        <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827] mb-3">
+        <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827] mb-3" style={{ lineHeight: '1.10' }}>
           Why Choose The Coral Room?
         </h2>
         <p className="text-base sm:text-lg text-gray-700 font-medium mb-16">

@@ -41,17 +41,20 @@ const posts: JournalPost[] = [
 
 export const JournalSection: React.FC = () => {
   return (
-    <section className="w-full bg-[#F9FAFB] py-20 px-6 sm:px-12 lg:px-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full bg-[#F9FAFB] py-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
         
         {/* Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           {/* Section Title with Gradient Branding */}
-          <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827]">
-            <span className="text-[#85E868]">The </span>
-            <span className="text-[#9FE66F]">Coral </span>
-            <span className="text-[#32CEC6]">Room </span>
-            <span className="text-[#111827]">: Journal</span>
+          <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827]" style={{ lineHeight: '1.10' }}>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: 'linear-gradient(90deg, #5E9738 0%, #9FE66F 19%, #32CEC6 100%)' }}
+            >
+              The Coral Room
+            </span>
+            <span className="text-[#111827]"> : Journal</span>
           </h2>
 
           {/* View All Posts Button */}

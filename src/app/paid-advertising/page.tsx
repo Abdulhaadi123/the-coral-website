@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import {
@@ -79,8 +80,8 @@ export default function PaidAdvertisingPage() {
         className="w-full relative overflow-hidden"
         style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }}
       >
-        <div className="max-w-6xl mx-auto px-6 sm:px-12 pt-16 sm:pt-24 pb-0">
-          <FadeIn direction="up">
+        <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
+          <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
             {/* Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">
               Paid Advertising Services
@@ -123,39 +124,40 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── Paid Advertising Services Grid ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-16 sm:py-24 w-full">
-        <FadeIn direction="up">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight mb-12 max-w-sm">
-            Paid Advertising Services
-          </h2>
-        </FadeIn>
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-24 w-full">
+        <div className="pl-10 sm:pl-11 lg:pl-11">
+          <FadeIn direction="up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight mb-12 max-w-sm">
+              Paid Advertising Services
+            </h2>
+          </FadeIn>
 
-        {/* 3-column grid with horizontal dividers */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map(({ Icon, title, desc }, i) => {
-            const isLastRow = i >= services.length - (services.length % 3 || 3);
-            return (
-              <StaggerItem
-                key={title}
-                className={`flex flex-col gap-3 py-8 pr-8 hover:translate-x-1 transition-transform duration-300 ${
-                  !isLastRow ? 'border-b border-gray-100' : ''
-                }`}
-              >
-                <div className="w-8 h-8 flex items-center justify-start text-[#111827]">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-sm font-bold text-[#111827]">{title}</h3>
-                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{desc}</p>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
-
+          {/* 3-column grid with horizontal dividers */}
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map(({ Icon, title, desc }, i) => {
+              const isLastRow = i >= services.length - (services.length % 3 || 3);
+              return (
+                <StaggerItem
+                  key={title}
+                  className={`flex flex-col gap-3 py-8 pr-8 hover:translate-x-1 transition-transform duration-300 ${
+                    !isLastRow ? 'border-b border-gray-100' : ''
+                  }`}
+                >
+                  <div className="w-8 h-8 flex items-center justify-start text-[#111827]">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#111827]">{title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">{desc}</p>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+        </div>
       </section>
 
       {/* ── PPC & Paid Advertising Section ── */}
-      <section className="w-full px-6 sm:px-12 pt-4 sm:pt-8 pb-0">
-        <div className="max-w-6xl mx-auto">
+      <section className="w-full px-8 sm:px-16 lg:px-24 pt-4 sm:pt-8 pb-0">
+        <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11">
           <FadeIn direction="up">
             {/* Two-column text row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-12">
@@ -216,7 +218,7 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-6 sm:px-12 relative overflow-hidden">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need paid campaigns that bring better customers?
@@ -226,9 +228,12 @@ export default function PaidAdvertisingPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 duration-200"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Start a Campaign Discussion →
+            <span>Start a Campaign Discussion</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

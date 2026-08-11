@@ -3,23 +3,26 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { FadeIn, ScaleIn } from '@/components/Animated';
 
 export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — controls height of section, ribbon fills it fully */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative min-h-[480px] lg:min-h-[560px] flex flex-col lg:flex-row items-stretch">
+      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 relative min-h-[480px] lg:min-h-[560px] flex flex-col lg:flex-row items-stretch">
 
         {/* ── LEFT: text + CTAs ── */}
         <FadeIn
           direction="up"
-          className="relative z-10 w-full lg:w-[52%] flex flex-col justify-center items-start py-14 lg:py-16 pr-0 lg:pr-10"
+          className="relative z-10 w-full lg:w-[65%] flex flex-col justify-center items-start py-14 lg:py-16 pr-0 lg:pr-16"
         >
-          {/* Heading — matches Figma 2 lines */}
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl font-semibold text-[#111827] leading-[1.2] tracking-tight">
-            Behind every digital brand that grows is a{' '}
+          {/* Heading — exact Figma 2 lines */}
+          <h2
+            className="font-semibold text-[#111827] tracking-tight max-w-none"
+            style={{ lineHeight: '1.10', fontSize: 'clamp(22px, 2.8vw, 42px)' }}
+          >
+            Behind every digital brand that<br />grows is a{' '}
             <span className="bg-gradient-to-r from-[#9FE66F] to-[#32CEC6] bg-clip-text text-transparent">
               process with depth
             </span>
@@ -42,21 +45,21 @@ export const ProcessWithDepthSection: React.FC = () => {
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4 sm:gap-6">
             <Link
               href="/fourth-dimension-framework"
-              className="group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center gap-2.5 hover:bg-gray-900 hover:text-white transition-all duration-300 whitespace-nowrap active:scale-95"
+              className="group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center gap-3 hover:bg-white hover:text-black hover:border-gray-900 transition-all duration-300 whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
             >
               <span>Learn more about Fourth Dimension™</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </span>
             </Link>
 
             <Link
               href="/book-a-call"
-              className="group inline-flex items-center gap-2 text-gray-900 font-semibold text-sm whitespace-nowrap hover:opacity-70 transition-opacity shrink-0"
+              className="group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center gap-3 hover:bg-white hover:text-black hover:border-gray-900 transition-all duration-300 whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
             >
               <span>Book a Discovery Call</span>
-              <span className="w-6 h-6 rounded-full border border-gray-900 flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
-                <ArrowRight className="w-3.5 h-3.5" />
+              <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </span>
             </Link>
           </div>

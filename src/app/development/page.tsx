@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
@@ -14,8 +15,8 @@ export default function DevelopmentPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-12 pt-12 pb-12 w-full">
-        <FadeIn direction="up">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-12 pb-12 w-full">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
             WEBSITE DEVELOPMENT
@@ -43,20 +44,22 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Hero Banner Image */}
-      <ScaleIn className="max-w-7xl mx-auto px-6 sm:px-12 pb-16 w-full" delay={0.1}>
-        <div className="w-full rounded-3xl overflow-hidden shadow-sm">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/development-hero.webp"
-            alt="Website development mockup preview on laptop"
-            className="w-full h-auto object-cover hover:scale-[1.01] transition-transform duration-700"
-          />
+      <ScaleIn className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pb-16 w-full" delay={0.1}>
+        <div className="w-full pl-10 sm:pl-11 lg:pl-11">
+          <div className="w-full rounded-3xl overflow-hidden shadow-sm">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/development-hero.webp"
+              alt="Website development mockup preview on laptop"
+              className="w-full h-auto object-cover hover:scale-[1.01] transition-transform duration-700"
+            />
+          </div>
         </div>
       </ScaleIn>
 
       {/* Section 2: How We Build Differently */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
-        <FadeIn direction="up">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
             
             {/* Left Title */}
@@ -116,12 +119,13 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 3: Website Development Services */}
-      <section className="max-w-5xl mx-auto px-6 sm:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
-        <FadeIn direction="up">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#111827] mb-12 sm:mb-16">
-            Website Development Services
-          </h2>
-        </FadeIn>
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+        <div className="pl-10 sm:pl-11 lg:pl-11">
+          <FadeIn direction="up">
+            <h2 className="text-3xl sm:text-4xl font-bold text-center text-[#111827] mb-12 sm:mb-16">
+              Website Development Services
+            </h2>
+          </FadeIn>
 
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 sm:gap-y-10">
           {[
@@ -160,10 +164,11 @@ export default function DevelopmentPage() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+        </div>
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-24 px-6 sm:px-12">
+      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
         <FadeIn direction="up" className="max-w-4xl mx-auto flex flex-col items-center">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">
@@ -221,7 +226,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -247,15 +252,21 @@ export default function DevelopmentPage() {
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-3">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
               >
                 <span>Learn more about Fourth Dimension™</span>
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </Link>
               <Link
                 href="/book-a-call"
-                className="text-sm font-semibold text-[#111827] hover:underline"
+                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
               >
-                Book a Discovery Call
+                <span>Book a Discovery Call</span>
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </Link>
             </div>
           </FadeIn>
@@ -264,7 +275,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-6 sm:px-12 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need a website that&apos;s fast, flexible and built to last?
@@ -274,9 +285,12 @@ export default function DevelopmentPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Book a Discovery Call →
+            <span>Book a Discovery Call</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

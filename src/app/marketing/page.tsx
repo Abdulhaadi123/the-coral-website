@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
@@ -26,13 +27,23 @@ export default function MarketingPage() {
       <Header />
 
       {/* ── Top Hero + Grow With Clearer Marketing Section (Green Gradient BG) ── */}
-      <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }} className="w-full pb-20">
+      <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }} className="w-full pb-20 relative overflow-hidden">
         
+        {/* Right Megaphone Image — Scaled and positioned cleanly matching Figma */}
+        <div className="hidden sm:block absolute right-[-60px] sm:right-[-110px] lg:right-[-160px] top-6 sm:top-10 lg:top-12 w-[480px] sm:w-[620px] lg:w-[760px] pointer-events-none z-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/marketing-megaphone.webp"
+            alt="Marketing Megaphone Illustration"
+            className="w-full h-auto object-contain drop-shadow-2xl scale-x-[-1]"
+          />
+        </div>
+
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-12 pt-12 pb-16 w-full relative min-h-[500px]">
+        <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-12 pb-16 w-full relative min-h-[460px]">
           
           {/* Left Content */}
-          <FadeIn direction="up" className="max-w-xl lg:max-w-2xl z-10 relative">
+          <FadeIn direction="up" className="max-w-xl lg:max-w-2xl z-10 relative pl-10 sm:pl-11 lg:pl-11">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
@@ -54,31 +65,21 @@ export default function MarketingPage() {
             </p>
           </FadeIn>
 
-          {/* Right Megaphone Image */}
-          <div className="hidden sm:block absolute right-[-80px] lg:right-[-120px] top-[-20px] lg:top-[-40px] w-[600px] sm:w-[750px] lg:w-[900px] pointer-events-none z-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/marketing-megaphone.webp"
-              alt="Marketing Megaphone Illustration"
-              className="w-full h-auto object-contain drop-shadow-2xl scale-x-[-1]"
-            />
-          </div>
-
           {/* Mobile fallback image */}
           <div className="flex sm:hidden mt-8 justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/marketing-megaphone.webp"
               alt="Marketing Megaphone Illustration"
-              className="w-full max-w-[320px] h-auto object-contain drop-shadow-lg scale-x-[-1]"
+              className="w-full max-w-[340px] h-auto object-contain drop-shadow-lg scale-x-[-1]"
             />
           </div>
 
         </section>
 
         {/* Section 2: Grow With Clearer Marketing */}
-        <section className="max-w-6xl mx-auto px-6 sm:px-12 pt-10 w-full">
-          <FadeIn direction="up">
+        <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-10 w-full">
+          <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
               
               {/* Left Title */}
@@ -122,8 +123,8 @@ export default function MarketingPage() {
       </div>
 
       {/* Section 3: Strategic Marketing Services (White BG) */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full border-t border-gray-100">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+        <div className="pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Gradient Title */}
           <FadeIn direction="up" className="md:col-span-5">
@@ -228,8 +229,8 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Our Approach Section (#F0F0F0 background) ── */}
-      <section className="w-full bg-[#F0F0F0] py-16 sm:py-24 px-6 sm:px-12">
-        <FadeIn direction="up" className="max-w-6xl mx-auto flex flex-col">
+      <section className="w-full bg-[#F0F0F0] py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
+        <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3">
             Our Approach
@@ -246,16 +247,17 @@ export default function MarketingPage() {
           {/* 4 Feature Columns */}
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 items-start">
             {[
-              { Icon: IconApproachIntent, text: 'Campaigns with clear intent' },
-              { Icon: IconApproachCrm, text: 'CRM and tools kept clean' },
-              { Icon: IconApproachFunnel, text: 'Full-funnel tracking' },
-              { Icon: IconApproachTesting, text: 'Testing that improves performance' },
-            ].map(({ Icon, text }) => (
+              { img: '/images/optimisation-icons/icon1.webp', text: 'Campaigns with clear intent' },
+              { img: '/images/optimisation-icons/icon2.webp', text: 'CRM and tools kept clean' },
+              { img: '/images/optimisation-icons/icon3.webp', text: 'Full-funnel tracking' },
+              { img: '/images/optimisation-icons/icon4.webp', text: 'Testing that improves performance' },
+            ].map(({ img, text }) => (
               <StaggerItem key={text} className="flex flex-col gap-4">
-                <div className="h-12 flex items-center justify-start text-[#111827]">
-                  <Icon className="h-8 w-auto max-w-[40px] text-[#111827]" />
+                <div className="w-10 h-10 flex items-center justify-start">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt={text} className="w-full h-full object-contain object-left" />
                 </div>
-                <span className="text-sm font-bold text-[#111827] leading-snug max-w-[170px]">
+                <span className="text-sm font-bold text-[#111827] leading-snug max-w-[180px]">
                   {text}
                 </span>
               </StaggerItem>
@@ -270,7 +272,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-12 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -318,7 +320,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Featured Work Section (#A7F076 Lime Green BG) ── */}
-      <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10 px-6 sm:px-12">
+      <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10 px-8 sm:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto flex flex-col">
           
           <FadeIn direction="up">
@@ -404,7 +406,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-6 sm:px-12 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn your marketing into a stronger pipeline?
@@ -414,9 +416,12 @@ export default function MarketingPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient mt-2 inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
-            Book a Discovery Call →
+            <span>Book a Discovery Call</span>
+            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            </span>
           </Link>
         </FadeIn>
       </section>

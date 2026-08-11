@@ -26,25 +26,28 @@ const allPartners = [...partners, ...partners];
 
 export const PartnersSection: React.FC = () => {
   return (
-    <section className="w-full bg-white pt-14 pb-0">
-      {/* Heading — reduced side padding */}
-      <FadeIn direction="up" className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+    <section className="w-full bg-white pt-24 sm:pt-32 pb-0">
+      {/* Heading — aligned with header container */}
+      <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 mb-20 sm:mb-28">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100/80 text-gray-700 text-xs font-semibold mb-5 shadow-sm">
           <span className="w-2.5 h-2.5 rounded-full bg-[#9FE66F] animate-pulse"></span>
           <span>Makes an Impact</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl font-semibold text-[#111827] leading-[1.18] max-w-3xl">
-          Our trusted partners who collaborate with us to create meaningful digital experiences
+        <h2
+          className="font-semibold text-[#111827] max-w-none"
+          style={{ lineHeight: '1.10', fontSize: 'clamp(24px, 3.5vw, 46px)' }}
+        >
+          Our trusted partners who collaborate with<br />us to create meaningful digital experiences
         </h2>
       </FadeIn>
 
-      {/* Full-bleed green marquee strip — no rounded corners, no side padding */}
+      {/* Full-bleed green marquee strip — original gradient */}
       <div
-        className="w-full py-5 sm:py-6 overflow-hidden"
+        className="w-full py-7 sm:py-9 overflow-hidden"
         style={{ background: 'linear-gradient(90deg, #85E868 0%, #4BD896 50%, #32CEC6 100%)' }}
       >
-        <div className="flex items-center gap-14 sm:gap-18 animate-marquee whitespace-nowrap pr-14 sm:pr-18">
+        <div className="flex items-center gap-24 sm:gap-28 md:gap-32 animate-marquee whitespace-nowrap pr-24 sm:pr-28 md:pr-32">
           {allPartners.map((partner, idx) => (
             <div
               key={`${partner.name}-${idx}`}
@@ -55,7 +58,7 @@ export const PartnersSection: React.FC = () => {
                 alt={partner.name}
                 width={partner.width}
                 height={partner.height}
-                className="h-7 sm:h-9 w-auto max-w-[130px] object-contain hover:scale-105 transition-transform duration-300"
+                className="h-9 sm:h-11 md:h-12 w-auto max-w-[160px] object-contain hover:scale-105 transition-transform duration-300"
               />
             </div>
           ))}
