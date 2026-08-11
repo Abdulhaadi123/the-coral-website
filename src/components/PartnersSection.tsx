@@ -26,7 +26,7 @@ const allPartners = [...partners, ...partners];
 
 export const PartnersSection: React.FC = () => {
   return (
-    <section className="w-full bg-white pt-24 sm:pt-32 pb-0">
+    <section className="w-full bg-white pt-16 sm:pt-20 pb-0">
       {/* Heading — aligned with header container */}
       <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 mb-20 sm:mb-28">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100/80 text-gray-700 text-xs font-semibold mb-5 shadow-sm">

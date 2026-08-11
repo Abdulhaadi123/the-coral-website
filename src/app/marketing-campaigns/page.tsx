@@ -112,7 +112,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── We Can Help You With ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pb-16 sm:pb-24">
+      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pb-16 sm:pb-20">
         <div className="pl-10 sm:pl-11 lg:pl-11">
 
         {/* Heading */}
@@ -177,7 +177,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Full-Journey Marketing (#F5F7FA BG) ── */}
-      <section className="w-full bg-[#F5F7FA] py-16 sm:py-24 px-8 sm:px-16 lg:px-24 my-12">
+      <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 px-8 sm:px-16 lg:px-24 my-12">
         <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col items-center">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] text-center mb-3">
@@ -344,7 +344,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn attention into qualified leads?

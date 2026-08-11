@@ -49,7 +49,7 @@ export default function OptimisationPage() {
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
       <section
-        className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-28 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32 w-full relative"
+        className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative"
         style={{
           background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
         }}
@@ -85,24 +85,26 @@ export default function OptimisationPage() {
           {/* Card 2: Visibility (Center — blue tint from G's blue arm) */}
           <StaggerItem
             className="backdrop-blur-2xl border border-white/80 rounded-[28px] p-8 sm:p-11 shadow-[0_25px_60px_rgba(68,138,255,0.12)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
-            style={{ background: 'rgba(220, 232, 255, 0.55)' }}
           >
+            <div className="h-full" style={{ background: 'rgba(220, 232, 255, 0.55)' }}>
             <h3 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">Visibility</h3>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">We help people find you</p>
             <div className="text-5xl sm:text-6xl font-extrabold text-[#111827] tracking-tight mt-12 sm:mt-16">
               +42%
+            </div>
             </div>
           </StaggerItem>
 
           {/* Card 3: User Testing (Right — subtle blue tint matching Figma) */}
           <StaggerItem
             className="backdrop-blur-xl border border-white/60 rounded-[28px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(68,138,255,0.08)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-            style={{ background: 'rgba(225, 234, 255, 0.50)' }}
           >
+            <div className="h-full" style={{ background: 'rgba(225, 234, 255, 0.50)' }}>
             <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">User Testing</h3>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">We detect what is frustrating users</p>
             <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-10 sm:mt-14">
               +25%
+            </div>
             </div>
           </StaggerItem>
 
@@ -110,8 +112,8 @@ export default function OptimisationPage() {
 
       </section>
 
-      {/* Lower Content Section — increased top spacing above heading */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-28 pb-20 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-28 w-full">
+      {/* Lower Content Section — balanced responsive spacing */}
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
         <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
             <div className="md:col-span-5">

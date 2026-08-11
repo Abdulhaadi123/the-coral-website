@@ -77,7 +77,7 @@ export default function DesignPage() {
       </section>
 
       {/* Section 3: Design Services Grid (Gradient Mesh Section) */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 px-8 sm:px-16 lg:px-24 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
         <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
 
           {/* Left Heading */}
@@ -116,7 +116,7 @@ export default function DesignPage() {
       </section>
 
       {/* ── Our Approach Section ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-20 w-full">
         <div className="pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}

@@ -72,7 +72,7 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
-      <section className="w-full bg-white py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
+      <section className="w-full bg-white py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11 flex flex-col gap-20 sm:gap-28">
           
           {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
@@ -169,7 +169,7 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── The Four Stages Breakdown (Stacked Full-Width Sections) ── */}
-      <section className="w-full pt-16 sm:pt-24">
+      <section className="w-full pt-16 sm:pt-20">
         
         {/* Section Header */}
         <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pl-10 sm:pl-11 lg:pl-11 mb-12 sm:mb-16">
@@ -302,7 +302,7 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
-      <section className="w-full bg-white py-20 sm:py-28 px-8 sm:px-16 lg:px-24">
+      <section className="w-full bg-white py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
         <FadeIn direction="up" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Column */}
@@ -332,7 +332,7 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
-      <section className="w-full bg-[#F8FAFC] py-16 sm:py-24 px-8 sm:px-16 lg:px-24 border-t border-gray-100">
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 px-8 sm:px-16 lg:px-24 border-t border-gray-100">
         <div className="max-w-7xl mx-auto">
           
           {/* Header */}

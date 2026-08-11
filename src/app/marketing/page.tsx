@@ -229,7 +229,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Our Approach Section (#F0F0F0 background) ── */}
-      <section className="w-full bg-[#F0F0F0] py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
+      <section className="w-full bg-[#F0F0F0] py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
         <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3">

@@ -168,7 +168,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-24 px-8 sm:px-16 lg:px-24">
+      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
         <FadeIn direction="up" className="max-w-4xl mx-auto flex flex-col items-center">
           
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">
@@ -226,7 +226,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
