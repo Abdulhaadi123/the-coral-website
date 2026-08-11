@@ -106,15 +106,15 @@ export default function PortfolioPage() {
   const hasActiveFilters = appliedTypes.length > 0 || appliedFeatured;
 
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col relative">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-hidden">
       <Header />
 
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-12 pb-16">
-        <div className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16">
+        <div className="pl-0 sm:pl-0 lg:pl-11">
 
           {/* Heading */}
           <FadeIn direction="up">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#111827] tracking-tight mb-4">
+            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-bold text-[#111827] tracking-tight mb-4">
               Our Portfolio
             </h1>
             <p className="text-sm sm:text-base font-semibold text-gray-700 mb-2 max-w-2xl">
@@ -151,7 +151,7 @@ export default function PortfolioPage() {
 
                     {/* Dropdown Panel */}
                 {filterOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                  <div className="absolute top-full left-0 mt-2 w-72 max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
 
                     {/* Panel Header */}
                     <div className="flex items-center justify-between px-5 py-4">
@@ -256,7 +256,7 @@ export default function PortfolioPage() {
           </FadeIn>
 
           {/* Grid */}
-          <StaggerContainer key={`${appliedTypes.join('-')}-${appliedFeatured}`} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+          <StaggerContainer key={`${appliedTypes.join('-')}-${appliedFeatured}`} className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
             {filtered.map((project, idx) => (
               <StaggerItem key={project.slug + idx}>
                 <Link
@@ -280,14 +280,14 @@ export default function PortfolioPage() {
                         alt={project.title}
                         fill
                         className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
                       />
                     ) : (
                       <div
                         className="absolute inset-0 flex items-center justify-center"
                         style={{ background: `linear-gradient(135deg, ${project.bg}cc, ${project.bg}44)` }}
                       >
-                        <span className="text-xs font-bold tracking-widest uppercase text-white/20 text-center px-4">
+                        <span className="text-xs font-bold tracking-widest uppercase text-[#FFFFFF]/20 text-center px-4">
                           {project.tags[0]}
                         </span>
                       </div>
@@ -317,7 +317,7 @@ export default function PortfolioPage() {
                   </div>
 
                   {/* Title below */}
-                  <p className="mt-2.5 text-sm font-semibold text-[#111827] leading-snug px-0.5">
+                  <p className="mt-2.5 text-sm font-semibold text-[#111827] leading-snug px-0.5 break-words">
                     {project.title}
                   </p>
                 </Link>
@@ -342,9 +342,9 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative overflow-x-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">

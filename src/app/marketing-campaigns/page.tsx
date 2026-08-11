@@ -56,10 +56,10 @@ export default function MarketingCampaignsPage() {
       <Header />
 
       {/* ── Hero Section ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 sm:pt-24">
-        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 sm:pt-24">
+        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
           {/* Heading */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-6">
+          <h1 className="text-2xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-6">
             We create marketing{' '}
             <span
               style={{
@@ -95,8 +95,8 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── 3-col Info Cards ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-12 sm:py-16">
-        <StaggerContainer className="pl-10 sm:pl-11 lg:pl-11 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-12 sm:py-16">
+        <StaggerContainer className="pl-0 sm:pl-11 lg:pl-11 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {infoCards.map(({ title, desc }) => (
             <StaggerItem key={title}>
               <div
@@ -112,11 +112,11 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── We Can Help You With ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pb-16 sm:pb-20">
-        <div className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pb-16 sm:pb-20">
+        <div className="pl-0 sm:pl-11 lg:pl-11">
 
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 leading-tight">
+        <h2 className="text-2xl sm:text-4xl font-bold text-center mb-12 leading-tight">
           We{' '}
           <span
             style={{
@@ -137,7 +137,7 @@ export default function MarketingCampaignsPage() {
           <div className="flex flex-col items-start gap-3 sm:gap-4 flex-1">
             {leftServices.map(({ text, indent, href }) => {
               const pill = (
-                <div className="inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 bg-white border border-gray-100 rounded-xl text-xs sm:text-sm text-[#111827] font-semibold shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.1)] transition-all">
+                <div className="inline-flex max-w-full items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 bg-white border border-gray-100 rounded-xl text-xs sm:text-sm text-[#111827] font-semibold shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.1)] transition-all">
                   <span className="flex-shrink-0 w-2.5 h-2.5 rounded-full bg-[#A7F076]" />
                   <span>{text}</span>
                 </div>
@@ -145,7 +145,7 @@ export default function MarketingCampaignsPage() {
               return (
                 <div
                   key={text}
-                  className={`${indent ? 'sm:ml-16 lg:sm:ml-20' : 'ml-0'}`}
+                  className={`${indent ? 'sm:ml-16 lg:ml-20' : 'ml-0'}`}
                 >
                   {href ? (
                     <Link href={href} className="block hover:scale-[1.02] transition-transform duration-200">
@@ -162,9 +162,9 @@ export default function MarketingCampaignsPage() {
             {rightServices.map(({ text, indent }) => (
               <div
                 key={text}
-                className={`${indent ? 'sm:ml-16 lg:sm:ml-20' : 'ml-0'}`}
+                className={`${indent ? 'sm:ml-16 lg:ml-20' : 'ml-0'}`}
               >
-                <div className="inline-flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 bg-white border border-gray-100 rounded-xl text-xs sm:text-sm text-[#111827] font-semibold shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.1)] transition-all">
+                <div className="inline-flex max-w-full items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 bg-white border border-gray-100 rounded-xl text-xs sm:text-sm text-[#111827] font-semibold shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.1)] transition-all">
                   <span className="flex-shrink-0 w-2.5 h-2.5 rounded-full bg-[#A7F076]" />
                   <span>{text}</span>
                 </div>
@@ -177,10 +177,10 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Full-Journey Marketing (#F5F7FA BG) ── */}
-      <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 px-8 sm:px-16 lg:px-24 my-12">
+      <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 px-4 sm:px-16 lg:px-24 my-12">
         <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col items-center">
           
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] text-center mb-3">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] text-center mb-3">
             Full-Journey Marketing
           </h2>
           <p className="text-sm sm:text-base text-gray-500 text-center mb-16 max-w-xl">
@@ -277,9 +277,9 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Building Your Inbound Foundation (#A7F176 Green Card) ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-10 sm:py-16">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-10 sm:py-16">
         <FadeIn direction="up">
-          <div className="w-full bg-[#A7F176] rounded-3xl p-8 sm:p-14">
+          <div className="w-full bg-[#A7F176] rounded-3xl p-5 sm:p-14">
             
             <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] text-center mb-10 sm:mb-12">
               Building Your Inbound Foundation
@@ -344,9 +344,9 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative overflow-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn attention into qualified leads?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">

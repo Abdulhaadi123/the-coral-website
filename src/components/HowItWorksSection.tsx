@@ -102,25 +102,25 @@ export const HowItWorksSection: React.FC = () => {
     <div ref={wrapperRef} style={{ height: '340vh' }} className="relative">
 
       <div className="sticky top-0 h-screen overflow-hidden w-full bg-[#21A0A3] text-white flex items-stretch">
-        <div className="max-w-7xl mx-auto w-full px-8 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div className="max-w-7xl mx-auto w-full px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-0">
 
-          <div className="lg:col-span-5 flex flex-col justify-start pt-16 sm:pt-20 pb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
+          <div className="lg:col-span-5 flex flex-col justify-start pt-8 sm:pt-20 pb-4 lg:pb-12">
+            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
               How It Works
             </h2>
 
-            <p className="mt-4 text-sm sm:text-base text-white/80 leading-relaxed max-w-xs font-normal">
+            <p className="mt-3 sm:mt-4 text-xs sm:text-base text-white/80 leading-relaxed max-w-xs font-normal">
               Not sure what your digital presence needs next? We help you find the right starting point before the work begins.
             </p>
 
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <Link
                 href="/book-a-call"
-                className="group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+                className="group px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <span>Book a Discovery Call</span>
-                <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
-                  <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
+                  <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#111827]" />
                 </span>
               </Link>
             </div>
@@ -129,29 +129,29 @@ export const HowItWorksSection: React.FC = () => {
           <div className="lg:col-span-7 relative overflow-hidden">
             <div
               ref={stepsRef}
-              className="pl-6 sm:pl-10 pt-16 sm:pt-20 pb-16 will-change-transform relative"
+              className="pl-6 sm:pl-10 pt-4 sm:pt-20 pb-16 will-change-transform relative"
               style={{
                 transform: `translateY(${translateY}px)`,
                 transition: 'transform 0.05s linear',
               }}
             >
-              <div className="absolute left-[23px] sm:left-[31px] top-16 sm:top-20 bottom-12 w-[2px] bg-white/25 rounded-full" />
+              <div className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 bottom-12 w-[2px] bg-white/25 rounded-full" />
 
               <div
-                className="absolute left-[23px] sm:left-[31px] top-16 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176]"
+                className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176]"
                 style={{
                   height: lineHeight,
                   transition: 'height 0.05s linear',
                 }}
               />
 
-              <div className="flex flex-col gap-8 sm:gap-10 pt-16 sm:pt-20">
+              <div className="flex flex-col gap-6 sm:gap-10 pt-4 sm:pt-20">
                 {steps.map((item, index) => {
                   const stepThreshold = index / (steps.length - 1);
                   const isActive = scrollProgress >= stepThreshold * 0.85;
 
                   return (
-                    <div key={item.step} className="relative pl-8 sm:pl-12">
+                    <div key={item.step} className="relative pl-7 sm:pl-12">
                       {/* Step dot — centered dead-on the timeline line */}
                       <div
                         className={`absolute -left-[7px] sm:-left-[15px] top-1.5 w-3.5 h-3.5 rounded-full transition-all duration-300 ${

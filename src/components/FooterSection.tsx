@@ -5,7 +5,7 @@ import { IconFacebook, IconInstagram, IconLinkedin } from '@/components/icons/Ic
 
 export const FooterSection: React.FC = () => {
   return (
-    <footer className="w-full relative bg-black text-white pt-16 pb-12 px-6 sm:px-12 lg:px-16 overflow-hidden">
+    <footer className="w-full relative bg-black text-white pt-16 pb-12 px-4 sm:px-12 lg:px-16 overflow-hidden">
 
       {/* Background 3D Liquid Image */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-80">
@@ -23,10 +23,10 @@ export const FooterSection: React.FC = () => {
       <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
 
         {/* Left Big Card Box */}
-        <div className="lg:col-span-7 bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-8 sm:p-12 flex flex-col justify-between shadow-2xl">
+        <div className="lg:col-span-7 bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-12 flex flex-col justify-between shadow-2xl">
 
           <div>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight text-white mb-6">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white mb-6">
               Let's find out<br />if we're the right fit
             </h2>
 
@@ -76,9 +76,9 @@ export const FooterSection: React.FC = () => {
         <div className="lg:col-span-5 flex flex-col gap-6 sm:gap-8 justify-between">
 
           {/* Collaborate Card */}
-          <div className="bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-8 sm:p-10 flex flex-col justify-between flex-1 shadow-2xl">
+          <div className="bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-10 flex flex-col justify-between flex-1 shadow-2xl">
             <div>
-              <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white mb-6">
+              <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-6">
                 Collaborate<br />with us
               </h3>
               <div className="relative inline-block mb-8">

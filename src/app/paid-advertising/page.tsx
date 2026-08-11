@@ -80,15 +80,15 @@ export default function PaidAdvertisingPage() {
         className="w-full relative overflow-hidden"
         style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }}
       >
-        <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
-          <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
+        <div className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
+          <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
             {/* Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">
               Paid Advertising Services
             </p>
 
             {/* Heading */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-5">
+            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-5">
               Paid campaigns built to bring{' '}
               <span
                 className="block"
@@ -124,10 +124,10 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── Paid Advertising Services Grid ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 sm:py-24 w-full">
-        <div className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-16 sm:py-24 w-full">
+        <div className="pl-0 sm:pl-11 lg:pl-11">
           <FadeIn direction="up">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight mb-12 max-w-sm">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight mb-8 sm:mb-12 max-w-sm">
               Paid Advertising Services
             </h2>
           </FadeIn>
@@ -139,7 +139,7 @@ export default function PaidAdvertisingPage() {
               return (
                 <StaggerItem
                   key={title}
-                  className={`flex flex-col gap-3 py-8 pr-8 hover:translate-x-1 transition-transform duration-300 ${
+                  className={`flex flex-col gap-3 py-6 sm:py-8 pr-4 sm:pr-8 hover:translate-x-1 transition-transform duration-300 ${
                     !isLastRow ? 'border-b border-gray-100' : ''
                   }`}
                 >
@@ -156,8 +156,8 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── PPC & Paid Advertising Section ── */}
-      <section className="w-full px-8 sm:px-16 lg:px-24 pt-4 sm:pt-8 pb-0">
-        <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11">
+      <section className="w-full px-4 sm:px-16 lg:px-24 pt-4 sm:pt-8 pb-0">
+        <div className="max-w-7xl mx-auto pl-0 sm:pl-11 lg:pl-11">
           <FadeIn direction="up">
             {/* Two-column text row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-12">
@@ -165,7 +165,7 @@ export default function PaidAdvertisingPage() {
               {/* Left Column */}
               <div className="flex flex-col gap-6">
                 <div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight mb-3">
+                  <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight mb-3">
                     PPC &amp; Paid Advertising
                   </h2>
                   <p className="text-sm sm:text-base font-semibold text-[#111827]">
@@ -205,12 +205,12 @@ export default function PaidAdvertisingPage() {
           </FadeIn>
 
           {/* Magnet image — right-aligned, fully inside white PPC section */}
-          <ScaleIn delay={0.2} className="flex justify-end mt-6">
+          <ScaleIn delay={0.2} className="flex justify-center sm:justify-end mt-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/magnet-hand.webp"
               alt="Hand holding a horseshoe magnet — attract the right customers"
-              className="w-[380px] sm:w-[480px] h-auto object-contain hover:scale-[1.02] transition-transform duration-500"
+              className="w-full max-w-[380px] sm:w-[480px] h-auto object-contain hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
@@ -218,9 +218,9 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative overflow-hidden">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative overflow-hidden">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need paid campaigns that bring better customers?
           </h2>
           <p className="text-sm sm:text-base text-gray-700 max-w-xl leading-relaxed font-medium">
@@ -228,7 +228,7 @@ export default function PaidAdvertisingPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-5 sm:px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Start a Campaign Discussion</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

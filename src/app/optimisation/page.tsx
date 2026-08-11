@@ -15,15 +15,15 @@ export default function OptimisationPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
-        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
           {/* Tag / Category */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
             OPTIMISATION
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
             Website performance that{' '}
             <span className="block sm:inline">
               turns{' '}
@@ -49,7 +49,7 @@ export default function OptimisationPage() {
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
       <section
-        className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative"
+        className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative overflow-hidden"
         style={{
           background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
         }}
@@ -58,7 +58,7 @@ export default function OptimisationPage() {
         {/* Google "G" Logo - G shape clearly visible, 8px blur, blue arm behind center-right cards */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0" style={{ transform: 'translateY(4%)' }}>
           <div
-            className="relative w-[340px] h-[340px] sm:w-[500px] sm:h-[500px] lg:w-[640px] lg:h-[640px] select-none"
+            className="relative w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] lg:w-[640px] lg:h-[640px] select-none"
             style={{ filter: 'blur(8px) saturate(1.3)', opacity: 0.9 }}
           >
             <svg viewBox="0 0 24 24" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -74,22 +74,22 @@ export default function OptimisationPage() {
         <StaggerContainer className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center max-w-5xl mx-auto">
           
           {/* Card 1: Conversions (Left — warm tint from yellow segment) */}
-          <StaggerItem className="bg-white/75 backdrop-blur-xl border border-white/60 rounded-[28px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+          <StaggerItem className="bg-white/75 backdrop-blur-xl border border-white/60 rounded-[28px] p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
             <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">Conversions</h3>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">We test what works</p>
-            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-10 sm:mt-14">
+            <div className="text-3xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-14">
               +27%
             </div>
           </StaggerItem>
 
           {/* Card 2: Visibility (Center — blue tint from G's blue arm) */}
           <StaggerItem
-            className="backdrop-blur-2xl border border-white/80 rounded-[28px] p-8 sm:p-11 shadow-[0_25px_60px_rgba(68,138,255,0.12)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
+            className="backdrop-blur-2xl border border-white/80 rounded-[28px] p-6 sm:p-11 shadow-[0_25px_60px_rgba(68,138,255,0.12)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
           >
             <div className="h-full" style={{ background: 'rgba(220, 232, 255, 0.55)' }}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#111827] mb-1">Visibility</h3>
+            <h3 className="text-xl sm:text-3xl font-bold text-[#111827] mb-1">Visibility</h3>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">We help people find you</p>
-            <div className="text-5xl sm:text-6xl font-extrabold text-[#111827] tracking-tight mt-12 sm:mt-16">
+            <div className="text-3xl sm:text-6xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-16">
               +42%
             </div>
             </div>
@@ -97,12 +97,12 @@ export default function OptimisationPage() {
 
           {/* Card 3: User Testing (Right — subtle blue tint matching Figma) */}
           <StaggerItem
-            className="backdrop-blur-xl border border-white/60 rounded-[28px] p-8 sm:p-10 shadow-[0_20px_50px_rgba(68,138,255,0.08)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+            className="backdrop-blur-xl border border-white/60 rounded-[28px] p-6 sm:p-10 shadow-[0_20px_50px_rgba(68,138,255,0.08)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
           >
             <div className="h-full" style={{ background: 'rgba(225, 234, 255, 0.50)' }}>
             <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">User Testing</h3>
             <p className="text-xs sm:text-sm text-gray-500 font-medium">We detect what is frustrating users</p>
-            <div className="text-4xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-10 sm:mt-14">
+            <div className="text-3xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-14">
               +25%
             </div>
             </div>
@@ -113,11 +113,11 @@ export default function OptimisationPage() {
       </section>
 
       {/* Lower Content Section — balanced responsive spacing */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
-        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
+        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
             <div className="md:col-span-5">
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
                 Optimisation That Keeps Your Website Moving
               </h2>
             </div>
@@ -132,12 +132,12 @@ export default function OptimisationPage() {
 
       {/* ── Services Grid Section ── */}
       <section className="w-full bg-[#F4F5F7] py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
 
           {/* Left: Section Title */}
           <FadeIn direction="up" className="md:col-span-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] leading-snug">
-              Optimisation &amp;<br />Performance<br />Services
+            <h2 className="text-xl sm:text-3xl font-bold text-[#111827] leading-snug">
+              Optimisation &amp;<br className="hidden sm:block" /> Performance<br className="hidden sm:block" /> Services
             </h2>
           </FadeIn>
 
@@ -175,13 +175,13 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Small Fixes Section ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
 
             {/* Left: Big Heading */}
             <div className="md:col-span-5">
-              <h2 className="text-4xl sm:text-5xl font-bold text-[#111827] leading-tight">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
                 Small fixes.<br />Clear data.<br />Better results.
               </h2>
             </div>
@@ -214,8 +214,8 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── 4 Icon Cards Section ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {[
             {
               img: '/images/optimisation-icons/icon4.webp',
@@ -239,7 +239,7 @@ export default function OptimisationPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={card.img} alt={card.label} className="w-full h-full object-contain object-left" />
               </div>
-              <p className="text-sm text-gray-700 leading-snug font-normal max-w-[220px]">
+              <p className="text-sm text-gray-700 leading-snug font-normal max-w-full sm:max-w-[220px]">
                 {card.label}
               </p>
             </StaggerItem>
@@ -248,7 +248,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: 4th Dimension Graphic */}
@@ -257,13 +257,13 @@ export default function OptimisationPage() {
             <img
               src="/images/fourth-dimension-graphic.webp"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full max-w-[340px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="w-full max-w-[260px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
           {/* Right: Text Content */}
           <FadeIn direction="up" className="md:col-span-7 flex flex-col gap-6" delay={0.15}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
               Built on Fourth Dimension™
             </h2>
             <div className="flex flex-col gap-4 text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -274,10 +274,10 @@ export default function OptimisationPage() {
                 We look at the full picture: brand, structure, content, search, user behaviour, speed, and conversion. Then we improve what matters most.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 mt-4 w-full">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Learn more about Fourth Dimension™</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -287,7 +287,7 @@ export default function OptimisationPage() {
 
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group shrink-0 px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-nowrap hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Book a Discovery Call</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -301,9 +301,9 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Call To Action Banner Section ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-8 sm:px-16 lg:px-24 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
             Not sure why your website is underperforming?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -311,7 +311,7 @@ export default function OptimisationPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto"
           >
             <span>Book a Website Audit</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

@@ -13,15 +13,15 @@ export default function FourthDimensionFrameworkPage() {
       <Header />
 
       {/* ── Hero Section ── */}
-      <section className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pt-14 sm:pt-20 pb-12">
-        <FadeIn direction="up" className="pl-10 sm:pl-11 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-14 sm:pt-20 pb-12">
+        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
           {/* Muted Label */}
           <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
             INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
           </p>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-6xl font-bold text-[#111827] leading-[1.1] mb-6">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.1] mb-6 break-words">
             <span
               style={{
                 background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
@@ -50,7 +50,7 @@ export default function FourthDimensionFrameworkPage() {
           {/* CTA Button */}
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient group inline-flex items-center gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -72,15 +72,15 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
-      <section className="w-full bg-white py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto pl-10 sm:pl-11 lg:pl-11 flex flex-col gap-20 sm:gap-28">
+      <section className="w-full bg-white py-16 sm:py-20 px-4 sm:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto pl-0 sm:pl-11 lg:pl-11 flex flex-col gap-12 sm:gap-28">
           
           {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
           <FadeIn direction="up">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
               <div className="lg:col-span-5">
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24">
+                <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24 break-words">
                   What is Fourth Dimension™?
                 </h2>
               </div>
@@ -117,10 +117,10 @@ export default function FourthDimensionFrameworkPage() {
 
           {/* Part 2: What Makes Our Approach Different */}
           <FadeIn direction="up">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 border-t border-gray-100 pt-16 sm:pt-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 border-t border-gray-100 pt-16 sm:pt-20">
               {/* Left Title */}
               <div className="lg:col-span-5">
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24">
+                <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24 break-words">
                   What Makes Our Approach Different
                 </h2>
               </div>
@@ -133,7 +133,7 @@ export default function FourthDimensionFrameworkPage() {
                 </p>
 
                 {/* 2x2 Feature Grid */}
-                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-2">
+                <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 pt-2">
                   <StaggerItem>
                     <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                       It gives every part of the project a job, from the first piece of research to the final
@@ -172,8 +172,8 @@ export default function FourthDimensionFrameworkPage() {
       <section className="w-full pt-16 sm:pt-20">
         
         {/* Section Header */}
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 pl-10 sm:pl-11 lg:pl-11 mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3 leading-tight">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pl-0 sm:pl-11 lg:pl-11 mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] mb-3 leading-tight break-words">
             The Four Stages of Fourth Dimension™
           </h2>
           <p className="text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed">
@@ -257,24 +257,24 @@ export default function FourthDimensionFrameworkPage() {
             <FadeIn
               key={title}
               direction="up"
-              className="w-full px-8 sm:px-16 lg:px-24 py-16 sm:py-24 text-white"
+              className="w-full px-4 sm:px-16 lg:px-24 py-16 sm:py-24 text-white"
               style={{ backgroundColor: bg }}
             >
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
                 
                 {/* Left Column — Large Title */}
                 <div className="lg:col-span-5 flex flex-col gap-2">
                   <span className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/80">
                     STAGE {num}
                   </span>
-                  <h3 className="text-4xl sm:text-6xl font-bold leading-tight tracking-tight">
+                  <h3 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight break-words">
                     {title}
                   </h3>
                 </div>
 
                 {/* Right Column — Details & Badges */}
                 <div className="lg:col-span-7 flex flex-col gap-5">
-                  <h4 className="text-lg sm:text-xl font-bold text-white leading-snug">
+                  <h4 className="text-base sm:text-xl font-bold text-white leading-snug">
                     {subtitle}
                   </h4>
                   <p className="text-sm sm:text-base text-white/90 leading-relaxed max-w-2xl font-normal">
@@ -282,11 +282,11 @@ export default function FourthDimensionFrameworkPage() {
                   </p>
 
                   {/* Badges / Tags */}
-                  <div className="flex flex-wrap gap-2 pt-3">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-3">
                     {tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 transition-colors"
+                        className="px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 transition-colors break-words max-w-full"
                       >
                         {tag}
                       </span>
@@ -302,17 +302,17 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
-      <section className="w-full bg-white py-16 sm:py-20 px-8 sm:px-16 lg:px-24">
-        <FadeIn direction="up" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <section className="w-full bg-white py-16 sm:py-20 px-4 sm:px-16 lg:px-24">
+        <FadeIn direction="up" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
           
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col items-start gap-6">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-[1.18] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-[1.18] tracking-tight break-words">
               Want to see how Fourth Dimension™ could shape your digital growth?
             </h2>
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#82D642] text-[#111827] font-semibold text-sm hover:text-white transition-all shadow-sm hover:scale-105 active:scale-95 duration-200"
+              className="btn-hover-gradient inline-flex items-center justify-center max-w-full gap-2 px-7 py-3.5 rounded-full bg-[#82D642] text-[#111827] font-semibold text-sm hover:text-white transition-all shadow-sm hover:scale-105 active:scale-95 duration-200 text-center"
             >
               Explore the Framework With Us →
             </Link>
@@ -332,12 +332,12 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
-      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 px-8 sm:px-16 lg:px-24 border-t border-gray-100">
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 px-4 sm:px-16 lg:px-24 border-t border-gray-100">
         <div className="max-w-7xl mx-auto">
           
           {/* Header */}
-          <FadeIn direction="up" className="flex items-center justify-between mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827]">
+          <FadeIn direction="up" className="flex flex-row items-center justify-between gap-2 mb-10">
+            <h2 className="text-xl sm:text-3xl font-bold text-[#111827]">
               Recent Work
             </h2>
             <Link

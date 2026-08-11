@@ -36,16 +36,16 @@ export const FeaturedWorkSection: React.FC = () => {
     <section className="w-full bg-[#21A0A3] pt-14 sm:pt-20 pb-0 overflow-hidden">
 
       {/* Heading — padded */}
-      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         <FadeIn direction="up">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
             Featured Work
           </h2>
         </FadeIn>
       </div>
 
       {/* Cards — left-padded but bleed to right screen edge (Figma exact) */}
-      <div className="mt-8 sm:mt-10 pl-8 sm:pl-16 lg:pl-24 flex gap-5 sm:gap-6">
+      <div className="mt-8 sm:mt-10 pl-6 sm:pl-16 lg:pl-24 flex gap-4 sm:gap-6">
         {visible.map((project) => (
           <Link
             key={`${project.name}-${active}`}
@@ -79,7 +79,7 @@ export const FeaturedWorkSection: React.FC = () => {
       </div>
 
       {/* Dots + arrows + lime bar — padded */}
-      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export const FeaturedWorkSection: React.FC = () => {
         {/* Lime bar */}
         <Link
           href="/portfolio"
-          className="group mt-8 sm:mt-10 mb-10 sm:mb-14 w-full bg-[#A7F176] rounded-2xl px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between hover:brightness-95 transition-all block"
+          className="group mt-8 sm:mt-10 mb-10 sm:mb-14 w-full bg-[#A7F176] rounded-2xl px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between hover:brightness-95 transition-all block"
         >
           <span className="text-base sm:text-xl font-semibold text-[#111827] group-hover:font-bold transition-all duration-200">
             Explore more of our work

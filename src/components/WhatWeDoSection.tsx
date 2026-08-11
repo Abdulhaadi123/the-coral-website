@@ -59,15 +59,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
 
 export const WhatWeDoSection: React.FC = () => {
   return (
-    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 mt-12">
-      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
+    <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 mt-12 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         {/* Top Header Content */}
         <FadeIn direction="up" className="mb-16">
           <span className="text-xs font-bold tracking-widest text-gray-700 uppercase block mb-4">
             WHAT WE DO
           </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-semibold text-[#111827] max-w-3xl mb-8" style={{ lineHeight: '1.10' }}>
+          <h2 className="text-2xl sm:text-4xl lg:text-[46px] font-semibold text-[#111827] max-w-3xl mb-8" style={{ lineHeight: '1.10' }}>
             Brand, web, and marketing built around one goal: growth
           </h2>
 
@@ -79,7 +79,7 @@ export const WhatWeDoSection: React.FC = () => {
         </FadeIn>
 
         {/* Services Grid (4 Columns, Equal Height Alignment) */}
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-4 items-stretch">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 pt-4 items-stretch">
           <StaggerItem className="h-full">
             <ServiceCard
               iconSrc="/images/what-we-do/design.webp"

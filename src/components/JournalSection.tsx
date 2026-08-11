@@ -42,12 +42,12 @@ const posts: JournalPost[] = [
 export const JournalSection: React.FC = () => {
   return (
     <section className="w-full bg-[#F9FAFB] py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         
         {/* Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           {/* Section Title with Gradient Branding */}
-          <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#111827]" style={{ lineHeight: '1.10' }}>
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111827]" style={{ lineHeight: '1.10' }}>
             <span
               className="bg-clip-text text-transparent"
               style={{ backgroundImage: 'linear-gradient(90deg, #5E9738 0%, #9FE66F 19%, #32CEC6 100%)' }}
@@ -64,7 +64,7 @@ export const JournalSection: React.FC = () => {
         </div>
 
         {/* 3 Journal Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {posts.map((post) => (
             <Link 
               key={post.id}
