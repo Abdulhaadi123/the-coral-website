@@ -15,15 +15,15 @@ export default function OptimisationPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Tag / Category */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
             OPTIMISATION
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
             Website performance that{' '}
             <span className="block sm:inline">
               turns{' '}
@@ -49,7 +49,7 @@ export default function OptimisationPage() {
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
       <section
-        className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative overflow-hidden"
+        className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative overflow-hidden"
         style={{
           background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
         }}
@@ -113,11 +113,11 @@ export default function OptimisationPage() {
       </section>
 
       {/* Lower Content Section — balanced responsive spacing */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
+        <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
             <div className="md:col-span-5">
-              <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight">
                 Optimisation That Keeps Your Website Moving
               </h2>
             </div>
@@ -132,11 +132,11 @@ export default function OptimisationPage() {
 
       {/* ── Services Grid Section ── */}
       <section className="w-full bg-[#F4F5F7] py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
 
           {/* Left: Section Title */}
           <FadeIn direction="up" className="md:col-span-4">
-            <h2 className="text-xl sm:text-3xl font-bold text-[#111827] leading-snug">
+            <h2 className="text-xl sm:text-3xl font-semibold text-[#111827] leading-snug">
               Optimisation &amp;<br className="hidden sm:block" /> Performance<br className="hidden sm:block" /> Services
             </h2>
           </FadeIn>
@@ -175,13 +175,13 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Small Fixes Section ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
 
             {/* Left: Big Heading */}
             <div className="md:col-span-5">
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] leading-tight">
                 Small fixes.<br />Clear data.<br />Better results.
               </h2>
             </div>
@@ -214,8 +214,8 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── 4 Icon Cards Section ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {[
             {
               img: '/images/optimisation-icons/icon4.webp',
@@ -239,7 +239,7 @@ export default function OptimisationPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={card.img} alt={card.label} className="w-full h-full object-contain object-left" />
               </div>
-              <p className="text-sm text-gray-700 leading-snug font-normal max-w-full sm:max-w-[220px]">
+              <p className="text-sm text-gray-700 leading-snug font-normal w-full">
                 {card.label}
               </p>
             </StaggerItem>
@@ -248,7 +248,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: 4th Dimension Graphic */}
@@ -263,7 +263,7 @@ export default function OptimisationPage() {
 
           {/* Right: Text Content */}
           <FadeIn direction="up" className="md:col-span-7 flex flex-col gap-6" delay={0.15}>
-            <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight">
               Built on Fourth Dimension™
             </h2>
             <div className="flex flex-col gap-4 text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -301,9 +301,9 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Call To Action Banner Section ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Not sure why your website is underperforming?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -311,7 +311,7 @@ export default function OptimisationPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto"
+            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto"
           >
             <span>Book a Website Audit</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

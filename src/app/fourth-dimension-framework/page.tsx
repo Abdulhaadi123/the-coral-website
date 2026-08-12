@@ -13,74 +13,76 @@ export default function FourthDimensionFrameworkPage() {
       <Header />
 
       {/* ── Hero Section ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-14 sm:pt-20 pb-12">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
-          {/* Muted Label */}
-          <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
-            INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
-          </p>
+      <section className="w-full pt-14 sm:pt-20 pb-12">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+          <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+            {/* Muted Label */}
+            <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
+              INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
+            </p>
 
-          {/* Main Heading */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.1] mb-6 break-words">
-            <span
-              style={{
-                background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
+            {/* Main Heading */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] leading-[1.1] mb-6 break-words">
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                The Fourth Dimension™
+              </span>{' '}
+              <br className="hidden sm:inline" />
+              Framework
+            </h1>
+
+            {/* Subheading */}
+            <p className="text-base sm:text-xl font-semibold text-[#111827] max-w-3xl leading-snug mb-4">
+              A four-stage process for building digital experiences with clarity, structure, and purpose.
+            </p>
+
+            {/* Description */}
+            <p className="text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed mb-8">
+              Fourth Dimension™ is how The Coral Room turns scattered ideas into focused digital work. We study
+              the brand, define the direction, develop the right solution, and drive performance after launch.
+            </p>
+
+            {/* CTA Button */}
+            <Link
+              href="/book-a-call"
+              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              The Fourth Dimension™
-            </span>{' '}
-            <br className="hidden sm:inline" />
-            Framework
-          </h1>
+              <span>Book a Discovery Call</span>
+              <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+          </FadeIn>
 
-          {/* Subheading */}
-          <p className="text-base sm:text-xl font-semibold text-[#111827] max-w-3xl leading-snug mb-4">
-            A four-stage process for building digital experiences with clarity, structure, and purpose.
-          </p>
+        </div>
 
-          {/* Description */}
-          <p className="text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed mb-8">
-            Fourth Dimension™ is how The Coral Room turns scattered ideas into focused digital work. We study
-            the brand, define the direction, develop the right solution, and drive performance after launch.
-          </p>
-
-          {/* CTA Button */}
-          <Link
-            href="/book-a-call"
-            className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            <span>Book a Discovery Call</span>
-            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </span>
-          </Link>
-        </FadeIn>
-
-        {/* ── Diagram Graphic ── */}
-        <ScaleIn delay={0.2} className="w-full mt-12 sm:mt-16 flex justify-center">
+        {/* ── Diagram Graphic (Wider to match Figma exact) ── */}
+        <ScaleIn delay={0.2} className="w-full max-w-[1360px] mx-auto px-4 sm:px-8 mt-12 sm:mt-16 flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/fourth-dimension-framework.webp"
             alt="The Fourth Dimension Framework Diagram — Discover, Define, Develop, and Drive stages"
-            className="w-full max-w-5xl h-auto object-contain drop-shadow-sm"
+            className="w-full h-auto object-contain drop-shadow-sm"
           />
         </ScaleIn>
-
       </section>
 
       {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
-      <section className="w-full bg-white py-16 sm:py-20 px-4 sm:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto pl-0 sm:pl-11 lg:pl-11 flex flex-col gap-12 sm:gap-28">
+      <section className="w-full bg-white py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col gap-12 sm:gap-28">
           
           {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
           <FadeIn direction="up">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
               <div className="lg:col-span-5">
-                <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24 break-words">
+                <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight sticky top-24 break-words">
                   What is Fourth Dimension™?
                 </h2>
               </div>
@@ -120,7 +122,7 @@ export default function FourthDimensionFrameworkPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 border-t border-gray-100 pt-16 sm:pt-20">
               {/* Left Title */}
               <div className="lg:col-span-5">
-                <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight sticky top-24 break-words">
+                <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight sticky top-24 break-words">
                   What Makes Our Approach Different
                 </h2>
               </div>
@@ -172,8 +174,8 @@ export default function FourthDimensionFrameworkPage() {
       <section className="w-full pt-16 sm:pt-20">
         
         {/* Section Header */}
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pl-0 sm:pl-11 lg:pl-11 mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] mb-3 leading-tight break-words">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3 leading-tight break-words">
             The Four Stages of Fourth Dimension™
           </h2>
           <p className="text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed">
@@ -257,10 +259,10 @@ export default function FourthDimensionFrameworkPage() {
             <FadeIn
               key={title}
               direction="up"
-              className="w-full px-4 sm:px-16 lg:px-24 py-16 sm:py-24 text-white"
+              className="w-full py-16 sm:py-24 text-white"
               style={{ backgroundColor: bg }}
             >
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+              <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
                 
                 {/* Left Column — Large Title */}
                 <div className="lg:col-span-5 flex flex-col gap-2">
@@ -302,19 +304,22 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
-      <section className="w-full bg-white py-16 sm:py-20 px-4 sm:px-16 lg:px-24">
-        <FadeIn direction="up" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+      <section className="w-full bg-white py-16 sm:py-20">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
           
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col items-start gap-6">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-[1.18] tracking-tight break-words">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] leading-[1.18] tracking-tight break-words">
               Want to see how Fourth Dimension™ could shape your digital growth?
             </h2>
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient inline-flex items-center justify-center max-w-full gap-2 px-7 py-3.5 rounded-full bg-[#82D642] text-[#111827] font-semibold text-sm hover:text-white transition-all shadow-sm hover:scale-105 active:scale-95 duration-200 text-center"
+              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3.5 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 text-center"
             >
-              Explore the Framework With Us →
+              <span>Explore the Framework With Us</span>
+              <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
             </Link>
           </div>
 
@@ -332,20 +337,22 @@ export default function FourthDimensionFrameworkPage() {
       </section>
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
-      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 px-4 sm:px-16 lg:px-24 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto">
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
           
           {/* Header */}
           <FadeIn direction="up" className="flex flex-row items-center justify-between gap-2 mb-10">
-            <h2 className="text-xl sm:text-3xl font-bold text-[#111827]">
+            <h2 className="text-xl sm:text-3xl font-semibold text-[#111827]">
               Recent Work
             </h2>
             <Link
               href="/portfolio"
-              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-transparent text-xs sm:text-sm font-semibold text-gray-700 hover:text-black hover:border-gray-300 transition-all duration-200"
+              className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-transparent hover:border-[#111827] text-xs sm:text-sm font-semibold text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <span>View all projects</span>
-              <span>↗</span>
+              <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center group-hover:bg-[#111827] group-hover:text-white group-hover:rotate-45 transition-all duration-300 shrink-0">
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
             </Link>
           </FadeIn>
 

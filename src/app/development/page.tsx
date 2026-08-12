@@ -16,14 +16,14 @@ export default function DevelopmentPage() {
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-12 w-full">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
             WEBSITE DEVELOPMENT
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-6">
+          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-6">
             Websites built to perform,{' '}
             <span
               style={{
@@ -43,35 +43,33 @@ export default function DevelopmentPage() {
         </FadeIn>
       </section>
 
-      {/* Hero Banner Image */}
-      <ScaleIn className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pb-16 w-full" delay={0.1}>
-        <div className="w-full pl-0 sm:pl-11 lg:pl-11">
-          <div className="w-full rounded-3xl overflow-hidden shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/development-hero.webp"
-              alt="Website development mockup preview on laptop"
-              className="w-full h-auto object-cover hover:scale-[1.01] transition-transform duration-700"
-            />
-          </div>
+      {/* Hero Banner Image — full-bleed like Figma */}
+      <ScaleIn className="w-full pb-0 overflow-hidden bg-[#F3EFE6]" delay={0.1}>
+        <div className="w-full overflow-hidden -mt-4 sm:-mt-6">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/development-hero.webp"
+            alt="Website development mockup preview on laptop"
+            className="w-full h-auto object-cover scale-[1.06] origin-top transition-transform duration-700"
+          />
         </div>
       </ScaleIn>
 
       {/* Section 2: How We Build Differently */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+        <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
             
             {/* Left Title */}
             <div className="md:col-span-5">
-              <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-medium leading-[1.15] tracking-[0px]">
+              <h2 className="text-2xl sm:text-4xl lg:text-[48px] font-medium leading-[1.2] tracking-[0px]">
                 <span
                   style={{
                     background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
-                  className="block"
+                  className="block pb-1"
                 >
                   How We
                 </span>
@@ -81,7 +79,7 @@ export default function DevelopmentPage() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
-                  className="block"
+                  className="block pb-1"
                 >
                   Build
                 </span>
@@ -91,7 +89,7 @@ export default function DevelopmentPage() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}
-                  className="block"
+                  className="block pb-2"
                 >
                   Differently
                 </span>
@@ -120,9 +118,9 @@ export default function DevelopmentPage() {
 
       {/* Section 3: Website Development Services */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
-        <div className="pl-0 sm:pl-11 lg:pl-11">
+        <div>
           <FadeIn direction="up">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-[#111827] mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#111827] mb-12 sm:mb-16">
               Website Development Services
             </h2>
           </FadeIn>
@@ -168,10 +166,10 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-20 px-6 sm:px-16 lg:px-24">
-        <FadeIn direction="up" className="max-w-4xl mx-auto flex flex-col items-center">
+      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
+        <FadeIn direction="up" className="max-w-4xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center">
           
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-3">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-3">
             Beyond the Code
           </h2>
           
@@ -241,7 +239,7 @@ export default function DevelopmentPage() {
 
           {/* Right: Text Content */}
           <FadeIn direction="up" className="md:col-span-7 flex flex-col gap-5" delay={0.15}>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] leading-tight">
               Built on Fourth Dimension™
             </h2>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-lg">
@@ -275,9 +273,9 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-6 sm:px-16 lg:px-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need a website that&apos;s fast, flexible and built to last?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -285,7 +283,7 @@ export default function DevelopmentPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-6 sm:px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-6 sm:px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">

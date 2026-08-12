@@ -55,11 +55,11 @@ export default function MarketingCampaignsPage() {
     <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-hidden">
       <Header />
 
-      {/* ── Hero Section ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-16 sm:pt-24">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+      {/* ── Hero Section — Text only, constrained ── */}
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
+        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Heading */}
-          <h1 className="text-2xl sm:text-5xl lg:text-6xl font-bold text-[#111827] leading-[1.15] max-w-2xl mb-6">
+          <h1 className="text-2xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] leading-[1.15] max-w-2xl mb-6">
             We create marketing{' '}
             <span
               style={{
@@ -74,33 +74,34 @@ export default function MarketingCampaignsPage() {
           </h1>
 
           {/* Subtext */}
-          <p className="text-sm sm:text-base text-gray-600 max-w-2xl leading-relaxed mb-12">
+          <p className="text-sm sm:text-base text-gray-600 max-w-2xl leading-relaxed mb-10">
             We plan and run content, email, automation, CRM, paid campaigns, and lead pipelines that help
             your brand get seen, stay relevant, and turn interest into revenue. Every channel works with
             one clear purpose: attract better leads, guide them through the journey, and build a pipeline
             your team can measure and grow.
           </p>
         </FadeIn>
+      </section>
 
-        {/* Tablet / dashboard image */}
-        <ScaleIn delay={0.2} className="w-full flex justify-center">
+      {/* ── Dashboard Image — Full-bleed RIGHT like Figma ── */}
+      <div className="w-full overflow-hidden mt-6 sm:mt-10 mb-12 sm:mb-16">
+        <ScaleIn delay={0.2} className="flex justify-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/omnix-dashboard.webp"
             alt="Omnix marketing dashboard — project performance, AI insights, and campaign tracking"
-            className="w-full max-w-5xl h-auto object-contain hover:scale-[1.01] transition-transform duration-500"
+            className="w-[92%] sm:w-[88%] max-w-none h-auto object-contain object-right"
           />
         </ScaleIn>
-
-      </section>
+      </div>
 
       {/* ── 3-col Info Cards ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-12 sm:py-16">
-        <StaggerContainer className="pl-0 sm:pl-11 lg:pl-11 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pb-16 sm:pb-20">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {infoCards.map(({ title, desc }) => (
-            <StaggerItem key={title}>
+            <StaggerItem key={title} className="h-full">
               <div
-                className="flex flex-col gap-3 p-6 rounded-2xl hover:-translate-y-1 transition-transform duration-300"
+                className="h-full flex flex-col gap-3 p-6 rounded-2xl hover:-translate-y-1 transition-transform duration-300"
                 style={{ background: '#B6F28D21' }}
               >
                 <h3 className="text-base font-bold text-[#111827]">{title}</h3>
@@ -112,12 +113,11 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── We Can Help You With ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pb-16 sm:pb-20">
-        <div className="pl-0 sm:pl-11 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pb-16 sm:pb-20">
+        <div>
 
         {/* Heading */}
-        <h2 className="text-2xl sm:text-4xl font-bold text-center mb-12 leading-tight">
-          We{' '}
+        <h2 className="text-2xl sm:text-4xl font-semibold text-center mb-12 leading-tight">
           <span
             style={{
               background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
@@ -126,7 +126,7 @@ export default function MarketingCampaignsPage() {
               backgroundClip: 'text',
             }}
           >
-            Can Help You With
+            We Can Help You With
           </span>
         </h2>
 
@@ -177,10 +177,10 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Full-Journey Marketing (#F5F7FA BG) ── */}
-      <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 px-4 sm:px-16 lg:px-24 my-12">
-        <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col items-center">
+      <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 my-12">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center">
           
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] text-center mb-3">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] text-center mb-3">
             Full-Journey Marketing
           </h2>
           <p className="text-sm sm:text-base text-gray-500 text-center mb-16 max-w-xl">
@@ -190,14 +190,12 @@ export default function MarketingCampaignsPage() {
           {/* Connected Steps & Cards Container */}
           <div className="w-full relative">
 
-            {/* Stepper Circles with Gradient Connecting Line */}
-            <div className="relative flex justify-between items-center max-w-5xl mx-auto mb-10 px-4 sm:px-8">
-              {/* Line behind icons — clean static line matching Figma */}
-              <div className="hidden sm:block absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[2px] bg-[#E2E8F0] z-0" />
+            {/* Stepper Circles with Separate Line Segments */}
+            <div className="flex justify-between items-center max-w-5xl mx-auto mb-10 px-4 sm:px-8">
 
               {/* Step 1 Circle (#21A0A3) */}
               <div
-                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                className="shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                 style={{ backgroundColor: '#21A0A3' }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -205,9 +203,12 @@ export default function MarketingCampaignsPage() {
                 </svg>
               </div>
 
+              {/* Line 1 (#21A0A3) */}
+              <div className="hidden sm:block flex-1 h-[2px] mx-3 sm:mx-4 bg-[#21A0A3]" />
+
               {/* Step 2 Circle (#8BD35C) */}
               <div
-                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                className="shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                 style={{ backgroundColor: '#8BD35C' }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -215,9 +216,12 @@ export default function MarketingCampaignsPage() {
                 </svg>
               </div>
 
+              {/* Line 2 (#8BD35C) */}
+              <div className="hidden sm:block flex-1 h-[2px] mx-3 sm:mx-4 bg-[#8BD35C]" />
+
               {/* Step 3 Circle (#BF00FF) */}
               <div
-                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                className="shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                 style={{ backgroundColor: '#BF00FF' }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -225,9 +229,12 @@ export default function MarketingCampaignsPage() {
                 </svg>
               </div>
 
+              {/* Line 3 (#BF00FF) */}
+              <div className="hidden sm:block flex-1 h-[2px] mx-3 sm:mx-4 bg-[#BF00FF]" />
+
               {/* Step 4 Circle (#FF008C) */}
               <div
-                className="relative z-10 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                className="shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform"
                 style={{ backgroundColor: '#FF008C' }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -237,9 +244,9 @@ export default function MarketingCampaignsPage() {
             </div>
 
             {/* 4 Cards Grid */}
-            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto items-stretch">
               {/* Card 1 */}
-              <StaggerItem className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
+              <StaggerItem className="h-full bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
                 <h3 className="text-lg font-bold text-[#111827]">Attract</h3>
                 <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                   SEO, content, paid ads, and social campaigns that bring the right people in.
@@ -247,7 +254,7 @@ export default function MarketingCampaignsPage() {
               </StaggerItem>
 
               {/* Card 2 */}
-              <StaggerItem className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
+              <StaggerItem className="h-full bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
                 <h3 className="text-lg font-bold text-[#111827]">Capture</h3>
                 <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                   Landing pages, lead magnets, forms, and CTAs that turn interest into enquiries.
@@ -255,7 +262,7 @@ export default function MarketingCampaignsPage() {
               </StaggerItem>
 
               {/* Card 3 */}
-              <StaggerItem className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
+              <StaggerItem className="h-full bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
                 <h3 className="text-lg font-bold text-[#111827]">Nurture</h3>
                 <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                   Email, CRM, automation, and retargeting that keep leads moving.
@@ -263,7 +270,7 @@ export default function MarketingCampaignsPage() {
               </StaggerItem>
 
               {/* Card 4 */}
-              <StaggerItem className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
+              <StaggerItem className="h-full bg-white p-6 rounded-2xl shadow-sm border border-gray-100/80 flex flex-col gap-2 text-center hover:-translate-y-1 transition-transform">
                 <h3 className="text-lg font-bold text-[#111827]">Grow</h3>
                 <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                   Sales follow-up, reporting, retention campaigns, and optimisation that improve results over time.
@@ -277,11 +284,11 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Building Your Inbound Foundation (#A7F176 Green Card) ── */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-10 sm:py-16">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-10 sm:py-16">
         <FadeIn direction="up">
           <div className="w-full bg-[#A7F176] rounded-3xl p-5 sm:p-14">
             
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#111827] text-center mb-10 sm:mb-12">
               Building Your Inbound Foundation
             </h2>
 
@@ -344,9 +351,9 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative overflow-hidden">
-        <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative overflow-hidden">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn attention into qualified leads?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -354,7 +361,7 @@ export default function MarketingCampaignsPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Start a Strategy Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">

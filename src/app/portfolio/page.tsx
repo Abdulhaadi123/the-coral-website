@@ -109,12 +109,12 @@ export default function PortfolioPage() {
     <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-hidden">
       <Header />
 
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16">
-        <div className="pl-0 sm:pl-0 lg:pl-11">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16">
+        <div>
 
           {/* Heading */}
-          <FadeIn direction="up">
-            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-bold text-[#111827] tracking-tight mb-4">
+          <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] tracking-tight mb-4">
               Our Portfolio
             </h1>
             <p className="text-sm sm:text-base font-semibold text-gray-700 mb-2 max-w-2xl">
@@ -342,9 +342,9 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Banner */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative overflow-x-hidden">
-        <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative overflow-x-hidden">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -354,7 +354,7 @@ export default function PortfolioPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">

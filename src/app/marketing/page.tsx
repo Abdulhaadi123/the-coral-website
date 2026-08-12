@@ -27,10 +27,10 @@ export default function MarketingPage() {
       <Header />
 
       {/* ── Top Hero + Grow With Clearer Marketing Section (Green Gradient BG) ── */}
-      <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }} className="w-full pb-20 relative overflow-hidden">
+      <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #ffffff 50%, #ffffff 100%)' }} className="w-full pb-20 relative overflow-hidden">
         
-        {/* Right Megaphone Image — Scaled and positioned cleanly matching Figma */}
-        <div className="hidden sm:block absolute right-[-60px] sm:right-[-110px] lg:right-[-160px] top-6 sm:top-10 lg:top-12 w-[480px] sm:w-[620px] lg:w-[760px] pointer-events-none z-0">
+        {/* Right Megaphone Image — Large, matching Figma 1226×817px overflowing right */}
+        <div className="hidden sm:block absolute right-[-180px] sm:right-[-280px] lg:right-[-380px] top-0 lg:top-[-20px] w-[600px] sm:w-[840px] lg:w-[1100px] pointer-events-none z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/marketing-megaphone.webp"
@@ -40,15 +40,15 @@ export default function MarketingPage() {
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16 w-full relative min-h-[460px]">
+        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full relative min-h-[460px]">
           
           {/* Left Content */}
-          <FadeIn direction="up" className="max-w-xl lg:max-w-2xl z-10 relative pl-0 sm:pl-11 lg:pl-11">
+          <FadeIn direction="up" className="max-w-xl lg:max-w-2xl z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
 
-            <h1 className="text-3xl sm:text-6xl font-bold tracking-tight leading-[1.12] mb-6 text-[#111827] break-words">
+            <h1 className="text-3xl sm:text-6xl font-semibold tracking-tight leading-[1.12] mb-6 text-[#111827] break-words">
               Marketing that connects{' '}
               <span className="block mt-1">
                 <span className="text-[#598323]">visibility,</span>{' '}
@@ -78,13 +78,13 @@ export default function MarketingPage() {
         </section>
 
         {/* Section 2: Grow With Clearer Marketing */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-10 w-full">
-          <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-10 w-full">
+          <FadeIn direction="up">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
               
               {/* Left Title */}
               <div className="md:col-span-5">
-                <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight">
                   Grow With Clearer Marketing, Not More Noise
                 </h2>
               </div>
@@ -123,8 +123,8 @@ export default function MarketingPage() {
       </div>
 
       {/* Section 3: Strategic Marketing Services (White BG) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
-        <div className="pl-0 sm:pl-11 lg:pl-11 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Gradient Title */}
           <FadeIn direction="up" className="md:col-span-5">
@@ -229,10 +229,10 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Our Approach Section (#F0F0F0 background) ── */}
-      <section className="w-full bg-[#F0F0F0] py-16 sm:py-20 px-4 sm:px-16 lg:px-24">
-        <FadeIn direction="up" className="max-w-7xl mx-auto flex flex-col">
+      <section className="w-full bg-[#F0F0F0] py-16 sm:py-20">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col">
           
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] mb-3">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3">
             Our Approach
           </h2>
           
@@ -272,7 +272,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -287,7 +287,7 @@ export default function MarketingPage() {
 
           {/* Right: Text Content */}
           <FadeIn direction="up" className="md:col-span-7 flex flex-col gap-5" delay={0.15}>
-            <h2 className="text-2xl sm:text-5xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-5xl font-semibold text-[#111827] leading-tight">
               Built on Fourth Dimension™
             </h2>
             <div className="flex flex-col gap-4 text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -320,11 +320,11 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Featured Work Section (#A7F076 Lime Green BG) ── */}
-      <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10 px-4 sm:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto flex flex-col">
+      <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col">
           
           <FadeIn direction="up">
-            <h2 className="text-2xl sm:text-5xl font-bold text-white mb-8 sm:mb-10 tracking-tight">
+            <h2 className="text-2xl sm:text-5xl font-semibold text-white mb-8 sm:mb-10 tracking-tight">
               Featured Work
             </h2>
           </FadeIn>
@@ -406,9 +406,9 @@ export default function MarketingPage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug max-w-xl">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn your marketing into a stronger pipeline?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -416,7 +416,7 @@ export default function MarketingPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

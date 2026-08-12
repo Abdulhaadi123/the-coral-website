@@ -44,21 +44,21 @@ export const PartnersSection: React.FC = () => {
 
       {/* Full-bleed green marquee strip — original gradient */}
       <div
-        className="w-full py-7 sm:py-9 overflow-hidden"
+        className="w-full py-5 sm:py-6 lg:py-7 overflow-hidden"
         style={{ background: 'linear-gradient(90deg, #85E868 0%, #4BD896 50%, #32CEC6 100%)' }}
       >
-        <div className="flex items-center gap-24 sm:gap-28 md:gap-32 animate-marquee whitespace-nowrap pr-24 sm:pr-28 md:pr-32">
+        <div className="flex items-center gap-48 sm:gap-52 lg:gap-56 animate-marquee whitespace-nowrap pr-48 sm:pr-52 lg:pr-56">
           {allPartners.map((partner, idx) => (
             <div
               key={`${partner.name}-${idx}`}
-              className="inline-flex items-center justify-center shrink-0 hover:scale-105 transition-transform duration-300"
+              className="inline-flex items-center justify-center shrink-0 h-8 sm:h-10 lg:h-11 hover:scale-105 transition-transform duration-300"
             >
               <Image
                 src={partner.src}
                 alt={partner.name}
                 width={partner.width}
                 height={partner.height}
-                className="h-9 sm:h-11 md:h-12 w-auto max-w-[160px] object-contain hover:scale-105 transition-transform duration-300"
+                className="h-full w-auto max-w-[140px] object-contain"
               />
             </div>
           ))}

@@ -33,9 +33,9 @@ export const FeaturedWorkSection: React.FC = () => {
   const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
 
   return (
-    <section className="w-full bg-[#21A0A3] pt-14 sm:pt-20 pb-0 overflow-hidden">
+    <section className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
 
-      {/* Heading — padded */}
+      {/* Heading — aligned with ProcessWithDepthSection */}
       <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         <FadeIn direction="up">
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
@@ -44,14 +44,15 @@ export const FeaturedWorkSection: React.FC = () => {
         </FadeIn>
       </div>
 
-      {/* Cards — left-padded but bleed to right screen edge (Figma exact) */}
-      <div className="mt-8 sm:mt-10 pl-6 sm:pl-16 lg:pl-24 flex gap-4 sm:gap-6">
-        {visible.map((project) => (
-          <Link
-            key={`${project.name}-${active}`}
-            href={`/portfolio/${project.slug}`}
-            className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[3/2] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[52vw] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
-          >
+      {/* Cards — perfectly aligned with max-w-7xl container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
+      <div className="mt-8 sm:mt-12 max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 overflow-hidden">
+        <div className="flex gap-4 sm:gap-6">
+          {visible.map((project) => (
+            <Link
+              key={`${project.name}-${active}`}
+              href={`/portfolio/${project.slug}`}
+              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[3/2] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[480px] lg:w-[580px] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+            >
             <Image
               src={project.image}
               alt={`${project.name} branding project`}
@@ -77,6 +78,7 @@ export const FeaturedWorkSection: React.FC = () => {
           </Link>
         ))}
       </div>
+    </div>
 
       {/* Dots + arrows + lime bar — padded */}
       <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">

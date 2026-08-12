@@ -22,12 +22,12 @@ export default function BookACallPage() {
 
       <div className="flex flex-col lg:flex-row flex-1">
 
-        {/* ── LEFT COLUMN (Form) — Vertically aligned with Hamburger icon ── */}
+        {/* ── LEFT COLUMN (Form) — Aligned with hamburger ── */}
         <div className="w-full lg:w-1/2 bg-white px-8 sm:px-16 lg:px-24 pt-4 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */
-            <div className="max-w-lg mx-auto lg:mx-0 w-full my-auto">
+            <div className="w-full max-w-lg my-auto">
               <div
                 className="relative rounded-3xl overflow-hidden p-10 sm:p-14 flex flex-col items-start gap-6"
                 style={{ background: 'linear-gradient(135deg, #9FE66F 0%, #78B249 50%, #21A0A3 100%)' }}
@@ -47,7 +47,7 @@ export default function BookACallPage() {
                   <span className="text-xs font-bold tracking-widest text-white/70 uppercase">
                     Submission Received
                   </span>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white leading-tight">
+                  <h2 className="text-3xl sm:text-4xl font-semibold text-white leading-tight">
                     We&apos;ve got<br />your details!
                   </h2>
                   <p className="text-sm sm:text-base text-white/85 leading-relaxed max-w-sm">
@@ -75,8 +75,8 @@ export default function BookACallPage() {
             </div>
           ) : (
             /* ── FORM STATE ── */
-            <FadeIn direction="up" className="max-w-xl mx-auto lg:mx-0 w-full my-auto">
-              <h1 className="text-3xl sm:text-4xl font-bold text-[#111827] mb-3">
+            <FadeIn direction="up" className="w-full max-w-lg my-auto">
+              <h1 className="text-3xl sm:text-4xl font-semibold text-[#111827] mb-3">
                 Book a Discovery Call
               </h1>
               <p className="text-xs sm:text-sm text-gray-500 mb-8 max-w-md leading-relaxed">
@@ -195,16 +195,16 @@ export default function BookACallPage() {
                 </button>
 
               </form>
-            </FadeIn>
+          </FadeIn>
           )}
 
           <div />
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-24 pt-8 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-16 pt-8 pb-16 flex flex-col justify-between">
 
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 max-w-xl mx-auto lg:mx-0 my-auto">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 w-full max-w-xl my-auto">
             {[
               {
                 tag: 'STEP 1',

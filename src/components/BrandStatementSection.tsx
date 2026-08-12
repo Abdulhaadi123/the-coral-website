@@ -4,8 +4,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 export const BrandStatementSection: React.FC = () => {
   return (
-    <section className="w-full bg-white py-20 px-6 sm:px-12 lg:px-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    <section className="w-full bg-white py-16 sm:py-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         
         {/* Left Column: Headline & CTA */}
         <div className="lg:col-span-6 flex flex-col items-start">

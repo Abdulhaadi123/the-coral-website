@@ -25,15 +25,15 @@ export default function DesignPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
             DESIGN SERVICES
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-bold tracking-tight leading-[1.15] max-w-4xl mb-8">
+          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-8">
             Design that looks sharp,{' '}
             <span className="text-gradient-figma">
               feels natural, and supports action
@@ -48,8 +48,8 @@ export default function DesignPage() {
       </section>
 
       {/* Section 2: Brand Recognition & Trust */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
-        <FadeIn direction="up" className="pl-0 sm:pl-11 lg:pl-11">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+        <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
             
             {/* Left Title */}
@@ -77,12 +77,12 @@ export default function DesignPage() {
       </section>
 
       {/* Section 3: Design Services Grid (Gradient Mesh Section) */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative">
-        <div className="max-w-7xl mx-auto pl-0 sm:pl-11 lg:pl-11 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
 
           {/* Left Heading */}
           <FadeIn direction="up" className="lg:col-span-5">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight max-w-md">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] leading-tight max-w-md">
               Design services built for every brand touchpoint
             </h2>
           </FadeIn>
@@ -116,8 +116,8 @@ export default function DesignPage() {
       </section>
 
       {/* ── Our Approach Section ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-16 lg:px-24 py-16 sm:py-20 w-full">
-        <div className="pl-0 sm:pl-11 lg:pl-11 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
           <ScaleIn className="md:col-span-5 flex items-center justify-center" delay={0.1}>
@@ -131,7 +131,7 @@ export default function DesignPage() {
 
           {/* Right: Text Content */}
           <FadeIn direction="up" className="md:col-span-7 flex flex-col gap-5" delay={0.15}>
-            <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight">
               Our Approach
             </h2>
             <p className="text-base font-semibold text-gray-800">
@@ -173,7 +173,8 @@ export default function DesignPage() {
       </section>
 
       {/* ── 4 Steps: Discover → Define → Develop → Drive ── */}
-      <section className="w-full border-t border-gray-100 px-4 sm:px-16 lg:px-24 overflow-hidden">
+      <section className="w-full border-t border-gray-100 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-6">
           {[
             { num: '01', step: 'Discover', desc: 'Research, audit, and understanding' },
@@ -201,12 +202,14 @@ export default function DesignPage() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+        </div>
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 px-4 sm:px-16 lg:px-24 relative">
+      <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
+        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#111827] tracking-tight leading-snug">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
@@ -214,7 +217,7 @@ export default function DesignPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
@@ -222,6 +225,7 @@ export default function DesignPage() {
             </span>
           </Link>
         </FadeIn>
+        </div>
       </section>
 
       {/* Footer */}

@@ -160,9 +160,12 @@ export const IconLayersStep: React.FC<{ className?: string }> = ({ className }) 
 // ────────────────────────────────────────────────
 
 export const IconInboundMarketing: React.FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9.8982 3.73926L4.37379 9.26318C4.08077 9.55614 3.68339 9.72071 3.26905 9.72071C2.85471 9.72071 2.45733 9.55614 2.16431 9.26318L1.05738 8.15869C0.912252 8.0136 0.797127 7.84133 0.718582 7.65174C0.640036 7.46214 0.599609 7.25893 0.599609 7.05371C0.599609 6.84849 0.640036 6.64528 0.718582 6.45569C0.797127 6.26609 0.912252 6.09383 1.05738 5.94873L6.58375 0.424316M16.5276 10.3682L11.0032 15.8945C10.8581 16.0397 10.6858 16.1548 10.4962 16.2333C10.3066 16.3119 10.1034 16.3523 9.8982 16.3523C9.69298 16.3523 9.48977 16.3119 9.30018 16.2333C9.11058 16.1548 8.93832 16.0397 8.79322 15.8945L7.68873 14.7896C7.5436 14.6445 7.42847 14.4722 7.34993 14.2826C7.27138 14.093 7.23096 13.8898 7.23096 13.6846C7.23096 13.4794 7.27138 13.2761 7.34993 13.0865C7.42847 12.897 7.5436 12.7247 7.68873 12.5796L13.2127 7.05371M2.74683 4.32129L6.06129 7.63623M9.37574 10.9507L12.6907 14.2651" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-  </svg>
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    src="/images/ion_magnet-outline.webp"
+    alt="Magnet Icon"
+    className={`object-contain ${className || 'w-5 h-5'}`}
+  />
 );
 
 export const IconEmailPaidAds: React.FC<{ className?: string }> = ({ className }) => (
