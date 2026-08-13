@@ -29,26 +29,27 @@ export default function MarketingPage() {
       {/* ── Top Hero + Grow With Clearer Marketing Section (Green Gradient BG) ── */}
       <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #ffffff 50%, #ffffff 100%)' }} className="w-full pb-20 relative overflow-hidden">
         
-        {/* Right Megaphone Image — Large, matching Figma 1226×817px overflowing right */}
-        <div className="hidden sm:block absolute right-[-180px] sm:right-[-280px] lg:right-[-380px] top-0 lg:top-[-20px] w-[600px] sm:w-[840px] lg:w-[1100px] pointer-events-none z-0">
+        {/* Right Megaphone Image — large & touching right side like Figma */}
+        <div className="hidden sm:block absolute right-[-80px] sm:right-[-120px] md:right-[-160px] lg:right-[-200px] xl:right-[-240px] top-[-10px] sm:top-[-20px] lg:top-[-25px] w-[560px] sm:w-[720px] md:w-[860px] lg:w-[1000px] pointer-events-none z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/marketing-megaphone.webp"
             alt="Marketing Megaphone Illustration"
-            className="w-full h-auto object-contain drop-shadow-2xl scale-x-[-1]"
+            style={{ transform: 'scaleX(-1)' }}
+            className="w-full h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full relative min-h-[460px]">
+        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
           
           {/* Left Content */}
-          <FadeIn direction="up" className="max-w-xl lg:max-w-2xl z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+          <FadeIn direction="up" className="max-w-[460px] md:max-w-[480px] lg:max-w-[520px] z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
 
-            <h1 className="text-3xl sm:text-6xl font-semibold tracking-tight leading-[1.12] mb-6 text-[#111827] break-words">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight mb-6 text-[#111827] break-words" style={{ lineHeight: '1.10' }}>
               Marketing that connects{' '}
               <span className="block mt-1">
                 <span className="text-[#598323]">visibility,</span>{' '}
@@ -60,7 +61,7 @@ export default function MarketingPage() {
               </span>
             </h1>
 
-            <p className="text-sm sm:text-lg text-gray-700 max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 max-w-[440px] md:max-w-[480px] lg:max-w-[500px] leading-relaxed">
               We plan and run content, email, automation, CRM, paid campaigns, and lead pipelines that help your brand get seen, stay relevant, and turn interest into revenue. Every channel works with one clear purpose: attract better leads, guide them through the journey, and build a pipeline your team can measure and grow.
             </p>
           </FadeIn>
@@ -300,18 +301,24 @@ export default function MarketingPage() {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 mt-3 w-full">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group shrink-0 sm:shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap text-center justify-center hover:scale-105 active:scale-95 max-w-full"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-between sm:justify-start gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
               >
                 <span>Learn more about Fourth Dimension™</span>
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </Link>
               <Link
                 href="/book-a-call"
-                className="text-sm font-semibold text-[#111827] hover:underline"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-between sm:justify-start gap-2.5 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
               >
-                Book a discovery call
+                <span>Book a Discovery Call</span>
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </Link>
             </div>
           </FadeIn>

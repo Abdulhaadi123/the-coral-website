@@ -88,7 +88,7 @@ export default function PaidAdvertisingPage() {
             </p>
 
             {/* Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] leading-[1.15] mb-5">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] mb-5" style={{ lineHeight: '1.10' }}>
               Paid campaigns built to bring{' '}
               <span
                 className="block"
@@ -225,12 +225,12 @@ export default function PaidAdvertisingPage() {
 
           {/* Magnet image — exact Figma placement overlapping upper green CTA area */}
           <div className="flex justify-end overflow-hidden">
-            <ScaleIn delay={0.2} className="w-full max-w-lg sm:max-w-xl lg:max-w-[740px] -mb-[12%]">
+            <ScaleIn delay={0.2} className="w-full max-w-lg sm:max-w-xl lg:max-w-[740px] -mb-[6%] sm:-mb-[9%]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/magnet-hand.webp"
                 alt="Hand holding a horseshoe magnet — attract the right customers"
-                style={{ rotate: '-6.66deg', transformOrigin: 'center center' }}
+                style={{ rotate: '7deg', transformOrigin: '35% 55%' }}
                 className="w-full h-auto object-contain object-right ml-auto"
               />
             </ScaleIn>

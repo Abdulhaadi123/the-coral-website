@@ -23,7 +23,7 @@ export default function DevelopmentPage() {
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-6">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight max-w-4xl mb-6" style={{ lineHeight: '1.10' }}>
             Websites built to perform,{' '}
             <span
               style={{
@@ -43,14 +43,14 @@ export default function DevelopmentPage() {
         </FadeIn>
       </section>
 
-      {/* Hero Banner Image — full-bleed like Figma */}
-      <ScaleIn className="w-full pb-0 overflow-hidden bg-[#F3EFE6]" delay={0.1}>
-        <div className="w-full overflow-hidden -mt-4 sm:-mt-6">
+      {/* Hero Banner Image — Full width with clean rounded corners */}
+      <ScaleIn className="w-full pb-0 overflow-hidden" delay={0.1}>
+        <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[36px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/development-hero.webp"
             alt="Website development mockup preview on laptop"
-            className="w-full h-auto object-cover scale-[1.06] origin-top transition-transform duration-700"
+            className="w-full h-auto object-cover rounded-[24px] sm:rounded-[36px] transition-transform duration-700"
           />
         </div>
       </ScaleIn>

@@ -71,7 +71,7 @@ export default function SeoSearchVisibilityPage() {
             </span>
 
             {/* Heading */}
-            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold text-white leading-[1.15] tracking-tight mb-6">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-white tracking-tight mb-6" style={{ lineHeight: '1.10' }}>
               SEO built to help the right customers find, trust, and choose you
             </h1>
 

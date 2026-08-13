@@ -22,7 +22,7 @@ export default function FourthDimensionFrameworkPage() {
             </p>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] leading-[1.1] mb-6 break-words">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] mb-6 break-words" style={{ lineHeight: '1.10' }}>
               <span
                 style={{
                   background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
@@ -66,7 +66,7 @@ export default function FourthDimensionFrameworkPage() {
         <ScaleIn delay={0.2} className="w-full max-w-[1360px] mx-auto px-4 sm:px-8 mt-12 sm:mt-16 flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/fourth-dimension-framework.webp"
+            src="/images/flowchart.webp"
             alt="The Fourth Dimension Framework Diagram — Discover, Define, Develop, and Drive stages"
             className="w-full h-auto object-contain drop-shadow-sm"
           />

@@ -23,7 +23,7 @@ export default function OptimisationPage() {
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl md:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-8 text-[#111827]">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight max-w-4xl mb-8 text-[#111827]" style={{ lineHeight: '1.10' }}>
             Website performance that{' '}
             <span className="block sm:inline">
               turns{' '}
@@ -123,7 +123,7 @@ export default function OptimisationPage() {
       {/* Lower Content Section — balanced responsive spacing */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
         <FadeIn direction="up">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-center">
             <div className="md:col-span-5">
               <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight">
                 Optimisation That Keeps Your Website Moving
@@ -221,16 +221,16 @@ export default function OptimisationPage() {
         </FadeIn>
       </section>
 
-      {/* ── 4 Icon Cards Section ── */}
+      {/* ── 4 Icon Cards Section (Figma Exact WebP Icons & Order) ── */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-12 lg:py-16 w-full">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {[
             {
-              img: '/images/optimisation-icons/icon4.webp',
+              img: '/images/optimisation-icons/icon1.webp',
               label: 'Built-in tracking tools and dashboards',
             },
             {
-              img: '/images/optimisation-icons/icon1.webp',
+              img: '/images/optimisation-icons/icon2.webp',
               label: 'Always user-first, never just "tweak for the sake of it"',
             },
             {
@@ -238,7 +238,7 @@ export default function OptimisationPage() {
               label: 'Blend of qualitative (user behaviour) + quantitative (conversion data)',
             },
             {
-              img: '/images/optimisation-icons/icon2.webp',
+              img: '/images/optimisation-icons/icon4.webp',
               label: 'Ideal for both high - traffic sites and newly launched projects',
             },
           ].map((card) => (
@@ -288,7 +288,7 @@ export default function OptimisationPage() {
                 className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Learn more about Fourth Dimension™</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
@@ -298,7 +298,7 @@ export default function OptimisationPage() {
                 className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Book a Discovery Call</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
@@ -319,11 +319,11 @@ export default function OptimisationPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95 w-full sm:w-auto"
+            className="btn-hover-gradient group mt-2 px-7 py-3.5 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center justify-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 w-full sm:w-auto"
           >
             <span>Book a Website Audit</span>
-            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </Link>
         </FadeIn>

@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           className="hover:opacity-80 transition-opacity p-1 cursor-pointer"
         >
           {dark ? (
-            <svg width="28" height="28" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="25" width="8" height="8" rx="4" fill="white"/>
               <rect width="23" height="8" rx="4" fill="white"/>
               <rect y="12" width="16" height="9" rx="4.5" fill="white"/>
@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             width={135}
             height={54}
             priority
-            style={{ width: 'auto', height: dark ? '42px' : '36px' }}
+            style={{ width: 'auto', height: '36px' }}
             className="object-contain"
           />
         </Link>

@@ -59,7 +59,7 @@ export default function MarketingCampaignsPage() {
       <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
         <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Heading */}
-          <h1 className="text-2xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] leading-[1.15] max-w-2xl mb-6">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] max-w-2xl mb-6" style={{ lineHeight: '1.10' }}>
             We create marketing{' '}
             <span
               style={{
@@ -88,9 +88,9 @@ export default function MarketingCampaignsPage() {
         <ScaleIn delay={0.2} className="flex justify-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/omnix-dashboard.webp"
-            alt="Omnix marketing dashboard — project performance, AI insights, and campaign tracking"
-            className="w-[92%] sm:w-[88%] max-w-none h-auto object-contain object-right"
+            src="/images/img1.webp"
+            alt="Marketing campaigns dashboard — project performance, AI insights, and campaign tracking"
+            className="w-[98%] sm:w-[96%] lg:w-[95%] max-w-none h-auto object-contain object-right"
           />
         </ScaleIn>
       </div>

@@ -114,7 +114,7 @@ export default function PortfolioPage() {
 
           {/* Heading */}
           <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
-            <h1 className="text-2xl sm:text-5xl lg:text-6xl font-semibold text-[#111827] tracking-tight mb-4">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] tracking-tight mb-4" style={{ lineHeight: '1.10' }}>
               Our Portfolio
             </h1>
             <p className="text-sm sm:text-base font-semibold text-gray-700 mb-2 max-w-2xl">

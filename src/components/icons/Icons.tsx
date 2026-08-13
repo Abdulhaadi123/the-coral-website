@@ -336,3 +336,46 @@ export const IconPaidAdCreative: React.FC<{ className?: string }> = ({ className
     <path d="M8.48259 21.4723C10.5316 22.5234 12.8887 22.8081 15.129 22.2751C17.3694 21.7421 19.3457 20.4264 20.7019 18.5652C22.058 16.704 22.7048 14.4196 22.5257 12.1237C22.3466 9.82776 21.3534 7.67131 19.725 6.04292C18.0966 4.41453 15.9401 3.42129 13.6442 3.24217C11.3483 3.06306 9.06391 3.70986 7.20269 5.06601C5.34146 6.42217 4.02581 8.39849 3.49281 10.6389C2.9598 12.8792 3.24451 15.2363 4.29561 17.2853L2.14844 23.6195L8.48259 21.4723Z" stroke="currentColor" strokeWidth="2.14717" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
+
+// ────────────────────────────────────────────────
+// Optimisation Page 4-Card Icons (Figma Exact)
+// ────────────────────────────────────────────────
+
+export const IconOptTracking: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 32 C12 16, 20 12, 24 24 C28 36, 36 32, 40 16" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none"/>
+    <circle cx="8" cy="32" r="3.5" fill="currentColor"/>
+    <circle cx="20" cy="18" r="3.5" fill="currentColor"/>
+    <circle cx="28" cy="30" r="3.5" fill="currentColor"/>
+    <circle cx="40" cy="16" r="3.5" fill="currentColor"/>
+  </svg>
+);
+
+export const IconOptUserFirst: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="16" r="6.5" stroke="currentColor" strokeWidth="3" fill="none"/>
+    <path d="M8 38 C8 29 13 27 20 27 C27 27 32 29 32 38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none"/>
+    <path d="M30 11 C33 11 35 13 35 16 C35 19 33 21 30 21" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none"/>
+    <path d="M33 28 C37 29 40 32 40 38" stroke="currentColor" strokeWidth="3" strokeLinecap="round" fill="none"/>
+  </svg>
+);
+
+export const IconOptQualQuant: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M24 10 V38" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+    <path d="M16 38 H32" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+    <path d="M24 10 L12 16 M24 10 L36 16" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+    <path d="M12 16 L7 27 M12 16 L17 27" stroke="currentColor" strokeWidth="2"/>
+    <path d="M6 27 C6 32 18 32 18 27 Z" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+    <path d="M36 16 L31 27 M36 16 L41 27" stroke="currentColor" strokeWidth="2"/>
+    <path d="M30 27 C30 32 42 32 42 27 Z" stroke="currentColor" strokeWidth="2.5" fill="none"/>
+  </svg>
+);
+
+export const IconOptGrowth: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 8 V38 H40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M14 30 L22 20 L28 24 L38 12" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M30 12 H38 V20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);

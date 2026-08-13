@@ -33,7 +33,7 @@ export default function DesignPage() {
           </span>
 
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl lg:text-6xl font-semibold tracking-tight leading-[1.15] max-w-4xl mb-8">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight max-w-4xl mb-8" style={{ lineHeight: '1.10' }}>
             Design that looks sharp,{' '}
             <span className="text-gradient-figma">
               feels natural, and supports action
@@ -50,17 +50,17 @@ export default function DesignPage() {
       {/* Section 2: Brand Recognition & Trust */}
       <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
         <FadeIn direction="up">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-stretch">
             
             {/* Left Title */}
-            <div className="md:col-span-5">
+            <div className="md:col-span-5 flex flex-col justify-between">
               <h2 className="text-2xl sm:text-[48px] font-medium text-[#111827] leading-[1.25] tracking-[0px]">
                 Design that makes your brand easier to recognize, trust, and choose
               </h2>
             </div>
 
-            {/* Right Description */}
-            <div className="md:col-span-7 flex flex-col gap-6 text-sm sm:text-base text-gray-700 leading-relaxed">
+            {/* Right Description — stretches to match left heading height with top and bottom edges aligned */}
+            <div className="md:col-span-7 flex flex-col justify-between py-0.5 text-sm sm:text-base text-gray-700 leading-relaxed gap-4 sm:gap-6">
               <p>
                 Your brand is judged before a customer speaks to you. It shows up in your logo, website, packaging, ads, social content, and every visual touchpoint people see.
               </p>
