@@ -49,62 +49,70 @@ export default function OptimisationPage() {
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
       <section
-        className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 w-full relative overflow-hidden"
+        className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-28 pb-24 sm:pt-36 sm:pb-32 lg:pt-44 lg:pb-40 w-full relative"
         style={{
           background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
         }}
       >
         
-        {/* Google "G" Logo - G shape clearly visible, 8px blur, blue arm behind center-right cards */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0" style={{ transform: 'translateY(4%)' }}>
+        {/* Google "G" Logo — Exact Figma W:736 H:762, Precision Official Paths, 16px Layer Blur */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
           <div
-            className="relative w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] lg:w-[640px] lg:h-[640px] select-none"
-            style={{ filter: 'blur(8px) saturate(1.3)', opacity: 0.9 }}
+            className="relative w-[340px] h-[350px] sm:w-[560px] sm:h-[580px] lg:w-[736px] lg:h-[762px] select-none"
+            style={{ filter: 'blur(16px)', opacity: 1 }}
           >
-            <svg viewBox="0 0 24 24" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#448AFF" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.9h6.69c-.29 1.5-1.14 2.76-2.4 3.61l3.7 2.87c2.17-2 3.75-4.94 3.75-8.31z"/>
-              <path fill="#43A047" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.7-2.87c-1.03.69-2.35 1.1-4.23 1.1-3.26 0-6.01-2.2-7-5.15l-3.83 2.97C3.12 21.3 7.23 24 12 24z"/>
-              <path fill="#FFC107" d="M5 14.27a7.12 7.12 0 0 1 0-4.54V6.76H1.17a11.96 11.96 0 0 0 0 10.48L5 14.27z"/>
-              <path fill="#F44336" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.12 2.7 1.17 6.76L5 10.27c.99-2.95 3.74-5.52 7-5.52z"/>
+            <svg viewBox="0 0 48 48" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              {/* Red — Top Arc */}
+              <path fill="#F44336" d="M 24,9.5 C 28.75,9.5 32.7,11.2 35.75,13.9 L 42.5,7.15 C 38.4,3.35 32.2,1 24,1 C 14.6,1 6.5,6.4 2.6,14.2 L 10.6,20.4 C 12.4,14 17.7,9.5 24,9.5 Z"/>
+              {/* Blue — Right Arm & Crossbar */}
+              <path fill="#448AFF" d="M 47,24.5 C 47,22.8 46.8,21.2 46.5,19.6 H 24 V 29.1 H 36.9 C 36.3,32.2 34.6,34.8 32,36.5 L 39.7,42.5 C 44.2,38.3 47,32 47,24.5 Z"/>
+              {/* Yellow — Left Arc */}
+              <path fill="#FFC107" d="M 10.6,27.6 C 9.8,25.2 9.8,22.8 10.6,20.4 L 2.6,14.2 C 0.9,17.4 0,20.6 0,24 C 0,27.4 0.9,30.6 2.6,33.8 L 10.6,27.6 Z"/>
+              {/* Green — Bottom Arc */}
+              <path fill="#43A047" d="M 24,47 C 30.5,47 36,44.9 39.7,41.4 L 32,35.4 C 29.9,36.8 27.2,37.7 24,37.7 C 17.7,37.7 12.4,33.2 10.6,26.8 L 2.6,33 C 6.5,40.8 14.6,47 24,47 Z"/>
             </svg>
           </div>
         </div>
 
-        {/* 3 Metric Cards Grid */}
+        {/* 3 Metric Cards Grid — Exact Figma: 27% White Fill, 31px Rounded Corners, Glassmorphic Blur */}
         <StaggerContainer className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center max-w-5xl mx-auto">
           
-          {/* Card 1: Conversions (Left — warm tint from yellow segment) */}
-          <StaggerItem className="bg-white/75 backdrop-blur-xl border border-white/60 rounded-[28px] p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-            <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">Conversions</h3>
-            <p className="text-xs sm:text-sm text-gray-500 font-medium">We test what works</p>
-            <div className="text-3xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-14">
+          {/* Card 1: Conversions */}
+          <StaggerItem
+            className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/60 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+          >
+            <div>
+              <h3 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">Conversions</h3>
+              <p className="text-xs sm:text-sm text-gray-500 font-normal">We test what works</p>
+            </div>
+            <div className="text-3xl sm:text-5xl font-semibold text-[#111827] tracking-tight">
               +27%
             </div>
           </StaggerItem>
 
-          {/* Card 2: Visibility (Center — blue tint from G's blue arm) */}
+          {/* Card 2: Visibility */}
           <StaggerItem
-            className="backdrop-blur-2xl border border-white/80 rounded-[28px] p-6 sm:p-11 shadow-[0_25px_60px_rgba(68,138,255,0.12)] transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
+            className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/70 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.08)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
           >
-            <div className="h-full" style={{ background: 'rgba(220, 232, 255, 0.55)' }}>
-            <h3 className="text-xl sm:text-3xl font-bold text-[#111827] mb-1">Visibility</h3>
-            <p className="text-xs sm:text-sm text-gray-500 font-medium">We help people find you</p>
-            <div className="text-3xl sm:text-6xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-16">
-              +42%
+            <div>
+              <h3 className="text-xl sm:text-3xl font-semibold text-[#111827] mb-1 tracking-tight">Visibility</h3>
+              <p className="text-xs sm:text-sm text-gray-500 font-normal">We help people find you</p>
             </div>
+            <div className="text-3xl sm:text-6xl font-semibold text-[#111827] tracking-tight">
+              +42%
             </div>
           </StaggerItem>
 
-          {/* Card 3: User Testing (Right — subtle blue tint matching Figma) */}
+          {/* Card 3: User Testing */}
           <StaggerItem
-            className="backdrop-blur-xl border border-white/60 rounded-[28px] p-6 sm:p-10 shadow-[0_20px_50px_rgba(68,138,255,0.08)] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+            className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/60 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
           >
-            <div className="h-full" style={{ background: 'rgba(225, 234, 255, 0.50)' }}>
-            <h3 className="text-xl sm:text-2xl font-bold text-[#111827] mb-1">User Testing</h3>
-            <p className="text-xs sm:text-sm text-gray-500 font-medium">We detect what is frustrating users</p>
-            <div className="text-3xl sm:text-5xl font-extrabold text-[#111827] tracking-tight mt-6 sm:mt-14">
-              +25%
+            <div>
+              <h3 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">User Testing</h3>
+              <p className="text-xs sm:text-sm text-gray-500 font-normal">We detect what is frustrating users</p>
             </div>
+            <div className="text-3xl sm:text-5xl font-semibold text-[#111827] tracking-tight">
+              +25%
             </div>
           </StaggerItem>
 

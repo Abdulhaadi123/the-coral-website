@@ -175,7 +175,7 @@ export default function DesignPage() {
       {/* ── 4 Steps: Discover → Define → Develop → Drive ── */}
       <section className="w-full border-t border-gray-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-6">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
           {[
             { num: '01', step: 'Discover', desc: 'Research, audit, and understanding' },
             { num: '02', step: 'Define',   desc: 'Strategy, positioning, and direction' },
@@ -183,7 +183,7 @@ export default function DesignPage() {
             { num: '04', step: 'Drive',    desc: 'Launch, optimise, and grow' },
           ].map(({ num, step, desc }) => (
             <StaggerItem key={step} className="relative flex items-center py-8 sm:py-10 min-h-[100px]">
-              {/* Ghost Number — 01 shifted slightly right (-left-2) so digit 1 touches Discover like 02, 03, 04 */}
+              {/* Ghost Number — exact original left position behind text */}
               <span
                 className={`absolute top-1/2 -translate-y-1/2 text-[64px] sm:text-[100px] lg:text-[120px] font-extrabold text-[#F3F7F2] leading-none select-none pointer-events-none tracking-tight z-0 ${
                   num === '01'
@@ -194,7 +194,7 @@ export default function DesignPage() {
               >
                 {num}
               </span>
-              {/* Text — stays cleanly placed in column */}
+              {/* Text — exact original left padding relative to number */}
               <div className="relative z-10 flex flex-col gap-1 min-w-0 pl-12 sm:pl-16 lg:pl-20">
                 <span className="text-xs sm:text-sm font-bold text-[#78B249]">{step}</span>
                 <span className="text-[10px] sm:text-xs lg:text-sm text-gray-600 leading-snug">{desc}</span>
