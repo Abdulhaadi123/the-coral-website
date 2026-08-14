@@ -15,7 +15,7 @@ export default function DevelopmentPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-12 w-full">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
         <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
@@ -26,13 +26,15 @@ export default function DevelopmentPage() {
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight max-w-4xl mb-6" style={{ lineHeight: '1.10' }}>
             Websites built to perform,{' '}
             <span
+              className="block w-fit mt-1"
               style={{
                 background: 'linear-gradient(90deg, #467923 0%, #A7F076 39.9%, #00C0E8 74.52%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
               }}
             >
-              scale, and sell
+              scale and sell
             </span>
           </h1>
 

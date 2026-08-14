@@ -48,7 +48,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── Hero Section (Dark BG Image) ── */}
       <section
-        className="relative w-full flex flex-col justify-center overflow-hidden pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 min-h-[550px] sm:min-h-[650px]"
+        className="relative w-full flex flex-col justify-center overflow-hidden pt-6 pb-16 sm:pt-8 sm:pb-20 lg:pt-10 lg:pb-24 min-h-[550px] sm:min-h-[650px]"
         style={{
           backgroundImage: "url('/images/seo-hero-bg.webp')",
           backgroundPosition: 'center',

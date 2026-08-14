@@ -29,28 +29,28 @@ export default function MarketingPage() {
       {/* ── Top Hero + Grow With Clearer Marketing Section (Green Gradient BG) ── */}
       <div style={{ background: 'linear-gradient(0deg, #A7F076 0%, #ffffff 50%, #ffffff 100%)' }} className="w-full pb-20 relative overflow-hidden">
         
-        {/* Right Megaphone Image — large & touching right side like Figma */}
-        <div className="hidden sm:block absolute right-[-80px] sm:right-[-120px] md:right-[-160px] lg:right-[-200px] xl:right-[-240px] top-[-10px] sm:top-[-20px] lg:top-[-25px] w-[560px] sm:w-[720px] md:w-[860px] lg:w-[1000px] pointer-events-none z-0">
+        {/* Right Megaphone Image — arm cut hidden cleanly off-screen */}
+        <div className="hidden sm:block absolute right-[-120px] sm:right-[-170px] md:right-[-210px] lg:right-[-260px] xl:right-[-300px] top-[-10px] sm:top-[-20px] lg:top-[-25px] w-[560px] sm:w-[720px] md:w-[860px] lg:w-[1000px] pointer-events-none z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/marketing-megaphone.webp"
             alt="Marketing Megaphone Illustration"
-            style={{ transform: 'scaleX(-1)' }}
+            style={{ transform: 'scaleX(-1) rotate(2deg)', transformOrigin: 'center center' }}
             className="w-full h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
+        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
           
           {/* Left Content */}
-          <FadeIn direction="up" className="max-w-[460px] md:max-w-[480px] lg:max-w-[520px] z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+          <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight mb-6 text-[#111827] break-words" style={{ lineHeight: '1.10' }}>
-              Marketing that connects{' '}
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold tracking-tight mb-6 text-[#111827]" style={{ lineHeight: '1.10' }}>
+              <span className="block sm:whitespace-nowrap">Marketing that connects</span>
               <span className="block mt-1">
                 <span className="text-[#598323]">visibility,</span>{' '}
                 <span className="text-[#84D450]">leads,</span>{' '}
@@ -61,7 +61,7 @@ export default function MarketingPage() {
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base text-gray-700 max-w-[440px] md:max-w-[480px] lg:max-w-[500px] leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-700 max-w-[440px] md:max-w-[480px] lg:max-w-[520px] leading-relaxed">
               We plan and run content, email, automation, CRM, paid campaigns, and lead pipelines that help your brand get seen, stay relevant, and turn interest into revenue. Every channel works with one clear purpose: attract better leads, guide them through the journey, and build a pipeline your team can measure and grow.
             </p>
           </FadeIn>

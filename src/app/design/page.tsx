@@ -25,7 +25,7 @@ export default function DesignPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
         <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
@@ -59,15 +59,15 @@ export default function DesignPage() {
               </h2>
             </div>
 
-            {/* Right Description — stretches to match left heading height with top and bottom edges aligned */}
+            {/* Right Description — justify-between aligns with heading, narrower max-w makes text wrap to more lines to fill gap */}
             <div className="md:col-span-7 flex flex-col justify-between py-0.5 text-sm sm:text-base text-gray-700 leading-relaxed gap-4 sm:gap-6">
-              <p>
+              <p className="max-w-[340px] lg:max-w-[380px]">
                 Your brand is judged before a customer speaks to you. It shows up in your logo, website, packaging, ads, social content, and every visual touchpoint people see.
               </p>
-              <p>
+              <p className="max-w-[340px] lg:max-w-[380px]">
                 At The Coral Room, we help brands build a visual presence that feels clear, consistent, and ready to work across every customer touchpoint.
               </p>
-              <p className="font-medium text-gray-800">
+              <p className="font-medium max-w-[340px] lg:max-w-[380px]">
                 Our design work follows the Fourth-Dimension™ framework which keeps every creative decision connected to strategy, usability, performance, and growth.
               </p>
             </div>

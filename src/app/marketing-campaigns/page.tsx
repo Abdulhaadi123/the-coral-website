@@ -56,7 +56,7 @@ export default function MarketingCampaignsPage() {
       <Header />
 
       {/* ── Hero Section — Text only, constrained ── */}
-      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-16 sm:pt-24 pb-0">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-0">
         <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Heading */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] max-w-2xl mb-6" style={{ lineHeight: '1.10' }}>

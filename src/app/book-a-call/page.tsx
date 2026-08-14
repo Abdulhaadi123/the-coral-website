@@ -23,7 +23,7 @@ export default function BookACallPage() {
       <div className="flex flex-col lg:flex-row flex-1">
 
         {/* ── LEFT COLUMN (Form) — Aligned with hamburger ── */}
-        <div className="w-full lg:w-1/2 bg-white px-8 sm:px-16 lg:px-24 pt-4 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-white px-8 sm:px-16 lg:px-24 pt-0 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */
@@ -202,7 +202,7 @@ export default function BookACallPage() {
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-16 pt-8 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-16 pt-4 pb-16 flex flex-col justify-between">
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 w-full max-w-xl my-auto">
             {[

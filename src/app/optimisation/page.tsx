@@ -15,7 +15,7 @@ export default function OptimisationPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16 w-full">
+      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
         <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
           {/* Tag / Category */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">

@@ -109,7 +109,7 @@ export default function PortfolioPage() {
     <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-hidden">
       <Header />
 
-      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-12 pb-16">
+      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-16">
         <div>
 
           {/* Heading */}
