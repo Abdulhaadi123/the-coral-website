@@ -2,42 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-
-interface JournalPost {
-  id: string;
-  badge: string;
-  date: string;
-  title: string;
-  description: string;
-  image: string;
-}
-
-const posts: JournalPost[] = [
-  {
-    id: 'post-1',
-    badge: 'Marketing',
-    date: 'Apr 16, 2026',
-    title: 'Create a Social Media Content Strategy in 2026',
-    description: 'Learn how a social media agency in Dubai builds a modern content strategy using AI, creators, and scalable systems to produce and optimise content in 2026.',
-    image: '/images/journal/post1.webp',
-  },
-  {
-    id: 'post-2',
-    badge: 'Marketing',
-    date: 'Apr 3, 2026',
-    title: 'Digital Marketing Agency Guide To Turn Website Traffic into Leads in 2026',
-    description: 'Learn how a digital marketing agency in Dubai uses AI, content systems, and modern strategies to turn website traffic into consistent lead generation.',
-    image: '/images/journal/post2.webp',
-  },
-  {
-    id: 'post-3',
-    badge: 'Website Production',
-    date: 'Mar 20, 2026',
-    title: 'Best Font Pairings for Website Design in 2026',
-    description: 'The right font pairing in 2026 enhances readability, strengthens brand perception, and optimises website performance across desktop and mobile devices.',
-    image: '/images/journal/post3.webp',
-  },
-];
+import { blogPosts } from '@/app/journal/data';
 
 export const JournalSection: React.FC = () => {
   return (
@@ -65,10 +30,10 @@ export const JournalSection: React.FC = () => {
 
         {/* 3 Journal Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {posts.map((post) => (
+          {blogPosts.slice(0, 3).map((post) => (
             <Link 
               key={post.id}
-              href="/journal"
+              href={`/journal/${post.slug}`}
               className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group block cursor-pointer"
             >
               {/* Card Image */}
@@ -122,3 +87,4 @@ export const JournalSection: React.FC = () => {
 };
 
 export default JournalSection;
+
