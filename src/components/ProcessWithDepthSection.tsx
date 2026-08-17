@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { FadeIn, ScaleIn } from '@/components/Animated';
@@ -9,39 +8,39 @@ import { FadeIn, ScaleIn } from '@/components/Animated';
 export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
-      {/* Inner wrapper — controls height of section, ribbon fills it fully */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 relative min-h-0 lg:min-h-[560px] flex flex-col lg:flex-row items-stretch">
+      {/* Inner wrapper — exact original min-h and container */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 relative min-h-0 lg:min-h-[560px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-14">
 
-        {/* ── LEFT: text + CTAs ── */}
+        {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
           direction="up"
-          className="relative z-10 w-full lg:w-[65%] flex flex-col justify-center items-start py-10 lg:py-16 pr-0 lg:pr-16"
+          className="relative z-10 w-full lg:w-[54%] xl:w-[56%] flex flex-col justify-center items-start pr-0 lg:pr-6"
         >
-          {/* Heading — exact Figma 2 lines */}
+          {/* Heading — exact original 2 lines & size */}
           <h2
             className="font-semibold text-[#111827] tracking-tight max-w-none text-2xl sm:text-3xl lg:text-[42px]"
             style={{ lineHeight: '1.10' }}
           >
-            Behind every digital brand that<br className="hidden sm:inline" /> grows is a{' '}
+            Behind every digital brand that grows is a{' '}
             <span className="bg-gradient-to-r from-[#9FE66F] to-[#32CEC6] bg-clip-text text-transparent">
               process with depth
             </span>
           </h2>
 
-          {/* Paragraph 1 — larger, medium weight */}
+          {/* Paragraph 1 — exact original */}
           <p className="mt-6 sm:mt-8 text-base sm:text-lg text-gray-700 leading-relaxed font-medium max-w-lg">
             Our Fourth Dimension™ framework brings strategy, brand thinking, development, and performance
             into one clear way of working.
           </p>
 
-          {/* Paragraph 2 — smaller, lighter */}
+          {/* Paragraph 2 — exact original */}
           <p className="mt-4 text-sm sm:text-[15px] text-gray-500 leading-relaxed max-w-lg">
             Before we create anything, we study what matters: your market, your audience, your offer,
             your customer journey, and the gaps holding growth back. Then we turn that clarity into digital
             work built to look sharp, function smoothly, and move people closer to action.
           </p>
 
-          {/* CTAs */}
+          {/* CTAs — exact original */}
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
             <Link
               href="/fourth-dimension-framework"
@@ -65,33 +64,22 @@ export const ProcessWithDepthSection: React.FC = () => {
           </div>
         </FadeIn>
 
-        {/* ── RIGHT: ribbon — absolute, fills full height, touches right edge ── */}
+        {/* ── RIGHT: Video Card (larger scale, 16:9 native aspect ratio, 0% crop) ── */}
         <ScaleIn
           delay={0.15}
-          className="pointer-events-none hidden lg:block lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[52%]"
+          className="w-full lg:w-[50%] xl:w-[52%] flex items-center justify-center z-10 shrink-0"
         >
-          <div className="relative w-full h-full">
-            <Image
-              src="/images/process-ribbon.webp"
-              alt="Fourth Dimension process - 3D fluid ribbon visual"
-              fill
-              priority
-              sizes="52vw"
-              className="object-contain object-right-top"
+          <div className="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-100/80 lg:scale-105 origin-center lg:origin-right">
+            <video
+              src="/ribbon-video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-contain"
             />
           </div>
         </ScaleIn>
-
-        {/* Mobile ribbon — below text */}
-        <div className="lg:hidden relative w-full h-[260px] sm:h-[320px] mt-4 mb-6">
-          <Image
-            src="/images/process-ribbon.webp"
-            alt="Fourth Dimension process - 3D fluid ribbon visual"
-            fill
-            sizes="100vw"
-            className="object-contain object-center"
-          />
-        </div>
 
       </div>
     </section>
@@ -99,3 +87,4 @@ export const ProcessWithDepthSection: React.FC = () => {
 };
 
 export default ProcessWithDepthSection;
+

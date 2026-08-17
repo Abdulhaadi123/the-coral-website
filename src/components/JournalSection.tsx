@@ -58,7 +58,7 @@ export const JournalSection: React.FC = () => {
           </h2>
 
           {/* View All Posts Button */}
-          <Link href="/marketing" className="px-6 py-2.5 rounded-full border border-gray-400 text-gray-700 hover:text-black hover:border-black text-xs sm:text-sm font-semibold transition-all duration-300">
+          <Link href="/journal" className="px-6 py-2.5 rounded-full border border-gray-400 text-gray-700 hover:text-black hover:border-black text-xs sm:text-sm font-semibold transition-all duration-300">
             View all posts
           </Link>
         </div>
@@ -68,7 +68,7 @@ export const JournalSection: React.FC = () => {
           {posts.map((post) => (
             <Link 
               key={post.id}
-              href="/marketing"
+              href="/journal"
               className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group block cursor-pointer"
             >
               {/* Card Image */}
