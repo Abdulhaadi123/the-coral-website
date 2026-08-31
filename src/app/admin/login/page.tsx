@@ -42,123 +42,131 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex flex-col justify-between items-center px-4 sm:px-6 py-8 sm:py-12 relative overflow-hidden select-none">
+    <main className="min-h-screen w-full bg-[#0A0E1A] flex flex-col items-center justify-center p-4 sm:p-6 py-10 relative overflow-x-hidden select-none">
       
-      {/* Subtle Background Glows */}
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#78B249]/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-[#00C0E8]/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient Luxury Glows */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-96 h-96 bg-[#78B249]/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 w-96 h-96 bg-[#00C0E8]/10 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Top Bar Link */}
-      <div className="w-full max-w-md flex justify-start z-10">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Live Website</span>
-        </Link>
-      </div>
-
-      {/* Login Card */}
-      <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-gray-100 relative z-10 my-auto">
+      {/* Main Form Wrapper */}
+      <div className="w-full max-w-md flex flex-col items-center z-10 my-auto">
         
-        {/* Top Decorative Brand Bar */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#78B249] via-[#9FE66F] to-[#00C0E8]" />
-
-        {/* Official Coral Room Logo */}
-        <div className="flex flex-col items-center text-center mb-8 pt-2">
-          <Link href="/" className="mb-4 inline-block">
-            <Image
-              src="/images/logo.png"
-              alt="The Coral Room"
-              width={160}
-              height={50}
-              style={{ width: 'auto', height: '40px' }}
-              priority
-              className="object-contain"
-            />
-          </Link>
-          <h1 className="text-xl font-bold text-[#111827] tracking-tight">Admin CMS Portal</h1>
-          <p className="text-xs text-gray-500 mt-1">Sign in to manage portfolio case studies &amp; reviews</p>
-        </div>
-
-        {/* Error Alert */}
-        {error && (
-          <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2.5 animate-shake">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
-            <span>{error}</span>
-          </div>
-        )}
-
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Email */}
-          <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-              Admin Email
-            </label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@thecoralroom.com"
-                className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:border-transparent transition-all placeholder:text-gray-400 bg-gray-50/50 focus:bg-white"
-              />
-            </div>
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type={showPassword ? 'text' : 'password'}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full pl-11 pr-11 py-3.5 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:border-transparent transition-all placeholder:text-gray-400 bg-gray-50/50 focus:bg-white"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none cursor-pointer"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Sign In Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 w-full py-4 px-6 rounded-full font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg transition-all duration-300 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
-            style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
+        {/* Top Back Link */}
+        <div className="w-full mb-4 flex items-center justify-between">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white transition-colors group"
           >
-            <span>{loading ? 'Authenticating Securely...' : 'Sign In to Dashboard'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </form>
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+            <span>Back to Live Website</span>
+          </Link>
+          <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest">
+            Coral Admin
+          </span>
+        </div>
 
-        {/* Security Footer Note */}
-        <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 font-medium">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#78B249]" />
-          <span>Protected by Encrypted JWT &amp; Supabase Database</span>
+        {/* Login Card */}
+        <div className="w-full bg-white rounded-3xl p-7 sm:p-9 shadow-2xl border border-white/20 relative overflow-hidden">
+          
+          {/* Top Brand Accent Line */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#78B249] via-[#9FE66F] to-[#00C0E8]" />
+
+          {/* Logo & Headline */}
+          <div className="flex flex-col items-center text-center mb-7 pt-2">
+            <Link href="/" className="mb-4 inline-block">
+              <Image
+                src="/images/logo.png"
+                alt="The Coral Room"
+                width={150}
+                height={45}
+                style={{ width: 'auto', height: '34px' }}
+                priority
+                className="object-contain"
+              />
+            </Link>
+            <h1 className="text-2xl font-extrabold text-[#111827] tracking-tight">Admin Portal</h1>
+            <p className="text-xs text-gray-500 mt-1">Sign in to manage portfolio case studies &amp; reviews</p>
+          </div>
+
+          {/* Error Alert */}
+          {error && (
+            <div className="mb-5 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {/* Email */}
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Admin Email
+              </label>
+              <div className="relative">
+                <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@thecoralroom.com"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:bg-white bg-gray-50/50 transition-all placeholder:text-gray-400 font-medium"
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:bg-white bg-gray-50/50 transition-all placeholder:text-gray-400 font-medium"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none cursor-pointer"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Sign In Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 w-full py-3.5 px-6 rounded-full font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg transition-all duration-300 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+              style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
+            >
+              <span>{loading ? 'Authenticating Securely...' : 'Sign In to Dashboard'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+
+          {/* Security Footer Note */}
+          <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 font-medium text-center">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#78B249]" />
+            <span>Protected by Encrypted JWT &amp; Supabase Database</span>
+          </div>
+
+        </div>
+
+        {/* Copyright Footer */}
+        <div className="mt-6 text-xs text-gray-500 text-center">
+          © {new Date().getFullYear()} The Coral Room. All rights reserved.
         </div>
 
       </div>
-
-      {/* Copyright Footer */}
-      <div className="text-xs text-gray-500 text-center z-10">
-        © {new Date().getFullYear()} The Coral Room. All rights reserved.
-      </div>
-    </div>
+    </main>
   );
 }
