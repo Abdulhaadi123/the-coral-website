@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
@@ -9,10 +8,24 @@ import { projects } from '../data';
 
 export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  const project = projects.find(p => p.slug === slug);
-  if (!project) notFound();
-
+  const staticProject = projects.find(p => p.slug === slug);
+  const [project, setProject] = React.useState(staticProject || null);
   const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  useEffect(() => {
+    fetch('/api/admin/projects')
+      .then(r => r.json())
+      .then(data => {
+        if (data.success && data.projects) {
+          const match = data.projects.find((p: any) => p.slug === slug);
+          if (match) setProject(match);
+        }
+      })
+      .catch(e => console.log('Using static fallback project'));
+  }, [slug]);
+
+  if (!project && !staticProject) notFound();
+  const currentProject = project || staticProject!;
 
   // Scroll to top on mount + Prevent keyboard & mouse wheel zoom gestures
   useEffect(() => {
@@ -53,7 +66,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
       <Header />
 
       {/* Full Screen Edge-to-Edge Image (Zero side space, Non-zoomable) */}
-      {project.detailImage ? (
+      {currentProject.detailImage ? (
         <div className="w-full bg-white leading-none overflow-hidden touch-pan-y min-h-[85vh] relative flex flex-col items-center">
           {/* Subtle loading spinner/shimmer while heavy image loads */}
           {!imageLoaded && (
@@ -64,39 +77,36 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={project.detailImage}
-            alt={project.title}
+            src={currentProject.detailImage}
+            alt={currentProject.title}
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             onLoad={() => setImageLoaded(true)}
-            className={`w-full h-auto block min-w-full pointer-events-none select-none touch-none transition-opacity duration-500 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="w-full h-auto object-contain block mx-auto pointer-events-none select-none max-w-none"
             style={{
+              display: 'block',
+              maxWidth: '100%',
+              width: '100%',
               userSelect: 'none',
               WebkitUserSelect: 'none',
-              touchAction: 'pan-y',
-            } as React.CSSProperties}
+              WebkitTouchCallout: 'none',
+            }}
           />
         </div>
+      ) : currentProject.image ? (
+        <div className="w-full max-w-5xl mx-auto px-6 py-20 flex flex-col items-center">
+          <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={currentProject.image}
+              alt={currentProject.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
       ) : (
-        /* Fallback view if no full vertical image is uploaded yet */
-        <div className="w-full max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 py-16 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">{project.title}</h1>
-          <p className="text-gray-500 text-sm max-w-xl mx-auto mb-12">
-            Full case study layout image for this project will be uploaded soon.
-          </p>
-
-          {project.image && (
-            <div className="relative w-full max-w-3xl aspect-[16/10] mx-auto rounded-3xl overflow-hidden shadow-2xl mb-16">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover object-center"
-              />
-            </div>
-          )}
+        <div className="py-32 text-center text-gray-400">
+          No showcase image available for this project.
         </div>
       )}
 

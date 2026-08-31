@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 
-const testimonials = [
+const staticTestimonials = [
   {
     quote:
       'Working with The Coral Room transformed how our brand shows up online. Clear process, sharp execution, and results we could measure.',
@@ -74,9 +74,32 @@ const testimonials = [
 ];
 
 export const ClientTestimonialsSection: React.FC = () => {
+  const [testimonials, setTestimonials] = useState(staticTestimonials);
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = 5;
+
+  useEffect(() => {
+    fetch('/api/admin/testimonials')
+      .then(r => r.json())
+      .then(data => {
+        if (data.success && data.testimonials && data.testimonials.length > 0) {
+          // Map DB shape to component shape
+          const mapped = data.testimonials.map((t: any) => ({
+            quote: t.quote,
+            name: t.name,
+            role: t.role,
+            avatar: t.avatar || '/images/testimonials/avatar-1.webp',
+            logo: t.logo || null,
+            logoAlt: t.name,
+            logoWidth: t.logoWidth || 80,
+            logoHeight: t.logoHeight || 32,
+          }));
+          setTestimonials(mapped);
+        }
+      })
+      .catch(() => {}); // silently fallback to static
+  }, []);
 
   const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1)); };
   const next = () => { setDirection('next'); setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1)); };

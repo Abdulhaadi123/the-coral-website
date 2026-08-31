@@ -1,0 +1,59 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  title       String
+  category    String
+  topBadge    String   @default("")
+  tags        String[]
+  image       String   // Small Card Thumbnail (Cloudinary URL)
+  detailImage String?  // Full Page Detail View (Cloudinary URL)
+  bg          String   @default("#1a1a1a")
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  name       String
+  role       String
+  quote      String
+  avatar     String?  // Avatar image (Cloudinary URL)
+  logo       String?  // Company logo (Cloudinary URL)
+  logoWidth  Int      @default(0)
+  logoHeight Int      @default(0)
+  rating     Int      @default(5)
+  featured   Boolean  @default(true)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Admin {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String   @default("Admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  source    String   @default("portfolio_gate")
+  createdAt DateTime @default(now())
+}
