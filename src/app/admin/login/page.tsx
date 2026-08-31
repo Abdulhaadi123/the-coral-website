@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen w-full bg-[#0A0E1A] flex flex-col items-center justify-center p-4 sm:p-6 py-10 relative overflow-x-hidden select-none">
+    <main className="min-h-screen w-full bg-[#0A0E1A] flex flex-col items-center justify-center p-4 sm:p-6 py-10 relative overflow-x-hidden">
       
       {/* Ambient Luxury Glows */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-96 h-96 bg-[#78B249]/15 rounded-full blur-[120px] pointer-events-none" />
@@ -129,15 +129,24 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-10 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:bg-white bg-gray-50/50 transition-all placeholder:text-gray-400 font-medium"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] focus:bg-white bg-gray-50/50 transition-all placeholder:text-gray-400 font-medium"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowPassword((prev) => !prev);
+                  }}
                   title={showPassword ? 'Hide password' : 'Show password'}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 focus:outline-none cursor-pointer"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-100 transition-colors z-20 cursor-pointer flex items-center justify-center"
                 >
-                  {showPassword ? <Eye className="w-4 h-4 text-[#467923]" /> : <EyeOff className="w-4 h-4" />}
+                  {showPassword ? (
+                    <Eye className="w-4 h-4 text-[#467923] pointer-events-none" />
+                  ) : (
+                    <EyeOff className="w-4 h-4 text-gray-400 pointer-events-none" />
+                  )}
                 </button>
               </div>
             </div>
