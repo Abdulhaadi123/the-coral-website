@@ -83,7 +83,8 @@ export default function PortfolioPage() {
     setPendingTypes([]);
   };
 
-  const [projectList, setProjectList] = useState(projects);
+  const [projectList, setProjectList] = useState<typeof projects | null>(null);
+  const [dbLoaded, setDbLoaded] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/projects')
@@ -91,9 +92,14 @@ export default function PortfolioPage() {
       .then((data) => {
         if (data.success && data.projects && data.projects.length > 0) {
           setProjectList(data.projects);
+        } else {
+          setProjectList(projects); // fallback to static
         }
       })
-      .catch((e) => console.log('Using local fallback portfolio data'));
+      .catch(() => {
+        setProjectList(projects); // fallback to static
+      })
+      .finally(() => setDbLoaded(true));
   }, []);
 
   const applyFilters = () => {
@@ -102,7 +108,7 @@ export default function PortfolioPage() {
   };
 
   // Compute filtered list
-  let filtered = projectList;
+  let filtered = projectList ?? [];
   if (appliedTypes.length > 0) {
     filtered = filtered.filter(p =>
       appliedTypes.includes(p.category) ||
