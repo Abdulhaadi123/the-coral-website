@@ -15,6 +15,7 @@ const staticTestimonials = [
     logoAlt: 'Namal Education Foundation',
     logoWidth: 48,
     logoHeight: 48,
+    rating: 5,
   },
   {
     quote:
@@ -26,6 +27,7 @@ const staticTestimonials = [
     logoAlt: 'GoGrad',
     logoWidth: 100,
     logoHeight: 36,
+    rating: 5,
   },
   {
     quote:
@@ -37,6 +39,7 @@ const staticTestimonials = [
     logoAlt: '',
     logoWidth: 0,
     logoHeight: 0,
+    rating: 5,
   },
   {
     quote:
@@ -48,6 +51,7 @@ const staticTestimonials = [
     logoAlt: 'Elovira',
     logoWidth: 80,
     logoHeight: 32,
+    rating: 5,
   },
   {
     quote:
@@ -59,6 +63,7 @@ const staticTestimonials = [
     logoAlt: 'Holix',
     logoWidth: 80,
     logoHeight: 32,
+    rating: 5,
   },
   {
     quote:
@@ -70,6 +75,7 @@ const staticTestimonials = [
     logoAlt: 'Ascent',
     logoWidth: 80,
     logoHeight: 32,
+    rating: 5,
   },
 ];
 
@@ -84,18 +90,22 @@ export const ClientTestimonialsSection: React.FC = () => {
       .then(r => r.json())
       .then(data => {
         if (data.success && data.testimonials && data.testimonials.length > 0) {
-          // Map DB shape to component shape
-          const mapped = data.testimonials.map((t: any) => ({
-            quote: t.quote,
-            name: t.name,
-            role: t.role,
-            avatar: t.avatar || '/images/testimonials/avatar-1.webp',
-            logo: t.logo || null,
-            logoAlt: t.name,
-            logoWidth: t.logoWidth || 80,
-            logoHeight: t.logoHeight || 32,
-          }));
-          setTestimonials(mapped);
+          // Filter live/featured and map DB shape to component shape
+          const liveOnly = data.testimonials.filter((t: any) => t.featured !== false);
+          if (liveOnly.length > 0) {
+            const mapped = liveOnly.map((t: any) => ({
+              quote: t.quote,
+              name: t.name,
+              role: t.role,
+              avatar: t.avatar || '/images/testimonials/avatar-1.webp',
+              logo: t.logo || null,
+              logoAlt: t.name,
+              logoWidth: t.logoWidth || 80,
+              logoHeight: t.logoHeight || 32,
+              rating: typeof t.rating === 'number' ? t.rating : 5,
+            }));
+            setTestimonials(mapped);
+          }
         }
       })
       .catch(() => {}); // silently fallback to static
@@ -129,9 +139,17 @@ export const ClientTestimonialsSection: React.FC = () => {
               key={`${item.name}-${active}-${idx}`}
               className={`flex flex-col ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
-              <div className="flex items-center gap-1 text-[#111827]">
+              {/* Dynamic 1-5 Star Rating */}
+              <div className="flex items-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+                  <Star
+                    key={i}
+                    className={`w-4 h-4 ${
+                      i < (item.rating ?? 5)
+                        ? 'fill-[#111827] text-[#111827]'
+                        : 'fill-gray-300 text-gray-300'
+                    }`}
+                  />
                 ))}
               </div>
 
