@@ -223,7 +223,7 @@ export default function PortfolioPage() {
                   </div>
 
                   <span className="text-xs text-gray-400 font-medium shrink-0">
-                    Showing {filtered.length} of {projectList.length}
+                    Showing {filtered.length} of {projectList?.length ?? 0}
                   </span>
                 </div>
               </FadeIn>
