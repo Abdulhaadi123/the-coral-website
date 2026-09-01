@@ -73,11 +73,11 @@ export const PortfolioInlineGate: React.FC<PortfolioInlineGateProps> = ({ onUnlo
           </div>
           
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-            Explore All 32+ Private Case Studies
+            Get Portfolio Access
           </h2>
           
           <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
-            Enter your details below to instantly reveal our full portfolio, brand identity guidelines, and high-resolution design deliverables.
+            Share your details to view a curated selection of The Coral Room’s work across branding, websites, ecommerce, campaigns, and digital growth.
           </p>
         </div>
 
@@ -165,7 +165,7 @@ export const PortfolioInlineGate: React.FC<PortfolioInlineGateProps> = ({ onUnlo
               </>
             ) : (
               <>
-                <span>Unlock Full Showcase (32+ Projects)</span>
+                <span>View Portfolio</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
@@ -175,7 +175,7 @@ export const PortfolioInlineGate: React.FC<PortfolioInlineGateProps> = ({ onUnlo
         {/* Security Footer */}
         <div className="mt-6 pt-4 border-t border-gray-800/80 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 text-center">
           <ShieldCheck className="w-3.5 h-3.5 text-[#78B249]" />
-          <span>Your contact info is strictly confidential. Instant portfolio unlock.</span>
+          <span>Your details stay private and are only used to share access.</span>
         </div>
 
       </div>

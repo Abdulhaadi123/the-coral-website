@@ -70,11 +70,11 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
           </div>
           
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111827] leading-tight">
-            Unlock Full Portfolio
+            Get Portfolio Access
           </h2>
           
           <p className="text-xs sm:text-sm text-gray-500 mt-2.5 leading-relaxed">
-            Enter your details below to gain instant access to all <span className="font-bold text-gray-800">{totalProjects}+ case studies</span>, brand identities, and high-resolution design deliverables.
+            Share your details to view a curated selection of The Coral Room’s work across branding, websites, ecommerce, campaigns, and digital growth.
           </p>
         </div>
 
@@ -151,16 +151,16 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
             {success ? (
               <>
                 <CheckCircle2 className="w-4 h-4 text-white" />
-                <span>Showcase Unlocked! Revealing projects...</span>
+                <span>Access Granted! Opening Portfolio...</span>
               </>
             ) : loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-white" />
-                <span>Unlocking Full Showcase...</span>
+                <span>Validating &amp; Opening...</span>
               </>
             ) : (
               <>
-                <span>Unlock Full Showcase ({totalProjects}+ Projects)</span>
+                <span>View Portfolio</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
@@ -170,7 +170,7 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
         {/* Security Footer */}
         <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 text-center">
           <ShieldCheck className="w-3.5 h-3.5 text-[#78B249]" />
-          <span>Your contact info is strictly confidential. Instant access granted.</span>
+          <span>Your details stay private and are only used to share access.</span>
         </div>
 
       </div>
