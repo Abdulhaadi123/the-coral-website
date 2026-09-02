@@ -72,7 +72,7 @@ const services = [
 
 export default function PaidAdvertisingPage() {
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-x-clip">
       <Header />
 
       {/* ── Hero Section ── */}

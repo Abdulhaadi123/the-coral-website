@@ -10,7 +10,7 @@ import { BeyondTheCodeTimeline } from '@/components/BeyondTheCodeTimeline';
 
 export default function DevelopmentPage() {
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col justify-between overflow-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col justify-between overflow-x-clip">
       
       {/* Header Navigation */}
       <Header />
@@ -169,7 +169,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
+      <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
         <FadeIn direction="up" className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center">
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
@@ -220,7 +220,7 @@ export default function DevelopmentPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 mt-3 w-full">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 hover:border-transparent transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
               >
                 <span>Learn more about Fourth Dimension™</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -229,7 +229,7 @@ export default function DevelopmentPage() {
               </Link>
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                className="btn-hover-gradient group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 hover:border-transparent transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
               >
                 <span>Book a Discovery Call</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

@@ -46,9 +46,19 @@ export default function SeoSearchVisibilityPage() {
   return (
     <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-x-clip">
 
+      {/*
+        Header is a top-level sibling so it can stay stuck for the whole page.
+        It was previously absolutely positioned inside the hero, which pinned it
+        to the hero and scrolled it away. The hero is pulled up underneath it so
+        the background image still shows behind the bar; `data-nav-dark` tells
+        the header to use the white logo while this section is under it.
+      */}
+      <Header />
+
       {/* ── Hero Section (Dark BG Image) ── */}
       <section
-        className="relative w-full flex flex-col justify-center overflow-hidden pt-6 pb-16 sm:pt-8 sm:pb-20 lg:pt-10 lg:pb-24 min-h-[550px] sm:min-h-[650px]"
+        data-nav-dark
+        className="relative w-full flex flex-col justify-center overflow-hidden -mt-[84px] pt-[108px] pb-16 sm:pt-[116px] sm:pb-20 lg:pt-[124px] lg:pb-24 min-h-[634px] sm:min-h-[734px]"
         style={{
           backgroundImage: "url('/images/seo-hero-bg.webp')",
           backgroundPosition: 'center',
@@ -57,11 +67,6 @@ export default function SeoSearchVisibilityPage() {
       >
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/60" />
-
-        {/* Header sits inside hero so image shows behind it */}
-        <div className="absolute top-0 left-0 right-0 z-20">
-          <Header dark />
-        </div>
 
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full relative z-10">
           <FadeIn direction="up" className="max-w-4xl">
@@ -178,7 +183,7 @@ export default function SeoSearchVisibilityPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ (#21A0A3 Teal BG) ── */}
-      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
+      <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
         <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col gap-8">
           <h2 className="text-2xl sm:text-4xl font-semibold text-white tracking-tight">
             Built on Fourth Dimension™
@@ -227,10 +232,10 @@ export default function SeoSearchVisibilityPage() {
 
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient group mt-2 px-5 sm:px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 shadow-md hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 max-w-full text-center"
+            className="btn-hover-gradient group mt-2 px-5 sm:px-7 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 shadow-md transition-all duration-300 hover:scale-105 active:scale-95 max-w-full text-center"
           >
             <span>Book an SEO Audit</span>
-            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
               <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </Link>

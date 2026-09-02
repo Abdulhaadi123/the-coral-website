@@ -52,7 +52,7 @@ const infoCards = [
 
 export default function MarketingCampaignsPage() {
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-x-clip">
       <Header />
 
       {/* ── Hero Section — Text only, constrained ── */}

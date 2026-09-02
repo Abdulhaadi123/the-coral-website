@@ -3,7 +3,7 @@
  * preserving the exact same paths the app requests.
  *
  *   public/images/portfolio/x.webp  ->  s3://$AWS_S3_BUCKET/images/portfolio/x.webp
- *   public/WEB.mp4                  ->  s3://$AWS_S3_BUCKET/WEB.mp4
+ *   public/WEBSITE VIDEO.mp4         ->  s3://$AWS_S3_BUCKET/WEBSITE%20VIDEO.mp4
  *
  * Because the keys mirror the public paths, assetUrl() only has to prepend the
  * bucket/CloudFront origin — no path rewriting anywhere in the app.
@@ -34,7 +34,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 
 /** Directories (recursive) and single files under /public that move to S3. */
 const ASSET_DIRS = ['images/portfolio', 'images/featured'];
-const ASSET_FILES = ['WEB.mp4', 'ribbon-video.mp4'];
+const ASSET_FILES = ['WEBSITE VIDEO.mp4', 'process-depth.gif'];
 
 const CONTENT_TYPES: Record<string, string> = {
   '.webp': 'image/webp',

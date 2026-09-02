@@ -32,7 +32,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
   }
 
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col w-full overflow-x-hidden select-none">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col w-full overflow-x-clip select-none">
       {/* Top Navbar */}
       <Header />
 

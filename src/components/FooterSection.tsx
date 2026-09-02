@@ -5,7 +5,7 @@ import { IconFacebook, IconInstagram, IconLinkedin } from '@/components/icons/Ic
 
 export const FooterSection: React.FC = () => {
   return (
-    <footer className="w-full relative bg-black text-white pt-16 pb-12 overflow-hidden">
+    <footer data-nav-dark className="w-full relative bg-black text-white pt-16 pb-12 overflow-hidden">
 
       {/* Background 3D Liquid Image */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-80">

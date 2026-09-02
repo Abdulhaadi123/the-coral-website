@@ -15,9 +15,9 @@ export const BrandStatementSection: React.FC = () => {
 
           {/* Single Action Button */}
           <div className="mt-8">
-            <Link href="/book-a-call" className="btn-hover-gradient group px-7 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm sm:text-base flex items-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 shadow-sm">
+            <Link href="/book-a-call" className="btn-hover-gradient group px-7 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm sm:text-base flex items-center gap-3 hover:border-transparent transition-all duration-300 shadow-sm">
               <span>Let's Talk About Your Goals</span>
-              <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+              <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs group-hover:rotate-45 transition-transform duration-300">
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </span>
             </Link>

@@ -9,7 +9,7 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function OptimisationPage() {
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col justify-between overflow-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col justify-between overflow-x-clip">
       
       {/* Header Navigation */}
       <Header />
@@ -285,20 +285,20 @@ export default function OptimisationPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 mt-4 w-full">
               <Link
                 href="/fourth-dimension-framework"
-                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Learn more about Fourth Dimension™</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
 
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
+                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
               >
                 <span>Book a Discovery Call</span>
-                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+                <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
@@ -319,10 +319,10 @@ export default function OptimisationPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="btn-hover-gradient group mt-2 px-7 py-3.5 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center justify-center gap-3 hover:border-transparent hover:text-white transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 w-full sm:w-auto"
+            className="btn-hover-gradient group mt-2 px-7 py-3.5 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center justify-center gap-3 hover:border-transparent transition-all duration-300 shadow-sm hover:scale-105 active:scale-95 w-full sm:w-auto"
           >
             <span>Book a Website Audit</span>
-            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs group-hover:rotate-45 group-hover:border-white transition-transform duration-300">
+            <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs group-hover:rotate-45 transition-transform duration-300">
               <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </Link>

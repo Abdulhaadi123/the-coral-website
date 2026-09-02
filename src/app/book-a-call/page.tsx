@@ -58,7 +58,7 @@ export default function BookACallPage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-white overflow-x-hidden relative">
+    <main className="min-h-screen flex flex-col bg-white overflow-x-clip relative">
       <Header />
 
       <div className="flex flex-col lg:flex-row flex-1">

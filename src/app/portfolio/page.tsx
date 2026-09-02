@@ -118,7 +118,7 @@ export default function PortfolioPage() {
   const hasActiveFilters = appliedTypes.length > 0;
 
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-clip">
       <Header />
 
       <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16">

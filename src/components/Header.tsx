@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -9,6 +9,16 @@ import { X, ChevronDown } from 'lucide-react';
 interface HeaderProps {
   dark?: boolean;
 }
+
+/*
+ * Logo geometry. The source lockup is 144x68 with the mark occupying a 49x49
+ * square, so at a 46px lockup height the mark reads as ~33px. It grows to
+ * MARK_LARGE once the wordmark collapses away.
+ */
+const MARK_SMALL = 34;
+const MARK_LARGE = 50;
+const WORDMARK_H = 46;
+const WORDMARK_W = Math.round(WORDMARK_H * (85 / 68)); // preserve crop aspect
 
 const solutionLinks = [
   { label: 'Design',                  href: '/design' },
@@ -23,7 +33,14 @@ const solutionLinks = [
 export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
   const [open, setOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [overDark, setOverDark] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
+
+  /** Manual `dark` prop OR a dark section currently sitting under the header. */
+  const isDark = dark || overDark;
 
   useEffect(() => {
     setOpen(false);
@@ -35,10 +52,97 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  // Collapses the lockup to just the mark once the page leaves the top.
+  // Setting the same value is a no-op in React, so this only renders on a crossing.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /*
+   * Automatic light/dark logo switching.
+   *
+   * Rather than tagging individual sections, this samples what is actually
+   * rendered behind the logo and treats anything that is not essentially white
+   * as dark. That covers solid colours, gradients, background images and video
+   * without every section needing to opt in.
+   */
+  useEffect(() => {
+    // Luminance at or above this counts as "white enough" for the dark logo.
+    const NEAR_WHITE = 0.86;
+
+    const parseColor = (value: string) => {
+      const m = value.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      const parts = m[1].split(',').map((v) => parseFloat(v.trim()));
+      return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+    };
+
+    const isDarkBehind = (x: number, y: number) => {
+      for (const el of document.elementsFromPoint(x, y)) {
+        if (el.closest('header')) continue; // ignore the bar itself
+        if (el.hasAttribute('data-nav-dark')) return true; // explicit override
+
+        const cs = getComputedStyle(el);
+
+        // Media and gradients can be any colour — assume they need the light logo.
+        if (el.tagName === 'VIDEO' || el.tagName === 'IMG') return true;
+        if (cs.backgroundImage && cs.backgroundImage !== 'none') return true;
+
+        const c = parseColor(cs.backgroundColor);
+        if (!c || c.a === 0) continue; // transparent: keep looking further down
+
+        const lum = (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+        return lum < NEAR_WHITE;
+      }
+      return false;
+    };
+
+    const update = () => {
+      const bar = headerRef.current;
+      if (!bar) return;
+      const r = bar.getBoundingClientRect();
+      const y = Math.max(1, Math.min(window.innerHeight - 1, r.top + r.height / 2));
+      const logo = logoRef.current?.getBoundingClientRect();
+      const x = logo ? logo.left + logo.width / 2 : window.innerWidth - 80;
+      setOverDark(isDarkBehind(x, y));
+    };
+
+    // elementsFromPoint forces a style/layout read, so cap it at ~30fps and
+    // always run once more after scrolling settles.
+    let last = 0;
+    let trailing: number | undefined;
+    const onScroll = () => {
+      const now = performance.now();
+      window.clearTimeout(trailing);
+      trailing = window.setTimeout(update, 60);
+      if (now - last < 32) return;
+      last = now;
+      update();
+    };
+
+    update();
+    const settle = window.setTimeout(update, 400); // late-rendering sections
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
+
+    return () => {
+      window.clearTimeout(trailing);
+      window.clearTimeout(settle);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', update);
+    };
+  }, [pathname]);
+
   return (
     <>
       {/* ── Top Header Bar ── */}
-      <header className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-8 pb-4 flex items-center justify-between relative z-30">
+      <header
+        ref={headerRef}
+        className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
+      >
 
         {/* Hamburger */}
         <button
@@ -47,7 +151,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           onClick={() => setOpen(true)}
           className="hover:opacity-80 transition-opacity p-1 cursor-pointer"
         >
-          {dark ? (
+          {isDark ? (
             <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="25" width="8" height="8" rx="4" fill="white"/>
               <rect width="23" height="8" rx="4" fill="white"/>
@@ -66,17 +170,73 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           )}
         </button>
 
-        {/* Logo */}
-        <Link href="/" className="cursor-pointer">
-          <Image
-            src={dark ? '/images/logo-white.png' : '/images/logo.png'}
-            alt="The Coral Room"
-            width={135}
-            height={54}
-            priority
-            style={{ width: 'auto', height: '36px' }}
-            className="object-contain"
-          />
+        {/*
+          The logo is two independent parts rather than one image, so scrolling
+          can animate them: the wordmark collapses to zero width while the CR mark
+          grows. Each part keeps both colour variants stacked and crossfades
+          between them, so moving over a dark background is a fade rather than the
+          hard swap you get from changing an <img src>.
+        */}
+        <Link
+          href="/"
+          ref={logoRef}
+          className="flex items-center cursor-pointer shrink-0"
+          aria-label="The Coral Room — home"
+        >
+          {/* CR mark — grows once scrolling starts */}
+          <span
+            className="relative block shrink-0 transition-[width,height] duration-500 ease-out"
+            style={{ width: scrolled ? MARK_LARGE : MARK_SMALL, height: scrolled ? MARK_LARGE : MARK_SMALL }}
+          >
+            <Image
+              src="/images/logo-mark.png"
+              alt=""
+              fill
+              priority
+              sizes="64px"
+              className="object-contain transition-opacity duration-300"
+              style={{ opacity: isDark ? 0 : 1 }}
+            />
+            <Image
+              src="/images/logo-mark-white.png"
+              alt=""
+              fill
+              sizes="64px"
+              className="object-contain transition-opacity duration-300"
+              style={{ opacity: isDark ? 1 : 0 }}
+            />
+          </span>
+
+          {/* Wordmark — clipped away to zero width on scroll */}
+          <span
+            className="relative block overflow-hidden shrink-0 transition-all duration-500 ease-out"
+            style={{
+              width: scrolled ? 0 : WORDMARK_W,
+              height: WORDMARK_H,
+              marginLeft: scrolled ? 0 : 10,
+              opacity: scrolled ? 0 : 1,
+            }}
+          >
+            {/* Fixed width on the images so the wrapper CLIPS them rather than
+                squashing the artwork as it narrows. */}
+            <Image
+              src="/images/logo-wordmark.png"
+              alt="The Coral Room"
+              width={85}
+              height={68}
+              priority
+              className="absolute left-0 top-0 max-w-none transition-opacity duration-300"
+              style={{ width: WORDMARK_W, height: WORDMARK_H, opacity: isDark ? 0 : 1 }}
+            />
+            <Image
+              src="/images/logo-wordmark-white.png"
+              alt=""
+              width={85}
+              height={68}
+              className="absolute left-0 top-0 max-w-none transition-opacity duration-300"
+              style={{ width: WORDMARK_W, height: WORDMARK_H, opacity: isDark ? 1 : 0 }}
+            />
+          </span>
         </Link>
       </header>
 

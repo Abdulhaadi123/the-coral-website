@@ -45,7 +45,7 @@ export const ProcessWithDepthSection: React.FC = () => {
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
             <Link
               href="/fourth-dimension-framework"
-              className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 hover:border-transparent hover:text-white transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95 text-center sm:text-left"
+              className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95 text-center sm:text-left"
             >
               <span>Learn more about Fourth Dimension™</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -70,13 +70,16 @@ export const ProcessWithDepthSection: React.FC = () => {
           delay={0.15}
           className="w-full lg:w-[50%] xl:w-[52%] flex items-center justify-center z-10 shrink-0"
         >
-          <div className="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-100/80 lg:scale-105 origin-center lg:origin-right">
-            <video
-              src={assetUrl('/ribbon-video.mp4')}
-              autoPlay
-              loop
-              muted
-              playsInline
+          {/*
+            No border or shadow: the artwork's own background is pure white,
+            identical to the section, so any frame around it reads as an empty
+            box rather than a card. Without one the graphic sits flush on the page.
+          */}
+          <div className="relative w-full aspect-video overflow-hidden lg:scale-105 origin-center lg:origin-right">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={assetUrl('/process-depth.gif')}
+              alt="The Fourth Dimension process, visualised"
               className="w-full h-full object-contain"
             />
           </div>

@@ -52,7 +52,7 @@ export default function FourthDimensionFrameworkPage() {
             {/* CTA Button */}
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95"
+              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm transition-all duration-300 hover:scale-105 active:scale-95"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -259,6 +259,7 @@ export default function FourthDimensionFrameworkPage() {
           ].map(({ num, title, bg, subtitle, desc, tags }) => (
             <div
               key={title}
+              data-nav-dark
               className="w-full py-16 sm:py-24 text-white"
               style={{ backgroundColor: bg }}
             >
@@ -317,7 +318,7 @@ export default function FourthDimensionFrameworkPage() {
             </h2>
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3.5 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 text-center"
+              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3.5 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm transition-all duration-300 hover:scale-105 active:scale-95 text-center"
             >
               <span>Explore the Framework With Us</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

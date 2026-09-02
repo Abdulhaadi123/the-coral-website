@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import { useScrollProgress } from '@/hooks/useScrollProgress';
+import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -68,116 +67,98 @@ const steps = [
   },
 ];
 
+/*
+ * Layout mirrors the reference site's timeline: nothing is pinned. The section
+ * sits in normal document flow and the steps scroll past at their own pace, so
+ * the page never feels frozen. Only two things are sticky —
+ *
+ *   - the left intro column, which stays alongside the steps, and
+ *   - a fixed-length bright segment on the rail, which reads as a progress
+ *     indicator travelling down the line as content passes it.
+ *
+ * Both are native CSS `position: sticky`, so the motion is compositor-driven and
+ * costs no JavaScript. The previous version pinned a full-screen panel for 340vh
+ * and re-translated the column on every scroll event — that is what made it feel
+ * stuck.
+ */
 export const HowItWorksSection: React.FC = () => {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const stepsRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const maxTranslateRef = useRef(0);
-
-  // Measured on mount/resize rather than per frame — reading scrollHeight forces
-  // a synchronous layout.
-  useEffect(() => {
-    const measure = () => {
-      const el = stepsRef.current;
-      if (el) maxTranslateRef.current = Math.max(0, el.scrollHeight - (window.innerHeight - 160));
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  const activeIndex = useScrollProgress(wrapperRef, {
-    mode: 'pinned',
-    itemCount: steps.length,
-    onFrame: (progress) => {
-      if (stepsRef.current) {
-        // translate3d keeps this on the compositor.
-        stepsRef.current.style.transform =
-          `translate3d(0, ${-progress * maxTranslateRef.current}px, 0)`;
-      }
-      if (lineRef.current) lineRef.current.style.height = `${progress * 100}%`;
-    },
-  });
-
   return (
-    <div ref={wrapperRef} style={{ height: '340vh' }} className="relative">
+    <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
 
-      <div className="sticky top-0 h-screen overflow-hidden w-full bg-[#21A0A3] text-white flex items-stretch">
-        <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-0">
+        {/* ── Left: intro, sticks while the steps scroll past ── */}
+        <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
+          <h2 className="text-3xl sm:text-4xl lg:text-[56px] font-semibold tracking-tight leading-[1.05]">
+            How It Works
+          </h2>
 
-          <div className="lg:col-span-5 flex flex-col justify-start pt-8 sm:pt-20 pb-4 lg:pb-12">
-            <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
-              How It Works
-            </h2>
+          <p className="mt-5 text-sm sm:text-base lg:text-lg text-white/80 leading-relaxed max-w-sm font-normal">
+            Not sure what your digital presence needs next? We help you find the right starting
+            point before the work begins.
+          </p>
 
-            <p className="mt-3 sm:mt-4 text-xs sm:text-base text-white/80 leading-relaxed max-w-xs font-normal">
-              Not sure what your digital presence needs next? We help you find the right starting point before the work begins.
-            </p>
-
-            <div className="mt-4 sm:mt-6">
-              <Link
-                href="/book-a-call"
-                className="group px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-3 shadow-md hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                <span>Book a Discovery Call</span>
-                <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">
-                  <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#111827]" />
-                </span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 relative overflow-hidden">
-            <div
-              ref={stepsRef}
-              className="pl-6 sm:pl-10 pt-4 sm:pt-20 pb-16 will-change-transform relative"
+          <div className="mt-7">
+            <Link
+              href="/book-a-call"
+              className="group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center gap-3 shadow-md hover:bg-white transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <div className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 bottom-12 w-[2px] bg-white/25 rounded-full" />
+              <span>Book a Discovery Call</span>
+              <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#111827]" />
+              </span>
+            </Link>
+          </div>
+        </div>
 
-              <div
-                ref={lineRef}
-                className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176] will-change-[height]"
-                style={{ height: 0 }}
-              />
+        {/*
+          ── Right: the steps, in normal flow ──
 
-              <div className="flex flex-col gap-6 sm:gap-10 pt-4 sm:pt-20">
-                {steps.map((item, index) => {
-                  const isActive = index <= activeIndex;
+          Rail, progress segment and dots are all positioned from this container's
+          left edge with one shared centre line (RAIL_CENTRE = 16px), so they cannot
+          drift apart. The previous version placed the rail from the container but
+          the dots as negative offsets from a padded step, which put them 3.5px out
+          of true at the `sm` breakpoint.
+        */}
+        <div className="lg:col-span-7 relative">
 
-                  return (
-                    <div key={item.step} className="relative pl-7 sm:pl-12">
-                      {/* Step dot — centered dead-on the timeline line */}
-                      <div
-                        className={`absolute -left-[7px] sm:-left-[15px] top-1.5 w-3.5 h-3.5 rounded-full transition-all duration-300 ${
-                          isActive
-                            ? 'bg-[#A7F176] border-2 border-white scale-110 shadow-[0_0_12px_#A7F176]'
-                            : 'bg-white border border-white/60'
-                        }`}
-                      />
+          {/* Rail — 2px wide, centred on 16px */}
+          <div className="absolute left-[15px] top-2 bottom-2 w-[2px] bg-white/25 rounded-full" />
 
-                      <span className="text-[11px] font-bold tracking-[0.2em] text-teal-100/70 uppercase block mb-3">
-                        {item.step}
-                      </span>
-
-                      <div className="mb-4 text-[#A7F176]">{item.icon}</div>
-
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">
-                        {item.title}
-                      </h3>
-
-                      <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed max-w-lg">
-                        {item.desc}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          {/* Travelling progress segment — sticky, so it rides the viewport */}
+          <div className="absolute left-[15px] top-2 bottom-2 w-[2px] pointer-events-none">
+            <div className="sticky top-24 h-[340px] w-full rounded-full bg-[#A7F176] shadow-[0_0_14px_#A7F176]" />
           </div>
 
+          {/* Fades so the segment dissolves at both ends instead of stopping dead */}
+          <div className="absolute left-[8px] top-0 h-24 w-4 pointer-events-none bg-gradient-to-b from-[#21A0A3] to-transparent" />
+          <div className="absolute left-[8px] bottom-0 h-24 w-4 pointer-events-none bg-gradient-to-t from-[#21A0A3] to-transparent" />
+
+          <div className="flex flex-col gap-16 sm:gap-20">
+            {steps.map((item) => (
+              <div key={item.step} className="relative pl-14">
+                {/* Dot, centred on the rail */}
+                <span className="absolute left-[9px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#A7F176] border-2 border-white shadow-[0_0_10px_#A7F176]" />
+
+                <span className="text-[11px] font-bold tracking-[0.2em] text-teal-100/70 uppercase block mb-3">
+                  {item.step}
+                </span>
+
+                <div className="mb-4 text-[#A7F176]">{item.icon}</div>
+
+                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed max-w-lg">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
-    </div>
+    </section>
   );
 };
 

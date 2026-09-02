@@ -6,26 +6,50 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
 import { assetUrl } from '@/lib/assets';
+import { projects as portfolioProjects } from '@/app/portfolio/data';
 
-const projects = [
-  {
-    name: 'Kaelvo',
-    slug: 'kaelvo-brand-identity',
-    category: 'Branding',
-    image: assetUrl('/images/featured/kaelvo.webp'),
-  },
-  {
-    name: 'Mochae',
-    slug: 'mochae-brand-identity',
-    category: 'Branding',
-    image: assetUrl('/images/featured/mochae.webp'),
-  },
+/*
+ * Featured entries are resolved from the portfolio data rather than duplicated
+ * here, so titles, categories and slugs can never drift out of sync with the
+ * detail pages. A slug that no longer exists is dropped instead of rendering a
+ * card that 404s.
+ *
+ * `image` is an optional override for the four brands that have purpose-shot
+ * wide artwork in /images/featured; the rest fall back to their portfolio card
+ * image. (finlo and liviq have featured art but no detail page, so they are
+ * deliberately excluded.)
+ */
+const FEATURED: { slug: string; image?: string }[] = [
+  { slug: 'kaelvo-brand-identity', image: '/images/featured/kaelvo.webp' },
+  { slug: 'mochae-brand-identity', image: '/images/featured/mochae.webp' },
+  { slug: 'elovira-packaging', image: '/images/featured/elovira.webp' },
+  { slug: 'the-vertical-launch', image: '/images/featured/the-vertical.webp' },
+  { slug: 'omnix-project-management' },
+  { slug: 'ascent-brand-identity' },
+  { slug: 'crewtix-brand-identity' },
+  { slug: 'noura-packaging' },
 ];
+
+const projects = FEATURED.flatMap(({ slug, image }) => {
+  const project = portfolioProjects.find((p) => p.slug === slug);
+  if (!project) return [];
+
+  // ProjectItem.image is nullable; a card with no artwork is not worth showing.
+  const src = image ? assetUrl(image) : project.image;
+  if (!src) return [];
+
+  return [{
+    name: project.title,
+    slug: project.slug,
+    category: project.category,
+    image: src,
+  }];
+});
 
 export const FeaturedWorkSection: React.FC = () => {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
-  const totalDots = 7;
+  const totalDots = projects.length;
 
   const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? projects.length - 1 : i - 1)); };
   const next = () => { setDirection('next'); setActive((i) => (i === projects.length - 1 ? 0 : i + 1)); };
@@ -34,7 +58,7 @@ export const FeaturedWorkSection: React.FC = () => {
   const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
 
   return (
-    <section className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
+    <section data-nav-dark className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
 
       {/* Heading — aligned with ProcessWithDepthSection */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
