@@ -9,6 +9,7 @@ import { FadeIn } from '@/components/Animated';
 import { SlidersHorizontal, ArrowUpRight } from 'lucide-react';
 import { PortfolioFullLockGate } from '@/components/PortfolioFullLockGate';
 import { projects } from './data';
+import { assetUrl } from '@/lib/assets';
 
 const PROJECT_TYPES = [
   'Branding',
@@ -120,11 +121,11 @@ export default function PortfolioPage() {
     <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-hidden">
       <Header />
 
-      <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-16">
+      <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16">
         <div>
 
           {/* Heading */}
-          <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+          <FadeIn direction="up">
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] tracking-tight mb-4" style={{ lineHeight: '1.10' }}>
               Our Portfolio
             </h1>
@@ -268,7 +269,7 @@ export default function PortfolioPage() {
                           >
                             {project.image ? (
                               <Image
-                                src={project.image}
+                                src={assetUrl(project.image)}
                                 alt={project.title}
                                 fill
                                 priority={idx < 4}
@@ -347,7 +348,7 @@ export default function PortfolioPage() {
                   >
                     {project.image && (
                       <Image
-                        src={project.image}
+                        src={assetUrl(project.image)}
                         alt="Locked preview"
                         fill
                         className="object-cover object-center"
@@ -365,7 +366,7 @@ export default function PortfolioPage() {
 
       {/* CTA Banner */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative overflow-x-hidden">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>

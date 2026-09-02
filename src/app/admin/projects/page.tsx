@@ -6,6 +6,7 @@ import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, FolderOpen,
   X, UploadCloud, ChevronDown, Check, AlertCircle,
 } from 'lucide-react';
+import { assetUrl } from '@/lib/assets';
 
 const CATEGORIES = ['Branding', 'Packaging', 'Social Media', 'Website', 'Development', 'Marketing', 'Ui & UX'];
 const BG_PRESETS = ['#111827','#1a1a1a','#0d0d0d','#101820','#180818','#1f1208','#1a1a0d','#0f0d00','#0a0a1a','#201010'];
@@ -34,7 +35,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
       {url ? (
         <div className="relative aspect-[3/2] rounded-xl overflow-hidden bg-gray-100 border border-gray-200 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={url} alt="preview" className="w-full h-full object-cover" />
+          <img src={assetUrl(url)} alt="preview" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
               Change Image
@@ -234,7 +235,7 @@ export default function AdminProjectsPage() {
               <div key={p.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex gap-3.5 items-center">
                 <div className="w-16 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                  <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-[#111827] text-sm truncate">{p.title}</p>
@@ -287,7 +288,7 @@ export default function AdminProjectsPage() {
                     <td className="py-3.5 px-6 align-middle">
                       <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                        <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                       </div>
                     </td>
 

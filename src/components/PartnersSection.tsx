@@ -28,7 +28,7 @@ export const PartnersSection: React.FC = () => {
   return (
     <section className="w-full bg-white pt-16 sm:pt-20 pb-0">
       {/* Heading — aligned with header container */}
-      <FadeIn direction="up" className="max-w-7xl mx-auto px-8 sm:px-16 lg:px-24 mb-20 sm:mb-28">
+      <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-20 sm:mb-28">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100/80 text-gray-700 text-xs font-semibold mb-5 shadow-sm">
           <span className="w-2.5 h-2.5 rounded-full bg-[#9FE66F] animate-pulse"></span>
           <span>Makes an Impact</span>

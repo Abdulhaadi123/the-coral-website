@@ -4,12 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { FadeIn, ScaleIn } from '@/components/Animated';
+import { assetUrl } from '@/lib/assets';
 
 export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 relative min-h-0 lg:min-h-[560px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-14">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative min-h-0 lg:min-h-[560px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-14">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
@@ -71,7 +72,7 @@ export const ProcessWithDepthSection: React.FC = () => {
         >
           <div className="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-100/80 lg:scale-105 origin-center lg:origin-right">
             <video
-              src="/ribbon-video.mp4"
+              src={assetUrl('/ribbon-video.mp4')}
               autoPlay
               loop
               muted

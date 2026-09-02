@@ -5,19 +5,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { assetUrl } from '@/lib/assets';
 
 const projects = [
   {
     name: 'Kaelvo',
     slug: 'kaelvo-brand-identity',
     category: 'Branding',
-    image: '/images/featured/kaelvo.webp',
+    image: assetUrl('/images/featured/kaelvo.webp'),
   },
   {
     name: 'Mochae',
     slug: 'mochae-brand-identity',
     category: 'Branding',
-    image: '/images/featured/mochae.webp',
+    image: assetUrl('/images/featured/mochae.webp'),
   },
 ];
 
@@ -36,7 +37,7 @@ export const FeaturedWorkSection: React.FC = () => {
     <section className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
 
       {/* Heading — aligned with ProcessWithDepthSection */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <FadeIn direction="up">
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
             Featured Work
@@ -45,7 +46,7 @@ export const FeaturedWorkSection: React.FC = () => {
       </div>
 
       {/* Cards — perfectly aligned with max-w-7xl container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
-      <div className="mt-8 sm:mt-12 max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 overflow-hidden">
+      <div className="mt-8 sm:mt-12 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 overflow-hidden">
         <div className="flex gap-4 sm:gap-6">
           {visible.map((project) => (
             <Link
@@ -81,7 +82,7 @@ export const FeaturedWorkSection: React.FC = () => {
     </div>
 
       {/* Dots + arrows + lime bar — padded */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
           <div className="flex items-center gap-2">

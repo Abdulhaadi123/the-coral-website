@@ -6,16 +6,17 @@ import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { assetUrl } from '@/lib/assets';
 
 export default function FourthDimensionFrameworkPage() {
   return (
-    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-hidden">
+    <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-x-clip">
       <Header />
 
       {/* ── Hero Section ── */}
       <section className="w-full pt-6 sm:pt-8 lg:pt-10 pb-12">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
-          <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          <FadeIn direction="up">
             {/* Muted Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
               INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
@@ -75,7 +76,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col gap-12 sm:gap-28">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col gap-12 sm:gap-28">
           
           {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
           <FadeIn direction="up">
@@ -174,7 +175,7 @@ export default function FourthDimensionFrameworkPage() {
       <section className="w-full pt-16 sm:pt-20">
         
         {/* Section Header */}
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 mb-12 sm:mb-16">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3 leading-tight break-words">
             The Four Stages of Fourth Dimension™
           </h2>
@@ -256,13 +257,15 @@ export default function FourthDimensionFrameworkPage() {
               ],
             },
           ].map(({ num, title, bg, subtitle, desc, tags }) => (
-            <FadeIn
+            <div
               key={title}
-              direction="up"
               className="w-full py-16 sm:py-24 text-white"
               style={{ backgroundColor: bg }}
             >
-              <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+              <FadeIn
+                direction="up"
+                className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start"
+              >
                 
                 {/* Left Column — Large Title */}
                 <div className="lg:col-span-5 flex flex-col gap-2">
@@ -296,8 +299,8 @@ export default function FourthDimensionFrameworkPage() {
                   </div>
                 </div>
 
-              </div>
-            </FadeIn>
+              </FadeIn>
+            </div>
           ))}
         </div>
 
@@ -305,7 +308,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
           
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col items-start gap-6">
@@ -338,7 +341,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
       <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           
           {/* Header */}
           <FadeIn direction="up" className="flex flex-row items-center justify-between gap-2 mb-10">
@@ -357,30 +360,30 @@ export default function FourthDimensionFrameworkPage() {
           </FadeIn>
 
           {/* 4 Cards Grid */}
-          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 title: 'Elovira Packaging',
                 category: 'Branding',
-                img: '/images/featured/elovira.webp',
+                img: assetUrl('/images/featured/elovira.webp'),
                 slug: 'elovira-packaging',
               },
               {
                 title: 'Mochae Brand Identity',
                 category: 'Branding',
-                img: '/images/featured/mochae.webp',
+                img: assetUrl('/images/featured/mochae.webp'),
                 slug: 'mochae-brand-identity',
               },
               {
                 title: 'Omnix Project Management',
                 category: 'Development',
-                img: '/images/portfolio/Rectangle 504 (16).webp',
+                img: assetUrl('/images/portfolio/Rectangle 504 (16).webp'),
                 slug: 'omnix-project-management',
               },
               {
                 title: 'V3 Launch Campaign',
                 category: 'Marketing',
-                img: '/images/portfolio/Rectangle 504 (18).webp',
+                img: assetUrl('/images/portfolio/Rectangle 504 (18).webp'),
                 slug: 'the-vertical-launch',
               },
             ].map(({ title, category, img, slug }) => (

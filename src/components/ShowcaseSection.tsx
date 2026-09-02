@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { FadeIn } from '@/components/Animated';
+import { assetUrl } from '@/lib/assets';
 
 export const ShowcaseSection: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ export const ShowcaseSection: React.FC = () => {
       <FadeIn direction="up">
         <div className="relative w-full aspect-[1643/294] overflow-hidden">
           <video
-            src="/WEB.mp4"
+            src={assetUrl('/WEB.mp4')}
             autoPlay
             loop
             muted

@@ -7,8 +7,8 @@ import { FadeIn } from '@/components/Animated';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="w-full max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 flex flex-col items-start overflow-x-hidden">
-      <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+    <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 flex flex-col items-start overflow-x-hidden">
+      <FadeIn direction="up">
         {/* Main Headline — exact Figma 2 lines with spacious leading */}
         <h1 className="font-semibold tracking-tight text-[#111827] text-2xl sm:text-4xl md:text-5xl lg:text-[48px]" style={{ lineHeight: '1.10' }}>
           <span className="block whitespace-normal sm:whitespace-nowrap">

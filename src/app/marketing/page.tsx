@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { assetUrl } from '@/lib/assets';
 import {
   IconInboundMarketing,
   IconEmailPaidAds,
@@ -41,10 +42,10 @@ export default function MarketingPage() {
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
+        <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
           
           {/* Left Content */}
-          <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+          <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
@@ -79,7 +80,7 @@ export default function MarketingPage() {
         </section>
 
         {/* Section 2: Grow With Clearer Marketing */}
-        <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-10 w-full">
+        <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-10 w-full">
           <FadeIn direction="up">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
               
@@ -124,7 +125,7 @@ export default function MarketingPage() {
       </div>
 
       {/* Section 3: Strategic Marketing Services (White BG) */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Gradient Title */}
@@ -231,7 +232,7 @@ export default function MarketingPage() {
 
       {/* ── Our Approach Section (#F0F0F0 background) ── */}
       <section className="w-full bg-[#F0F0F0] py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col">
+        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
           
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3">
             Our Approach
@@ -273,7 +274,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -328,7 +329,7 @@ export default function MarketingPage() {
 
       {/* ── Featured Work Section (#A7F076 Lime Green BG) ── */}
       <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
           
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-5xl font-semibold text-white mb-8 sm:mb-10 tracking-tight">
@@ -343,25 +344,25 @@ export default function MarketingPage() {
                 title: 'Elovira Packaging',
                 client: 'Elovira',
                 tag: 'FMGC',
-                img: '/images/featured/elovira.webp',
+                img: assetUrl('/images/featured/elovira.webp'),
               },
               {
                 title: 'Liviq Smart Home App',
                 client: 'Liviq',
                 tag: 'SERVICES',
-                img: '/images/featured/liviq.webp',
+                img: assetUrl('/images/featured/liviq.webp'),
               },
               {
                 title: 'V3 By The Vertical Launch Campaign',
                 client: 'The Vertical',
                 tag: 'CO WORKING SPACES',
-                img: '/images/featured/the-vertical.webp',
+                img: assetUrl('/images/featured/the-vertical.webp'),
               },
               {
                 title: 'Finlo Smart Banking',
                 client: 'Finlo',
                 tag: 'BANKING',
-                img: '/images/featured/finlo.webp',
+                img: assetUrl('/images/featured/finlo.webp'),
               },
             ].map(({ title, client, tag, img }) => (
               <StaggerItem
@@ -414,7 +415,7 @@ export default function MarketingPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Ready to turn your marketing into a stronger pipeline?
           </h2>

@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { BeyondTheCodeTimeline } from '@/components/BeyondTheCodeTimeline';
 
 export default function DevelopmentPage() {
   return (
@@ -15,8 +16,8 @@ export default function DevelopmentPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
-        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
+        <FadeIn direction="up">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
             WEBSITE DEVELOPMENT
@@ -58,7 +59,7 @@ export default function DevelopmentPage() {
       </ScaleIn>
 
       {/* Section 2: How We Build Differently */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
             
@@ -119,7 +120,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 3: Website Development Services */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
         <div>
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#111827] mb-12 sm:mb-16">
@@ -168,57 +169,24 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-4xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center">
-          
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center mb-3">
+      <section className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
+        <FadeIn direction="up" className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center">
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
             Beyond the Code
           </h2>
-          
-          <p className="text-sm sm:text-base lg:text-lg font-medium text-center text-white/95 mb-2">
+
+          <p className="text-base sm:text-lg lg:text-xl font-medium text-center text-white/95 mb-3">
             We do not just turn designs into web pages.
           </p>
-          
-          <p className="text-xs sm:text-sm text-center text-white/80 max-w-xl mb-8 sm:mb-14 leading-relaxed font-normal">
+
+          <p className="text-sm sm:text-base text-center text-white/80 max-w-2xl mb-12 sm:mb-20 leading-relaxed font-normal">
             We build the structure behind your website so it loads fast, works smoothly, supports search, and stays easy to manage after launch.
           </p>
 
-          {/* Vertical Timeline */}
-          <div className="relative w-full max-w-xl my-6 flex flex-col gap-8 sm:gap-10">
-            {/* Center Line */}
-            <div className="absolute left-1/2 top-3 bottom-3 w-[1.5px] bg-white/40 -translate-x-1/2" />
+          <BeyondTheCodeTimeline />
 
-            <StaggerContainer className="flex flex-col gap-8 sm:gap-10">
-              {[
-                { text: 'Translate design with care', align: 'left' },
-                { text: 'Build mobile-first layouts', align: 'right' },
-                { text: 'Keep the codebase clean', align: 'left' },
-                { text: 'Set up flexible content control', align: 'right' },
-                { text: 'Prepare SEO and tracking basics', align: 'left' },
-                { text: 'Test key journeys before launch', align: 'right' },
-              ].map(({ text, align }, idx) => (
-                <StaggerItem key={idx} className="relative flex items-center w-full min-h-[32px]">
-                  {/* Dot */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white z-10 shadow-sm" />
-
-                  {/* Text Box */}
-                  <div
-                    className={`w-1/2 ${
-                      align === 'left'
-                        ? 'pr-3 sm:pr-6 text-right'
-                        : 'pl-3 sm:pl-6 text-left ml-auto'
-                    }`}
-                  >
-                    <span className="text-xs sm:text-sm md:text-base font-bold text-[#A7F076]">
-                      {text}
-                    </span>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-
-          <p className="text-xs sm:text-sm font-medium text-center text-white/90 max-w-md mt-14 leading-relaxed">
+          <p className="text-sm sm:text-base font-medium text-center text-white/90 max-w-xl mt-16 sm:mt-20 leading-relaxed">
             The result is a website that works well from launch and stays ready for what comes next.
           </p>
 
@@ -226,7 +194,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -276,7 +244,7 @@ export default function DevelopmentPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-5 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need a website that&apos;s fast, flexible and built to last?
           </h2>

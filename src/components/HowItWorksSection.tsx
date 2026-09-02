@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useScrollProgress } from '@/hooks/useScrollProgress';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -70,39 +71,39 @@ const steps = [
 export const HowItWorksSection: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stepsRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const maxTranslateRef = useRef(0);
 
+  // Measured on mount/resize rather than per frame — reading scrollHeight forces
+  // a synchronous layout.
   useEffect(() => {
-    const handleScroll = () => {
-      if (!wrapperRef.current) return;
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const wrapperHeight = wrapperRef.current.offsetHeight;
-      const scrollable = wrapperHeight - window.innerHeight;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollable));
-      setScrollProgress(progress);
+    const measure = () => {
+      const el = stepsRef.current;
+      if (el) maxTranslateRef.current = Math.max(0, el.scrollHeight - (window.innerHeight - 160));
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
   }, []);
 
-  // The right steps column scrolls up as user scrolls through wrapper
-  // translateY goes from 0 → -(steps content height - visible area)
-  const stepsHeight = stepsRef.current?.scrollHeight ?? 1200;
-  const visibleHeight = typeof window !== 'undefined' ? window.innerHeight - 160 : 800;
-  const maxTranslate = Math.max(0, stepsHeight - visibleHeight);
-  const translateY = -scrollProgress * maxTranslate;
-
-  // Line fill height: 0% → 100% as progress goes 0 → 1
-  const lineHeight = `${scrollProgress * 100}%`;
+  const activeIndex = useScrollProgress(wrapperRef, {
+    mode: 'pinned',
+    itemCount: steps.length,
+    onFrame: (progress) => {
+      if (stepsRef.current) {
+        // translate3d keeps this on the compositor.
+        stepsRef.current.style.transform =
+          `translate3d(0, ${-progress * maxTranslateRef.current}px, 0)`;
+      }
+      if (lineRef.current) lineRef.current.style.height = `${progress * 100}%`;
+    },
+  });
 
   return (
     <div ref={wrapperRef} style={{ height: '340vh' }} className="relative">
 
       <div className="sticky top-0 h-screen overflow-hidden w-full bg-[#21A0A3] text-white flex items-stretch">
-        <div className="max-w-7xl mx-auto w-full px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-0">
 
           <div className="lg:col-span-5 flex flex-col justify-start pt-8 sm:pt-20 pb-4 lg:pb-12">
             <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-tight leading-tight text-white">
@@ -130,25 +131,18 @@ export const HowItWorksSection: React.FC = () => {
             <div
               ref={stepsRef}
               className="pl-6 sm:pl-10 pt-4 sm:pt-20 pb-16 will-change-transform relative"
-              style={{
-                transform: `translateY(${translateY}px)`,
-                transition: 'transform 0.05s linear',
-              }}
             >
               <div className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 bottom-12 w-[2px] bg-white/25 rounded-full" />
 
               <div
-                className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176]"
-                style={{
-                  height: lineHeight,
-                  transition: 'height 0.05s linear',
-                }}
+                ref={lineRef}
+                className="absolute left-[23px] sm:left-[31px] top-4 sm:top-20 w-[2px] bg-[#A7F176] rounded-full shadow-[0_0_10px_#A7F176] will-change-[height]"
+                style={{ height: 0 }}
               />
 
               <div className="flex flex-col gap-6 sm:gap-10 pt-4 sm:pt-20">
                 {steps.map((item, index) => {
-                  const stepThreshold = index / (steps.length - 1);
-                  const isActive = scrollProgress >= stepThreshold * 0.85;
+                  const isActive = index <= activeIndex;
 
                   return (
                     <div key={item.step} className="relative pl-7 sm:pl-12">

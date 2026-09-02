@@ -1,3 +1,5 @@
+import { assetUrl } from '@/lib/assets';
+
 export interface ProjectItem {
   slug: string;
   title: string;
@@ -9,7 +11,9 @@ export interface ProjectItem {
   bg: string;
 }
 
-export const projects: ProjectItem[] = [
+// Raw source-of-truth paths. Every image is resolved through assetUrl() below so
+// the whole list is served from the S3 bucket when NEXT_PUBLIC_ASSET_BASE_URL is set.
+const rawProjects: ProjectItem[] = [
   // Row 1 (Boxes 1-4)
   {
     slug: 'elovira-packaging',
@@ -346,3 +350,9 @@ export const projects: ProjectItem[] = [
     bg: '#1a1a1a',
   },
 ];
+
+export const projects: ProjectItem[] = rawProjects.map((project) => ({
+  ...project,
+  image: assetUrl(project.image),
+  detailImage: assetUrl(project.detailImage),
+}));

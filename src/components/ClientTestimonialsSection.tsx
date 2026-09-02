@@ -123,7 +123,7 @@ export const ClientTestimonialsSection: React.FC = () => {
 
   return (
     <section className="w-full bg-[#F5F6F7] pt-16 sm:pt-20 pb-16 sm:pb-20 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] tracking-tight max-w-2xl" style={{ lineHeight: '1.10' }}>
           What Our Clients Say
         </h2>

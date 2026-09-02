@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAdminSession } from '@/lib/auth';
-import { uploadImageToCloudinary } from '@/lib/cloudinary';
+import { uploadToS3 } from '@/lib/s3';
+
+// Videos and full-page detail images can be large — stream them rather than
+// buffering through the default 4MB body limit.
+export const runtime = 'nodejs';
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,23 +22,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const base64Image = `data:${file.type};base64,${buffer.toString('base64')}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    const uploadResult = await uploadImageToCloudinary(base64Image, folder);
+    const { url, key } = await uploadToS3(
+      buffer,
+      file.name || 'upload',
+      file.type,
+      folder
+    );
 
     return NextResponse.json({
       success: true,
-      url: uploadResult.url,
-      publicId: uploadResult.publicId,
-      width: uploadResult.width,
-      height: uploadResult.height,
+      url,
+      key,
+      // Kept for backwards compatibility with the existing admin forms, which
+      // read `publicId` from the Cloudinary-era response shape.
+      publicId: key,
     });
   } catch (error: any) {
     console.error('Upload error:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to upload image' },
+      { error: error.message || 'Failed to upload file' },
       { status: 500 }
     );
   }

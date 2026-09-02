@@ -28,9 +28,9 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
       <Header />
 
       {/* Hero Header Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-6 w-full">
-        {/* Top Header Text with exact pl-6 sm:pl-12 md:pl-16 lg:pl-20 site-wide indent */}
-        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20 mb-8 sm:mb-10">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-6 w-full">
+        {/* Top Header Text — flush with the section gutter, no extra indent */}
+        <FadeIn direction="up" className="mb-8 sm:mb-10">
           {/* Back link */}
           <Link
             href="/journal"
@@ -243,7 +243,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
 
       {/* ── Bottom Call To Action Banner Section ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center gap-4 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-4 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need your own solid online presence with a lucrative inbound funnel?
           </h2>

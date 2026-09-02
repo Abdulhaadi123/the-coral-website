@@ -25,8 +25,8 @@ export default function DesignPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
-        <FadeIn direction="up" className="pl-6 sm:pl-12 md:pl-16 lg:pl-20">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
+        <FadeIn direction="up">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
             DESIGN SERVICES
@@ -48,7 +48,7 @@ export default function DesignPage() {
       </section>
 
       {/* Section 2: Brand Recognition & Trust */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-stretch">
             
@@ -78,7 +78,7 @@ export default function DesignPage() {
 
       {/* Section 3: Design Services Grid (Gradient Mesh Section) */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
 
           {/* Left Heading */}
           <FadeIn direction="up" className="lg:col-span-5">
@@ -116,7 +116,7 @@ export default function DesignPage() {
       </section>
 
       {/* ── Our Approach Section ── */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 py-16 sm:py-20 w-full">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -174,7 +174,7 @@ export default function DesignPage() {
 
       {/* ── 4 Steps: Discover → Define → Develop → Drive ── */}
       <section className="w-full border-t border-gray-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
           {[
             { num: '01', step: 'Discover', desc: 'Research, audit, and understanding' },
@@ -207,7 +207,7 @@ export default function DesignPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <FadeIn direction="up" className="max-w-3xl mx-auto flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?

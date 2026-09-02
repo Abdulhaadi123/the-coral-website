@@ -11,7 +11,7 @@ import {
 export const WhyChooseUsSection: React.FC = () => {
   return (
     <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 text-[#111827] overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-16 lg:px-24 flex flex-col items-center text-center">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center">
 
         {/* Title & Subtitle */}
         <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111827] mb-3" style={{ lineHeight: '1.10' }}>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { assetUrl } from '@/lib/assets';
 
 interface ProjectDetailViewerProps {
   project: {
@@ -58,7 +59,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={project.detailImage}
+          src={assetUrl(project.detailImage)}
           alt={project.title}
           draggable={false}
           onContextMenu={(e) => e.preventDefault()}
@@ -83,7 +84,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
         <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={project.image}
+            src={assetUrl(project.image)}
             alt={project.title}
             className="w-full h-full object-cover"
           />

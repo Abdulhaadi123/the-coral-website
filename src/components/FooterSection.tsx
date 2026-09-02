@@ -5,7 +5,7 @@ import { IconFacebook, IconInstagram, IconLinkedin } from '@/components/icons/Ic
 
 export const FooterSection: React.FC = () => {
   return (
-    <footer className="w-full relative bg-black text-white pt-16 pb-12 px-4 sm:px-12 lg:px-16 overflow-hidden">
+    <footer className="w-full relative bg-black text-white pt-16 pb-12 overflow-hidden">
 
       {/* Background 3D Liquid Image */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-80">
@@ -20,7 +20,7 @@ export const FooterSection: React.FC = () => {
       </div>
 
       {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
 
         {/* Left Big Card Box */}
         <div className="lg:col-span-7 bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-12 flex flex-col justify-between shadow-2xl">

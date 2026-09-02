@@ -4,16 +4,57 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Loader2 } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
 import { IconLayersStep } from '@/components/icons/Icons';
 
+const EMPTY_FORM = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  company: '',
+  website: '',
+  message: '',
+  hasBrief: '',
+};
+
 export default function BookACallPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const setField = (key: keyof typeof EMPTY_FORM, value: string) =>
+    setForm((prev) => ({ ...prev, [key]: value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+
+    setSending(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      setForm(EMPTY_FORM);
+      setSubmitted(true);
+    } catch {
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -23,7 +64,7 @@ export default function BookACallPage() {
       <div className="flex flex-col lg:flex-row flex-1">
 
         {/* ── LEFT COLUMN (Form) — Aligned with hamburger ── */}
-        <div className="w-full lg:w-1/2 bg-white px-8 sm:px-16 lg:px-24 pt-0 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-white px-5 sm:px-8 lg:px-12 pt-0 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */
@@ -92,6 +133,8 @@ export default function BookACallPage() {
                       First name <span className="text-red-400">*</span>
                     </label>
                     <input
+                      value={form.firstName}
+                      onChange={(e) => setField('firstName', e.target.value)}
                       type="text"
                       required
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
@@ -102,6 +145,8 @@ export default function BookACallPage() {
                       Last name <span className="text-red-400">*</span>
                     </label>
                     <input
+                      value={form.lastName}
+                      onChange={(e) => setField('lastName', e.target.value)}
                       type="text"
                       required
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
@@ -116,6 +161,8 @@ export default function BookACallPage() {
                       Work email <span className="text-red-400">*</span>
                     </label>
                     <input
+                      value={form.email}
+                      onChange={(e) => setField('email', e.target.value)}
                       type="email"
                       required
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
@@ -126,6 +173,8 @@ export default function BookACallPage() {
                       Phone / WhatsApp
                     </label>
                     <input
+                      value={form.phone}
+                      onChange={(e) => setField('phone', e.target.value)}
                       type="tel"
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
                     />
@@ -139,6 +188,8 @@ export default function BookACallPage() {
                       Company or brand name
                     </label>
                     <input
+                      value={form.company}
+                      onChange={(e) => setField('company', e.target.value)}
                       type="text"
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
                     />
@@ -148,6 +199,8 @@ export default function BookACallPage() {
                       Website or social link
                     </label>
                     <input
+                      value={form.website}
+                      onChange={(e) => setField('website', e.target.value)}
                       type="url"
                       className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors"
                     />
@@ -160,6 +213,8 @@ export default function BookACallPage() {
                     What do you need help with?
                   </label>
                   <textarea
+                      value={form.message}
+                      onChange={(e) => setField('message', e.target.value)}
                     rows={4}
                     className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#78B249] transition-colors resize-none"
                   />
@@ -173,24 +228,36 @@ export default function BookACallPage() {
                   <p className="text-xs text-gray-400">A few notes, deck, or rough outline is enough.</p>
                   <div className="flex items-center gap-6 mt-1">
                     <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                      <input type="radio" name="brief" value="yes" className="accent-[#78B249]" />
+                      <input type="radio" name="brief" value="yes" checked={form.hasBrief === 'yes'} onChange={() => setField('hasBrief', 'yes')} className="accent-[#78B249]" />
                       Yes
                     </label>
                     <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                      <input type="radio" name="brief" value="no" className="accent-[#78B249]" />
+                      <input type="radio" name="brief" value="no" checked={form.hasBrief === 'no'} onChange={() => setField('hasBrief', 'no')} className="accent-[#78B249]" />
                       No
                     </label>
                   </div>
                 </div>
 
+                {/* Error message */}
+                {error && (
+                  <p className="text-sm text-red-500 font-medium" role="alert">
+                    {error}
+                  </p>
+                )}
+
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="group self-start mt-2 inline-flex items-center gap-3 px-7 py-3 rounded-full bg-[#111827] text-white font-semibold text-sm hover:bg-[#111827]/90 transition-all duration-300 shadow-md hover:scale-105 active:scale-95"
+                  disabled={sending}
+                  className="group self-start mt-2 inline-flex items-center gap-3 px-7 py-3 rounded-full bg-[#111827] text-white font-semibold text-sm hover:bg-[#111827]/90 transition-all duration-300 shadow-md hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  <span>Submit</span>
+                  <span>{sending ? 'Sending...' : 'Submit'}</span>
                   <span className="w-6 h-6 rounded-full border border-white flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
-                    <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+                    {sending ? (
+                      <Loader2 className="w-3.5 h-3.5 text-white animate-spin" />
+                    ) : (
+                      <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+                    )}
                   </span>
                 </button>
 
@@ -202,7 +269,7 @@ export default function BookACallPage() {
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-8 sm:px-16 lg:px-16 pt-4 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-5 sm:px-8 lg:px-12 pt-4 pb-16 flex flex-col justify-between">
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 w-full max-w-xl my-auto">
             {[

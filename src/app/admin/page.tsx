@@ -10,6 +10,7 @@ import {
   Sparkles,
   ExternalLink,
 } from 'lucide-react';
+import { assetUrl } from '@/lib/assets';
 
 export default function AdminDashboardPage() {
   const [projectsCount, setProjectsCount] = useState<number | null>(null);
@@ -190,7 +191,7 @@ export default function AdminDashboardPage() {
                 <div className="relative aspect-[3/2] rounded-xl overflow-hidden bg-gray-100 mb-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={p.image}
+                    src={assetUrl(p.image)}
                     alt={p.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
