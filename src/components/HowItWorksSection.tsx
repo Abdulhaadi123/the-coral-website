@@ -177,7 +177,7 @@ export const HowItWorksSection: React.FC = () => {
             style={{ height: 0 }}
           />
 
-          <div className="flex flex-col gap-16 sm:gap-20 pt-16 lg:pt-[162px]">
+          <div className="flex flex-col gap-16 sm:gap-20 pt-16 lg:pt-[162px] pb-16 lg:pb-[181px]">
             {steps.map((item, i) => (
               <div key={item.step} className="relative pl-14">
                 {/* Dot, centred on the rail */}

@@ -55,7 +55,7 @@ export const ProcessWithDepthSection: React.FC = () => {
 
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95 text-center sm:text-left"
+              className="group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-transparent hover:border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 text-center sm:text-left"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
