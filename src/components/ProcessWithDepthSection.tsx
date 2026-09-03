@@ -10,12 +10,12 @@ export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-6">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
           direction="up"
-          className="relative z-10 w-full lg:w-[42%] flex flex-col justify-center items-start pr-0 lg:pr-6"
+          className="relative z-10 w-full lg:w-[50%] flex flex-col justify-center items-start pr-0 lg:pr-6"
         >
           {/* Heading — exact original 2 lines & size */}
           <h2
@@ -42,7 +42,7 @@ export const ProcessWithDepthSection: React.FC = () => {
           </p>
 
           {/* CTAs — exact original */}
-          <div className="mt-5 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 w-full sm:w-auto">
+          <div className="mt-5 flex flex-col sm:flex-row sm:flex-nowrap items-stretch sm:items-center gap-3 w-full sm:w-auto">
             <Link
               href="/fourth-dimension-framework"
               className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95 text-center sm:text-left"
@@ -55,7 +55,7 @@ export const ProcessWithDepthSection: React.FC = () => {
 
             <Link
               href="/book-a-call"
-              className="group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-transparent hover:border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 text-center sm:text-left"
+              className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95 text-center sm:text-left"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -84,7 +84,7 @@ export const ProcessWithDepthSection: React.FC = () => {
       <FadeIn
         direction="none"
         delay={0.15}
-        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:right-0 lg:w-auto lg:aspect-[1138/640] lg:z-0"
+        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:right-0 lg:w-auto lg:aspect-[1138/640] lg:z-0 lg:translate-x-16"
       >
         <div className="relative w-full aspect-video lg:aspect-auto lg:h-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}

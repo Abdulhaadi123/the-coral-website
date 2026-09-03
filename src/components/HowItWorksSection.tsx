@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -82,6 +82,47 @@ const steps = [
  * stuck.
  */
 export const HowItWorksSection: React.FC = () => {
+  const colRef = useRef<HTMLDivElement>(null);
+  const fillRef = useRef<HTMLDivElement>(null);
+  const dotsRef = useRef<Array<HTMLSpanElement | null>>([]);
+
+  useEffect(() => {
+    const update = () => {
+      const col = colRef.current;
+      const fill = fillRef.current;
+      if (!col || !fill) return;
+
+      const rect = col.getBoundingClientRect();
+      // The "playhead" sits just below the middle of the viewport; the rail is
+      // filled down to wherever that line has reached.
+      const anchor = window.innerHeight * 0.55;
+      const filled = Math.max(0, Math.min(rect.height, anchor - rect.top));
+      fill.style.height = `${filled}px`;
+
+      // Dots light as the fill reaches them. Written straight to style so
+      // scrolling never re-renders the component.
+      for (const dot of dotsRef.current) {
+        if (!dot) continue;
+        const reached = dot.getBoundingClientRect().top - rect.top <= filled;
+        dot.style.backgroundColor = reached ? '#A7F176' : 'rgba(255,255,255,0.45)';
+        dot.style.boxShadow = reached ? '0 0 10px #A7F176' : 'none';
+      }
+    };
+
+    // Run synchronously rather than through requestAnimationFrame: this is a
+    // handful of rect reads, and rAF-only scheduling silently does nothing
+    // wherever frames are throttled (background tabs, reduced-motion setups).
+    const onScroll = () => update();
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
     <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
@@ -119,25 +160,32 @@ export const HowItWorksSection: React.FC = () => {
           the dots as negative offsets from a padded step, which put them 3.5px out
           of true at the `sm` breakpoint.
         */}
-        <div className="lg:col-span-7 relative">
+        <div ref={colRef} className="lg:col-span-7 relative">
 
-          {/* Rail — 2px wide, centred on 16px */}
-          <div className="absolute left-[15px] top-2 bottom-2 w-[2px] bg-white/25 rounded-full" />
+          {/* Rail — 2px wide, centred on 16px. Starts above the first dot. */}
+          <div className="absolute left-[15px] top-0 bottom-2 w-[2px] bg-white/25 rounded-full" />
 
-          {/* Travelling progress segment — sticky, so it rides the viewport */}
-          <div className="absolute left-[15px] top-2 bottom-2 w-[2px] pointer-events-none">
-            <div className="sticky top-24 h-[340px] w-full rounded-full bg-[#A7F176] shadow-[0_0_14px_#A7F176]" />
-          </div>
+          {/*
+            Progress fill — grows downward and STAYS filled behind itself, so the
+            rail reads as completed above the playhead. The previous sticky segment
+            was a fixed-height band that travelled, which let the line fall back to
+            dark once it moved past.
+          */}
+          <div
+            ref={fillRef}
+            className="absolute left-[15px] top-0 w-[2px] rounded-full bg-[#A7F176] shadow-[0_0_14px_#A7F176] pointer-events-none"
+            style={{ height: 0 }}
+          />
 
-          {/* Fades so the segment dissolves at both ends instead of stopping dead */}
-          <div className="absolute left-[8px] top-0 h-24 w-4 pointer-events-none bg-gradient-to-b from-[#21A0A3] to-transparent" />
-          <div className="absolute left-[8px] bottom-0 h-24 w-4 pointer-events-none bg-gradient-to-t from-[#21A0A3] to-transparent" />
-
-          <div className="flex flex-col gap-16 sm:gap-20">
-            {steps.map((item) => (
+          <div className="flex flex-col gap-16 sm:gap-20 pt-16 lg:pt-[162px]">
+            {steps.map((item, i) => (
               <div key={item.step} className="relative pl-14">
                 {/* Dot, centred on the rail */}
-                <span className="absolute left-[9px] top-1.5 w-3.5 h-3.5 rounded-full bg-[#A7F176] border-2 border-white shadow-[0_0_10px_#A7F176]" />
+                <span
+                  ref={(el) => { dotsRef.current[i] = el; }}
+                  className="absolute left-[9px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white transition-colors duration-300"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.45)' }}
+                />
 
                 <span className="text-[11px] font-bold tracking-[0.2em] text-teal-100/70 uppercase block mb-3">
                   {item.step}
