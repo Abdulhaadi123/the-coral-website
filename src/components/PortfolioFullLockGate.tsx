@@ -8,6 +8,9 @@ interface PortfolioFullLockGateProps {
   totalProjects: number;
 }
 
+/** Entering this in all three fields unlocks the gate without submitting a lead. */
+const BYPASS_VALUE = '111';
+
 export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ onUnlock, totalProjects }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,8 +21,29 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || !phone.trim()) {
+    const n = name.trim();
+    const em = email.trim();
+    const ph = phone.trim();
+
+    if (!n || !em || !ph) {
       setError('Please fill in your name, email, and phone number.');
+      return;
+    }
+
+    // Internal shortcut: 111 in all three fields unlocks without creating a lead.
+    // Client-side only, so treat it as a convenience for demos and QA rather than
+    // a secret — anyone reading the bundle can find it.
+    if (n === BYPASS_VALUE && em === BYPASS_VALUE && ph === BYPASS_VALUE) {
+      setSuccess(true);
+      localStorage.setItem('coral_portfolio_unlocked', 'true');
+      setTimeout(onUnlock, 500);
+      return;
+    }
+
+    // The form is noValidate (so the shortcut can reach this handler), so the
+    // email format is checked here instead of by the browser.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+      setError('Please enter a valid email address.');
       return;
     }
 
@@ -31,9 +55,9 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          phone: phone.trim(),
+          name: n,
+          email: em,
+          phone: ph,
           source: 'portfolio_gate',
         }),
       });
@@ -86,7 +110,7 @@ export const PortfolioFullLockGate: React.FC<PortfolioFullLockGateProps> = ({ on
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
           {/* Full Name */}
           <div>
             <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
