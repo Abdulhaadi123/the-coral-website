@@ -42,3 +42,12 @@ temp_auto_push.bat
 temp_interactive_push.bat
 
 *.mov
+
+# Heavy media. These are served from S3 in every environment
+# (NEXT_PUBLIC_ASSET_BASE_URL), so committing ~65MB of binaries would bloat the
+# repo permanently for no gain. Re-upload with `npm run sync:assets` after
+# replacing one. The two at the project root are stray source copies.
+/Gif file.gif
+/WEBSITE VIDEO.mp4
+/public/WEBSITE VIDEO.mp4
+/public/process-depth.gif

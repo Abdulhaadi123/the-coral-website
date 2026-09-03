@@ -13,17 +13,12 @@ export const JournalSection: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           {/* Section Title with Gradient Branding */}
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#111827]" style={{ lineHeight: '1.10' }}>
-            <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(90deg, #5E9738 0%, #9FE66F 19%, #32CEC6 100%)' }}
-            >
-              The Coral Room
-            </span>
+            <span className="text-[#111827]">The Coral Room</span>
             <span className="text-[#111827]"> : Journal</span>
           </h2>
 
           {/* View All Posts Button */}
-          <Link href="/journal" className="px-6 py-2.5 rounded-full border border-gray-400 text-gray-700 hover:text-black hover:border-black text-xs sm:text-sm font-semibold transition-all duration-300">
+          <Link href="/journal" className="px-6 py-2.5 rounded-full border border-gray-400 text-gray-700 hover:bg-[#111827] hover:text-white hover:border-[#111827] text-xs sm:text-sm font-semibold transition-all duration-300">
             View all posts
           </Link>
         </div>

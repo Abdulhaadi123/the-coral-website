@@ -74,11 +74,9 @@ export default function FourthDimensionFrameworkPage() {
         </ScaleIn>
       </section>
 
-      {/* ── What is Fourth Dimension™ & What Makes Our Approach Different (Unified White Section) ── */}
+      {/* ── What is Fourth Dimension™ & Why it Matters ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col gap-12 sm:gap-28">
-          
-          {/* Part 1: What is Fourth Dimension™ & Why it Matters */}
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
@@ -117,10 +115,14 @@ export default function FourthDimensionFrameworkPage() {
               </div>
             </div>
           </FadeIn>
+        </div>
+      </section>
 
-          {/* Part 2: What Makes Our Approach Different */}
+      {/* ── What Makes Our Approach Different ── */}
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 border-t border-gray-100 pt-16 sm:pt-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
               <div className="lg:col-span-5">
                 <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight sticky top-24 break-words">
@@ -167,7 +169,6 @@ export default function FourthDimensionFrameworkPage() {
               </div>
             </div>
           </FadeIn>
-
         </div>
       </section>
 
