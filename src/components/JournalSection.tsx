@@ -7,7 +7,7 @@ import { blogPosts } from '@/app/journal/data';
 export const JournalSection: React.FC = () => {
   return (
     <section className="w-full bg-[#F9FAFB] py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
         
         {/* Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">

@@ -314,7 +314,7 @@ export default function BookACallPage() {
 
       {/* ── FIGMA CUSTOM DARK FOOTER FOR BOOK A CALL PAGE ── */}
       <section className="w-full px-4 sm:px-8 pb-8 pt-6 bg-white">
-        <div className="max-w-7xl mx-auto bg-[#202020] rounded-[32px] sm:rounded-[40px] px-8 sm:px-16 lg:px-20 pt-12 sm:pt-16 pb-8 flex flex-col justify-between min-h-[360px] relative overflow-hidden shadow-2xl">
+        <div className="max-w-[1600px] mx-auto bg-[#202020] rounded-[32px] sm:rounded-[40px] px-8 sm:px-16 lg:px-20 pt-12 sm:pt-16 pb-8 flex flex-col justify-between min-h-[360px] relative overflow-hidden shadow-2xl">
           
           {/* Massive "the coral room." Logo Banner */}
           <div className="w-full flex justify-center items-center my-auto py-6">

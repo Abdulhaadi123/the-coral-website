@@ -28,7 +28,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
       <Header />
 
       {/* Hero Header Section */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-6 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-6 w-full">
         {/* Top Header Text — flush with the section gutter, no extra indent */}
         <FadeIn direction="up" className="mb-8 sm:mb-10">
           {/* Back link */}

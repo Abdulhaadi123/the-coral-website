@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
       {/* ── Top Header Bar ── */}
       <header
         ref={headerRef}
-        className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
+        className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
       >
 
         {/* Hamburger */}
@@ -149,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           aria-label="Open Menu"
           aria-expanded={open}
           onClick={() => setOpen(true)}
-          className="hover:opacity-80 transition-opacity p-1 cursor-pointer"
+          className="hover:opacity-80 transition-opacity p-1 -ml-1 cursor-pointer"
         >
           {isDark ? (
             <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -42,7 +42,7 @@ export default function MarketingPage() {
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
+        <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
           
           {/* Left Content */}
           <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative">
@@ -80,7 +80,7 @@ export default function MarketingPage() {
         </section>
 
         {/* Section 2: Grow With Clearer Marketing */}
-        <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-10 w-full">
+        <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-10 w-full">
           <FadeIn direction="up">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
               
@@ -125,7 +125,7 @@ export default function MarketingPage() {
       </div>
 
       {/* Section 3: Strategic Marketing Services (White BG) */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Left Gradient Title */}
@@ -232,7 +232,7 @@ export default function MarketingPage() {
 
       {/* ── Our Approach Section (#F0F0F0 background) ── */}
       <section className="w-full bg-[#F0F0F0] py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
           
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3">
             Our Approach
@@ -274,7 +274,7 @@ export default function MarketingPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -329,7 +329,7 @@ export default function MarketingPage() {
 
       {/* ── Featured Work Section (#A7F076 Lime Green BG) ── */}
       <section className="w-full bg-[#A7F076] pt-14 sm:pt-20 pb-8 sm:pb-10">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col">
           
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-5xl font-semibold text-white mb-8 sm:mb-10 tracking-tight">

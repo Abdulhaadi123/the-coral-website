@@ -60,7 +60,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ iconSrc, altText, title, desc
 export const WhatWeDoSection: React.FC = () => {
   return (
     <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 mt-12 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
         {/* Top Header Content */}
         <FadeIn direction="up" className="mb-16">
           <span className="text-xs font-bold tracking-widest text-gray-700 uppercase block mb-4">

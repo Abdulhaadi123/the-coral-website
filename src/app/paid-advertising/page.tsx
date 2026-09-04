@@ -80,7 +80,7 @@ export default function PaidAdvertisingPage() {
         className="w-full relative overflow-hidden"
         style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-0">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-0">
           <FadeIn direction="up">
             {/* Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">
@@ -123,7 +123,7 @@ export default function PaidAdvertisingPage() {
       </section>
 
       {/* ── Paid Advertising Services Grid ── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24 w-full">
         <div>
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] leading-tight mb-8 sm:mb-12 max-w-sm">
@@ -156,7 +156,7 @@ export default function PaidAdvertisingPage() {
 
       {/* ── PPC & Paid Advertising Section ── */}
       <section className="w-full pt-4 sm:pt-8 pb-0">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
             {/* Two-column text row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-12">

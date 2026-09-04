@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 export const BrandStatementSection: React.FC = () => {
   return (
     <section className="w-full bg-white py-16 sm:py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         
         {/* Left Column: Headline & CTA */}
         <div className="lg:col-span-6 flex flex-col items-start">

@@ -56,7 +56,7 @@ export default function MarketingCampaignsPage() {
       <Header />
 
       {/* ── Hero Section — Text only, constrained ── */}
-      <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-0">
+      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-0">
         <FadeIn direction="up">
           {/* Heading */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[48px] font-semibold text-[#111827] max-w-2xl mb-6" style={{ lineHeight: '1.10' }}>
@@ -96,7 +96,7 @@ export default function MarketingCampaignsPage() {
       </div>
 
       {/* ── 3-col Info Cards ── */}
-      <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20">
+      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {infoCards.map(({ title, desc }) => (
             <StaggerItem key={title} className="h-full">
@@ -113,7 +113,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── We Can Help You With ── */}
-      <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20">
+      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20">
         <div>
 
         {/* Heading */}
@@ -178,7 +178,7 @@ export default function MarketingCampaignsPage() {
 
       {/* ── Full-Journey Marketing (#F5F7FA BG) ── */}
       <section className="w-full bg-[#F5F7FA] py-16 sm:py-20 my-12">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center">
           
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] text-center mb-3">
             Full-Journey Marketing
@@ -284,7 +284,7 @@ export default function MarketingCampaignsPage() {
       </section>
 
       {/* ── Building Your Inbound Foundation (#A7F176 Green Card) ── */}
-      <section className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-10 sm:py-16">
+      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-10 sm:py-16">
         <FadeIn direction="up">
           <div className="w-full bg-[#A7F176] rounded-3xl p-5 sm:p-14">
             

@@ -68,7 +68,7 @@ export default function SeoSearchVisibilityPage() {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full relative z-10">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 w-full relative z-10">
           <FadeIn direction="up" className="max-w-4xl">
             {/* Tag */}
             <span className="text-xs font-bold tracking-widest uppercase text-white block mb-5">
@@ -92,7 +92,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── How We Approach SEO ── */}
       <section className="w-full bg-white py-16 sm:py-20 border-b border-gray-100">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left Title */}
           <div className="md:col-span-5">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] leading-tight sticky top-24">
@@ -119,7 +119,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── SEO & Search Visibility Services (Green Mesh Gradient BG) ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
           <FadeIn direction="up" className="mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] text-center">
               SEO &amp; Search Visibility Services
@@ -142,7 +142,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── Our SEO Standard Section (White BG) ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center">
           <FadeIn direction="up" className="flex flex-col items-center text-center mb-12 sm:mb-14">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-[#111827] tracking-tight mb-3">
               Our SEO Standard
@@ -184,7 +184,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── Built on Fourth Dimension™ (#21A0A3 Teal BG) ── */}
       <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col gap-8">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col gap-8">
           <h2 className="text-2xl sm:text-4xl font-semibold text-white tracking-tight">
             Built on Fourth Dimension™
           </h2>
@@ -216,7 +216,7 @@ export default function SeoSearchVisibilityPage() {
 
       {/* ── Book a Discovery Call / CTA Section (White BG) ── */}
       <section className="w-full bg-white py-16 sm:py-20 text-center">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center gap-4">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center gap-4">
           <span className="text-base sm:text-lg font-bold text-[#111827]">
             Book a Discovery Call
           </span>

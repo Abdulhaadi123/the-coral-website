@@ -37,7 +37,7 @@ export default function JournalPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-8 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-8 w-full">
         <FadeIn direction="up" className="mb-8 sm:mb-10">
           {/* Main Title with exact Gradient */}
           <h1

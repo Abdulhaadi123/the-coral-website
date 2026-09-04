@@ -15,7 +15,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Hero Section ── */}
       <section className="w-full pt-6 sm:pt-8 lg:pt-10 pb-12">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
             {/* Muted Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
@@ -64,7 +64,7 @@ export default function FourthDimensionFrameworkPage() {
         </div>
 
         {/* ── Diagram Graphic (Wider to match Figma exact) ── */}
-        <ScaleIn delay={0.2} className="w-full max-w-[1360px] mx-auto px-4 sm:px-8 mt-12 sm:mt-16 flex justify-center">
+        <ScaleIn delay={0.2} className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 mt-12 sm:mt-16 flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/flowchart.webp"
@@ -76,7 +76,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── What is Fourth Dimension™ & Why it Matters ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
@@ -120,7 +120,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── What Makes Our Approach Different ── */}
       <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
           <FadeIn direction="up">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16">
               {/* Left Title */}
@@ -176,7 +176,7 @@ export default function FourthDimensionFrameworkPage() {
       <section className="w-full pt-16 sm:pt-20">
         
         {/* Section Header */}
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-12 sm:mb-16">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] mb-3 leading-tight break-words">
             The Four Stages of Fourth Dimension™
           </h2>
@@ -266,7 +266,7 @@ export default function FourthDimensionFrameworkPage() {
             >
               <FadeIn
                 direction="up"
-                className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start"
+                className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start"
               >
                 
                 {/* Left Column — Large Title */}
@@ -310,7 +310,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Want to see how Fourth Dimension... Section (White BG) ── */}
       <section className="w-full bg-white py-16 sm:py-20">
-        <FadeIn direction="up" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+        <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
           
           {/* Left Column */}
           <div className="lg:col-span-6 flex flex-col items-start gap-6">
@@ -343,7 +343,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Recent Work Section (#F8FAFC Light Gray BG) ── */}
       <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
           
           {/* Header */}
           <FadeIn direction="up" className="flex flex-row items-center justify-between gap-2 mb-10">

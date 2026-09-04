@@ -15,7 +15,7 @@ export default function OptimisationPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
         <FadeIn direction="up">
           {/* Tag / Category */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
@@ -49,7 +49,7 @@ export default function OptimisationPage() {
 
       {/* Center Google Blurred G Graphic + 3 Glassmorphism Metric Cards */}
       <section
-        className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-28 pb-24 sm:pt-36 sm:pb-32 lg:pt-44 lg:pb-40 w-full relative"
+        className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-28 pb-24 sm:pt-36 sm:pb-32 lg:pt-44 lg:pb-40 w-full relative"
         style={{
           background: 'radial-gradient(ellipse 70% 80% at 55% 50%, rgba(68,138,255,0.10) 0%, rgba(68,138,255,0.04) 50%, transparent 75%)',
         }}
@@ -121,7 +121,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* Lower Content Section — balanced responsive spacing */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24 w-full">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-center">
             <div className="md:col-span-5">
@@ -140,7 +140,7 @@ export default function OptimisationPage() {
 
       {/* ── Services Grid Section ── */}
       <section className="w-full bg-[#F4F5F7] py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
 
           {/* Left: Section Title */}
           <FadeIn direction="up" className="md:col-span-4">
@@ -183,7 +183,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Small Fixes Section ── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
 
@@ -222,7 +222,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── 4 Icon Cards Section (Figma Exact WebP Icons & Order) ── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12 lg:py-16 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-12 lg:py-16 w-full">
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {[
             {
@@ -256,7 +256,7 @@ export default function OptimisationPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-20 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: 4th Dimension Graphic */}

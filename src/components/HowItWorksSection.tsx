@@ -125,7 +125,7 @@ export const HowItWorksSection: React.FC = () => {
 
   return (
     <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
 
         {/* ── Left: intro, sticks while the steps scroll past ── */}
         <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">

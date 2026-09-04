@@ -20,7 +20,7 @@ export const FooterSection: React.FC = () => {
       </div>
 
       {/* Main Footer Container */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
 
         {/* Left Big Card Box */}
         <div className="lg:col-span-7 bg-[#121214]/85 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-12 flex flex-col justify-between shadow-2xl">

@@ -61,7 +61,7 @@ export const FeaturedWorkSection: React.FC = () => {
     <section data-nav-dark className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
 
       {/* Heading — aligned with ProcessWithDepthSection */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
         <FadeIn direction="up">
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
             Featured Work
@@ -69,14 +69,14 @@ export const FeaturedWorkSection: React.FC = () => {
         </FadeIn>
       </div>
 
-      {/* Cards — perfectly aligned with max-w-7xl container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
-      <div className="mt-8 sm:mt-12 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 overflow-hidden">
+      {/* Cards — perfectly aligned with max-w-[1600px] container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
+      <div className="mt-8 sm:mt-12 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 overflow-hidden">
         <div className="flex gap-4 sm:gap-6">
           {visible.map((project) => (
             <Link
               key={`${project.name}-${active}`}
               href={`/portfolio/${project.slug}`}
-              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[480px] lg:w-[580px] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[480px] lg:w-[calc((100%-1.5rem)/2)] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
             <Image
               src={project.image}
@@ -106,7 +106,7 @@ export const FeaturedWorkSection: React.FC = () => {
     </div>
 
       {/* Dots + arrows + lime bar — padded */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
           <div className="flex items-center gap-2">

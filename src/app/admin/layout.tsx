@@ -165,7 +165,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       )}
 
       {/* ── Main Content Area ── */}
-      <main className="flex-1 min-h-screen p-6 sm:p-10 max-w-7xl mx-auto w-full overflow-x-hidden">
+      <main className="flex-1 min-h-screen p-6 sm:p-10 max-w-[1600px] mx-auto w-full overflow-x-hidden">
         {children}
       </main>
     </div>

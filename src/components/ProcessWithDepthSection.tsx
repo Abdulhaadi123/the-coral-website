@@ -10,7 +10,7 @@ export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
@@ -72,7 +72,7 @@ export const ProcessWithDepthSection: React.FC = () => {
         Artwork — full bleed from lg up, matching the Figma comp: pinned to the
         section's own edges so it meets the bands above and below and runs off the
         right of the viewport. It is a direct child of <section> for that reason;
-        inside the max-w-7xl wrapper, right-0 would stop at the content column.
+        inside the max-w-[1600px] wrapper, right-0 would stop at the content column.
 
         Below lg it drops back into normal flow beneath the text as a 16:9 block.
         object-contain, not cover. The GIF is 16:9 (1.778) but the column is far
