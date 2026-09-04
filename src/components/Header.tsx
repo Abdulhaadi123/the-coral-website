@@ -149,7 +149,17 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           aria-label="Open Menu"
           aria-expanded={open}
           onClick={() => setOpen(true)}
-          className="hover:opacity-80 transition-opacity p-1 -ml-1 cursor-pointer"
+          /*
+           * The icon sits in the margin, not on the content line: it ends where the
+           * section grid begins so headings never start underneath it.
+           *
+           * -ml-1 cancels the button's own p-1, putting the ICON (not the button box)
+           * on the container edge. From lg up there is a 48px gutter to work with, so
+           * -ml-7 pulls it a further 24px left: icon 24->44, content 48. Below lg the
+           * gutter is only 20-32px, which leaves no room to inset it, so it stays on
+           * the content edge there.
+           */
+          className="hover:opacity-80 transition-opacity p-1 -ml-1 lg:-ml-7 cursor-pointer"
         >
           {isDark ? (
             <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
