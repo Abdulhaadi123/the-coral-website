@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
       {/* ── Top Header Bar ── */}
       <header
         ref={headerRef}
-        className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
+        className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
       >
 
         {/* Hamburger */}
@@ -150,12 +150,16 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           aria-expanded={open}
           onClick={() => setOpen(true)}
           /*
-           * -ml-1 cancels the button's own p-1 so the ICON, not the button box, sits
-           * on the container edge. Figma has the icon's left edge on the same line as
-           * the section text below it; the hero clears the icon by indenting itself
-           * (see HeroSection), not by pushing the icon into the margin.
+           * The content column starts 104px in from lg up, hero and sections alike.
+           * The icon is deliberately not on that line — it hangs 56px outboard of it
+           * so no heading ever sits underneath it.
+           *
+           * p-1 is the button's own padding; -ml-1 cancels it so it is the ICON, not
+           * the button box, that lands on the content edge, and -ml-[60px] then
+           * carries it out to 48. Below lg the gutter is 20-32px with nothing to
+           * give, so the icon stays on the content edge there.
            */
-          className="hover:opacity-80 transition-opacity p-1 -ml-1 cursor-pointer"
+          className="hover:opacity-80 transition-opacity p-1 -ml-1 lg:-ml-[60px] cursor-pointer"
         >
           {isDark ? (
             <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">

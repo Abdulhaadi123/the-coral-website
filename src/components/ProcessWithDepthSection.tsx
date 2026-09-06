@@ -10,7 +10,7 @@ export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn

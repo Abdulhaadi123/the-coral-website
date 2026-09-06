@@ -16,7 +16,7 @@ export default function DevelopmentPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
         <FadeIn direction="up">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
@@ -59,7 +59,7 @@ export default function DevelopmentPage() {
       </ScaleIn>
 
       {/* Section 2: How We Build Differently */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] py-16 sm:py-20 w-full border-t border-gray-100">
         <FadeIn direction="up">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-start">
             
@@ -120,7 +120,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 3: Website Development Services */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] py-16 sm:py-20 w-full border-t border-gray-100">
         <div>
           <FadeIn direction="up">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-center text-[#111827] mb-12 sm:mb-16">
@@ -170,7 +170,7 @@ export default function DevelopmentPage() {
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
       <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
-        <FadeIn direction="up" className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center">
+        <FadeIn direction="up" className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-[104px] flex flex-col items-center">
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
             Beyond the Code
@@ -194,7 +194,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ Section ── */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-20 w-full border-t border-gray-100">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] py-16 sm:py-20 w-full border-t border-gray-100">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           {/* Left: Fourth Dimension Graphic */}
@@ -244,7 +244,7 @@ export default function DevelopmentPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-5 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[104px] flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
             Need a website that&apos;s fast, flexible and built to last?
           </h2>

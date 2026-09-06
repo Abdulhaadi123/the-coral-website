@@ -37,7 +37,7 @@ export default function JournalPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-8 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] pt-6 sm:pt-8 lg:pt-10 pb-8 w-full">
         <FadeIn direction="up" className="mb-8 sm:mb-10">
           {/* Main Title with exact Gradient */}
           <h1
@@ -225,7 +225,7 @@ export default function JournalPage() {
 
       {/* ── Call To Action Banner Section ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col items-center text-center gap-4 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[104px] flex flex-col items-center text-center gap-4 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need your own solid online presence with a lucrative inbound funnel?
           </h2>

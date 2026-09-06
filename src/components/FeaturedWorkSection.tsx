@@ -61,7 +61,7 @@ export const FeaturedWorkSection: React.FC = () => {
     <section data-nav-dark className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
 
       {/* Heading — aligned with ProcessWithDepthSection */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px]">
         <FadeIn direction="up">
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
             Featured Work
@@ -70,7 +70,7 @@ export const FeaturedWorkSection: React.FC = () => {
       </div>
 
       {/* Cards — perfectly aligned with max-w-[1600px] container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
-      <div className="mt-8 sm:mt-12 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 overflow-hidden">
+      <div className="mt-8 sm:mt-12 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] overflow-hidden">
         <div className="flex gap-4 sm:gap-6">
           {visible.map((project) => (
             <Link
@@ -106,7 +106,7 @@ export const FeaturedWorkSection: React.FC = () => {
     </div>
 
       {/* Dots + arrows + lime bar — padded */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px]">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
           <div className="flex items-center gap-2">
