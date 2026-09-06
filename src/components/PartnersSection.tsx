@@ -34,11 +34,19 @@ export const PartnersSection: React.FC = () => {
           <span>Makes an Impact</span>
         </div>
 
+        {/*
+          Typography is the Figma spec for this block: Bricolage Grotesque
+          Medium (500) / 48 / 132% / #232323, in a 958px box.
+
+          No hard <br />. The comp constrains the box and lets the line breaks
+          fall out of the wrap — forcing them here pinned the text to two lines
+          across the full content column instead of the three it should be.
+        */}
         <h2
-          className="font-semibold text-[#111827] max-w-none"
-          style={{ lineHeight: '1.10', fontSize: 'clamp(24px, 3.5vw, 46px)' }}
+          className="font-medium text-[#232323] max-w-[958px]"
+          style={{ lineHeight: '1.32', fontSize: 'clamp(24px, 3.5vw, 48px)' }}
         >
-          Our trusted partners who collaborate with<br />us to create meaningful digital experiences
+          Our trusted partners who collaborate with us to create meaningful digital experiences
         </h2>
       </FadeIn>
 
