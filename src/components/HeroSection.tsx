@@ -6,8 +6,19 @@ import { ArrowUpRight } from 'lucide-react';
 import { FadeIn } from '@/components/Animated';
 
 export const HeroSection: React.FC = () => {
+  /*
+   * Homepage hero only. Every other block on the page — including the header's
+   * hamburger — starts on the grid line (48px from the container edge at lg).
+   * The Figma insets the hero a further 56px so its copy begins clear of the
+   * hamburger above it: measured there as section 136 / hero 190 at a 1440
+   * frame, a +54 delta. pl-[104px] is that 48 + 56, and it lands after px-12 in
+   * Tailwind's output so it wins on the left edge only.
+   *
+   * Held to lg and up: below that the gutter is 20-32px and there is no room to
+   * give away.
+   */
   return (
-    <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 flex flex-col items-start overflow-x-hidden">
+    <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 flex flex-col items-start overflow-x-hidden">
       <FadeIn direction="up">
         {/* Main Headline — exact Figma 2 lines with spacious leading */}
         <h1 className="font-semibold tracking-tight text-[#111827] text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] xl:text-[64px]" style={{ lineHeight: '1.06' }}>

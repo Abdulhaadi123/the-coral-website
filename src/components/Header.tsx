@@ -150,16 +150,12 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           aria-expanded={open}
           onClick={() => setOpen(true)}
           /*
-           * The icon sits in the margin, not on the content line: it ends where the
-           * section grid begins so headings never start underneath it.
-           *
-           * -ml-1 cancels the button's own p-1, putting the ICON (not the button box)
-           * on the container edge. From lg up there is a 48px gutter to work with, so
-           * -ml-7 pulls it a further 24px left: icon 24->44, content 48. Below lg the
-           * gutter is only 20-32px, which leaves no room to inset it, so it stays on
-           * the content edge there.
+           * -ml-1 cancels the button's own p-1 so the ICON, not the button box, sits
+           * on the container edge. Figma has the icon's left edge on the same line as
+           * the section text below it; the hero clears the icon by indenting itself
+           * (see HeroSection), not by pushing the icon into the margin.
            */
-          className="hover:opacity-80 transition-opacity p-1 -ml-1 lg:-ml-7 cursor-pointer"
+          className="hover:opacity-80 transition-opacity p-1 -ml-1 cursor-pointer"
         >
           {isDark ? (
             <svg width="20" height="20" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
