@@ -15,7 +15,7 @@ export default function FourthDimensionFrameworkPage() {
 
       {/* ── Hero Section ── */}
       <section className="w-full pt-6 sm:pt-8 lg:pt-10 pb-12">
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px]">
           <FadeIn direction="up">
             {/* Muted Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">

@@ -68,7 +68,7 @@ export default function SeoSearchVisibilityPage() {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 w-full relative z-10">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] w-full relative z-10">
           <FadeIn direction="up" className="max-w-4xl">
             {/* Tag */}
             <span className="text-xs font-bold tracking-widest uppercase text-white block mb-5">

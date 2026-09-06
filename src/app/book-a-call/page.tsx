@@ -63,8 +63,9 @@ export default function BookACallPage() {
 
       <div className="flex flex-col lg:flex-row flex-1">
 
-        {/* ── LEFT COLUMN (Form) — Aligned with hamburger ── */}
-        <div className="w-full lg:w-1/2 bg-white px-5 sm:px-8 lg:px-12 pt-0 pb-16 flex flex-col justify-between">
+        {/* ── LEFT COLUMN (Form) — carries the hero indent: its h1 sits directly
+             under the hamburger, so it takes the same +56 as every other hero ── */}
+        <div className="w-full lg:w-1/2 bg-white px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-0 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */

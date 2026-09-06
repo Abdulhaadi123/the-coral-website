@@ -80,7 +80,7 @@ export default function PaidAdvertisingPage() {
         className="w-full relative overflow-hidden"
         style={{ background: 'linear-gradient(0deg, #A7F076 0%, #FFFFFF 100%)' }}
       >
-        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-0">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-0">
           <FadeIn direction="up">
             {/* Label */}
             <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">

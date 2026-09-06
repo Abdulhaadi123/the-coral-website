@@ -42,7 +42,7 @@ export default function MarketingPage() {
         </div>
 
         {/* Hero Container */}
-        <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
+        <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-20 sm:pb-24 lg:pb-28 w-full relative min-h-[500px]">
           
           {/* Left Content */}
           <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative">

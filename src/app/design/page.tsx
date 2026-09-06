@@ -25,7 +25,7 @@ export default function DesignPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
+      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-12 lg:pl-[104px] pt-6 sm:pt-8 lg:pt-10 pb-16 w-full">
         <FadeIn direction="up">
           {/* Category Tag */}
           <span className="text-xs font-bold tracking-widest text-gray-500 uppercase block mb-4">
