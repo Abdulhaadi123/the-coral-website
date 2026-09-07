@@ -10,7 +10,7 @@ export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] relative z-10 min-h-0 lg:min-h-[694px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
@@ -84,14 +84,14 @@ export const ProcessWithDepthSection: React.FC = () => {
       <FadeIn
         direction="none"
         delay={0.15}
-        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:left-[72%] lg:right-auto lg:w-auto lg:aspect-[1138/640] lg:z-0"
+        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:left-[74%] lg:right-auto lg:w-auto lg:aspect-[1138/640] lg:z-0"
       >
         <div className="relative w-full aspect-video lg:aspect-auto lg:h-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={assetUrl('/process-depth.gif')}
             alt="The Fourth Dimension process, visualised"
-            className="w-full h-full object-contain object-center"
+            className="w-full h-full object-contain object-center rotate-180"
           />
         </div>
       </FadeIn>
