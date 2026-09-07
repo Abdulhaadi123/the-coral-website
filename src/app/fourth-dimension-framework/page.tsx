@@ -261,7 +261,14 @@ export default function FourthDimensionFrameworkPage() {
             <div
               key={title}
               data-nav-dark
-              className="w-full py-16 sm:py-24 text-white"
+              /*
+                Reference scroll behaviour, nothing else changed: each stage is
+                one screen tall and sticks to the top, so it stays put while the
+                next stage scrolls up over it. Measured on the reference — its
+                steps are 100vh each and its pinned column holds top:0 for the
+                whole section.
+              */
+              className="w-full py-16 sm:py-24 text-white lg:sticky lg:top-0 lg:min-h-screen lg:flex lg:items-center"
               style={{ backgroundColor: bg }}
             >
               <FadeIn
