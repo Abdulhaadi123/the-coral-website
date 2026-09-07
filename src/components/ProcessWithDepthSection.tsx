@@ -10,7 +10,7 @@ export const ProcessWithDepthSection: React.FC = () => {
   return (
     <section className="w-full bg-white relative overflow-hidden">
       {/* Inner wrapper — exact original min-h and container */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] relative z-10 min-h-0 lg:min-h-[420px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] relative z-10 min-h-0 lg:min-h-[694px] flex flex-col lg:flex-row items-center justify-between gap-10 py-10 lg:py-12">
 
         {/* ── LEFT: exact original text + CTAs shape ── */}
         <FadeIn
@@ -19,8 +19,8 @@ export const ProcessWithDepthSection: React.FC = () => {
         >
           {/* Heading — exact original 2 lines & size */}
           <h2
-            className="font-semibold text-[#111827] tracking-tight max-w-none text-2xl sm:text-3xl lg:text-[30px]"
-            style={{ lineHeight: '1.10' }}
+            className="font-medium text-black max-w-none text-[28px] sm:text-[34px] lg:text-[42px] xl:text-[48px]"
+            style={{ lineHeight: '1.37' }}
           >
             Behind every digital brand that grows is a{' '}
             <span className="bg-gradient-to-r from-[#9FE66F] to-[#32CEC6] bg-clip-text text-transparent">
@@ -84,7 +84,7 @@ export const ProcessWithDepthSection: React.FC = () => {
       <FadeIn
         direction="none"
         delay={0.15}
-        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:right-0 lg:w-auto lg:aspect-[1138/640] lg:z-0 lg:translate-x-16"
+        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:left-[52.9%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[90.5%] lg:aspect-[1416/799] lg:z-0"
       >
         <div className="relative w-full aspect-video lg:aspect-auto lg:h-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
