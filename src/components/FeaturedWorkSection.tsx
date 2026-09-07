@@ -58,55 +58,48 @@ export const FeaturedWorkSection: React.FC = () => {
   const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
 
   return (
-    <section data-nav-dark className="w-full bg-[#21A0A3] py-16 sm:py-24 overflow-hidden">
-
-      {/* Heading — aligned with ProcessWithDepthSection */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
+    <section data-nav-dark className="w-full bg-[#21A0A3] pt-14 sm:pt-20 pb-0 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-12">
         <FadeIn direction="up">
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             Featured Work
           </h2>
         </FadeIn>
-      </div>
 
-      {/* Cards — perfectly aligned with max-w-[1600px] container so 1st card lines up with text above on ALL screen sizes & zoom levels */}
-      <div className="mt-8 sm:mt-12 max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] overflow-hidden">
-        <div className="flex gap-4 sm:gap-6">
+        {/* Project cards — 2-column grid like original */}
+        <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           {visible.map((project) => (
             <Link
               key={`${project.name}-${active}`}
               href={`/portfolio/${project.slug}`}
-              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[480px] lg:w-[calc((100%-1.5rem)/2)] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] block cursor-pointer ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
-            <Image
-              src={project.image}
-              alt={`${project.name} branding project`}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              sizes="(max-width: 768px) 88vw, 48vw"
-            />
+              <Image
+                src={project.image}
+                alt={`${project.name} branding project`}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
 
-            {/* Soft top gradient for title readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/35 pointer-events-none" />
+              {/* Soft top gradient for title readability */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/35 pointer-events-none" />
 
-            <div className="absolute top-5 left-5 sm:top-6 sm:left-6 z-10">
-              <h3 className="text-2xl sm:text-3xl font-bold text-white leading-none">{project.name}</h3>
-              <p className="mt-1.5 text-sm sm:text-base text-white/90 font-medium">{project.category}</p>
-            </div>
+              <div className="absolute top-5 left-5 sm:top-6 sm:left-6 z-10">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white leading-none">{project.name}</h3>
+                <p className="mt-1.5 text-sm sm:text-base text-white/90 font-medium">{project.category}</p>
+              </div>
 
-            <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-10">
-              <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold group-hover:bg-white group-hover:text-[#21A0A3] transition-colors duration-300">
-                <span>View project</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
+              <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-10">
+                <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold group-hover:bg-white group-hover:text-[#21A0A3] transition-colors duration-300">
+                  <span>View project</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-      {/* Dots + arrows + lime bar — padded */}
-      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -148,12 +141,12 @@ export const FeaturedWorkSection: React.FC = () => {
         {/* Lime bar */}
         <Link
           href="/portfolio"
-          className="group mt-8 sm:mt-10 mb-10 sm:mb-14 w-full bg-[#A7F176] rounded-2xl px-5 sm:px-8 py-4 sm:py-6 flex items-center justify-between hover:brightness-95 transition-all block"
+          className="group mt-8 sm:mt-10 mb-10 sm:mb-14 w-full bg-[#A7F176] rounded-2xl px-6 sm:px-8 py-5 sm:py-6 flex items-center justify-between hover:brightness-95 transition-all block"
         >
-          <span className="text-base sm:text-xl font-semibold text-[#111827] group-hover:font-bold transition-all duration-200">
+          <span className="text-base sm:text-xl font-semibold text-[#111827]">
             Explore more of our work
           </span>
-          <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#111827] text-[#111827] group-hover:bg-[#111827] group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
+          <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#111827] text-white flex items-center justify-center shrink-0">
             <ArrowRight className="w-4 h-4" />
           </span>
         </Link>
