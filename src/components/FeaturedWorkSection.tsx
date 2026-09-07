@@ -59,7 +59,7 @@ export const FeaturedWorkSection: React.FC = () => {
 
   return (
     <section data-nav-dark className="w-full bg-[#21A0A3] pt-14 sm:pt-20 pb-0 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
+      <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
         <FadeIn direction="up">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             Featured Work
