@@ -72,7 +72,7 @@ export const FeaturedWorkSection: React.FC = () => {
             <Link
               key={`${project.name}-${active}`}
               href={`/portfolio/${project.slug}`}
-              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] sm:aspect-[5/4] block cursor-pointer ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+              className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[5/4] sm:aspect-[9/8] block cursor-pointer ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
               <Image
                 src={project.image}
