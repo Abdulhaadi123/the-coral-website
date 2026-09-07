@@ -10,7 +10,20 @@ export const HeroSection: React.FC = () => {
     <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 flex flex-col items-start overflow-x-hidden">
       <FadeIn direction="up">
         {/* Main Headline — exact Figma 2 lines with spacious leading */}
-        <h1 className="font-semibold tracking-tight text-[#111827] text-4xl sm:text-5xl md:text-[56px] lg:text-[60px] xl:text-[64px]" style={{ lineHeight: '1.06' }}>
+        {/*
+          Figma spec, read off the comp's own text layers (both lines carry the
+          same type; only the fill differs):
+
+            Bricolage Grotesque / Medium 500 / 50px / line height Auto / 0%
+            line 1 #000000, line 2 the gradient below
+
+          "Auto" is the font's own metric. The comp's H1 box measures 833x120
+          for two lines at 50px, so that resolves to 1.2.
+
+          50px is the value at the comp's 1564 frame, which is our xl band; the
+          smaller steps scale it down rather than introducing a second design.
+        */}
+        <h1 className="font-medium text-black text-[30px] sm:text-[36px] md:text-[42px] lg:text-[46px] xl:text-[50px]" style={{ lineHeight: '1.2' }}>
           {/* No forced nowrap: at these sizes the first line exceeds the content
               box below xl, so it is allowed to wrap rather than overflow. */}
           <span className="block">
