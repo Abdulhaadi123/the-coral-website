@@ -65,7 +65,7 @@ export default function BookACallPage() {
 
         {/* ── LEFT COLUMN (Form) — carries the hero indent: its h1 sits directly
              under the hamburger, so it takes the same +56 as every other hero ── */}
-        <div className="w-full lg:w-1/2 bg-white px-5 sm:px-8 lg:px-[104px] lg:pr-12 pt-0 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-white px-5 sm:px-8 lg:px-[13.1%] lg:pr-12 pt-0 pb-16 flex flex-col justify-between">
 
           {submitted ? (
             /* ── SUCCESS STATE ── */
@@ -270,7 +270,7 @@ export default function BookACallPage() {
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-5 sm:px-8 lg:px-[104px] lg:pl-12 pt-4 pb-16 flex flex-col justify-between">
+        <div className="w-full lg:w-1/2 bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center px-5 sm:px-8 lg:px-[13.1%] lg:pl-12 pt-4 pb-16 flex flex-col justify-between">
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-10 sm:gap-y-12 w-full max-w-xl my-auto">
             {[

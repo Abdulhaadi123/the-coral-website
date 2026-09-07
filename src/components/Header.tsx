@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
       {/* ── Top Header Bar ── */}
       <header
         ref={headerRef}
-        className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
+        className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] pt-8 pb-4 flex items-center justify-between sticky top-0 z-30"
       >
 
         {/* Hamburger */}

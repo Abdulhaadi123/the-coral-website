@@ -121,7 +121,7 @@ export default function PortfolioPage() {
     <main className="min-h-screen bg-white text-[#111827] flex flex-col relative overflow-x-clip">
       <Header />
 
-      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[104px] pt-6 sm:pt-8 lg:pt-10 pb-16">
+      <section className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] pt-6 sm:pt-8 lg:pt-10 pb-16">
         <div>
 
           {/* Heading */}
@@ -366,7 +366,7 @@ export default function PortfolioPage() {
 
       {/* CTA Banner */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative overflow-x-hidden">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[104px] flex flex-col items-center text-center gap-5 relative z-10">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-5 relative z-10">
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>
