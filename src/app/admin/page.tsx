@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   FolderKanban,
   MessageSquareQuote,
+  Handshake,
   Plus,
   ArrowUpRight,
   Sparkles,
@@ -16,21 +17,24 @@ export default function AdminDashboardPage() {
   const [projectsCount, setProjectsCount] = useState<number | null>(null);
   const [testimonialsCount, setTestimonialsCount] = useState<number | null>(null);
   const [leadsCount, setLeadsCount] = useState<number | null>(null);
+  const [partnersCount, setPartnersCount] = useState<number | null>(null);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const [projRes, testRes, leadRes] = await Promise.all([
+        const [projRes, testRes, leadRes, partnerRes] = await Promise.all([
           fetch('/api/admin/projects'),
           fetch('/api/admin/testimonials'),
           fetch('/api/admin/leads'),
+          fetch('/api/admin/partners'),
         ]);
 
         const projData = await projRes.json();
         const testData = await testRes.json();
         const leadData = await leadRes.json();
+        const partnerData = await partnerRes.json();
 
         if (projData.success) {
           setProjectsCount(projData.projects.length);
@@ -41,6 +45,9 @@ export default function AdminDashboardPage() {
         }
         if (leadData.success) {
           setLeadsCount(leadData.leads.length);
+        }
+        if (partnerData.success) {
+          setPartnersCount(partnerData.partners.length);
         }
       } catch (e) {
         console.error('Error loading dashboard stats:', e);
@@ -88,7 +95,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* ── Quick Stats Grid ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Portfolio Card */}
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
@@ -157,6 +164,30 @@ export default function AdminDashboardPage() {
             </div>
             <p className="text-xs sm:text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
               Portfolio Leads
+            </p>
+          </div>
+        </div>
+
+        {/* Partners Card */}
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#2ECE9E]/20 flex items-center justify-center text-[#1B8F6B]">
+              <Handshake className="w-6 h-6" />
+            </div>
+            <Link
+              href="/admin/partners"
+              className="text-xs font-semibold text-gray-600 hover:text-[#111827] flex items-center gap-1"
+            >
+              <span>Manage all</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <div>
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#111827]">
+              {loading ? '...' : partnersCount ?? 0}
+            </div>
+            <p className="text-xs sm:text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
+              Partner Logos
             </p>
           </div>
         </div>

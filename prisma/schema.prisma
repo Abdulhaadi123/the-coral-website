@@ -40,6 +40,20 @@ model Testimonial {
   updatedAt  DateTime @updatedAt
 }
 
+model Partner {
+  id        String   @id @default(uuid())
+  name      String
+  logo      String   // Logo image (S3 URL)
+  // Intrinsic size passed to next/image. The marquee sizes logos by CSS height,
+  // so these only fix the aspect ratio — 183x110 matches the original set.
+  width     Int      @default(183)
+  height    Int      @default(110)
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Admin {
   id           String   @id @default(uuid())
   email        String   @unique

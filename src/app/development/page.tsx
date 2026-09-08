@@ -203,7 +203,7 @@ export default function DevelopmentPage() {
             <img
               src="/images/fourth-dimension-graphic.webp"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full max-w-[280px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
@@ -244,11 +244,11 @@ export default function DevelopmentPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-2xl">
             Need a website that&apos;s fast, flexible and built to last?
           </h2>
-          <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-gray-800 leading-relaxed font-medium">
             Let&apos;s talk about the right platform, tech stack, and structure for your goals — and how we can bring your designs to life with clean, scalable code.
           </p>
           <Link

@@ -14,6 +14,7 @@ import {
   X,
   Sparkles,
   Users,
+  Handshake,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -44,6 +45,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { label: 'Portfolio Projects', href: '/admin/projects', icon: FolderKanban },
     { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
+    { label: 'Partner Logos', href: '/admin/partners', icon: Handshake },
     { label: 'Portfolio Leads', href: '/admin/leads', icon: Users },
   ];
 

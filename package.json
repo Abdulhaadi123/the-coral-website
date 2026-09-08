@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed.ts",
-    "sync:assets": "tsx --env-file-if-exists=.env scripts/sync-assets-to-s3.ts"
+    "sync:assets": "tsx --env-file-if-exists=.env scripts/sync-assets-to-s3.ts",
+    "seed:partners": "tsx --env-file-if-exists=.env scripts/seed-partners.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1124.0",

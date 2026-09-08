@@ -352,8 +352,8 @@ export default function MarketingCampaignsPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative overflow-hidden">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-2xl">
             Ready to turn attention into qualified leads?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">

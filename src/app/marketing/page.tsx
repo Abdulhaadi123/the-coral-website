@@ -211,16 +211,25 @@ export default function MarketingPage() {
               },
             ].map(({ Icon, title, desc, href }) => {
               const inner = (
-                <StaggerItem key={title} className="flex flex-col gap-2 group">
+                <StaggerItem key={title} className={`flex flex-col gap-2 group ${href ? 'cursor-pointer' : ''}`}>
                   <div className="w-8 h-8 flex items-center justify-start text-[#111827]">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-[#111827] group-hover:text-[#467923] transition-colors duration-300">{title}</h3>
+                  <div className="flex items-start justify-between gap-2 sm:min-h-[48px]">
+                    <h3 className={`text-base font-bold text-[#111827] transition-colors duration-300 ${href ? 'group-hover:text-[#467923]' : ''}`}>
+                      {title}
+                    </h3>
+                    {href && (
+                      <span className="w-5 h-5 rounded-full border border-gray-400 text-gray-700 group-hover:border-[#467923] group-hover:bg-[#467923] group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300 mt-0.5">
+                        <ArrowUpRight className="w-3 h-3 group-hover:rotate-45 transition-transform duration-300" />
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">{desc}</p>
                 </StaggerItem>
               );
               return href ? (
-                <Link key={title} href={href} className="block">
+                <Link key={title} href={href} className="block group">
                   {inner}
                 </Link>
               ) : inner;
@@ -283,7 +292,7 @@ export default function MarketingPage() {
             <img
               src="/images/fourth-dimension-graphic.webp"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full max-w-[280px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
@@ -415,8 +424,8 @@ export default function MarketingPage() {
 
       {/* ── CTA Banner ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-xl">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-2xl">
             Ready to turn your marketing into a stronger pipeline?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">

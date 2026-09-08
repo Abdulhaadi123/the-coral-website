@@ -1,10 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FadeIn } from '@/components/Animated';
 
-const partners = [
+/**
+ * Fallback set. The marquee is driven from the admin panel (Partner table), but
+ * these render on first paint and stay put if the fetch fails, so the strip is
+ * never empty.
+ */
+const staticPartners = [
   { name: 'ELOVIRA',      src: '/images/partners/elovira.webp',      width: 183, height: 110 },
   { name: 'Holix',        src: '/images/partners/holix.webp',        width: 183, height: 110 },
   { name: 'ASCENT',       src: '/images/partners/ascent.webp',       width: 183, height: 110 },
@@ -21,10 +26,33 @@ const partners = [
   { name: 'Ronin',        src: '/images/partners/ronin.webp',        width: 183, height: 110 },
 ];
 
-// Duplicate for seamless infinite loop
-const allPartners = [...partners, ...partners];
-
 export const PartnersSection: React.FC = () => {
+  const [partners, setPartners] = useState(staticPartners);
+
+  useEffect(() => {
+    fetch('/api/admin/partners')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success && data.partners && data.partners.length > 0) {
+          const liveOnly = data.partners.filter((p: any) => p.active !== false);
+          if (liveOnly.length > 0) {
+            setPartners(
+              liveOnly.map((p: any) => ({
+                name: p.name,
+                src: p.logo,
+                width: p.width || 183,
+                height: p.height || 110,
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {}); // silently fallback to static
+  }, []);
+
+  // Duplicate for seamless infinite loop
+  const allPartners = [...partners, ...partners];
+
   return (
     <section className="w-full bg-white pt-16 sm:pt-20 pb-0">
       {/* Heading — aligned with header container */}

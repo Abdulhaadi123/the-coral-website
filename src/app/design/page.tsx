@@ -48,32 +48,39 @@ export default function DesignPage() {
       </section>
 
       {/* Section 2: Brand Recognition & Trust */}
-      <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] py-16 sm:py-20 w-full border-t border-gray-100">
-        <FadeIn direction="up">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-stretch">
-            
-            {/* Left Title */}
-            <div className="md:col-span-5 flex flex-col justify-between">
-              <h2 className="text-2xl sm:text-[48px] font-medium text-[#111827] leading-[1.25] tracking-[0px]">
-                Design that makes your brand easier to recognize, trust, and choose
-              </h2>
-            </div>
+      <section className="w-full bg-[#F8FAFC] py-16 sm:py-20 border-t border-gray-100">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
+          <FadeIn direction="up">
+            {/*
+              Not the usual 12-column split: the comp needs >=545px for the heading
+              and >=444px for the body, and no 12-col ratio gives both inside this
+              grid. 1.25fr/1fr with a 32px gutter lands at 566/453, which does.
+            */}
+            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] gap-10 md:gap-8 items-stretch">
 
-            {/* Right Description — justify-between aligns with heading, narrower max-w makes text wrap to more lines to fill gap */}
-            <div className="md:col-span-7 flex flex-col justify-between py-0.5 text-sm sm:text-base text-gray-700 leading-relaxed gap-4 sm:gap-6">
-              <p className="max-w-[340px] lg:max-w-[380px]">
-                Your brand is judged before a customer speaks to you. It shows up in your logo, website, packaging, ads, social content, and every visual touchpoint people see.
-              </p>
-              <p className="max-w-[340px] lg:max-w-[380px]">
-                At The Coral Room, we help brands build a visual presence that feels clear, consistent, and ready to work across every customer touchpoint.
-              </p>
-              <p className="font-medium max-w-[340px] lg:max-w-[380px]">
-                Our design work follows the Fourth-Dimension™ framework which keeps every creative decision connected to strategy, usability, performance, and growth.
-              </p>
-            </div>
+              {/* Left Title — 567px is the middle of the 545-589px window that keeps the comp's four-line break. */}
+              <div className="flex flex-col justify-between">
+                <h2 className="text-2xl sm:text-[48px] font-medium text-[#111827] leading-[1.25] tracking-[0px] max-w-[567px]">
+                  Design that makes your brand easier to recognize, trust, and choose
+                </h2>
+              </div>
 
-          </div>
-        </FadeIn>
+              {/* Right Description — 450px is the middle of the 444-457px window that reproduces the Figma line breaks. */}
+              <div className="flex flex-col justify-between py-0.5 text-sm sm:text-base text-gray-700 leading-relaxed gap-4 sm:gap-6">
+                <p className="max-w-[450px]">
+                  Your brand is judged before a customer speaks to you. It shows up in your logo, website, packaging, ads, social content, and every visual touchpoint people see.
+                </p>
+                <p className="max-w-[450px]">
+                  At The Coral Room, we help brands build a visual presence that feels clear, consistent, and ready to work across every customer touchpoint.
+                </p>
+                <p className="font-medium max-w-[450px]">
+                  Our design work follows the Fourth-Dimension™ framework which keeps every creative decision connected to strategy, usability, performance, and growth.
+                </p>
+              </div>
+
+            </div>
+          </FadeIn>
+        </div>
       </section>
 
       {/* Section 3: Design Services Grid (Gradient Mesh Section) */}
@@ -125,7 +132,7 @@ export default function DesignPage() {
             <img
               src="/images/fourth-dimension-graphic.webp"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full max-w-[340px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="w-full md:w-[132%] max-w-[449px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
@@ -212,7 +219,8 @@ export default function DesignPage() {
           <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
             Need sharper design direction, fast?
           </h2>
-          <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
+          {/* 648px is the middle of the 640-671px window that gives the Figma line breaks. */}
+          <p className="text-sm sm:text-base text-gray-800 max-w-[648px] leading-relaxed font-medium">
             Start with a focused Design Clarity Session. We review your brand, website, visuals, and customer touchpoints, then map the clearest next move for your identity, UI, content, or campaigns.
           </p>
           <Link

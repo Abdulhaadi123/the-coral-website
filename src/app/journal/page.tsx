@@ -225,8 +225,8 @@ export default function JournalPage() {
 
       {/* ── Call To Action Banner Section ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-20 sm:py-24 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-4 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center gap-4 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-2xl">
             Need your own solid online presence with a lucrative inbound funnel?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">

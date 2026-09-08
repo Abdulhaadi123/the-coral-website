@@ -265,7 +265,7 @@ export default function OptimisationPage() {
             <img
               src="/images/fourth-dimension-graphic.webp"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full max-w-[260px] sm:max-w-[400px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="w-full md:w-[132%] max-w-[343px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
             />
           </ScaleIn>
 
@@ -310,8 +310,8 @@ export default function OptimisationPage() {
 
       {/* ── Call To Action Banner Section ── */}
       <section className="w-full bg-[url('/images/cta-banner-bg.webp')] bg-cover bg-center py-16 sm:py-20 relative">
-        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center text-center gap-5 relative z-10">
-          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug">
+        <FadeIn direction="up" className="max-w-3xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center gap-5 relative z-10">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-[#111827] tracking-tight leading-snug max-w-2xl">
             Not sure why your website is underperforming?
           </h2>
           <p className="text-sm sm:text-base text-gray-800 max-w-xl leading-relaxed font-medium">
