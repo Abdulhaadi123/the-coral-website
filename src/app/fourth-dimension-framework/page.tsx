@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
@@ -9,6 +10,18 @@ import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/Ani
 import { assetUrl } from '@/lib/assets';
 
 export default function FourthDimensionFrameworkPage() {
+  const router = useRouter();
+
+  const handleProjectClick = (e: React.MouseEvent, slug: string) => {
+    e.preventDefault();
+    const isUnlocked = localStorage.getItem('coral_portfolio_unlocked') === 'true';
+    if (isUnlocked) {
+      router.push(`/portfolio/${slug}`);
+    } else {
+      router.push(`/portfolio?redirect=/portfolio/${slug}`);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white text-[#111827] flex flex-col overflow-x-clip">
       <Header />
@@ -69,7 +82,7 @@ export default function FourthDimensionFrameworkPage() {
           <img
             src="/images/flowchart.webp"
             alt="The Fourth Dimension Framework Diagram — Discover, Define, Develop, and Drive stages"
-            className="w-full h-auto object-contain drop-shadow-sm"
+            className="w-full h-auto object-contain drop-shadow-sm scale-[1.20]"
           />
         </ScaleIn>
       </section>
@@ -397,8 +410,9 @@ export default function FourthDimensionFrameworkPage() {
               },
             ].map(({ title, category, img, slug }) => (
               <StaggerItem key={title}>
-                <Link
+                <a
                   href={`/portfolio/${slug}`}
+                  onClick={(e) => handleProjectClick(e, slug)}
                   className="group relative rounded-2xl overflow-hidden bg-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all flex flex-col block cursor-pointer"
                 >
                   <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 relative">
@@ -413,7 +427,7 @@ export default function FourthDimensionFrameworkPage() {
                     <h3 className="font-bold text-sm text-[#111827] group-hover:text-[#78B249] transition-colors">{title}</h3>
                     <p className="text-xs text-gray-400 font-medium">{category}</p>
                   </div>
-                </Link>
+                </a>
               </StaggerItem>
             ))}
           </StaggerContainer>

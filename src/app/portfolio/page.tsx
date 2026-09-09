@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { Suspense, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
@@ -28,7 +29,10 @@ const placeholderColors = [
   '#101820', '#0d1520', '#180818', '#1f1208',
 ];
 
-export default function PortfolioPage() {
+// Inner component that uses searchParams (requires Suspense wrapper)
+function PortfolioInner() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [filterOpen, setFilterOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
 
@@ -39,6 +43,15 @@ export default function PortfolioPage() {
       setUnlocked(true);
     }
   }, []);
+
+  const handleUnlock = () => {
+    const redirect = searchParams.get('redirect');
+    if (redirect) {
+      router.push(redirect);
+    } else {
+      setUnlocked(true);
+    }
+  };
 
   // Pending = what's shown in the open panel (not yet applied)
   const [pendingTypes, setPendingTypes] = useState<string[]>([]);
@@ -333,7 +346,7 @@ export default function PortfolioPage() {
           ) : (
             <div className="relative pb-8">
               {/* Full Lock Access Gate Card (Clean on-brand card) */}
-              <PortfolioFullLockGate totalProjects={projects.length} onUnlock={() => setUnlocked(true)} />
+              <PortfolioFullLockGate totalProjects={projects.length} onUnlock={handleUnlock} />
 
               {/* Background Silhouette Grid (0 projects unlocked, blurred preview) */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-15 blur-[4px] pointer-events-none select-none -mt-44 sm:-mt-60">
@@ -389,5 +402,13 @@ export default function PortfolioPage() {
 
       <FooterSection />
     </main>
+  );
+}
+
+export default function PortfolioPage() {
+  return (
+    <Suspense fallback={null}>
+      <PortfolioInner />
+    </Suspense>
   );
 }

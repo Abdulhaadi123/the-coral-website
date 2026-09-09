@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
 import { assetUrl } from '@/lib/assets';
@@ -47,6 +48,7 @@ const projects = FEATURED.flatMap(({ slug, image }) => {
 });
 
 export const FeaturedWorkSection: React.FC = () => {
+  const router = useRouter();
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = projects.length;
@@ -56,6 +58,16 @@ export const FeaturedWorkSection: React.FC = () => {
 
   // Show two cards starting from active (wrap)
   const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
+
+  const handleCardClick = (e: React.MouseEvent, slug: string) => {
+    e.preventDefault();
+    const isUnlocked = localStorage.getItem('coral_portfolio_unlocked') === 'true';
+    if (isUnlocked) {
+      router.push(`/portfolio/${slug}`);
+    } else {
+      router.push(`/portfolio?redirect=/portfolio/${slug}`);
+    }
+  };
 
   return (
     <section data-nav-dark className="w-full bg-[#21A0A3] py-14 sm:py-20 overflow-hidden">
@@ -74,9 +86,10 @@ export const FeaturedWorkSection: React.FC = () => {
         <div className="max-w-[1600px] mx-auto pl-5 sm:pl-8 lg:pl-[13.1%] pr-0">
           <div className="flex gap-4 sm:gap-6 overflow-visible">
             {visible.map((project) => (
-              <Link
+              <a
                 key={`${project.name}-${active}`}
                 href={`/portfolio/${project.slug}`}
+                onClick={(e) => handleCardClick(e, project.slug)}
                 className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[55vw] lg:w-[56vw] max-w-[580px] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
               >
                 <Image
@@ -101,7 +114,7 @@ export const FeaturedWorkSection: React.FC = () => {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
         </div>

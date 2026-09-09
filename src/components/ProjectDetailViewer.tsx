@@ -1,18 +1,33 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { assetUrl } from '@/lib/assets';
 
 interface ProjectDetailViewerProps {
   project: {
     title: string;
+    slug?: string | null;
     image?: string | null;
     detailImage?: string | null;
   };
 }
 
 export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ project }) => {
+  const router = useRouter();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [lockChecked, setLockChecked] = useState(false);
+
+  // Check lock on mount — redirect to gate if not unlocked
+  useEffect(() => {
+    const isUnlocked = localStorage.getItem('coral_portfolio_unlocked') === 'true';
+    if (!isUnlocked) {
+      const slug = project.slug || '';
+      router.replace(`/portfolio${slug ? `?redirect=/portfolio/${slug}` : ''}`);
+    } else {
+      setLockChecked(true);
+    }
+  }, [router, project.slug]);
 
   // Scroll to top on mount + Prevent keyboard & mouse wheel zoom gestures
   useEffect(() => {
@@ -46,6 +61,15 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
       window.removeEventListener('gesturechange', handleGesture);
     };
   }, []);
+
+  // Show spinner while checking lock or if locked (will redirect)
+  if (!lockChecked) {
+    return (
+      <div className="flex items-center justify-center min-h-[85vh] bg-white">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-[#9FE66F] rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (project.detailImage) {
     return (
