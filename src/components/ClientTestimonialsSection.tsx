@@ -146,7 +146,7 @@ export const ClientTestimonialsSection: React.FC = () => {
                     key={i}
                     className={`w-4 h-4 ${
                       i < (item.rating ?? 5)
-                        ? 'fill-[#111827] text-[#111827]'
+                        ? 'fill-[#F59E0B] text-[#F59E0B]'
                         : 'fill-gray-300 text-gray-300'
                     }`}
                   />
