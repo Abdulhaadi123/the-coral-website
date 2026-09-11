@@ -66,7 +66,7 @@ export const FooterSection: React.FC = () => {
               <h4 className="font-bold text-white text-sm sm:text-base">Company</h4>
               <Link href="/book-a-call" className="text-gray-400 hover:text-white transition-colors">Book a Call</Link>
               <Link href="/seo-search-visibility" className="text-gray-400 hover:text-white transition-colors">SEO Services</Link>
-              <Link href="/marketing" className="text-gray-400 hover:text-white transition-colors">Journal</Link>
+              <Link href="/journal" className="text-gray-400 hover:text-white transition-colors">Journal</Link>
             </div>
           </div>
 

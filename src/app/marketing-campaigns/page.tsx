@@ -88,7 +88,7 @@ export default function MarketingCampaignsPage() {
         <ScaleIn delay={0.2} className="flex justify-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/img1.webp"
+            src="/images/marketing-campaigns-dashboard.webp"
             alt="Marketing campaigns dashboard — project performance, AI insights, and campaign tracking"
             className="w-[98%] sm:w-[96%] lg:w-[95%] max-w-none h-auto object-contain object-right"
           />

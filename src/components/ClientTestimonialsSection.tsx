@@ -10,7 +10,7 @@ const staticTestimonials = [
       'Working with The Coral Room transformed how our brand shows up online. Clear process, sharp execution, and results we could measure.',
     name: 'Qasim Zaman Khan',
     role: 'COO, Namal Education Foundation',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: '/images/testimonials/namal.webp',
     logoAlt: 'Namal Education Foundation',
     logoWidth: 48,
@@ -22,7 +22,7 @@ const staticTestimonials = [
       'They brought strategy and craft together. Our new identity feels premium, consistent, and built for growth across every touchpoint.',
     name: 'Umar Mumtaz',
     role: 'Managing Director, GoGrad',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: '/images/testimonials/gograd.webp',
     logoAlt: 'GoGrad',
     logoWidth: 100,
@@ -34,7 +34,7 @@ const staticTestimonials = [
       'From discovery to delivery, the team made complex decisions simple. The work looks sharp and performs exactly how we needed.',
     name: 'Hamza Rehman',
     role: 'Marketing Lead, Urban',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: null,
     logoAlt: '',
     logoWidth: 0,
@@ -46,7 +46,7 @@ const staticTestimonials = [
       'The Coral Room redesigned our website and scaled our conversion rate by over 30%. Their Fourth Dimension framework gave us total clarity.',
     name: 'Sarah Jenkins',
     role: 'Creative Lead, Elovira',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: '/images/partners/elovira.webp',
     logoAlt: 'Elovira',
     logoWidth: 80,
@@ -58,7 +58,7 @@ const staticTestimonials = [
       'Fast turnarounds, clean code, and zero fluff. They feel like a natural extension of our internal design and engineering team.',
     name: 'Marcus Vance',
     role: 'Director, Holix',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: '/images/partners/holix.webp',
     logoAlt: 'Holix',
     logoWidth: 80,
@@ -70,7 +70,7 @@ const staticTestimonials = [
       'Our search visibility and lead quality doubled within three months of launching. Best digital investment we have made.',
     name: 'Zane Al-Mansoor',
     role: 'Founder, Ascent',
-    avatar: '/images/testimonials/avatar-1.webp',
+    avatar: null,
     logo: '/images/partners/ascent.webp',
     logoAlt: 'Ascent',
     logoWidth: 80,
@@ -97,7 +97,7 @@ export const ClientTestimonialsSection: React.FC = () => {
               quote: t.quote,
               name: t.name,
               role: t.role,
-              avatar: t.avatar || '/images/testimonials/avatar-1.webp',
+              avatar: t.avatar || null,
               logo: t.logo || null,
               logoAlt: t.name,
               logoWidth: t.logoWidth || 80,
@@ -158,14 +158,20 @@ export const ClientTestimonialsSection: React.FC = () => {
               </p>
 
               <div className="mt-8 flex items-center gap-3">
-                <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 bg-gray-200">
-                  <Image
-                    src={item.avatar}
-                    alt={item.name}
-                    fill
-                    className="object-cover object-top"
-                    sizes="44px"
-                  />
+                <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#111827] flex items-center justify-center">
+                  {item.avatar ? (
+                    <Image
+                      src={item.avatar}
+                      alt={item.name}
+                      fill
+                      className="object-cover object-top"
+                      sizes="44px"
+                    />
+                  ) : (
+                    <span className="text-sm font-bold text-white">
+                      {item.name.charAt(0)}
+                    </span>
+                  )}
                 </div>
 
                 <div className="min-w-0 flex-1">

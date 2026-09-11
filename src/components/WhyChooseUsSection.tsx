@@ -78,13 +78,6 @@ export const WhyChooseUsSection: React.FC = () => {
               <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </Link>
-
-          <Link href="/fourth-dimension-framework" className="inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-[#111827] group border border-transparent hover:border-[#111827] px-5 py-3 rounded-full transition-all duration-300 w-full sm:w-auto">
-            <span>Explore Our Services</span>
-            <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center group-hover:bg-[#111827] group-hover:text-white group-hover:rotate-45 transition-all duration-300 shrink-0">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </span>
-          </Link>
         </div>
 
       </div>

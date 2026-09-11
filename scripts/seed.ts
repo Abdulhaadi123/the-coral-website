@@ -24,31 +24,31 @@ const defaultTestimonials = [
   {
     quote: 'Working with The Coral Room transformed how our brand shows up online. Clear process, sharp execution, and results we could measure.',
     name: 'Qasim Zaman Khan', role: 'COO, Namal Education Foundation',
-    avatar: '/images/testimonials/avatar-1.webp', logo: '/images/testimonials/namal.webp',
+    avatar: null, logo: '/images/testimonials/namal.webp',
     logoWidth: 48, logoHeight: 48, rating: 5, featured: true, order: 0,
   },
   {
     quote: 'They brought strategy and craft together. Our new identity feels premium, consistent, and built for growth across every touchpoint.',
     name: 'Umar Mumtaz', role: 'Managing Director, GoGrad',
-    avatar: '/images/testimonials/avatar-1.webp', logo: '/images/testimonials/gograd.webp',
+    avatar: null, logo: '/images/testimonials/gograd.webp',
     logoWidth: 100, logoHeight: 36, rating: 5, featured: true, order: 1,
   },
   {
     quote: 'From discovery to delivery, the team made complex decisions simple. The work looks sharp and performs exactly how we needed.',
     name: 'Hamza Rehman', role: 'Marketing Lead, Urban',
-    avatar: '/images/testimonials/avatar-1.webp', logo: null,
+    avatar: null, logo: null,
     logoWidth: 0, logoHeight: 0, rating: 5, featured: true, order: 2,
   },
   {
     quote: 'The Coral Room redesigned our website and scaled our conversion rate by over 30%. Their Fourth Dimension framework gave us total clarity.',
     name: 'Sarah Jenkins', role: 'Creative Lead, Elovira',
-    avatar: '/images/testimonials/avatar-1.webp', logo: '/images/partners/elovira.webp',
+    avatar: null, logo: '/images/partners/elovira.webp',
     logoWidth: 80, logoHeight: 32, rating: 5, featured: true, order: 3,
   },
   {
     quote: 'Fast turnarounds, clean code, and zero fluff. They feel like a natural extension of our internal design and engineering team.',
     name: 'Marcus Vance', role: 'Director, Holix',
-    avatar: '/images/testimonials/avatar-1.webp', logo: '/images/partners/holix.webp',
+    avatar: null, logo: '/images/partners/holix.webp',
     logoWidth: 80, logoHeight: 32, rating: 5, featured: true, order: 4,
   },
 ];
