@@ -6,6 +6,7 @@ import {
   FolderKanban,
   MessageSquareQuote,
   Handshake,
+  Newspaper,
   Plus,
   ArrowUpRight,
   Sparkles,
@@ -18,23 +19,26 @@ export default function AdminDashboardPage() {
   const [testimonialsCount, setTestimonialsCount] = useState<number | null>(null);
   const [leadsCount, setLeadsCount] = useState<number | null>(null);
   const [partnersCount, setPartnersCount] = useState<number | null>(null);
+  const [blogCount, setBlogCount] = useState<number | null>(null);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       try {
-        const [projRes, testRes, leadRes, partnerRes] = await Promise.all([
+        const [projRes, testRes, leadRes, partnerRes, blogRes] = await Promise.all([
           fetch('/api/admin/projects'),
           fetch('/api/admin/testimonials'),
           fetch('/api/admin/leads'),
           fetch('/api/admin/partners'),
+          fetch('/api/admin/blog'),
         ]);
 
         const projData = await projRes.json();
         const testData = await testRes.json();
         const leadData = await leadRes.json();
         const partnerData = await partnerRes.json();
+        const blogData = await blogRes.json();
 
         if (projData.success) {
           setProjectsCount(projData.projects.length);
@@ -48,6 +52,9 @@ export default function AdminDashboardPage() {
         }
         if (partnerData.success) {
           setPartnersCount(partnerData.partners.length);
+        }
+        if (blogData.success) {
+          setBlogCount(blogData.posts.length);
         }
       } catch (e) {
         console.error('Error loading dashboard stats:', e);
@@ -90,6 +97,13 @@ export default function AdminDashboardPage() {
           >
             <Plus className="w-4 h-4" />
             <span>Add Testimonial</span>
+          </Link>
+          <Link
+            href="/admin/blog/new"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm text-[#111827] bg-gray-100 hover:bg-gray-200 transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Write Post</span>
           </Link>
         </div>
       </div>
@@ -188,6 +202,30 @@ export default function AdminDashboardPage() {
             </div>
             <p className="text-xs sm:text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
               Partner Logos
+            </p>
+          </div>
+        </div>
+
+        {/* Blog Posts Card */}
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#78B249]/20 flex items-center justify-center text-[#467923]">
+              <Newspaper className="w-6 h-6" />
+            </div>
+            <Link
+              href="/admin/blog"
+              className="text-xs font-semibold text-gray-600 hover:text-[#111827] flex items-center gap-1"
+            >
+              <span>Manage all</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <div>
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#111827]">
+              {loading ? '...' : blogCount ?? 0}
+            </div>
+            <p className="text-xs sm:text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">
+              Blog Posts
             </p>
           </div>
         </div>

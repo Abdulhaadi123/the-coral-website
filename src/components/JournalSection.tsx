@@ -2,13 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { blogPosts } from '@/app/journal/data';
+import { getPublishedBlogPosts } from '@/lib/blog';
+import { assetUrl } from '@/lib/assets';
 
-export const JournalSection: React.FC = () => {
+export async function JournalSection() {
+  const posts = await getPublishedBlogPosts(3);
+
+  if (posts.length === 0) return null;
+
   return (
     <section className="w-full bg-[#F9FAFB] py-20 overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
-        
+
         {/* Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           {/* Section Title with Gradient Branding */}
@@ -25,8 +30,8 @@ export const JournalSection: React.FC = () => {
 
         {/* 3 Journal Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {blogPosts.slice(0, 3).map((post) => (
-            <Link 
+          {posts.map((post) => (
+            <Link
               key={post.id}
               href={`/journal/${post.slug}`}
               className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group block cursor-pointer"
@@ -34,7 +39,7 @@ export const JournalSection: React.FC = () => {
               {/* Card Image */}
               <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
                 <Image
-                  src={post.image}
+                  src={assetUrl(post.image)}
                   alt={post.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -79,7 +84,6 @@ export const JournalSection: React.FC = () => {
       </div>
     </section>
   );
-};
+}
 
 export default JournalSection;
-

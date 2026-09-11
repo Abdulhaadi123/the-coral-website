@@ -132,5 +132,145 @@ body {
   animation-play-state: paused;
 }
 
+/*
+ * Journal / blog article body.
+ *
+ * The article used to be hand-coded paragraph/heading elements with explicit
+ * Tailwind classes. Content now comes from the admin rich-text editor as raw
+ * HTML, so these rules reproduce the exact same type sizes, colours and
+ * spacing for the tags the editor can output (p, h2/h3, strong/em/u, links,
+ * lists, blockquote) — the rendered look stays identical either way.
+ */
+.journal-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.journal-prose p,
+.journal-prose ul,
+.journal-prose ol,
+.journal-prose blockquote {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.625;
+}
+
+.journal-prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.375;
+  margin: 0.5rem 0;
+}
+
+.journal-prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.375;
+  margin: 0.25rem 0;
+}
+
+.journal-prose strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+.journal-prose em {
+  font-style: italic;
+}
+
+.journal-prose u {
+  text-decoration: underline;
+}
+
+.journal-prose a {
+  color: #21A0A3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.journal-prose a:hover {
+  color: #111827;
+}
+
+.journal-prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.journal-prose ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.journal-prose blockquote {
+  border-left: 3px solid #E5E7EB;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #4B5563;
+}
+
+.journal-prose code {
+  background: #F3F4F6;
+  border-radius: 4px;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.85em;
+  color: #111827;
+}
+
+.journal-prose > *:first-child {
+  margin-top: 0;
+}
+
+.journal-prose > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .journal-prose p,
+  .journal-prose ul,
+  .journal-prose ol,
+  .journal-prose blockquote {
+    font-size: 1rem;
+  }
+
+  .journal-prose h2 {
+    font-size: 1.5rem;
+    margin: 0.75rem 0;
+  }
+
+  .journal-prose h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .journal-prose h2 {
+    font-size: 1.875rem;
+  }
+}
+
+/* Compact variant used inside the admin rich-text editor itself. */
+.journal-prose.journal-prose--editor {
+  gap: 1rem;
+  min-height: 260px;
+}
+
+.journal-prose.journal-prose--editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: #9CA3AF;
+  pointer-events: none;
+}
+
 
 

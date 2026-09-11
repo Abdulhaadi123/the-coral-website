@@ -15,6 +15,8 @@ import {
   Sparkles,
   Users,
   Handshake,
+  Newspaper,
+  Search,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -44,9 +46,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { label: 'Portfolio Projects', href: '/admin/projects', icon: FolderKanban },
+    { label: 'Blog Posts', href: '/admin/blog', icon: Newspaper },
     { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
     { label: 'Partner Logos', href: '/admin/partners', icon: Handshake },
     { label: 'Portfolio Leads', href: '/admin/leads', icon: Users },
+    { label: 'SEO Settings', href: '/admin/seo', icon: Search },
   ];
 
   return (

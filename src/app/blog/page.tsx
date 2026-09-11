@@ -1,1 +1,1 @@
-export { default } from '../journal/page';
+export { default, generateMetadata } from '../journal/page';

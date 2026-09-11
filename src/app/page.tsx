@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import ShowcaseSection from '@/components/ShowcaseSection';
@@ -11,6 +12,12 @@ import BrandStatementSection from '@/components/BrandStatementSection';
 import JournalSection from '@/components/JournalSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import FooterSection from '@/components/FooterSection';
+import { getPageSeo } from '@/lib/seo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo('/');
+  return { title: seo.title, description: seo.description };
+}
 
 export default function Home() {
   return (
