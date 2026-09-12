@@ -20,7 +20,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Next resizes to the actual rendered dimensions and negotiates
+    // AVIF/WebP per-browser — real quality is unchanged, only the wasted
+    // (invisible) resolution and bytes are dropped.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       // Any S3 bucket endpoint, virtual-hosted style

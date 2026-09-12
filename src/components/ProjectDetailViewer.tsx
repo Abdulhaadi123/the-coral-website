@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { assetUrl } from '@/lib/assets';
 
@@ -81,18 +82,23 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
           </div>
         )}
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={assetUrl(project.detailImage)}
           alt={project.title}
+          width={1600}
+          height={1000}
+          sizes="100vw"
+          quality={100}
+          priority
           draggable={false}
           onContextMenu={(e) => e.preventDefault()}
           onLoad={() => setImageLoaded(true)}
-          className="w-full h-auto object-contain block mx-auto pointer-events-none select-none max-w-none"
+          className="pointer-events-none select-none"
           style={{
             display: 'block',
-            maxWidth: '100%',
             width: '100%',
+            height: 'auto',
+            maxWidth: 'none',
             userSelect: 'none',
             WebkitUserSelect: 'none',
             WebkitTouchCallout: 'none',
@@ -106,11 +112,13 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
     return (
       <div className="w-full max-w-5xl mx-auto px-6 py-20 flex flex-col items-center">
         <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={assetUrl(project.image)}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 1024px"
+            quality={100}
+            className="object-cover"
           />
         </div>
       </div>
