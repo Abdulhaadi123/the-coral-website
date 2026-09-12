@@ -137,7 +137,7 @@ export const ClientTestimonialsSection: React.FC = () => {
           {visible.map((item, idx) => (
             <article
               key={`${item.name}-${active}-${idx}`}
-              className={`flex flex-col ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+              className={`${idx === 0 ? 'flex' : 'hidden md:flex'} flex-col ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
             >
               {/* Dynamic 1-5 Star Rating */}
               <div className="flex items-center gap-1">
