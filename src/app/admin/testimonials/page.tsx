@@ -16,7 +16,9 @@ import {
   AlertCircle,
   ChevronDown,
   Quote,
+  EyeOff,
 } from 'lucide-react';
+import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 function StarRatingSelector({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -67,6 +69,8 @@ export default function AdminTestimonialsPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   // Drawer state for Add/Edit Modal
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -223,6 +227,67 @@ export default function AdminTestimonialsPage() {
     );
   });
 
+  const toggleOne = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every(t => selected.has(t.id));
+  const someFilteredSelected = filtered.some(t => selected.has(t.id));
+
+  const toggleSelectAll = () => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (allFilteredSelected) filtered.forEach(t => next.delete(t.id));
+      else filtered.forEach(t => next.add(t.id));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelected(new Set());
+
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.size} selected testimonial(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id => fetch(`/api/admin/testimonials/${id}`, { method: 'DELETE' })));
+      const failed = results.filter(r => !r.ok).length;
+      setTestimonials(prev => prev.filter(t => !selected.has(t.id)));
+      clearSelection();
+      if (failed > 0) alert(`${failed} testimonial(s) failed to delete.`);
+    } catch (e) {
+      alert('Error deleting selected testimonials');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const bulkSetFeatured = async (featured: boolean) => {
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id =>
+        fetch(`/api/admin/testimonials/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ featured }),
+        })
+      ));
+      const failed = results.filter(r => !r.ok).length;
+      await fetchTestimonials();
+      clearSelection();
+      if (failed > 0) alert(`${failed} testimonial(s) failed to update.`);
+    } catch (e) {
+      alert('Error updating selected testimonials');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 pb-12">
       {/* ── Header ── */}
@@ -255,6 +320,18 @@ export default function AdminTestimonialsPage() {
         />
       </div>
 
+      <BulkActionBar count={selected.size} onClear={clearSelection}>
+        <BulkActionButton onClick={() => bulkSetFeatured(true)} loading={bulkBusy}>
+          <Star className="w-3.5 h-3.5" /> Show Live
+        </BulkActionButton>
+        <BulkActionButton onClick={() => bulkSetFeatured(false)} loading={bulkBusy}>
+          <EyeOff className="w-3.5 h-3.5" /> Hide
+        </BulkActionButton>
+        <BulkActionButton onClick={bulkDelete} loading={bulkBusy} variant="danger">
+          <Trash2 className="w-3.5 h-3.5" /> Delete
+        </BulkActionButton>
+      </BulkActionBar>
+
       {/* ── Content ── */}
       {loading ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center justify-center gap-3">
@@ -276,9 +353,10 @@ export default function AdminTestimonialsPage() {
             {filtered.map((t) => (
               <div
                 key={t.id}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex flex-col gap-3"
+                className={`bg-white rounded-2xl border shadow-sm p-4 flex flex-col gap-3 transition-colors ${selected.has(t.id) ? 'border-[#78B249] ring-1 ring-[#78B249]/30' : 'border-gray-200'}`}
               >
                 <div className="flex items-center gap-3">
+                  <SelectCheckbox checked={selected.has(t.id)} onChange={() => toggleOne(t.id)} label={`Select ${t.name}`} />
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
                     {t.avatar ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -351,6 +429,9 @@ export default function AdminTestimonialsPage() {
             <table className="w-full text-left text-sm text-gray-700">
               <thead className="bg-[#F8FAFC] border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <tr>
+                  <th className="py-4 px-5 w-[44px]">
+                    <SelectCheckbox checked={allFilteredSelected} indeterminate={!allFilteredSelected && someFilteredSelected} onChange={toggleSelectAll} label="Select all testimonials" />
+                  </th>
                   <th className="py-4 px-5">Client</th>
                   <th className="py-4 px-5">Quote</th>
                   <th className="py-4 px-5 text-center w-24">Rating</th>
@@ -361,7 +442,10 @@ export default function AdminTestimonialsPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map((t) => (
-                  <tr key={t.id} className="hover:bg-gray-50/70 transition-colors">
+                  <tr key={t.id} className={`hover:bg-gray-50/70 transition-colors ${selected.has(t.id) ? 'bg-[#78B249]/5' : ''}`}>
+                    <td className="py-3.5 px-5">
+                      <SelectCheckbox checked={selected.has(t.id)} onChange={() => toggleOne(t.id)} label={`Select ${t.name}`} />
+                    </td>
                     <td className="py-3.5 px-5">
                       <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-full overflow-hidden bg-gray-100 shrink-0 border border-gray-200">

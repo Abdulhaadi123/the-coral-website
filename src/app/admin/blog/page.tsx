@@ -7,6 +7,7 @@ import {
   Check, X as XIcon,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
+import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 const CATEGORIES = [
   'RevOps',
@@ -29,6 +30,8 @@ export default function AdminBlogPage() {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -75,6 +78,71 @@ export default function AdminBlogPage() {
     return ms && mc;
   });
 
+  const toggleOne = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every(p => selected.has(p.id));
+  const someFilteredSelected = filtered.some(p => selected.has(p.id));
+
+  const toggleSelectAll = () => {
+    setSelected(prev => {
+      if (allFilteredSelected) {
+        const next = new Set(prev);
+        filtered.forEach(p => next.delete(p.id));
+        return next;
+      }
+      const next = new Set(prev);
+      filtered.forEach(p => next.add(p.id));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelected(new Set());
+
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.size} selected post(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id => fetch(`/api/admin/blog/${id}`, { method: 'DELETE' })));
+      const failed = results.filter(r => !r.ok).length;
+      setPosts(prev => prev.filter(p => !selected.has(p.id)));
+      clearSelection();
+      if (failed > 0) alert(`${failed} post(s) failed to delete.`);
+    } catch (e) {
+      alert('Error deleting selected posts');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const bulkSetPublished = async (published: boolean) => {
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id =>
+        fetch(`/api/admin/blog/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ published }),
+        })
+      ));
+      const failed = results.filter(r => !r.ok).length;
+      await fetchPosts();
+      clearSelection();
+      if (failed > 0) alert(`${failed} post(s) failed to update.`);
+    } catch (e) {
+      alert('Error updating selected posts');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 pb-10">
       {/* Header */}
@@ -109,6 +177,18 @@ export default function AdminBlogPage() {
         </div>
       </div>
 
+      <BulkActionBar count={selected.size} onClear={clearSelection}>
+        <BulkActionButton onClick={() => bulkSetPublished(true)} loading={bulkBusy}>
+          <Check className="w-3.5 h-3.5" /> Publish
+        </BulkActionButton>
+        <BulkActionButton onClick={() => bulkSetPublished(false)} loading={bulkBusy}>
+          <XIcon className="w-3.5 h-3.5" /> Unpublish
+        </BulkActionButton>
+        <BulkActionButton onClick={bulkDelete} loading={bulkBusy} variant="danger">
+          <Trash2 className="w-3.5 h-3.5" /> Delete
+        </BulkActionButton>
+      </BulkActionBar>
+
       {/* List */}
       {loading ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center gap-3">
@@ -126,7 +206,8 @@ export default function AdminBlogPage() {
           {/* Mobile Cards */}
           <div className="flex flex-col gap-3 md:hidden">
             {filtered.map(p => (
-              <div key={p.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex gap-3.5 items-center">
+              <div key={p.id} className={`bg-white rounded-2xl border shadow-sm p-4 flex gap-3.5 items-center transition-colors ${selected.has(p.id) ? 'border-[#78B249] ring-1 ring-[#78B249]/30' : 'border-gray-200'}`}>
+                <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
                 <div className="w-16 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
@@ -166,6 +247,9 @@ export default function AdminBlogPage() {
             <table className="w-full text-left text-sm table-fixed">
               <thead className="bg-[#F8FAFC] border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <tr>
+                  <th className="py-4 px-6 w-[44px]">
+                    <SelectCheckbox checked={allFilteredSelected} indeterminate={!allFilteredSelected && someFilteredSelected} onChange={toggleSelectAll} label="Select all posts" />
+                  </th>
                   <th className="py-4 px-6 w-[88px]">Image</th>
                   <th className="py-4 px-6 w-[320px]">Title</th>
                   <th className="py-4 px-6 w-[160px]">Category</th>
@@ -176,7 +260,11 @@ export default function AdminBlogPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map(p => (
-                  <tr key={p.id} className="hover:bg-gray-50/70 transition-colors group">
+                  <tr key={p.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
+                    <td className="py-3.5 px-6 align-middle">
+                      <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
+                    </td>
+
                     <td className="py-3.5 px-6 align-middle">
                       <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}

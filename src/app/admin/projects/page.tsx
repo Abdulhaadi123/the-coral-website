@@ -7,6 +7,7 @@ import {
   X, UploadCloud, ChevronDown, Check, AlertCircle,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
+import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 const CATEGORIES = ['Branding', 'Packaging', 'Social Media', 'Website', 'Development', 'Marketing', 'Ui & UX'];
 const BG_PRESETS = ['#111827','#1a1a1a','#0d0d0d','#101820','#180818','#1f1208','#1a1a0d','#0f0d00','#0a0a1a','#201010'];
@@ -63,6 +64,8 @@ export default function AdminProjectsPage() {
   const [catFilter, setCatFilter] = useState('ALL');
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   // Drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -181,6 +184,45 @@ export default function AdminProjectsPage() {
     return ms && mc;
   });
 
+  const toggleOne = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every(p => selected.has(p.id));
+  const someFilteredSelected = filtered.some(p => selected.has(p.id));
+
+  const toggleSelectAll = () => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (allFilteredSelected) filtered.forEach(p => next.delete(p.id));
+      else filtered.forEach(p => next.add(p.id));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelected(new Set());
+
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.size} selected project(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id => fetch(`/api/admin/projects/${id}`, { method: 'DELETE' })));
+      const failed = results.filter(r => !r.ok).length;
+      setProjects(prev => prev.filter(p => !selected.has(p.id)));
+      clearSelection();
+      if (failed > 0) alert(`${failed} project(s) failed to delete.`);
+    } catch (e) {
+      alert('Error deleting selected projects');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 pb-10">
       {/* Header */}
@@ -215,6 +257,12 @@ export default function AdminProjectsPage() {
         </div>
       </div>
 
+      <BulkActionBar count={selected.size} onClear={clearSelection}>
+        <BulkActionButton onClick={bulkDelete} loading={bulkBusy} variant="danger">
+          <Trash2 className="w-3.5 h-3.5" /> Delete
+        </BulkActionButton>
+      </BulkActionBar>
+
       {/* List */}
       {loading ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center gap-3">
@@ -232,7 +280,8 @@ export default function AdminProjectsPage() {
           {/* Mobile Cards */}
           <div className="flex flex-col gap-3 md:hidden">
             {filtered.map(p => (
-              <div key={p.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex gap-3.5 items-center">
+              <div key={p.id} className={`bg-white rounded-2xl border shadow-sm p-4 flex gap-3.5 items-center transition-colors ${selected.has(p.id) ? 'border-[#78B249] ring-1 ring-[#78B249]/30' : 'border-gray-200'}`}>
+                <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
                 <div className="w-16 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
@@ -274,6 +323,9 @@ export default function AdminProjectsPage() {
             <table className="w-full text-left text-sm table-fixed">
               <thead className="bg-[#F8FAFC] border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <tr>
+                  <th className="py-4 px-6 w-[44px]">
+                    <SelectCheckbox checked={allFilteredSelected} indeterminate={!allFilteredSelected && someFilteredSelected} onChange={toggleSelectAll} label="Select all projects" />
+                  </th>
                   <th className="py-4 px-6 w-[88px]">Image</th>
                   <th className="py-4 px-6 w-[280px]">Title</th>
                   <th className="py-4 px-6 w-[160px]">Category</th>
@@ -283,7 +335,10 @@ export default function AdminProjectsPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map(p => (
-                  <tr key={p.id} className="hover:bg-gray-50/70 transition-colors group">
+                  <tr key={p.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
+                    <td className="py-3.5 px-6 align-middle">
+                      <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
+                    </td>
                     {/* Image */}
                     <td className="py-3.5 px-6 align-middle">
                       <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">

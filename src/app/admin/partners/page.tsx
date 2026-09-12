@@ -10,7 +10,9 @@ import {
   Loader2,
   Handshake,
   EyeOff,
+  Eye,
 } from 'lucide-react';
+import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 interface Partner {
   id: string;
@@ -27,6 +29,8 @@ export default function AdminPartnersPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   const load = async () => {
     try {
@@ -67,6 +71,67 @@ export default function AdminPartnersPage() {
   });
 
   const liveCount = partners.filter((p) => p.active).length;
+
+  const toggleOne = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every(p => selected.has(p.id));
+  const someFilteredSelected = filtered.some(p => selected.has(p.id));
+
+  const toggleSelectAll = () => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (allFilteredSelected) filtered.forEach(p => next.delete(p.id));
+      else filtered.forEach(p => next.add(p.id));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelected(new Set());
+
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.size} selected partner(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id => fetch(`/api/admin/partners/${id}`, { method: 'DELETE' })));
+      const failed = results.filter(r => !r.ok).length;
+      setPartners(prev => prev.filter(p => !selected.has(p.id)));
+      clearSelection();
+      if (failed > 0) alert(`${failed} partner(s) failed to delete.`);
+    } catch (e) {
+      alert('Error deleting selected partners');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const bulkSetActive = async (active: boolean) => {
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id =>
+        fetch(`/api/admin/partners/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ active }),
+        })
+      ));
+      const failed = results.filter(r => !r.ok).length;
+      await load();
+      clearSelection();
+      if (failed > 0) alert(`${failed} partner(s) failed to update.`);
+    } catch (e) {
+      alert('Error updating selected partners');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6 pb-12">
@@ -115,6 +180,18 @@ export default function AdminPartnersPage() {
         />
       </div>
 
+      <BulkActionBar count={selected.size} onClear={clearSelection}>
+        <BulkActionButton onClick={() => bulkSetActive(true)} loading={bulkBusy}>
+          <Eye className="w-3.5 h-3.5" /> Activate
+        </BulkActionButton>
+        <BulkActionButton onClick={() => bulkSetActive(false)} loading={bulkBusy}>
+          <EyeOff className="w-3.5 h-3.5" /> Deactivate
+        </BulkActionButton>
+        <BulkActionButton onClick={bulkDelete} loading={bulkBusy} variant="danger">
+          <Trash2 className="w-3.5 h-3.5" /> Delete
+        </BulkActionButton>
+      </BulkActionBar>
+
       {/* ── Content ── */}
       {loading ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center justify-center gap-3">
@@ -136,9 +213,10 @@ export default function AdminPartnersPage() {
             {filtered.map((p) => (
               <div
                 key={p.id}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex flex-col gap-3"
+                className={`bg-white rounded-2xl border shadow-sm p-4 flex flex-col gap-3 transition-colors ${selected.has(p.id) ? 'border-[#78B249] ring-1 ring-[#78B249]/30' : 'border-gray-200'}`}
               >
                 <div className="flex items-center gap-3">
+                  <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.name}`} />
                   <div className="h-12 w-24 rounded-xl bg-[#2ECE9E] shrink-0 flex items-center justify-center p-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.logo} alt={p.name} className="max-h-full max-w-full object-contain" />
@@ -187,6 +265,9 @@ export default function AdminPartnersPage() {
             <table className="w-full text-left text-sm text-gray-700">
               <thead className="bg-gray-50/80 border-b border-gray-200">
                 <tr>
+                  <th className="px-6 py-4 w-[44px]">
+                    <SelectCheckbox checked={allFilteredSelected} indeterminate={!allFilteredSelected && someFilteredSelected} onChange={toggleSelectAll} label="Select all partners" />
+                  </th>
                   <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-500">Logo</th>
                   <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-500">Partner</th>
                   <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-gray-500">Order</th>
@@ -196,7 +277,10 @@ export default function AdminPartnersPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map((p) => (
-                  <tr key={p.id} className="hover:bg-gray-50/60 transition-colors">
+                  <tr key={p.id} className={`hover:bg-gray-50/60 transition-colors ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
+                    <td className="px-6 py-4">
+                      <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.name}`} />
+                    </td>
                     <td className="px-6 py-4">
                       {/* Green tile mirrors the marquee background so white logos stay visible. */}
                       <div className="h-12 w-28 rounded-xl bg-[#2ECE9E] flex items-center justify-center p-2">

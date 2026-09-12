@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Check,
 } from 'lucide-react';
+import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 export default function AdminLeadsPage() {
   const [leads, setLeads] = useState<any[]>([]);
@@ -22,6 +23,8 @@ export default function AdminLeadsPage() {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkBusy, setBulkBusy] = useState(false);
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -115,6 +118,45 @@ export default function AdminLeadsPage() {
     );
   });
 
+  const toggleOne = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every(l => selected.has(l.id));
+  const someFilteredSelected = filtered.some(l => selected.has(l.id));
+
+  const toggleSelectAll = () => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (allFilteredSelected) filtered.forEach(l => next.delete(l.id));
+      else filtered.forEach(l => next.add(l.id));
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelected(new Set());
+
+  const bulkDelete = async () => {
+    if (!confirm(`Delete ${selected.size} selected lead(s)? This cannot be undone.`)) return;
+    setBulkBusy(true);
+    try {
+      const ids = Array.from(selected);
+      const results = await Promise.all(ids.map(id => fetch(`/api/admin/leads?id=${id}`, { method: 'DELETE' })));
+      const failed = results.filter(r => !r.ok).length;
+      setLeads(prev => prev.filter(l => !selected.has(l.id)));
+      clearSelection();
+      if (failed > 0) alert(`${failed} lead(s) failed to delete.`);
+    } catch (e) {
+      alert('Error deleting selected leads');
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 pb-12">
       {/* ── Page Header ── */}
@@ -154,6 +196,12 @@ export default function AdminLeadsPage() {
         />
       </div>
 
+      <BulkActionBar count={selected.size} onClear={clearSelection}>
+        <BulkActionButton onClick={bulkDelete} loading={bulkBusy} variant="danger">
+          <Trash2 className="w-3.5 h-3.5" /> Delete
+        </BulkActionButton>
+      </BulkActionBar>
+
       {/* ── Content ── */}
       {loading ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center justify-center gap-3">
@@ -186,10 +234,12 @@ export default function AdminLeadsPage() {
               return (
                 <div
                   key={l.id}
-                  className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 flex flex-col gap-3"
+                  className={`bg-white rounded-2xl border shadow-sm p-4 flex flex-col gap-3 transition-colors ${selected.has(l.id) ? 'border-[#78B249] ring-1 ring-[#78B249]/30' : 'border-gray-200'}`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div>
+                    <div className="flex items-start gap-3">
+                      <SelectCheckbox checked={selected.has(l.id)} onChange={() => toggleOne(l.id)} label={`Select ${l.name}`} />
+                      <div>
                       <p className="font-bold text-[#111827] text-base">{l.name}</p>
                       <span className="inline-flex items-center gap-1 text-[11px] text-gray-400 mt-0.5">
                         <Calendar className="w-3 h-3 text-gray-400" />
@@ -197,6 +247,7 @@ export default function AdminLeadsPage() {
                           {date} at {time}
                         </span>
                       </span>
+                      </div>
                     </div>
 
                     <button
@@ -238,6 +289,9 @@ export default function AdminLeadsPage() {
             <table className="w-full text-left text-sm table-fixed">
               <thead className="bg-[#F8FAFC] border-b border-gray-200 text-xs font-bold text-gray-500 uppercase tracking-wider">
                 <tr>
+                  <th className="py-4 px-6 w-[44px]">
+                    <SelectCheckbox checked={allFilteredSelected} indeterminate={!allFilteredSelected && someFilteredSelected} onChange={toggleSelectAll} label="Select all leads" />
+                  </th>
                   <th className="py-4 px-6 w-[220px]">Visitor Name</th>
                   <th className="py-4 px-6 w-[260px]">Email Address</th>
                   <th className="py-4 px-6 w-[190px]">Phone Number</th>
@@ -258,7 +312,10 @@ export default function AdminLeadsPage() {
                   });
 
                   return (
-                    <tr key={l.id} className="hover:bg-gray-50/70 transition-colors group">
+                    <tr key={l.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(l.id) ? 'bg-[#78B249]/5' : ''}`}>
+                      <td className="py-3.5 px-6 align-middle">
+                        <SelectCheckbox checked={selected.has(l.id)} onChange={() => toggleOne(l.id)} label={`Select ${l.name}`} />
+                      </td>
                       {/* Name */}
                       <td className="py-3.5 px-6 align-middle">
                         <div className="font-bold text-[#111827] text-sm truncate">{l.name}</div>
