@@ -92,6 +92,21 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/*
+ * Gradient headline text (Tailwind's bg-clip-text utility, plus the custom
+ * .text-gradient-figma above) sometimes wraps onto a second line on mobile.
+ * By default Safari/WebKit paints the gradient once across the whole inline
+ * box spanning both lines, then clips each line against that shared box —
+ * this cuts off/garbles the first character(s) of the wrapped line. Cloning
+ * the background per line box fixes it, with no visible effect anywhere the
+ * bug wasn't happening.
+ */
+.bg-clip-text,
+.text-gradient-figma {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /* Carousel card slide-in from RIGHT (next click) */
 @keyframes slideInFromRight {
   from { opacity: 0; transform: translateX(55px); }

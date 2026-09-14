@@ -1,9 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import { getPublishedBlogPosts } from '@/lib/blog';
-import { assetUrl } from '@/lib/assets';
+import { JournalCardGrid } from '@/components/JournalCardGrid';
 
 export async function JournalSection() {
   const posts = await getPublishedBlogPosts(3);
@@ -28,58 +26,8 @@ export async function JournalSection() {
           </Link>
         </div>
 
-        {/* 3 Journal Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {posts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/journal/${post.slug}`}
-              className="bg-gray-100/70 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group block cursor-pointer"
-            >
-              {/* Card Image */}
-              <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
-                <Image
-                  src={assetUrl(post.image)}
-                  alt={post.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  {/* Badge & Date */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 rounded-full bg-gray-200 text-gray-700 text-[11px] font-semibold">
-                      {post.badge}
-                    </span>
-                    <span className="text-xs text-gray-500 font-medium">
-                      {post.date}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#111827] leading-snug mb-3 group-hover:text-[#21A0A3] transition-colors duration-200">
-                    {post.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
-                    {post.description}
-                  </p>
-                </div>
-
-                {/* Read More Link */}
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-800 group-hover:text-[#21A0A3] group-hover:translate-x-1 transition-all duration-200">
-                  <span>Read more</span>
-                  <ChevronRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* 3 Journal Cards — one at a time on mobile (matches testimonials), all 3 on desktop */}
+        <JournalCardGrid posts={posts} />
 
       </div>
     </section>
