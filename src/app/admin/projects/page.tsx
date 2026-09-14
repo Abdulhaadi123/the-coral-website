@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, FolderOpen,
-  X, UploadCloud, ChevronDown, Check, AlertCircle,
+  X, UploadCloud, ChevronDown, Check, AlertCircle, PlayCircle,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
+import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 const CATEGORIES = ['Branding', 'Packaging', 'Social Media', 'Website', 'Development', 'Marketing', 'Ui & UX'];
@@ -56,7 +57,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
   );
 }
 
-const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImage: '' };
+const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImage: '', videoUrl: '' };
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -108,6 +109,7 @@ export default function AdminProjectsPage() {
       order: String(p.order ?? 0),
       image: p.image || '',
       detailImage: p.detailImage || '',
+      videoUrl: p.videoUrl || '',
     });
     setFormError('');
     setFormSuccess(false);
@@ -150,6 +152,7 @@ export default function AdminProjectsPage() {
       topBadge: form.topBadge || form.category,
       tags: form.tagsInput.split(',').map(t => t.trim()).filter(Boolean),
       image: form.image, detailImage: form.detailImage || null,
+      videoUrl: form.videoUrl.trim() || null,
       bg: form.bg, order: Number(form.order) || 0,
     };
     try {
@@ -488,6 +491,37 @@ export default function AdminProjectsPage() {
             label="2. Full Detail Page Image"
             hint="Edge-to-edge showcase when project is opened"
           />
+
+          {/* Project Video */}
+          <div>
+            <label className="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-1">3. Project Video (optional)</label>
+            <p className="text-[11px] text-gray-400 mb-1.5">
+              Paste a YouTube link — a play button appears on the portfolio card and opens the video in a player on the site.
+            </p>
+            <input
+              type="url"
+              value={form.videoUrl}
+              onChange={e => setField('videoUrl', e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=..."
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#78B249]"
+            />
+            {form.videoUrl && (
+              getYouTubeId(form.videoUrl) ? (
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-900 border border-gray-200 mt-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={getYouTubeThumbnail(form.videoUrl) || ''} alt="Video thumbnail preview" className="w-full h-full object-cover opacity-80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <PlayCircle className="w-10 h-10 text-white drop-shadow-lg" />
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-red-500 flex items-center gap-1.5 mt-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  Doesn&apos;t look like a valid YouTube link yet.
+                </p>
+              )
+            )}
+          </div>
 
           {/* BG Color */}
           <div>

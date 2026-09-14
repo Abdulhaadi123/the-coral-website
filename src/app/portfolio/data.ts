@@ -8,6 +8,7 @@ export interface ProjectItem {
   tags: string[];
   image: string | null;
   detailImage?: string | null;
+  videoUrl?: string | null;
   bg: string;
 }
 

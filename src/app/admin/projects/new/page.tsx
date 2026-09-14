@@ -10,8 +10,10 @@ import {
   Check,
   AlertCircle,
   ChevronDown,
+  PlayCircle,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
+import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube';
 
 const CATEGORIES = [
   'Branding',
@@ -49,6 +51,7 @@ export default function CreateProjectPage() {
 
   const [image, setImage] = useState('');
   const [detailImage, setDetailImage] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
 
   const [uploadingThumb, setUploadingThumb] = useState(false);
   const [uploadingDetail, setUploadingDetail] = useState(false);
@@ -124,6 +127,7 @@ export default function CreateProjectPage() {
           tags: tagsArray,
           image,
           detailImage: detailImage || null,
+          videoUrl: videoUrl.trim() || null,
           bg: bg || '#111827',
           order: Number(order) || 0,
         }),
@@ -404,6 +408,46 @@ export default function CreateProjectPage() {
                   }
                 />
               </label>
+            )}
+          </div>
+
+          {/* Project Video */}
+          <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-4">
+            <div>
+              <h2 className="text-sm font-bold text-[#111827]">3. Project Video (optional)</h2>
+              <p className="text-xs text-gray-500">
+                Paste a YouTube link. A play button appears on the portfolio card and opens the
+                video in a player on the site — visitors never leave to YouTube.
+              </p>
+            </div>
+
+            <input
+              type="url"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=..."
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249]"
+            />
+
+            {videoUrl && (
+              getYouTubeId(videoUrl) ? (
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-900 border border-gray-200">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={getYouTubeThumbnail(videoUrl) || ''}
+                    alt="Video thumbnail preview"
+                    className="w-full h-full object-cover opacity-80"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <PlayCircle className="w-12 h-12 text-white drop-shadow-lg" />
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-red-500 flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  Doesn&apos;t look like a valid YouTube link yet.
+                </p>
+              )
             )}
           </div>
 

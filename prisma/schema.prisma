@@ -17,6 +17,7 @@ model Project {
   tags        String[]
   image       String   // Small Card Thumbnail (Cloudinary URL)
   detailImage String?  // Full Page Detail View (Cloudinary URL)
+  videoUrl    String?  // YouTube video link, played in an in-site lightbox
   bg          String   @default("#1a1a1a")
   featured    Boolean  @default(false)
   order       Int      @default(0)

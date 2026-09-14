@@ -7,8 +7,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
-import { SlidersHorizontal, ArrowUpRight } from 'lucide-react';
+import { SlidersHorizontal, ArrowUpRight, PlayCircle } from 'lucide-react';
 import { PortfolioFullLockGate } from '@/components/PortfolioFullLockGate';
+import { VideoLightbox } from '@/components/VideoLightbox';
 import { projects } from './data';
 import { assetUrl } from '@/lib/assets';
 
@@ -35,6 +36,7 @@ function PortfolioInner() {
   const searchParams = useSearchParams();
   const [filterOpen, setFilterOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   // Check localStorage on mount
   useEffect(() => {
@@ -308,6 +310,21 @@ function PortfolioInner() {
                               </div>
                             )}
 
+                            {project.videoUrl && (
+                              <button
+                                type="button"
+                                aria-label={`Play ${project.title} video`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setActiveVideo(project.videoUrl!);
+                                }}
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110 cursor-pointer"
+                              >
+                                <PlayCircle className="w-8 h-8 text-white" strokeWidth={1.5} />
+                              </button>
+                            )}
+
                             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
                             <div className="absolute bottom-3 left-3 flex gap-1.5 flex-wrap z-10 pointer-events-none">
                               {(project.tags || []).map(tag => (
@@ -401,6 +418,8 @@ function PortfolioInner() {
       </section>
 
       <FooterSection />
+
+      <VideoLightbox videoUrl={activeVideo} onClose={() => setActiveVideo(null)} />
     </main>
   );
 }

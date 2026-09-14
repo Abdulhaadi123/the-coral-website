@@ -3,7 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { PlayCircle } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
+import { VideoLightbox } from '@/components/VideoLightbox';
 
 interface ProjectDetailViewerProps {
   project: {
@@ -11,6 +13,7 @@ interface ProjectDetailViewerProps {
     slug?: string | null;
     image?: string | null;
     detailImage?: string | null;
+    videoUrl?: string | null;
   };
 }
 
@@ -18,6 +21,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
   const router = useRouter();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [lockChecked, setLockChecked] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   // Check lock on mount — redirect to gate if not unlocked
   useEffect(() => {
@@ -72,6 +76,21 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
     );
   }
 
+  const videoButton = project.videoUrl && (
+    <button
+      type="button"
+      onClick={() => setVideoOpen(true)}
+      className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-30 flex items-center gap-2 pl-3.5 pr-5 py-3 rounded-full bg-[#111827]/90 backdrop-blur-md border border-white/10 text-white text-sm font-semibold shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+    >
+      <PlayCircle className="w-5 h-5 text-[#A7F176]" />
+      <span>Watch Video</span>
+    </button>
+  );
+
+  const videoLightbox = project.videoUrl && (
+    <VideoLightbox videoUrl={videoOpen ? project.videoUrl : null} onClose={() => setVideoOpen(false)} />
+  );
+
   if (project.detailImage) {
     return (
       <div className="w-full bg-white leading-none overflow-hidden touch-pan-y min-h-[85vh] relative flex flex-col items-center">
@@ -104,6 +123,9 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             WebkitTouchCallout: 'none',
           }}
         />
+
+        {videoButton}
+        {videoLightbox}
       </div>
     );
   }
@@ -121,6 +143,9 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             className="object-cover"
           />
         </div>
+
+        {videoButton}
+        {videoLightbox}
       </div>
     );
   }
