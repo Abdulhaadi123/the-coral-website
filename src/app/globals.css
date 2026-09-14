@@ -15,6 +15,23 @@ body {
   overflow-x: hidden;
 }
 
+/*
+ * Balanced heading wraps, sitewide.
+ *
+ * Left to the browser's default (greedy) wrapping, a multi-line heading
+ * fills each line as full as possible and dumps whatever's left on the
+ * last line — on mobile that often means one long line followed by a
+ * short, ragged one (or a single orphaned word). text-wrap: balance asks
+ * the browser to distribute words evenly across all lines instead, so
+ * the shape reads as intentional rather than accidental. It only kicks
+ * in for short blocks (browsers cap it around 4-6 lines), which is
+ * exactly the heading case; unsupported browsers just keep the old
+ * (still correct) wrapping.
+ */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
 /* Custom Hover Gradient specified by User */
 /*
  * Gradient hover.
