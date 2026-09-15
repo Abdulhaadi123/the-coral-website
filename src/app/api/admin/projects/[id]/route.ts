@@ -8,6 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   try {
     const project = await prisma.project.findUnique({
       where: { id: params.id },
+      include: { videos: { orderBy: { order: 'asc' } } },
     });
 
     if (!project) {
@@ -37,7 +38,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       tags,
       image,
       detailImage,
-      videoUrl,
+      videos,
       bg,
       featured,
       order,
@@ -61,21 +62,43 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       }
     }
 
-    const updated = await prisma.project.update({
-      where: { id: params.id },
-      data: {
-        ...(title && { title: title.trim() }),
-        ...(slug && { slug: slug.trim().toLowerCase() }),
-        ...(category && { category: category.trim() }),
-        topBadge: topBadge !== undefined ? topBadge.trim() : existingProject.topBadge,
-        tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()).filter(Boolean) : existingProject.tags,
-        ...(image && { image: image.trim() }),
-        detailImage: detailImage !== undefined ? (detailImage ? detailImage.trim() : null) : existingProject.detailImage,
-        videoUrl: videoUrl !== undefined ? (videoUrl ? videoUrl.trim() : null) : existingProject.videoUrl,
-        ...(bg && { bg: bg.trim() }),
-        ...(featured !== undefined && { featured: Boolean(featured) }),
-        ...(order !== undefined && { order: Number(order) }),
-      },
+    const updated = await prisma.$transaction(async (tx) => {
+      const project = await tx.project.update({
+        where: { id: params.id },
+        data: {
+          ...(title && { title: title.trim() }),
+          ...(slug && { slug: slug.trim().toLowerCase() }),
+          ...(category && { category: category.trim() }),
+          topBadge: topBadge !== undefined ? topBadge.trim() : existingProject.topBadge,
+          tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()).filter(Boolean) : existingProject.tags,
+          ...(image && { image: image.trim() }),
+          detailImage: detailImage !== undefined ? (detailImage ? detailImage.trim() : null) : existingProject.detailImage,
+          ...(bg && { bg: bg.trim() }),
+          ...(featured !== undefined && { featured: Boolean(featured) }),
+          ...(order !== undefined && { order: Number(order) }),
+        },
+      });
+
+      // Videos are replaced wholesale when included — simplest way to keep
+      // titles, URLs, and order in sync with whatever the admin submitted.
+      if (Array.isArray(videos)) {
+        await tx.projectVideo.deleteMany({ where: { projectId: params.id } });
+        if (videos.length > 0) {
+          await tx.projectVideo.createMany({
+            data: videos.map((v: any, i: number) => ({
+              projectId: params.id,
+              url: String(v.url).trim(),
+              title: String(v.title).trim(),
+              order: Number(v.order ?? i),
+            })),
+          });
+        }
+      }
+
+      return tx.project.findUniqueOrThrow({
+        where: { id: params.id },
+        include: { videos: { orderBy: { order: 'asc' } } },
+      });
     });
 
     revalidatePath('/portfolio');

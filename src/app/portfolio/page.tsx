@@ -9,20 +9,10 @@ import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
 import { SlidersHorizontal, ArrowUpRight, PlayCircle } from 'lucide-react';
 import { PortfolioFullLockGate } from '@/components/PortfolioFullLockGate';
-import { VideoLightbox } from '@/components/VideoLightbox';
+import { VideoLightbox, VideoItem } from '@/components/VideoLightbox';
+import { useCategories } from '@/lib/useCategories';
 import { projects } from './data';
 import { assetUrl } from '@/lib/assets';
-
-const PROJECT_TYPES = [
-  'Branding',
-  'Social Media',
-  'Video Production',
-  'Ui & UX',
-  'Packaging',
-  'Website',
-  'App Design',
-  'Marketing',
-];
 
 const placeholderColors = [
   '#1a2e1a', '#0a1628', '#2d1f0e', '#0f0f1a',
@@ -34,9 +24,10 @@ const placeholderColors = [
 function PortfolioInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const categories = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activeVideos, setActiveVideos] = useState<VideoItem[] | null>(null);
 
   // Check localStorage on mount
   useEffect(() => {
@@ -113,21 +104,10 @@ function PortfolioInner() {
     setFilterOpen(false);
   };
 
-  // Compute filtered list
+  // Compute filtered list — filters are just the admin-managed categories now
   let filtered = projectList ?? [];
   if (appliedTypes.length > 0) {
-    filtered = filtered.filter(p =>
-      appliedTypes.includes(p.category) ||
-      appliedTypes.some(type =>
-        type === 'Design' ? p.category === 'Design' :
-        type === 'Website' ? (p.category === 'Design' || (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('web') || t.toLowerCase().includes('site')))) :
-        type === 'Ui & UX' ? (p.category === 'Design' || p.category === 'Development' || (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('ui') || t.toLowerCase().includes('ux') || t.toLowerCase().includes('crm')))) :
-        type === 'App Design' ? (p.category === 'Development' || (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('app')))) :
-        type === 'Packaging' ? (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('packag'))) :
-        type === 'Video Production' ? (p.category === 'Social Media' || (p.tags && p.tags.some((t: string) => t.toLowerCase().includes('video')))) :
-        (p.tags && p.tags.some((t: string) => t.toLowerCase().includes(type.toLowerCase())))
-      )
-    );
+    filtered = filtered.filter(p => appliedTypes.includes(p.category));
   }
 
   const hasActiveFilters = appliedTypes.length > 0;
@@ -216,7 +196,7 @@ function PortfolioInner() {
                               </button>
                             </div>
                             <div className="px-5 pb-4 flex flex-col gap-3.5">
-                              {PROJECT_TYPES.map(type => {
+                              {categories.map(c => c.name).map(type => {
                                 const isChecked = pendingTypes.includes(type);
                                 return (
                                   <label
@@ -310,14 +290,14 @@ function PortfolioInner() {
                               </div>
                             )}
 
-                            {project.videoUrl && (
+                            {project.videos && project.videos.length > 0 && (
                               <button
                                 type="button"
                                 aria-label={`Play ${project.title} video`}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  setActiveVideo(project.videoUrl!);
+                                  setActiveVideos(project.videos!);
                                 }}
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110 cursor-pointer"
                               >
@@ -419,7 +399,7 @@ function PortfolioInner() {
 
       <FooterSection />
 
-      <VideoLightbox videoUrl={activeVideo} onClose={() => setActiveVideo(null)} />
+      <VideoLightbox videos={activeVideos} onClose={() => setActiveVideos(null)} />
     </main>
   );
 }

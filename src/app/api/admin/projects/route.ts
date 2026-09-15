@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
   try {
     const projects = await prisma.project.findMany({
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
+      include: { videos: { orderBy: { order: 'asc' } } },
     });
     return NextResponse.json({ success: true, projects });
   } catch (error: any) {
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
       tags,
       image,
       detailImage,
-      videoUrl,
+      videos,
       bg,
       featured,
       order,
@@ -67,11 +68,20 @@ export async function POST(req: NextRequest) {
         tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
         image: image.trim(),
         detailImage: detailImage ? detailImage.trim() : null,
-        videoUrl: videoUrl ? videoUrl.trim() : null,
         bg: bg ? bg.trim() : '#1a1a1a',
         featured: Boolean(featured),
         order: Number(order) || 0,
+        videos: Array.isArray(videos) && videos.length > 0
+          ? {
+              create: videos.map((v: any, i: number) => ({
+                url: String(v.url).trim(),
+                title: String(v.title).trim(),
+                order: Number(v.order ?? i),
+              })),
+            }
+          : undefined,
       },
+      include: { videos: { orderBy: { order: 'asc' } } },
     });
 
     // Revalidate frontend paths for instantaneous live updates

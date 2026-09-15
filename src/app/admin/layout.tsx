@@ -17,6 +17,7 @@ import {
   Handshake,
   Newspaper,
   Search,
+  Tag,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -46,6 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { label: 'Portfolio Projects', href: '/admin/projects', icon: FolderKanban },
+    { label: 'Categories', href: '/admin/categories', icon: Tag },
     { label: 'Blog Posts', href: '/admin/blog', icon: Newspaper },
     { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
     { label: 'Partner Logos', href: '/admin/partners', icon: Handshake },

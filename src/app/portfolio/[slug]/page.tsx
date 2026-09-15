@@ -14,7 +14,10 @@ export const revalidate = 0;
 async function findProject(slug: string) {
   let dbProject = null;
   try {
-    dbProject = await prisma.project.findUnique({ where: { slug } });
+    dbProject = await prisma.project.findUnique({
+      where: { slug },
+      include: { videos: { orderBy: { order: 'asc' } } },
+    });
   } catch (err) {
     console.error('Error querying project from DB:', err);
   }

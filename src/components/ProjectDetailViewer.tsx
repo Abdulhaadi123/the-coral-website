@@ -13,7 +13,7 @@ interface ProjectDetailViewerProps {
     slug?: string | null;
     image?: string | null;
     detailImage?: string | null;
-    videoUrl?: string | null;
+    videos?: { url: string; title: string }[];
   };
 }
 
@@ -76,19 +76,21 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
     );
   }
 
-  const videoButton = project.videoUrl && (
+  const hasVideos = !!project.videos && project.videos.length > 0;
+
+  const videoButton = hasVideos && (
     <button
       type="button"
       onClick={() => setVideoOpen(true)}
       className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-30 flex items-center gap-2 pl-3.5 pr-5 py-3 rounded-full bg-[#111827]/90 backdrop-blur-md border border-white/10 text-white text-sm font-semibold shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
     >
       <PlayCircle className="w-5 h-5 text-[#A7F176]" />
-      <span>Watch Video</span>
+      <span>{project.videos!.length > 1 ? 'Watch Videos' : 'Watch Video'}</span>
     </button>
   );
 
-  const videoLightbox = project.videoUrl && (
-    <VideoLightbox videoUrl={videoOpen ? project.videoUrl : null} onClose={() => setVideoOpen(false)} />
+  const videoLightbox = hasVideos && (
+    <VideoLightbox videos={videoOpen ? project.videos! : null} onClose={() => setVideoOpen(false)} />
   );
 
   if (project.detailImage) {
