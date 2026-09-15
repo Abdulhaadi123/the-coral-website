@@ -9,19 +9,11 @@ import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
 import { assetUrl } from '@/lib/assets';
 import type { PublicBlogPost } from '@/lib/blog';
-
-const categories = [
-  'View All',
-  'RevOps',
-  'Website Production',
-  'Digital Marketing',
-  'Online Advertising',
-  'Design/UI/UX',
-  'Digital',
-  'News',
-];
+import { useCategories } from '@/lib/useCategories';
 
 export default function JournalPageClient({ posts }: { posts: PublicBlogPost[] }) {
+  const blogCategories = useCategories('blog');
+  const categories = ['View All', ...blogCategories.map((c) => c.name)];
   const [activeCategory, setActiveCategory] = useState('View All');
   const [currentPage, setCurrentPage] = useState(1);
 

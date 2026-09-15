@@ -8,22 +8,14 @@ import {
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
-
-const CATEGORIES = [
-  'RevOps',
-  'Website Production',
-  'Digital Marketing',
-  'Online Advertising',
-  'Design/UI/UX',
-  'Digital',
-  'News',
-];
+import { useCategories } from '@/lib/useCategories';
 
 function formatDate(iso: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(iso));
 }
 
 export default function AdminBlogPage() {
+  const categories = useCategories('blog');
   const [posts, setPosts] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [catFilter, setCatFilter] = useState('ALL');
@@ -168,7 +160,7 @@ export default function AdminBlogPage() {
             className="w-full pl-10 pr-4 py-3 rounded-2xl border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#78B249] placeholder:text-gray-400 shadow-sm" />
         </div>
         <div className="flex flex-wrap gap-2">
-          {['ALL', ...CATEGORIES].map(cat => (
+          {['ALL', ...categories.map(c => c.name)].map(cat => (
             <button key={cat} onClick={() => setCatFilter(cat)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${catFilter === cat ? 'bg-[#111827] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
               {cat}

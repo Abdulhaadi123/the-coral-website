@@ -10,20 +10,10 @@ import {
   Check,
   AlertCircle,
   Trash2,
-  ChevronDown,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import RichTextEditor from '@/components/admin/RichTextEditor';
-
-const CATEGORIES = [
-  'RevOps',
-  'Website Production',
-  'Digital Marketing',
-  'Online Advertising',
-  'Design/UI/UX',
-  'Digital',
-  'News',
-];
+import { CategorySelect } from '@/components/admin/CategorySelect';
 
 export default function EditBlogPostPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -272,20 +262,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
                   Category
                 </label>
-                <div className="relative">
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full appearance-none px-4 py-3 pr-10 rounded-xl border border-gray-200 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#78B249] bg-white cursor-pointer"
-                  >
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                </div>
+                <CategorySelect value={category} onChange={setCategory} type="blog" />
               </div>
             </div>
 
