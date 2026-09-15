@@ -47,7 +47,7 @@ export const FooterSection: React.FC = () => {
           </div>
 
           {/* Navigation Links Columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-white/10 text-xs sm:text-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-white/10 text-xs sm:text-sm">
             <div className="flex flex-col gap-3">
               <h4 className="font-bold text-white text-sm sm:text-base">Services</h4>
               <Link href="/design" className="text-gray-400 hover:text-white transition-colors">Design</Link>

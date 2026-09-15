@@ -74,7 +74,7 @@ export const ProcessWithDepthSection: React.FC = () => {
       <FadeIn
         direction="none"
         delay={0.15}
-        className="w-full px-5 sm:px-8 pb-10 lg:p-0 lg:absolute lg:inset-y-0 lg:left-[74%] lg:right-0 lg:w-auto lg:z-0 xl:left-[60%] 2xl:left-[55%]"
+        className="hidden lg:block lg:p-0 lg:absolute lg:inset-y-0 lg:left-[74%] lg:right-0 lg:w-auto lg:z-0 xl:left-[60%] 2xl:left-[55%]"
       >
         <div className="relative w-full aspect-video lg:aspect-auto lg:h-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
