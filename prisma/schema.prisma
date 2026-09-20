@@ -51,6 +51,19 @@ model Category {
   @@unique([name, type])
 }
 
+// Social profile links shown as icons in the site footer, managed from
+// /admin/social-links. `platform` picks the icon; "other" uses a generic link icon.
+model SocialLink {
+  id        String   @id @default(uuid())
+  platform  String   // facebook | instagram | linkedin | youtube | x | tiktok | other
+  label     String   @default("")
+  url       String
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Testimonial {
   id         String   @id @default(uuid())
   name       String

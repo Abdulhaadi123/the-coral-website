@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IconFacebook, IconInstagram, IconLinkedin } from '@/components/icons/Icons';
+import { FooterSocialLinks } from '@/components/FooterSocialLinks';
 
 export const FooterSection: React.FC = () => {
   return (
@@ -104,43 +104,8 @@ export const FooterSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Social Cards Grid */}
-          <div className="grid grid-cols-3 gap-4">
-
-            <a
-              href="https://www.facebook.com/people/The-Coral-Room/61574508644297/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="bg-[#171717] rounded-2xl flex items-center justify-center shadow-lg hover:opacity-80 transition-all duration-300"
-              style={{ width: '100%', aspectRatio: '168/156' }}
-            >
-              <IconFacebook />
-            </a>
-
-            <a
-              href="https://www.instagram.com/thecoral_room"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="bg-[#171717] rounded-2xl flex items-center justify-center shadow-lg hover:opacity-80 transition-all duration-300"
-              style={{ width: '100%', aspectRatio: '168/156' }}
-            >
-              <IconInstagram />
-            </a>
-
-            <a
-              href="https://www.linkedin.com/company/coral-room/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="bg-[#171717] rounded-2xl flex items-center justify-center shadow-lg hover:opacity-80 transition-all duration-300"
-              style={{ width: '100%', aspectRatio: '168/156' }}
-            >
-              <IconLinkedin />
-            </a>
-
-          </div>
+          {/* Social Cards Grid — managed from /admin/social-links */}
+          <FooterSocialLinks />
 
         </div>
 
