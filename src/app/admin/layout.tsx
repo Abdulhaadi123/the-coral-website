@@ -18,6 +18,8 @@ import {
   Newspaper,
   Search,
   Tag,
+  Share2,
+  Map as MapIcon,
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -51,8 +53,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { label: 'Blog Posts', href: '/admin/blog', icon: Newspaper },
     { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
     { label: 'Partner Logos', href: '/admin/partners', icon: Handshake },
+    { label: 'Social Links', href: '/admin/social-links', icon: Share2 },
     { label: 'Portfolio Leads', href: '/admin/leads', icon: Users },
     { label: 'SEO Settings', href: '/admin/seo', icon: Search },
+    { label: 'Sitemap', href: '/admin/sitemap', icon: MapIcon },
   ];
 
   return (
