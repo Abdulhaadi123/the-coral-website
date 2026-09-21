@@ -156,7 +156,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        <div>
+        <div className="flex-1 min-h-0 overflow-y-auto">
           {/* Brand Header with Real Logo */}
           <div className="p-6 border-b border-gray-100 flex flex-col gap-2">
             <div className="flex items-center justify-between">
@@ -209,7 +209,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-gray-100 flex flex-col gap-2">
+        <div className="shrink-0 p-4 border-t border-gray-100 flex flex-col gap-2">
           <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-gray-50 border border-gray-100">
             <div className="w-8 h-8 rounded-full bg-[#111827] text-[#9FE66F] flex items-center justify-center text-xs font-bold shrink-0">
               {(me.name || me.email).charAt(0).toUpperCase()}
