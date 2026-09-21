@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { SOCIAL_PLATFORMS, normalizeSocialUrl, platformLabel } from '@/lib/social';
 
 export const dynamic = 'force-dynamic';
@@ -8,10 +8,8 @@ export const dynamic = 'force-dynamic';
 // PUT update a social link (platform / url / label / visibility / order)
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('social');
+    if (denied) return denied;
 
     const existing = await prisma.socialLink.findUnique({ where: { id: params.id } });
     if (!existing) {
@@ -68,10 +66,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // DELETE a social link
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('social');
+    if (denied) return denied;
 
     const existing = await prisma.socialLink.findUnique({ where: { id: params.id } });
     if (!existing) {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { SOCIAL_PLATFORMS, normalizeSocialUrl, platformLabel } from '@/lib/social';
 
 export const dynamic = 'force-dynamic';
@@ -8,10 +8,8 @@ export const dynamic = 'force-dynamic';
 // GET every social link, including hidden ones (admin)
 export async function GET() {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('social');
+    if (denied) return denied;
 
     const links = await prisma.socialLink.findMany({
       orderBy: [{ order: 'asc' }, { createdAt: 'asc' }],
@@ -26,10 +24,8 @@ export async function GET() {
 // POST create a social link
 export async function POST(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('social');
+    if (denied) return denied;
 
     const data = await req.json();
     const platform = String(data.platform || '');

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { revalidatePath } from 'next/cache';
 
 // GET single testimonial
@@ -23,10 +23,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // PUT / PATCH update testimonial
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('testimonials');
+    if (denied) return denied;
 
     const data = await req.json();
     const { name, role, quote, avatar, logo, logoWidth, logoHeight, rating, featured, order } = data;
@@ -67,10 +65,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // DELETE testimonial
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('testimonials');
+    if (denied) return denied;
 
     await prisma.testimonial.delete({
       where: { id: params.id },

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { getSitemapEntries } from '@/lib/sitemap';
 import { SITE_URL } from '@/lib/site';
 
@@ -8,10 +8,8 @@ export const dynamic = 'force-dynamic';
 // GET the URLs currently in sitemap.xml, for the admin "Sitemap" screen
 export async function GET() {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('sitemap');
+    if (denied) return denied;
 
     const entries = await getSitemapEntries();
     return NextResponse.json({

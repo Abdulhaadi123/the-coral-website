@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { revalidatePath } from 'next/cache';
 
 // PUT update a page's title/description by id
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('seo');
+    if (denied) return denied;
 
     const data = await req.json();
     const { title, description } = data;

@@ -10,6 +10,10 @@ export interface AdminJwtPayload {
   id: string;
   email: string;
   name: string;
+  // Absent on tokens issued before roles existed. Only used for fast, coarse
+  // page gating — API routes always re-check the database (see lib/access.ts).
+  role?: string;
+  permissions?: string[];
 }
 
 export async function hashPassword(password: string): Promise<string> {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -20,16 +20,73 @@ import {
   Tag,
   Share2,
   Map as MapIcon,
+  UserCog,
+  Loader2,
 } from 'lucide-react';
+import { AdminMe, AdminUserProvider } from '@/components/admin/AdminUserContext';
+import { SECTIONS, SectionKey, canAccessPath, hasPermission, isSuper } from '@/lib/permissions';
+
+const SECTION_ICONS: Record<SectionKey, React.ComponentType<{ className?: string }>> = {
+  projects: FolderKanban,
+  categories: Tag,
+  blog: Newspaper,
+  testimonials: MessageSquareQuote,
+  partners: Handshake,
+  social: Share2,
+  leads: Users,
+  seo: Search,
+  sitemap: MapIcon,
+};
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [me, setMe] = useState<AdminMe | null>(null);
+  const [meLoaded, setMeLoaded] = useState(false);
+
+  const isLoginPage = pathname === '/admin/login';
+
+  // Who is signed in, straight from the database (also refreshes the session
+  // cookie when their access changed). Re-read on every admin navigation so
+  // a change made by a Super Admin shows up without signing out and in.
+  const loadMe = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/auth', { cache: 'no-store' });
+      if (res.status === 401) {
+        setMe(null);
+        router.replace('/admin/login');
+        return;
+      }
+      const data = await res.json();
+      if (data.authenticated) setMe(data.admin);
+    } catch (e) {
+      console.error('Error loading current admin:', e);
+    } finally {
+      setMeLoaded(true);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (isLoginPage) {
+      // Signed out: forget the previous person so the next login starts clean.
+      setMe(null);
+      setMeLoaded(false);
+    } else {
+      loadMe();
+    }
+  }, [pathname, isLoginPage, loadMe]);
+
+  const allowedHere = !me || canAccessPath(me, pathname);
+
+  // Landed on a section they don't have (e.g. permission just removed).
+  useEffect(() => {
+    if (!isLoginPage && me && !allowedHere) router.replace('/admin?denied=1');
+  }, [isLoginPage, me, allowedHere, router]);
 
   // Don't render admin sidebar/nav on login page
-  if (pathname === '/admin/login') {
+  if (isLoginPage) {
     return <>{children}</>;
   }
 
@@ -46,20 +103,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   };
 
+  // Only the sections this user was given (Super Admins get everything).
   const navItems = [
     { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    { label: 'Portfolio Projects', href: '/admin/projects', icon: FolderKanban },
-    { label: 'Categories', href: '/admin/categories', icon: Tag },
-    { label: 'Blog Posts', href: '/admin/blog', icon: Newspaper },
-    { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
-    { label: 'Partner Logos', href: '/admin/partners', icon: Handshake },
-    { label: 'Social Links', href: '/admin/social-links', icon: Share2 },
-    { label: 'Portfolio Leads', href: '/admin/leads', icon: Users },
-    { label: 'SEO Settings', href: '/admin/seo', icon: Search },
-    { label: 'Sitemap', href: '/admin/sitemap', icon: MapIcon },
+    ...SECTIONS.filter((s) => hasPermission(me, s.key)).map((s) => ({
+      label: s.label,
+      href: s.href,
+      icon: SECTION_ICONS[s.key],
+    })),
+    ...(isSuper(me) ? [{ label: 'Users & Access', href: '/admin/users', icon: UserCog }] : []),
   ];
 
+  // Until we know who this is (and that they may be here) show nothing that could flash restricted content.
+  if (!meLoaded || !me || !allowedHere) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#78B249] animate-spin" />
+      </div>
+    );
+  }
+
   return (
+    <AdminUserProvider admin={me}>
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col md:flex-row antialiased">
       {/* ── Mobile Top Bar ── */}
       <div className="md:hidden flex items-center justify-between bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-40">
@@ -145,6 +210,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Footer Actions */}
         <div className="p-4 border-t border-gray-100 flex flex-col gap-2">
+          <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-gray-50 border border-gray-100">
+            <div className="w-8 h-8 rounded-full bg-[#111827] text-[#9FE66F] flex items-center justify-center text-xs font-bold shrink-0">
+              {(me.name || me.email).charAt(0).toUpperCase()}
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-gray-900 truncate" title={me.email}>
+                {me.name || me.email}
+              </p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+                {isSuper(me) ? 'Super Admin' : 'Editor'}
+              </p>
+            </div>
+          </div>
+
           <Link
             href="/"
             target="_blank"
@@ -181,5 +260,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {children}
       </main>
     </div>
+    </AdminUserProvider>
   );
 }

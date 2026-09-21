@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 
 // GET all categories of a given type ("portfolio" | "blog"), default portfolio
 export async function GET(req: NextRequest) {
@@ -20,10 +20,8 @@ export async function GET(req: NextRequest) {
 // POST create category
 export async function POST(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('categories');
+    if (denied) return denied;
 
     const data = await req.json();
     const name = (data.name || '').trim();

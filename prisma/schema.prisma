@@ -127,6 +127,12 @@ model Admin {
   email        String   @unique
   passwordHash String
   name         String   @default("Admin")
+  // "super" sees everything and manages other users; "editor" only gets the
+  // sections listed in `permissions`. Defaults to "super" so accounts that
+  // existed before roles were introduced keep their full access.
+  role         String   @default("super")
+  permissions  String[] @default([])
+  active       Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -138,4 +144,13 @@ model Lead {
   phone     String
   source    String   @default("portfolio_gate")
   createdAt DateTime @default(now())
+}
+
+// Generic key-value store for site-wide settings toggled from the admin panel.
+// `key` is a stable identifier (e.g. "portfolio_geo_lock"); `value` is a string
+// ("true" / "false" for booleans, raw text otherwise).
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

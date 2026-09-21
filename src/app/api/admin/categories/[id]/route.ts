@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 
 // PUT update category (rename / reorder)
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('categories');
+    if (denied) return denied;
 
     const data = await req.json();
     const existingCategory = await prisma.category.findUnique({ where: { id: params.id } });
@@ -70,10 +68,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // DELETE category — blocked while any project/post still uses it
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('categories');
+    if (denied) return denied;
 
     const category = await prisma.category.findUnique({ where: { id: params.id } });
     if (!category) {

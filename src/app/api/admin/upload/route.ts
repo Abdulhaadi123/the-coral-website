@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { uploadToS3 } from '@/lib/s3';
 
 // Videos and full-page detail images can be large — stream them rather than
@@ -9,10 +9,8 @@ export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess(['projects', 'blog', 'testimonials', 'partners']);
+    if (denied) return denied;
 
     const formData = await req.formData();
     const file = formData.get('file') as File | null;

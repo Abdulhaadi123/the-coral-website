@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Loader2, Check, ExternalLink, Search, AlertCircle, Newspaper, FileText } from 'lucide-react';
+import { Loader2, Check, ExternalLink, Search, AlertCircle, Newspaper, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface SeoPage {
   id: string;
@@ -244,11 +244,66 @@ function BlogSeoRow({ post, onSaved }: { post: BlogSeoPost; onSaved: (updated: B
   );
 }
 
+function Pagination({
+  page,
+  totalPages,
+  onChange,
+}: {
+  page: number;
+  totalPages: number;
+  onChange: (page: number) => void;
+}) {
+  if (totalPages <= 1) return null;
+
+  return (
+    <div className="flex items-center justify-center gap-2 pt-2">
+      <button
+        type="button"
+        onClick={() => onChange(page - 1)}
+        disabled={page === 1}
+        className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        aria-label="Previous page"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+
+      {Array.from({ length: totalPages }).map((_, i) => {
+        const n = i + 1;
+        return (
+          <button
+            key={n}
+            type="button"
+            onClick={() => onChange(n)}
+            className={`w-8 h-8 rounded-full text-xs font-semibold flex items-center justify-center transition-all duration-200 ${
+              page === n ? 'bg-[#111827] text-white shadow-xs' : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            {n}
+          </button>
+        );
+      })}
+
+      <button
+        type="button"
+        onClick={() => onChange(page + 1)}
+        disabled={page === totalPages}
+        className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        aria-label="Next page"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
+
+const BLOG_PAGE_SIZE = 5;
+
 export default function AdminSeoPage() {
   const [pages, setPages] = useState<SeoPage[]>([]);
   const [posts, setPosts] = useState<BlogSeoPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [blogPage, setBlogPage] = useState(1);
 
   useEffect(() => {
     async function load() {
@@ -282,6 +337,18 @@ export default function AdminSeoPage() {
     return !q || p.title.toLowerCase().includes(q) || p.slug.toLowerCase().includes(q);
   });
 
+  const totalBlogPages = Math.max(1, Math.ceil(filteredPosts.length / BLOG_PAGE_SIZE));
+  const currentBlogPage = Math.min(blogPage, totalBlogPages);
+  const paginatedPosts = filteredPosts.slice(
+    (currentBlogPage - 1) * BLOG_PAGE_SIZE,
+    currentBlogPage * BLOG_PAGE_SIZE
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setBlogPage(1);
+  };
+
   return (
     <div className="flex flex-col gap-6 max-w-3xl mx-auto pb-16">
       <div>
@@ -296,7 +363,7 @@ export default function AdminSeoPage() {
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
           placeholder="Search pages or blog posts..."
           className="w-full pl-10 pr-4 py-3 rounded-2xl border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#78B249] placeholder:text-gray-400 shadow-sm"
         />
@@ -327,17 +394,21 @@ export default function AdminSeoPage() {
 
           {filteredPosts.length > 0 && (
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-2 mt-4">
-                <Newspaper className="w-4 h-4 text-gray-400" />
-                <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Blog Posts</h2>
+              <div className="flex items-center justify-between gap-2 mt-4">
+                <div className="flex items-center gap-2">
+                  <Newspaper className="w-4 h-4 text-gray-400" />
+                  <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Blog Posts</h2>
+                </div>
+                <span className="text-[11px] text-gray-400">{filteredPosts.length} total</span>
               </div>
-              {filteredPosts.map((post) => (
+              {paginatedPosts.map((post) => (
                 <BlogSeoRow
                   key={post.id}
                   post={post}
                   onSaved={(updated) => setPosts((prev) => prev.map((p) => (p.id === updated.id ? updated : p)))}
                 />
               ))}
+              <Pagination page={currentBlogPage} totalPages={totalBlogPages} onChange={setBlogPage} />
             </div>
           )}
 

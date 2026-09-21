@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { revalidatePath } from 'next/cache';
 
 // GET all testimonials
@@ -19,10 +19,8 @@ export async function GET(req: NextRequest) {
 // POST create testimonial
 export async function POST(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('testimonials');
+    if (denied) return denied;
 
     const data = await req.json();
     const { name, role, quote, avatar, logo, logoWidth, logoHeight, rating, featured, order } = data;

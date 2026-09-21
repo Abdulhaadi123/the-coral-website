@@ -1,14 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess, getCurrentAdmin } from '@/lib/access';
+import { hasPermission } from '@/lib/permissions';
 import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 // GET all blog posts (admin — includes unpublished)
 export async function GET(req: NextRequest) {
   try {
+    const admin = await getCurrentAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const canManageBlog = hasPermission(admin, 'blog');
+    if (!canManageBlog && !hasPermission(admin, 'seo')) {
+      return NextResponse.json({ error: 'You do not have permission to do this.' }, { status: 403 });
+    }
+
     const posts = await prisma.blogPost.findMany({
       orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
     });
+
+    // The SEO screen lists every post to edit its title and description, so SEO
+    // users get just those — not post bodies, covers or drafts' full content.
+    if (!canManageBlog) {
+      return NextResponse.json({
+        success: true,
+        posts: posts.map((p) => ({ id: p.id, slug: p.slug, title: p.title, description: p.description })),
+      });
+    }
+
     return NextResponse.json({ success: true, posts });
   } catch (error: any) {
     console.error('Error fetching blog posts:', error);
@@ -19,10 +42,8 @@ export async function GET(req: NextRequest) {
 // POST create blog post
 export async function POST(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('blog');
+    if (denied) return denied;
 
     const data = await req.json();
     const {

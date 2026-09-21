@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 import { revalidatePath } from 'next/cache';
 
 // GET single partner
@@ -23,10 +23,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // PUT update partner
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('partners');
+    if (denied) return denied;
 
     const data = await req.json();
     const { name, logo, width, height, active, order } = data;
@@ -63,10 +61,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // DELETE partner
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('partners');
+    if (denied) return denied;
 
     await prisma.partner.delete({
       where: { id: params.id },

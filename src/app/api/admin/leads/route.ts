@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess } from '@/lib/access';
 
 // GET all leads (Admin Protected)
 export async function GET(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('leads');
+    if (denied) return denied;
 
     const leads = await prisma.lead.findMany({
       orderBy: { createdAt: 'desc' },
@@ -24,10 +22,8 @@ export async function GET(req: NextRequest) {
 // DELETE lead by ID (Admin Protected)
 export async function DELETE(req: NextRequest) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('leads');
+    if (denied) return denied;
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');

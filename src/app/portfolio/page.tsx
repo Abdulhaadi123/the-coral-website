@@ -27,7 +27,7 @@ function PortfolioInner() {
   const categories = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [activeVideos, setActiveVideos] = useState<VideoItem[] | null>(null);
+  const [activeProject, setActiveProject] = useState<{ slug: string; videos: VideoItem[] } | null>(null);
 
   // Check localStorage on mount
   useEffect(() => {
@@ -253,6 +253,15 @@ function PortfolioInner() {
                           scroll={true}
                           prefetch={true}
                           className="group block cursor-pointer"
+                          // A project with videos opens its video modal from anywhere on the card;
+                          // one without goes straight to the detail page. Ctrl/Cmd/middle-click
+                          // still open the detail page in a new tab as usual.
+                          onClick={(e) => {
+                            if (!project.videos || project.videos.length === 0) return;
+                            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                            e.preventDefault();
+                            setActiveProject({ slug: project.slug, videos: project.videos });
+                          }}
                         >
                           <div
                             className="relative w-full overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:scale-[1.03]"
@@ -291,18 +300,12 @@ function PortfolioInner() {
                             )}
 
                             {project.videos && project.videos.length > 0 && (
-                              <button
-                                type="button"
-                                aria-label={`Play ${project.title} video`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setActiveVideos(project.videos!);
-                                }}
-                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110 cursor-pointer"
+                              <div
+                                aria-hidden="true"
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 pointer-events-none"
                               >
                                 <PlayCircle className="w-8 h-8 text-white" strokeWidth={1.5} />
-                              </button>
+                              </div>
                             )}
 
                             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
@@ -399,7 +402,11 @@ function PortfolioInner() {
 
       <FooterSection />
 
-      <VideoLightbox videos={activeVideos} onClose={() => setActiveVideos(null)} />
+      <VideoLightbox
+        videos={activeProject?.videos ?? null}
+        detailsHref={activeProject ? `/portfolio/${activeProject.slug}` : undefined}
+        onClose={() => setActiveProject(null)}
+      />
     </main>
   );
 }

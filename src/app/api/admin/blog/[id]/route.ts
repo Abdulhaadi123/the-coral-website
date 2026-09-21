@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getAdminSession } from '@/lib/auth';
+import { checkAccess, getCurrentAdmin } from '@/lib/access';
+import { hasPermission } from '@/lib/permissions';
 import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 // GET single blog post by id
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const denied = await checkAccess('blog');
+    if (denied) return denied;
+
     const post = await prisma.blogPost.findUnique({
       where: { id: params.id },
     });
@@ -23,12 +29,30 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 // PUT update blog post by id
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
+    const admin = await getCurrentAdmin();
+    if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const canManageBlog = hasPermission(admin, 'blog');
+    if (!canManageBlog && !hasPermission(admin, 'seo')) {
+      return NextResponse.json({ error: 'You do not have permission to do this.' }, { status: 403 });
+    }
+
     const data = await req.json();
+
+    // SEO access covers a post's title and description only (that's all the SEO
+    // screen sends) — never its content, slug, publish state or anything else.
+    if (!canManageBlog) {
+      const outOfScope = Object.keys(data).filter((key) => key !== 'title' && key !== 'description');
+      if (outOfScope.length > 0) {
+        return NextResponse.json(
+          { error: "SEO access only allows editing a post's title and description." },
+          { status: 403 }
+        );
+      }
+    }
+
     const {
       title,
       slug,
@@ -97,10 +121,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 // DELETE blog post by id
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const session = await getAdminSession();
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const denied = await checkAccess('blog');
+    if (denied) return denied;
 
     const post = await prisma.blogPost.findUnique({
       where: { id: params.id },
