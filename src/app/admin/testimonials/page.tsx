@@ -19,6 +19,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 function StarRatingSelector({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -138,12 +139,7 @@ export default function AdminTestimonialsPage() {
     setFormError('');
 
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('folder', 'coral-room/testimonials');
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/testimonials');
       if (isAvatar) setField('avatar', data.url);
       else setField('logo', data.url);
     } catch (err: any) {

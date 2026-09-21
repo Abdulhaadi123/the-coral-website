@@ -14,6 +14,7 @@ import {
 import { assetUrl } from '@/lib/assets';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import { CategorySelect } from '@/components/admin/CategorySelect';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 export default function EditBlogPostPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -69,13 +70,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
     setUploadingCover(true);
     setError('');
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'coral-room/journal');
-
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/journal');
       setImage(data.url);
     } catch (err: any) {
       console.error(err);

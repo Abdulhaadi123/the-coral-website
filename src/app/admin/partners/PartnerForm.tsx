@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, UploadCloud, Loader2, Check, AlertCircle } from 'lucide-react';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 export interface PartnerFormValues {
   name: string;
@@ -42,13 +43,7 @@ export default function PartnerForm({ id, initial }: Props) {
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'coral-room/partners');
-
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/partners');
 
       setLogo(data.url);
 

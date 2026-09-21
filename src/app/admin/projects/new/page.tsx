@@ -14,6 +14,7 @@ import { assetUrl } from '@/lib/assets';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 const BG_PRESETS = [
   '#111827',
@@ -65,17 +66,7 @@ export default function CreateProjectPage() {
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'coral-room/portfolio');
-
-      const res = await fetch('/api/admin/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/portfolio');
 
       if (isThumbnail) {
         setImage(data.url);

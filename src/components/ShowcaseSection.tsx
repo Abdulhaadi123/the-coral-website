@@ -35,9 +35,10 @@ const PLAYBACK_RATE = 1;
  * so nothing else has to be invalidated.
  *
  * Bump on every re-encode of the video.
- *   v2 = 22.4s, 0.8x motion-interpolated, 11.6MB
+ *   v2 = 22.4s, 0.8x motion-interpolated, 11.6MB   (WEBSITE VIDEO.mp4)
+ *   v3 = 46s new cut at 1.0x, no audio, 12MB          (WEBSITE.mp4)
  */
-const ASSET_VERSION = '2';
+const ASSET_VERSION = '3';
 
 /** How often to check that the loop is still running, in ms. */
 const WATCHDOG_MS = 2000;
@@ -130,7 +131,7 @@ export const ShowcaseSection: React.FC = () => {
         <div className="relative w-full aspect-[1643/294] overflow-hidden">
           <video
             ref={videoRef}
-            src={`${assetUrl('/WEBSITE VIDEO.mp4')}?v=${ASSET_VERSION}`}
+            src={`${assetUrl('/WEBSITE.mp4')}?v=${ASSET_VERSION}`}
             autoPlay
             loop
             muted

@@ -12,6 +12,7 @@ import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 const BG_PRESETS = ['#111827','#1a1a1a','#0d0d0d','#101820','#180818','#1f1208','#1a1a0d','#0f0d00','#0a0a1a','#201010'];
 
@@ -121,12 +122,7 @@ export default function AdminProjectsPage() {
     if (isThumb) setUploadingThumb(true); else setUploadingDetail(true);
     setFormError('');
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('folder', 'coral-room/portfolio');
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/portfolio');
       if (isThumb) setField('image', data.url); else setField('detailImage', data.url);
     } catch (err: any) {
       setFormError(err.message || 'Upload error');

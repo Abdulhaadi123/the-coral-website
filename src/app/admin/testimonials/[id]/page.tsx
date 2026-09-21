@@ -12,6 +12,7 @@ import {
   Trash2,
   Star,
 } from 'lucide-react';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 function StarRatingSelector({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -99,17 +100,7 @@ export default function EditTestimonialPage({ params }: { params: { id: string }
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'coral-room/testimonials');
-
-      const res = await fetch('/api/admin/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Upload failed');
+      const data = await uploadAdminFile(file, 'coral-room/testimonials');
 
       if (isAvatar) {
         setAvatar(data.url);
