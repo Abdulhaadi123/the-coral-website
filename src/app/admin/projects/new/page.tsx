@@ -13,6 +13,7 @@ import {
 import { assetUrl } from '@/lib/assets';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
+import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
 
 const BG_PRESETS = [
   '#111827',
@@ -41,6 +42,7 @@ export default function CreateProjectPage() {
   const [image, setImage] = useState('');
   const [detailImage, setDetailImage] = useState('');
   const [videos, setVideos] = useState<VideoEntry[]>([]);
+  const [pakistanOnly, setPakistanOnly] = useState(false);
 
   const [uploadingThumb, setUploadingThumb] = useState(false);
   const [uploadingDetail, setUploadingDetail] = useState(false);
@@ -121,6 +123,7 @@ export default function CreateProjectPage() {
             .map((v, i) => ({ url: v.url.trim(), title: v.title.trim(), order: i })),
           bg: bg || '#111827',
           order: Number(order) || 0,
+          pakistanOnly,
         }),
       });
 
@@ -391,6 +394,9 @@ export default function CreateProjectPage() {
 
           {/* Project Videos */}
           <VideoListEditor videos={videos} onChange={setVideos} />
+
+          {/* Pakistan-only */}
+          <PakistanOnlyToggle checked={pakistanOnly} onChange={setPakistanOnly} />
 
           {/* Submit */}
           <button

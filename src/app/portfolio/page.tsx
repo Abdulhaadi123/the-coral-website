@@ -87,7 +87,9 @@ function PortfolioInner() {
     fetch('/api/admin/projects')
       .then((r) => r.json())
       .then((data) => {
-        if (data.success && data.projects && data.projects.length > 0) {
+        // `restricted` = some projects were deliberately hidden (Pakistan-only), so an
+        // empty list is real and must not fall back to the built-in sample projects.
+        if (data.success && data.projects && (data.projects.length > 0 || data.restricted)) {
           setProjectList(data.projects);
         } else {
           setProjectList(projects);

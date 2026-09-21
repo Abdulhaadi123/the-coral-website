@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, FolderOpen,
-  X, UploadCloud, Check, AlertCircle,
+  X, UploadCloud, Check, AlertCircle, Globe2,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { useCategories } from '@/lib/useCategories';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
+import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 
 const BG_PRESETS = ['#111827','#1a1a1a','#0d0d0d','#101820','#180818','#1f1208','#1a1a0d','#0f0d00','#0a0a1a','#201010'];
@@ -43,7 +44,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
   );
 }
 
-const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImage: '', videos: [] as VideoEntry[] };
+const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImage: '', videos: [] as VideoEntry[], pakistanOnly: false };
 
 export default function AdminProjectsPage() {
   const categories = useCategories();
@@ -100,6 +101,7 @@ export default function AdminProjectsPage() {
         .slice()
         .sort((a: any, b: any) => a.order - b.order)
         .map((v: any) => ({ url: v.url, title: v.title })),
+      pakistanOnly: !!p.pakistanOnly,
     });
     setFormError('');
     setFormSuccess(false);
@@ -146,6 +148,7 @@ export default function AdminProjectsPage() {
         .filter((v) => v.url.trim() && v.title.trim())
         .map((v, i) => ({ url: v.url.trim(), title: v.title.trim(), order: i })),
       bg: form.bg, order: Number(form.order) || 0,
+      pakistanOnly: form.pakistanOnly,
     };
     try {
       const res = await fetch(
@@ -288,6 +291,11 @@ export default function AdminProjectsPage() {
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
                       {p.category}
                     </span>
+                    {p.pakistanOnly && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#111827] text-[#9FE66F] whitespace-nowrap">
+                        <Globe2 className="w-3 h-3" /> PAKISTAN ONLY
+                      </span>
+                    )}
                     {(p.tags || []).slice(0, 2).map((t: string) => (
                       <span key={t} className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium bg-gray-50 border border-gray-200 text-gray-500 whitespace-nowrap">
                         {t}
@@ -344,7 +352,14 @@ export default function AdminProjectsPage() {
 
                     {/* Title & Slug */}
                     <td className="py-3.5 px-6 align-middle">
-                      <div className="font-bold text-[#111827] text-sm truncate">{p.title}</div>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="font-bold text-[#111827] text-sm truncate">{p.title}</span>
+                        {p.pakistanOnly && (
+                          <span title="Only visitors from Pakistan can see this project" className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#111827] text-[#9FE66F] whitespace-nowrap shrink-0">
+                            <Globe2 className="w-3 h-3" /> PK ONLY
+                          </span>
+                        )}
+                      </div>
                       <div className="text-[11px] text-gray-400 font-mono mt-0.5 truncate">/portfolio/{p.slug}</div>
                     </td>
 
@@ -486,6 +501,9 @@ export default function AdminProjectsPage() {
 
           {/* Project Videos */}
           <VideoListEditor videos={form.videos} onChange={v => setField('videos', v)} />
+
+          {/* Pakistan-only */}
+          <PakistanOnlyToggle checked={form.pakistanOnly} onChange={v => setField('pakistanOnly', v)} />
 
           {/* BG Color */}
           <div>

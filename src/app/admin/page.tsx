@@ -18,8 +18,6 @@ import {
   Share2,
   Map as MapIcon,
   Users,
-  Globe2,
-  Loader2,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { useAdminUser } from '@/components/admin/AdminUserContext';
@@ -58,47 +56,6 @@ export default function AdminDashboardPage() {
       window.history.replaceState(null, '', '/admin');
     }
   }, []);
-
-  // ── Geo-lock toggle ───────────────────────────────────────────────────────
-  const [geoLock, setGeoLock] = useState<boolean | null>(null);
-  const [geoLockSaving, setGeoLockSaving] = useState(false);
-  const [geoLockError, setGeoLockError] = useState('');
-  // Only people who manage portfolio projects may see or change the lock.
-  const canGeoLock = hasPermission(me, 'projects');
-
-  useEffect(() => {
-    if (!canGeoLock) return;
-    fetch('/api/admin/settings?keys=portfolio_geo_lock', { cache: 'no-store' })
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.settings) setGeoLock(d.settings.portfolio_geo_lock === 'true');
-      })
-      .catch(() => setGeoLockError('Could not load the portfolio access setting.'));
-  }, [canGeoLock]);
-
-  const toggleGeoLock = async () => {
-    if (geoLockSaving || geoLock === null) return;
-    const next = !geoLock;
-    setGeoLockSaving(true);
-    setGeoLockError('');
-    try {
-      const res = await fetch('/api/admin/settings', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: 'portfolio_geo_lock', value: String(next) }),
-      });
-      if (res.ok) {
-        setGeoLock(next);
-      } else {
-        const d = await res.json().catch(() => ({}));
-        setGeoLockError(d.error || 'Could not save the change. Please try again.');
-      }
-    } catch {
-      setGeoLockError('Could not save the change. Please try again.');
-    } finally {
-      setGeoLockSaving(false);
-    }
-  };
 
   // Refetch only when their access actually changes, not on every session refresh.
   const accessKey = me ? `${me.role}:${me.permissions.join(',')}` : '';
@@ -256,52 +213,6 @@ export default function AdminDashboardPage() {
           )}
         </div>
       </div>
-
-      {/* ── Portfolio country lock ── */}
-      {canGeoLock && (
-        <div className="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200/80 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div
-              className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-colors ${
-                geoLock ? 'bg-[#111827] text-[#9FE66F]' : 'bg-[#9FE66F]/20 text-[#467923]'
-              }`}
-            >
-              <Globe2 className="w-6 h-6" />
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <h2 className="text-sm sm:text-base font-bold text-[#111827]">Portfolio: Pakistan-only access</h2>
-              <p className="text-xs sm:text-sm text-gray-600 mt-0.5">
-                {geoLock === null
-                  ? 'Loading current setting...'
-                  : geoLock
-                  ? 'ON — only visitors from Pakistan can open the portfolio. Everyone else sees a "not available" page.'
-                  : 'OFF — the portfolio is visible to visitors from every country.'}
-              </p>
-            </div>
-
-            {geoLockSaving && <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" />}
-            <button
-              type="button"
-              role="switch"
-              aria-checked={!!geoLock}
-              aria-label="Restrict portfolio to Pakistan"
-              onClick={toggleGeoLock}
-              disabled={geoLock === null || geoLockSaving}
-              className={`relative w-12 h-7 rounded-full transition-colors shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
-                geoLock ? 'bg-[#78B249]' : 'bg-gray-300'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform ${
-                  geoLock ? 'translate-x-5' : 'translate-x-0'
-                }`}
-              />
-            </button>
-          </div>
-          {geoLockError && <p className="text-xs text-red-600 font-medium mt-3">{geoLockError}</p>}
-        </div>
-      )}
 
       {/* ── Nothing assigned yet ── */}
       {restricted && mySections.length === 0 && (

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
+import { shouldHidePakistanOnly } from '@/lib/geo';
 import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 // GET single project by id
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
@@ -11,11 +14,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       include: { videos: { orderBy: { order: 'asc' } } },
     });
 
-    if (!project) {
+    // A Pakistan-only project simply doesn't exist for visitors abroad.
+    if (!project || (project.pakistanOnly && (await shouldHidePakistanOnly()))) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, project });
+    return NextResponse.json({ success: true, project }, { headers: { 'Cache-Control': 'private, no-store' } });
   } catch (error: any) {
     return NextResponse.json({ error: 'Failed to fetch project' }, { status: 500 });
   }
@@ -39,6 +43,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       videos,
       bg,
       featured,
+      pakistanOnly,
       order,
     } = data;
 
@@ -73,6 +78,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
           detailImage: detailImage !== undefined ? (detailImage ? detailImage.trim() : null) : existingProject.detailImage,
           ...(bg && { bg: bg.trim() }),
           ...(featured !== undefined && { featured: Boolean(featured) }),
+          ...(pakistanOnly !== undefined && { pakistanOnly: Boolean(pakistanOnly) }),
           ...(order !== undefined && { order: Number(order) }),
         },
       });

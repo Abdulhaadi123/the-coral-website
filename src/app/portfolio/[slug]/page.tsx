@@ -1,12 +1,13 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { ProjectDetailViewer } from '@/components/ProjectDetailViewer';
 import { projects as staticProjects } from '../data';
 import prisma from '@/lib/db';
 import { assetUrl } from '@/lib/assets';
+import { shouldHidePakistanOnly } from '@/lib/geo';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -25,9 +26,16 @@ async function findProject(slug: string) {
   return dbProject || staticProject || null;
 }
 
+// A Pakistan-only project is off limits to visitors abroad (admins still see it).
+async function isBlockedForVisitor(project: unknown): Promise<boolean> {
+  if (!project || !(project as { pakistanOnly?: boolean }).pakistanOnly) return false;
+  return shouldHidePakistanOnly();
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const project = await findProject(params.slug);
   if (!project) return {};
+  if (await isBlockedForVisitor(project)) return { robots: { index: false, follow: false } };
 
   const description = `${project.title} — a ${project.category} project by The Coral Room${
     project.tags?.length ? `, covering ${project.tags.slice(0, 3).join(', ')}` : ''
@@ -51,6 +59,10 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
 
   if (!project) {
     notFound();
+  }
+
+  if (await isBlockedForVisitor(project)) {
+    redirect('/portfolio-unavailable');
   }
 
   return (

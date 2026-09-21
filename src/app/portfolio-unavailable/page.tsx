@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 
 export const metadata: Metadata = {
-  title: 'Portfolio Not Available | The Coral Room',
+  title: 'Project Not Available | The Coral Room',
   robots: { index: false, follow: false },
 };
 
@@ -32,19 +32,27 @@ export default function PortfolioUnavailablePage() {
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-semibold text-[#111827] mb-3">
-          Portfolio Not Available
+          Project Not Available
         </h1>
         <p className="text-sm sm:text-base text-gray-500 max-w-md leading-relaxed mb-8">
-          Our portfolio is currently only accessible from certain regions.
-          Please get in touch with us directly to view our work.
+          This project is only available to visitors from certain regions.
+          Get in touch with us directly and we&apos;ll be happy to walk you through it.
         </p>
 
-        <Link
-          href="/book-a-call"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111827] text-white text-sm font-semibold hover:bg-[#1f2937] transition-colors"
-        >
-          Book a Discovery Call
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#111827] text-[#111827] text-sm font-semibold hover:bg-gray-50 transition-colors"
+          >
+            Browse Our Portfolio
+          </Link>
+          <Link
+            href="/book-a-call"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111827] text-white text-sm font-semibold hover:bg-[#1f2937] transition-colors"
+          >
+            Book a Discovery Call
+          </Link>
+        </div>
       </div>
 
       <FooterSection />

@@ -1,16 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
+import { shouldHidePakistanOnly } from '@/lib/geo';
 import { revalidatePath } from 'next/cache';
 
-// GET all projects
+// The answer depends on who is asking (Pakistan-only projects are hidden from
+// visitors abroad), so it must never be cached or prerendered.
+export const dynamic = 'force-dynamic';
+
+// GET all projects — Pakistan-only ones are left out for visitors outside Pakistan
 export async function GET(req: NextRequest) {
   try {
+    const hidePakistanOnly = await shouldHidePakistanOnly();
     const projects = await prisma.project.findMany({
+      where: hidePakistanOnly ? { pakistanOnly: false } : undefined,
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
       include: { videos: { orderBy: { order: 'asc' } } },
     });
-    return NextResponse.json({ success: true, projects });
+    // `restricted` tells the portfolio page an empty list is deliberate, so it
+    // doesn't fall back to its built-in sample projects.
+    return NextResponse.json(
+      { success: true, projects, restricted: hidePakistanOnly },
+      { headers: { 'Cache-Control': 'private, no-store' } }
+    );
   } catch (error: any) {
     console.error('Error fetching projects:', error);
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
@@ -35,6 +47,7 @@ export async function POST(req: NextRequest) {
       videos,
       bg,
       featured,
+      pakistanOnly,
       order,
     } = data;
 
@@ -68,6 +81,7 @@ export async function POST(req: NextRequest) {
         detailImage: detailImage ? detailImage.trim() : null,
         bg: bg ? bg.trim() : '#1a1a1a',
         featured: Boolean(featured),
+        pakistanOnly: Boolean(pakistanOnly),
         order: Number(order) || 0,
         videos: Array.isArray(videos) && videos.length > 0
           ? {

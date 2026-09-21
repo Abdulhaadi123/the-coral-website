@@ -20,6 +20,9 @@ model Project {
   videos      ProjectVideo[]
   bg          String   @default("#1a1a1a")
   featured    Boolean  @default(false)
+  // When true the project is hidden from, and blocked for, visitors outside
+  // Pakistan (admins always see it). Decided per project in the admin panel.
+  pakistanOnly Boolean @default(false)
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
