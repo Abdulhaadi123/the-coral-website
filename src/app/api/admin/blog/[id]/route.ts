@@ -3,6 +3,7 @@ import prisma from '@/lib/db';
 import { checkAccess, getCurrentAdmin } from '@/lib/access';
 import { hasPermission } from '@/lib/permissions';
 import { revalidatePath } from 'next/cache';
+import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
 
 export const dynamic = 'force-dynamic';
 
@@ -110,6 +111,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     revalidatePath(`/blog/${existingPost.slug}`);
     revalidatePath(`/blog/${updated.slug}`);
     revalidatePath('/');
+    await pingSearchConsoleSitemap();
 
     return NextResponse.json({ success: true, post: updated });
   } catch (error: any) {
@@ -141,6 +143,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     revalidatePath('/blog');
     revalidatePath(`/blog/${post.slug}`);
     revalidatePath('/');
+    await pingSearchConsoleSitemap();
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

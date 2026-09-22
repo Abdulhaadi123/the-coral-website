@@ -3,6 +3,7 @@ import prisma from '@/lib/db';
 import { checkAccess, getCurrentAdmin } from '@/lib/access';
 import { hasPermission } from '@/lib/permissions';
 import { revalidatePath } from 'next/cache';
+import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
 
 export const dynamic = 'force-dynamic';
 
@@ -101,6 +102,7 @@ export async function POST(req: NextRequest) {
     revalidatePath('/blog');
     revalidatePath(`/blog/${post.slug}`);
     revalidatePath('/');
+    await pingSearchConsoleSitemap();
 
     return NextResponse.json({ success: true, post }, { status: 201 });
   } catch (error: any) {
