@@ -5,8 +5,13 @@
 // admin as "Unexpected token 'R' ... is not valid JSON". This turns every failure
 // into a message an admin can act on.
 
-/** Slightly under Vercel's 4.5 MB body limit, leaving room for the form envelope. */
-export const MAX_UPLOAD_BYTES = 4.4 * 1024 * 1024;
+/**
+ * Default is slightly under Vercel's 4.5 MB body limit, leaving room for the form
+ * envelope. When self-hosting (no such limit) set NEXT_PUBLIC_MAX_UPLOAD_MB at
+ * build time — and raise client_max_body_size in nginx to match.
+ */
+const configuredMB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB);
+export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 4.4) * 1024 * 1024;
 
 const toMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 

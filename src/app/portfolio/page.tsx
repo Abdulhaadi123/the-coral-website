@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useState, useRef, useEffect } from 'react';
+import React, { Suspense, useState, useRef, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,6 +13,7 @@ import { VideoLightbox, VideoItem } from '@/components/VideoLightbox';
 import { useCategories } from '@/lib/useCategories';
 import { projects } from './data';
 import { assetUrl } from '@/lib/assets';
+import { readCachedProjects, writeCachedProjects } from '@/lib/portfolioCache';
 
 const placeholderColors = [
   '#1a2e1a', '#0a1628', '#2d1f0e', '#0f0f1a',
@@ -83,20 +84,35 @@ function PortfolioInner() {
   const [projectList, setProjectList] = useState<typeof projects | null>(null);
   const [dbLoaded, setDbLoaded] = useState(false);
 
+  // Paint instantly from the last-seen list, before the browser gets a chance to
+  // show the loading state at all. useLayoutEffect (not useEffect) runs before
+  // paint, and only after hydration matched the server's initial (loading) HTML,
+  // so this never causes a hydration mismatch — it just skips the visible flash
+  // on every revisit. First-ever visit has nothing cached yet and falls through
+  // to the normal fetch below exactly as before.
+  useLayoutEffect(() => {
+    const cached = readCachedProjects<(typeof projects)[number]>();
+    if (cached) {
+      setProjectList(cached);
+      setDbLoaded(true);
+    }
+  }, []);
+
   useEffect(() => {
-    fetch('/api/admin/projects')
+    fetch('/api/admin/projects', { cache: 'no-store' })
       .then((r) => r.json())
       .then((data) => {
         // `restricted` = some projects were deliberately hidden (Pakistan-only), so an
         // empty list is real and must not fall back to the built-in sample projects.
         if (data.success && data.projects && (data.projects.length > 0 || data.restricted)) {
           setProjectList(data.projects);
-        } else {
+          writeCachedProjects(data.projects);
+        } else if (!readCachedProjects()) {
           setProjectList(projects);
         }
       })
       .catch(() => {
-        setProjectList(projects);
+        if (!readCachedProjects()) setProjectList(projects);
       })
       .finally(() => setDbLoaded(true));
   }, []);

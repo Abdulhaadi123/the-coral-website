@@ -334,10 +334,10 @@ export default function BookACallPage() {
           {/* Bottom Divider & Row matching Figma */}
           <div className="w-full border-t border-white/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-gray-400 font-medium">
             <a
-              href="mailto:dronexia@youremail.com"
+              href="mailto:info@thecoralroom.co"
               className="underline hover:text-white transition-colors cursor-pointer"
             >
-              dronexia@youremail.com
+              info@thecoralroom.co
             </a>
             <span className="text-gray-400">Ready to get started?</span>
           </div>

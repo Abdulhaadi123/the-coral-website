@@ -109,7 +109,10 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
           width={1600}
           height={1000}
           sizes="100vw"
-          quality={100}
+          // 100 re-encodes near-lossless, keeping these at 1.5-2.5MB for no visible
+          // gain; 88 is indistinguishable at normal viewing distance and cuts that
+          // by roughly half — a real difference on a first (uncached) visit.
+          quality={88}
           priority
           draggable={false}
           onContextMenu={(e) => e.preventDefault()}
@@ -141,7 +144,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             alt={project.title}
             fill
             sizes="(max-width: 1024px) 100vw, 1024px"
-            quality={100}
+            quality={88}
             className="object-cover"
           />
         </div>
