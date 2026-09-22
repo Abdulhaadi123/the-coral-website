@@ -1,40 +1,14 @@
 import { headers } from 'next/headers';
-import geoip from 'geoip-lite';
 import { getCurrentAdmin } from '@/lib/access';
 
 // Vercel sets `x-vercel-ip-country` on every request (clients can't spoof it
-// there); `cf-ipcountry` covers Cloudflare in front of another host. Neither
-// exists on a plain self-hosted box, so `geoip-lite` — an offline, bundled
-// IP-to-country database, no external API call — is the last resort, looking
-// up the real visitor IP that nginx forwards via X-Real-IP/X-Forwarded-For
-// (see deploy/nginx-thecoralroom.conf). Less precise than a platform header,
-// but good enough for a coarse country gate.
+// there); `cf-ipcountry` covers Cloudflare in front of another host.
 export const ALLOWED_COUNTRY = 'PK';
-
-/** The real visitor IP: nginx's forwarded headers, falling back to X-Forwarded-For's first hop. */
-function clientIp(h: Headers): string | null {
-  const real = h.get('x-real-ip');
-  if (real) return real.trim();
-  const forwarded = h.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  return null;
-}
 
 export function visitorCountry(): string | null {
   const h = headers();
-
-  const platform = h.get('x-vercel-ip-country') || h.get('cf-ipcountry');
-  if (platform) return platform.trim().toUpperCase();
-
-  const ip = clientIp(h);
-  if (!ip) return null;
-  try {
-    const result = geoip.lookup(ip);
-    return result?.country ? result.country.toUpperCase() : null;
-  } catch {
-    // Malformed/unlookupable IP — treat as unknown, same as no header at all.
-    return null;
-  }
+  const raw = h.get('x-vercel-ip-country') || h.get('cf-ipcountry');
+  return raw ? raw.trim().toUpperCase() : null;
 }
 
 /**
