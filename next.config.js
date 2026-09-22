@@ -19,6 +19,13 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    // geoip-lite reads its bundled .dat files from disk via `__dirname`;
+    // letting webpack bundle/rewrite it (the default) breaks that path
+    // resolution during the build's page-data-collection step. Keeping it as
+    // a real `require()` resolved from node_modules at runtime fixes it.
+    serverComponentsExternalPackages: ['geoip-lite'],
+  },
   images: {
     // Next resizes to the actual rendered dimensions and negotiates
     // AVIF/WebP per-browser — real quality is unchanged, only the wasted
