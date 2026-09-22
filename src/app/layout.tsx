@@ -24,6 +24,15 @@ export const metadata: Metadata = {
   verification: {
     google: 'HWl6_Pb6rKSfez6wnTKD3dWJ_DVYlnNBDZRbn-6socg',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png' },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
