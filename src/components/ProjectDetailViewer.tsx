@@ -7,19 +7,31 @@ import { PlayCircle } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { VideoLightbox } from '@/components/VideoLightbox';
 
+interface DetailImagePart {
+  url: string;
+  width: number;
+  height: number;
+}
+
 interface ProjectDetailViewerProps {
   project: {
     title: string;
     slug?: string | null;
     image?: string | null;
+    // Legacy single-image shape (only the static fallback sample data still
+    // uses this — every real, DB-backed project now uses detailImages).
     detailImage?: string | null;
+    // A design can be uploaded as several stacked slices instead of one huge
+    // file — smaller uploads, faster/parallel loading — while still reading
+    // as a single continuous image on the page (see the render below).
+    detailImages?: DetailImagePart[];
     videos?: { url: string; title: string }[];
   };
 }
 
 export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ project }) => {
   const router = useRouter();
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [firstPartLoaded, setFirstPartLoaded] = useState(false);
   const [lockChecked, setLockChecked] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
 
@@ -93,41 +105,70 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
     <VideoLightbox videos={videoOpen ? project.videos! : null} onClose={() => setVideoOpen(false)} />
   );
 
-  if (project.detailImage) {
+  // Normalise both possible shapes into one ordered list of slices. A plain
+  // single detailImage (legacy / static sample data) becomes a one-slice list,
+  // so the exact same rendering path below handles it identically to today.
+  const parts: DetailImagePart[] =
+    project.detailImages && project.detailImages.length > 0
+      ? project.detailImages
+      : project.detailImage
+      ? [{ url: project.detailImage, width: 1600, height: 1000 }]
+      : [];
+
+  if (parts.length > 0) {
     return (
       <div className="w-full bg-white leading-none overflow-hidden touch-pan-y min-h-[85vh] relative flex flex-col items-center">
-        {/* Subtle loading spinner while heavy image loads */}
-        {!imageLoaded && (
+        {/* Subtle loading spinner while the top of the image loads */}
+        {!firstPartLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-white z-10 min-h-[85vh]">
             <div className="w-10 h-10 border-4 border-gray-200 border-t-[#9FE66F] rounded-full animate-spin" />
           </div>
         )}
 
-        <Image
-          src={assetUrl(project.detailImage)}
-          alt={project.title}
-          width={1600}
-          height={1000}
-          sizes="100vw"
-          // 100 re-encodes near-lossless, keeping these at 1.5-2.5MB for no visible
-          // gain; 88 is indistinguishable at normal viewing distance and cuts that
-          // by roughly half — a real difference on a first (uncached) visit.
-          quality={88}
-          priority
-          draggable={false}
-          onContextMenu={(e) => e.preventDefault()}
-          onLoad={() => setImageLoaded(true)}
-          className="pointer-events-none select-none"
-          style={{
-            display: 'block',
-            width: '100%',
-            height: 'auto',
-            maxWidth: 'none',
-            userSelect: 'none',
-            WebkitUserSelect: 'none',
-            WebkitTouchCallout: 'none',
-          }}
-        />
+        {/*
+          Slices are rendered edge-to-edge with zero gap so they read as one
+          continuous image, exactly like a single detailImage always has:
+            - every slice is `display:block` (an inline/inline-block image
+              leaves a few px of baseline whitespace under it — block never does)
+            - no margin/padding/border/gap anywhere in this stack
+            - every slice spans the exact same 100% width, so there is no
+              horizontal misalignment even if a slice's own pixel width differs
+            - all slices start loading immediately on mount (only the first is
+              `priority`, but none are deferred/lazy) — a lazily-loaded lower
+              slice could still be blank when scrolled into view, which would
+              look exactly like the gap this must never have
+        */}
+        {parts.map((part, i) => (
+          <Image
+            key={`${part.url}-${i}`}
+            src={assetUrl(part.url)}
+            alt={i === 0 ? project.title : ''}
+            width={part.width}
+            height={part.height}
+            sizes="100vw"
+            // 100 re-encodes near-lossless for no visible gain; 88 is
+            // indistinguishable at normal viewing distance and meaningfully
+            // smaller — a real difference on a first (uncached) visit.
+            quality={88}
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+            onLoad={i === 0 ? () => setFirstPartLoaded(true) : undefined}
+            className="pointer-events-none select-none"
+            style={{
+              display: 'block',
+              width: '100%',
+              height: 'auto',
+              maxWidth: 'none',
+              margin: 0,
+              padding: 0,
+              border: 0,
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+            }}
+            {...(i === 0 ? { priority: true } : { loading: 'eager' as const })}
+          />
+        ))}
 
         {videoButton}
         {videoLightbox}

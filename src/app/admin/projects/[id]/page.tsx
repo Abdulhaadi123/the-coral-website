@@ -14,6 +14,7 @@ import {
 import { assetUrl } from '@/lib/assets';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
+import { DetailImagePartsEditor, DetailImagePart } from '@/components/admin/DetailImagePartsEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
 import { uploadAdminFile } from '@/lib/uploadClient';
 
@@ -43,13 +44,12 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
   const [order, setOrder] = useState('0');
 
   const [image, setImage] = useState('');
-  const [detailImage, setDetailImage] = useState('');
+  const [detailImages, setDetailImages] = useState<DetailImagePart[]>([]);
   const [videos, setVideos] = useState<VideoEntry[]>([]);
   const [pakistanOnly, setPakistanOnly] = useState(false);
 
   const [initialLoading, setInitialLoading] = useState(true);
   const [uploadingThumb, setUploadingThumb] = useState(false);
-  const [uploadingDetail, setUploadingDetail] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
@@ -69,7 +69,12 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           setBg(p.bg || '#111827');
           setOrder(String(p.order || 0));
           setImage(p.image || '');
-          setDetailImage(p.detailImage || '');
+          setDetailImages(
+            (p.detailImages || [])
+              .slice()
+              .sort((a: any, b: any) => a.order - b.order)
+              .map((d: any) => ({ url: d.url, width: d.width, height: d.height }))
+          );
           setPakistanOnly(!!p.pakistanOnly);
           setVideos(
             (p.videos || [])
@@ -89,25 +94,17 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
     loadProject();
   }, [id]);
 
-  const handleFileUpload = async (file: File, isThumbnail: boolean) => {
-    if (isThumbnail) setUploadingThumb(true);
-    else setUploadingDetail(true);
+  const handleThumbUpload = async (file: File) => {
+    setUploadingThumb(true);
     setError('');
-
     try {
       const data = await uploadAdminFile(file, 'coral-room/portfolio');
-
-      if (isThumbnail) {
-        setImage(data.url);
-      } else {
-        setDetailImage(data.url);
-      }
+      setImage(data.url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error uploading image to Cloudinary');
+      setError(err.message || 'Error uploading image');
     } finally {
-      if (isThumbnail) setUploadingThumb(false);
-      else setUploadingDetail(false);
+      setUploadingThumb(false);
     }
   };
 
@@ -132,7 +129,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           topBadge: topBadge || category,
           tags: tagsArray,
           image,
-          detailImage: detailImage || null,
+          detailImages,
           videos: videos
             .filter((v) => v.url.trim() && v.title.trim())
             .map((v, i) => ({ url: v.url.trim(), title: v.title.trim(), order: i })),
@@ -360,7 +357,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
                       accept="image/*"
                       className="hidden"
                       onChange={(e) =>
-                        e.target.files?.[0] && handleFileUpload(e.target.files[0], true)
+                        e.target.files?.[0] && handleThumbUpload(e.target.files[0])
                       }
                     />
                   </label>
@@ -382,7 +379,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
                   disabled={uploadingThumb}
                   className="hidden"
                   onChange={(e) =>
-                    e.target.files?.[0] && handleFileUpload(e.target.files[0], true)
+                    e.target.files?.[0] && handleThumbUpload(e.target.files[0])
                   }
                 />
               </label>
@@ -390,54 +387,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           </div>
 
           {/* Full Page Detail Image */}
-          <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-4">
-            <div>
-              <h2 className="text-sm font-bold text-[#111827]">2. Full Detail View Image</h2>
-              <p className="text-xs text-gray-500">
-                Edge-to-edge showcase graphic when project is opened.
-              </p>
-            </div>
-
-            {detailImage ? (
-              <div className="relative aspect-[3/2] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={assetUrl(detailImage)} alt="Detail preview" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
-                    Change Detail Image
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={(e) =>
-                        e.target.files?.[0] && handleFileUpload(e.target.files[0], false)
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-            ) : (
-              <label className="border-2 border-dashed border-gray-200 hover:border-[#78B249] rounded-2xl p-6 flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors text-center bg-gray-50/50 hover:bg-green-50/30">
-                {uploadingDetail ? (
-                  <Loader2 className="w-6 h-6 text-[#78B249] animate-spin" />
-                ) : (
-                  <UploadCloud className="w-6 h-6 text-gray-400" />
-                )}
-                <span className="text-xs font-semibold text-gray-600">
-                  {uploadingDetail ? 'Uploading...' : 'Upload Full Detail Image'}
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  disabled={uploadingDetail}
-                  className="hidden"
-                  onChange={(e) =>
-                    e.target.files?.[0] && handleFileUpload(e.target.files[0], false)
-                  }
-                />
-              </label>
-            )}
-          </div>
+          <DetailImagePartsEditor parts={detailImages} onChange={setDetailImages} folder="coral-room/portfolio" />
 
           {/* Project Videos */}
           <VideoListEditor videos={videos} onChange={setVideos} />
@@ -448,7 +398,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           {/* Submit */}
           <button
             type="submit"
-            disabled={saving || uploadingThumb || uploadingDetail}
+            disabled={saving || uploadingThumb}
             className="w-full py-4 px-6 rounded-full font-bold text-sm text-white flex items-center justify-center gap-2 shadow-md transition-all duration-300 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
             style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
           >

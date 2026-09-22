@@ -17,7 +17,10 @@ async function findProject(slug: string) {
   try {
     dbProject = await prisma.project.findUnique({
       where: { slug },
-      include: { videos: { orderBy: { order: 'asc' } } },
+      include: {
+        videos: { orderBy: { order: 'asc' } },
+        detailImages: { orderBy: { order: 'asc' } },
+      },
     });
   } catch (err) {
     console.error('Error querying project from DB:', err);

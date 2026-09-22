@@ -16,7 +16,7 @@ model Project {
   topBadge    String   @default("")
   tags        String[]
   image       String   // Small Card Thumbnail (Cloudinary URL)
-  detailImage String?  // Full Page Detail View (Cloudinary URL)
+  detailImages ProjectDetailImage[] // Full Page Detail View, one or more stacked slices
   videos      ProjectVideo[]
   bg          String   @default("#1a1a1a")
   featured    Boolean  @default(false)
@@ -36,6 +36,24 @@ model ProjectVideo {
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   url       String
   title     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// One slice of a project's detail-page showcase. A designer can crop one tall
+// design into several pieces and upload them here instead of one huge file —
+// the detail page stacks them back to back with zero gap so it still reads as
+// a single image, while each smaller file loads faster (and in parallel).
+// width/height are the slice's real pixel size, captured client-side on
+// upload, so the page can reserve the right box (no layout shift) and never
+// distort the image.
+model ProjectDetailImage {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url       String
+  width     Int
+  height    Int
   order     Int      @default(0)
   createdAt DateTime @default(now())
 }

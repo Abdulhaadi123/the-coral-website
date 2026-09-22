@@ -47,7 +47,13 @@ export async function setAdminSession(payload: AdminJwtPayload) {
   const cookieStore = cookies();
   cookieStore.set(COOKIE_NAME, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    // A `Secure` cookie is silently dropped by the browser over plain HTTP —
+    // login looks successful (the API returns the admin) but the session
+    // never actually gets stored, so every page bounces back to /admin/login.
+    // Default stays secure in production (matches Vercel, which is HTTPS);
+    // set COOKIE_SECURE=false only for temporarily testing a self-hosted
+    // deploy over http://ip:port before its domain + SSL are wired up.
+    secure: process.env.COOKIE_SECURE === 'false' ? false : process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: '/',

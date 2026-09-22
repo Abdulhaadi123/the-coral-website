@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
 import path from 'path';
 import fs from 'fs';
+import sharp from 'sharp';
 import { projects } from '../src/app/portfolio/data';
 
 // ─── Cloudinary config ────────────────────────────────────────────────────────
@@ -80,13 +81,39 @@ async function uploadAllImages() {
   console.log('\n📤 PHASE 1: Uploading all images to Cloudinary...\n');
 
   // Projects
-  const projectImageMap: Record<string, { card: string; detail: string | null }> = {};
+  const projectImageMap: Record<
+    string,
+    { card: string; detail: string | null; detailWidth: number; detailHeight: number }
+  > = {};
   for (let i = 0; i < projects.length; i++) {
     const p = projects[i];
     console.log(`[${i + 1}/${projects.length}] ${p.title}`);
     const card = await uploadToCloudinary(p.image, 'coral-room/portfolio') || p.image || '';
     const detail = await uploadToCloudinary(p.detailImage || null, 'coral-room/portfolio');
-    projectImageMap[p.slug] = { card, detail };
+
+    // Read the real pixel size from the local source file (whether or not the
+    // upload above succeeded), so the single seeded slice renders at the
+    // correct aspect ratio — same requirement as an admin-uploaded slice.
+    let detailWidth = 1600;
+    let detailHeight = 1000;
+    if (p.detailImage) {
+      const localPath = path.join(process.cwd(), 'public', p.detailImage.replace(/^\//, ''));
+      if (fs.existsSync(localPath)) {
+        try {
+          const meta = await sharp(localPath).metadata();
+          if (meta.width && meta.height) {
+            detailWidth = meta.width;
+            detailHeight = meta.height;
+          }
+        } catch {
+          // Keep the 1600x1000 fallback — height:auto at render time means a
+          // wrong guess here only affects the loading-placeholder box, never
+          // the actual displayed image.
+        }
+      }
+    }
+
+    projectImageMap[p.slug] = { card, detail, detailWidth, detailHeight };
   }
 
   // Testimonials
@@ -105,7 +132,10 @@ async function uploadAllImages() {
 
 // ─── PHASE 2: Write EVERYTHING to DB in rapid succession (no uploads, no delays)
 async function seedDatabase(
-  projectImageMap: Record<string, { card: string; detail: string | null }>,
+  projectImageMap: Record<
+    string,
+    { card: string; detail: string | null; detailWidth: number; detailHeight: number }
+  >,
   testimonialImageMap: Record<string, { avatar: string | null; logo: string | null }>
 ) {
   console.log('💾 PHASE 2: Writing to Supabase...\n');
@@ -133,18 +163,24 @@ async function seedDatabase(
     for (let i = 0; i < projects.length; i++) {
       const p = projects[i];
       const imgs = projectImageMap[p.slug];
+      const detailImagesWrite = imgs.detail
+        ? [{ url: imgs.detail, width: imgs.detailWidth, height: imgs.detailHeight, order: 0 }]
+        : [];
       await prisma.project.upsert({
         where: { slug: p.slug },
         update: {
           title: p.title, category: p.category,
           topBadge: p.topBadge || p.category, tags: p.tags,
-          image: imgs.card, detailImage: imgs.detail, bg: p.bg, order: i,
+          image: imgs.card, bg: p.bg, order: i,
+          // Wholesale replace, same as the admin API — keeps a reseed idempotent.
+          detailImages: { deleteMany: {}, create: detailImagesWrite },
         },
         create: {
           slug: p.slug, title: p.title, category: p.category,
           topBadge: p.topBadge || p.category, tags: p.tags,
-          image: imgs.card, detailImage: imgs.detail, bg: p.bg,
+          image: imgs.card, bg: p.bg,
           order: i, featured: i < 6,
+          detailImages: { create: detailImagesWrite },
         },
       });
       process.stdout.write(`  [${i + 1}/${projects.length}] ${p.title}\n`);

@@ -10,6 +10,7 @@ import { assetUrl } from '@/lib/assets';
 import { useCategories } from '@/lib/useCategories';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
+import { DetailImagePartsEditor, DetailImagePart } from '@/components/admin/DetailImagePartsEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 import { uploadAdminFile } from '@/lib/uploadClient';
@@ -45,7 +46,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
   );
 }
 
-const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImage: '', videos: [] as VideoEntry[], pakistanOnly: false };
+const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImages: [] as DetailImagePart[], videos: [] as VideoEntry[], pakistanOnly: false };
 
 export default function AdminProjectsPage() {
   const categories = useCategories();
@@ -62,7 +63,6 @@ export default function AdminProjectsPage() {
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [uploadingThumb, setUploadingThumb] = useState(false);
-  const [uploadingDetail, setUploadingDetail] = useState(false);
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState(false);
@@ -97,7 +97,10 @@ export default function AdminProjectsPage() {
       bg: p.bg || '#111827',
       order: String(p.order ?? 0),
       image: p.image || '',
-      detailImage: p.detailImage || '',
+      detailImages: (p.detailImages || [])
+        .slice()
+        .sort((a: any, b: any) => a.order - b.order)
+        .map((d: any) => ({ url: d.url, width: d.width, height: d.height })),
       videos: (p.videos || [])
         .slice()
         .sort((a: any, b: any) => a.order - b.order)
@@ -118,16 +121,16 @@ export default function AdminProjectsPage() {
     setField('slug', val.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-'));
   };
 
-  const handleUpload = async (file: File, isThumb: boolean) => {
-    if (isThumb) setUploadingThumb(true); else setUploadingDetail(true);
+  const handleThumbUpload = async (file: File) => {
+    setUploadingThumb(true);
     setFormError('');
     try {
       const data = await uploadAdminFile(file, 'coral-room/portfolio');
-      if (isThumb) setField('image', data.url); else setField('detailImage', data.url);
+      setField('image', data.url);
     } catch (err: any) {
       setFormError(err.message || 'Upload error');
     } finally {
-      if (isThumb) setUploadingThumb(false); else setUploadingDetail(false);
+      setUploadingThumb(false);
     }
   };
 
@@ -139,7 +142,7 @@ export default function AdminProjectsPage() {
       title: form.title, slug: form.slug, category: form.category,
       topBadge: form.topBadge || form.category,
       tags: form.tagsInput.split(',').map(t => t.trim()).filter(Boolean),
-      image: form.image, detailImage: form.detailImage || null,
+      image: form.image, detailImages: form.detailImages,
       videos: form.videos
         .filter((v) => v.url.trim() && v.title.trim())
         .map((v, i) => ({ url: v.url.trim(), title: v.title.trim(), order: i })),
@@ -480,19 +483,17 @@ export default function AdminProjectsPage() {
           {/* Card Thumbnail */}
           <ImageUploader
             url={form.image}
-            onUpload={f => handleUpload(f, true)}
+            onUpload={f => handleThumbUpload(f)}
             uploading={uploadingThumb}
             label="1. Card Thumbnail Image *"
             hint="Shown in portfolio grid · PNG / WebP / JPG"
           />
 
           {/* Detail Image */}
-          <ImageUploader
-            url={form.detailImage}
-            onUpload={f => handleUpload(f, false)}
-            uploading={uploadingDetail}
-            label="2. Full Detail Page Image"
-            hint="Edge-to-edge showcase when project is opened"
+          <DetailImagePartsEditor
+            parts={form.detailImages}
+            onChange={v => setField('detailImages', v)}
+            folder="coral-room/portfolio"
           />
 
           {/* Project Videos */}
@@ -535,7 +536,7 @@ export default function AdminProjectsPage() {
           </button>
           <button
             onClick={handleSubmit as any}
-            disabled={saving || uploadingThumb || uploadingDetail}
+            disabled={saving || uploadingThumb}
             className="flex-1 py-3 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow transition-all hover:opacity-95 active:scale-[0.99] disabled:opacity-50 cursor-pointer"
             style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
           >

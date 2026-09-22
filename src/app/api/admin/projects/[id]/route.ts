@@ -11,7 +11,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   try {
     const project = await prisma.project.findUnique({
       where: { id: params.id },
-      include: { videos: { orderBy: { order: 'asc' } } },
+      include: {
+        videos: { orderBy: { order: 'asc' } },
+        detailImages: { orderBy: { order: 'asc' } },
+      },
     });
 
     // A Pakistan-only project simply doesn't exist for visitors abroad.
@@ -39,7 +42,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       topBadge,
       tags,
       image,
-      detailImage,
+      detailImages,
       videos,
       bg,
       featured,
@@ -75,7 +78,6 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
           topBadge: topBadge !== undefined ? topBadge.trim() : existingProject.topBadge,
           tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()).filter(Boolean) : existingProject.tags,
           ...(image && { image: image.trim() }),
-          detailImage: detailImage !== undefined ? (detailImage ? detailImage.trim() : null) : existingProject.detailImage,
           ...(bg && { bg: bg.trim() }),
           ...(featured !== undefined && { featured: Boolean(featured) }),
           ...(pakistanOnly !== undefined && { pakistanOnly: Boolean(pakistanOnly) }),
@@ -99,9 +101,28 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         }
       }
 
+      // Detail image slices are replaced wholesale when included, same as videos.
+      if (Array.isArray(detailImages)) {
+        await tx.projectDetailImage.deleteMany({ where: { projectId: params.id } });
+        if (detailImages.length > 0) {
+          await tx.projectDetailImage.createMany({
+            data: detailImages.map((d: any, i: number) => ({
+              projectId: params.id,
+              url: String(d.url).trim(),
+              width: Number(d.width),
+              height: Number(d.height),
+              order: Number(d.order ?? i),
+            })),
+          });
+        }
+      }
+
       return tx.project.findUniqueOrThrow({
         where: { id: params.id },
-        include: { videos: { orderBy: { order: 'asc' } } },
+        include: {
+          videos: { orderBy: { order: 'asc' } },
+          detailImages: { orderBy: { order: 'asc' } },
+        },
       });
     });
 

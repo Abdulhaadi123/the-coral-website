@@ -15,7 +15,10 @@ export async function GET(req: NextRequest) {
     const projects = await prisma.project.findMany({
       where: hidePakistanOnly ? { pakistanOnly: false } : undefined,
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      include: { videos: { orderBy: { order: 'asc' } } },
+      include: {
+        videos: { orderBy: { order: 'asc' } },
+        detailImages: { orderBy: { order: 'asc' } },
+      },
     });
     // `restricted` tells the portfolio page an empty list is deliberate, so it
     // doesn't fall back to its built-in sample projects.
@@ -43,7 +46,7 @@ export async function POST(req: NextRequest) {
       topBadge,
       tags,
       image,
-      detailImage,
+      detailImages,
       videos,
       bg,
       featured,
@@ -78,7 +81,6 @@ export async function POST(req: NextRequest) {
         topBadge: topBadge ? topBadge.trim() : category.trim(),
         tags: Array.isArray(tags) ? tags : typeof tags === 'string' ? tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
         image: image.trim(),
-        detailImage: detailImage ? detailImage.trim() : null,
         bg: bg ? bg.trim() : '#1a1a1a',
         featured: Boolean(featured),
         pakistanOnly: Boolean(pakistanOnly),
@@ -92,8 +94,21 @@ export async function POST(req: NextRequest) {
               })),
             }
           : undefined,
+        detailImages: Array.isArray(detailImages) && detailImages.length > 0
+          ? {
+              create: detailImages.map((d: any, i: number) => ({
+                url: String(d.url).trim(),
+                width: Number(d.width),
+                height: Number(d.height),
+                order: Number(d.order ?? i),
+              })),
+            }
+          : undefined,
       },
-      include: { videos: { orderBy: { order: 'asc' } } },
+      include: {
+        videos: { orderBy: { order: 'asc' } },
+        detailImages: { orderBy: { order: 'asc' } },
+      },
     });
 
     // Revalidate frontend paths for instantaneous live updates
