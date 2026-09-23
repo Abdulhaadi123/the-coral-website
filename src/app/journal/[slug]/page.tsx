@@ -97,12 +97,12 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start mb-16 sm:mb-20">
 
           {/* ── Left Column: Article Body ── */}
-          <FadeIn direction="up" className="lg:col-span-8">
+          <div className="lg:col-span-8">
             <div
               className="journal-prose"
               dangerouslySetInnerHTML={{ __html: post.contentHtml }}
             />
-          </FadeIn>
+          </div>
 
           {/* ── Right Column: Sticky Sidebar Card ── */}
           <FadeIn direction="up" delay={0.1} className="lg:col-span-4 w-full">

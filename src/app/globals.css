@@ -183,9 +183,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  color: #374151;
 }
 
 .journal-prose p,
+.journal-prose span,
+.journal-prose div,
+.journal-prose li,
 .journal-prose ul,
 .journal-prose ol,
 .journal-prose blockquote {
@@ -210,12 +214,14 @@ body {
   margin: 0.25rem 0;
 }
 
-.journal-prose strong {
+.journal-prose strong,
+.journal-prose b {
   font-weight: 700;
   color: #111827;
 }
 
-.journal-prose em {
+.journal-prose em,
+.journal-prose i {
   font-style: italic;
 }
 
@@ -231,6 +237,23 @@ body {
 
 .journal-prose a:hover {
   color: #111827;
+}
+
+/* Guard against dark-mode / copied content that injects white text or dark backgrounds */
+.journal-prose [style*="color: #fff" i],
+.journal-prose [style*="color:#fff" i],
+.journal-prose [style*="color: white" i],
+.journal-prose [style*="color:white" i],
+.journal-prose [style*="rgb(255, 255, 255)" i],
+.journal-prose [style*="rgb(255,255,255)" i],
+.journal-prose [style*="rgba(255, 255, 255" i],
+.journal-prose [style*="rgba(255,255,255" i] {
+  color: #374151 !important;
+}
+
+.journal-prose [style*="background" i] {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .journal-prose ul {
