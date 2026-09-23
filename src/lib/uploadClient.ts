@@ -6,19 +6,18 @@
 // into a message an admin can act on.
 
 /**
- * Default is slightly under Vercel's 4.5 MB body limit, leaving room for the form
- * envelope. When self-hosting (no such limit) set NEXT_PUBLIC_MAX_UPLOAD_MB at
- * build time — and raise client_max_body_size in nginx to match.
+ * Default upload limit for self-hosted server (e.g. Ubuntu VPS).
+ * Can be overridden via NEXT_PUBLIC_MAX_UPLOAD_MB environment variable.
  */
 const configuredMB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB);
-export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 4.4) * 1024 * 1024;
+export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 100) * 1024 * 1024;
 
 const toMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 
 function tooLargeMessage(file: File): string {
   return `“${file.name || 'This file'}” is ${toMB(file.size)}, but uploads are limited to ${toMB(
     MAX_UPLOAD_BYTES
-  )}. Please compress or resize the image (WebP or JPG works well) and try again.`;
+  )}. Please choose a file under ${toMB(MAX_UPLOAD_BYTES)} or compress the image and try again.`;
 }
 
 export interface UploadedFile {
@@ -56,7 +55,7 @@ export async function uploadAdminFile(file: File, folder: string): Promise<Uploa
   if (!res.ok) {
     if (res.status === 413) {
       throw new Error(
-        `“${file.name || 'This file'}” is too large for the server to accept (limit about 4.5 MB). Please compress or resize the image and try again.`
+        `“${file.name || 'This file'}” is too large for the server to accept (limit about ${toMB(MAX_UPLOAD_BYTES)}). If using Nginx, make sure client_max_body_size is set.`
       );
     }
     if (res.status === 401) throw new Error('Your session has expired. Please sign in again and retry.');
