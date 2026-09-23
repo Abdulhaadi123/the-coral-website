@@ -1,16 +1,17 @@
 /** @type {import('next').NextConfig} */
 
-// Allow next/image to load from whatever host NEXT_PUBLIC_ASSET_BASE_URL points at
-// (CloudFront distribution or the S3 bucket endpoint itself).
-const assetHost = (() => {
+// Allow next/image to load from whatever hosts the asset env vars point at: the
+// S3 origin (NEXT_PUBLIC_ASSET_BASE_URL) and the optional CDN in front of it
+// (NEXT_PUBLIC_CDN_BASE_URL — a *.cloudfront.net domain or a custom one).
+const hostOf = (value) => {
   try {
-    return process.env.NEXT_PUBLIC_ASSET_BASE_URL
-      ? new URL(process.env.NEXT_PUBLIC_ASSET_BASE_URL).hostname
-      : null;
+    return value ? new URL(value).hostname : null;
   } catch {
     return null;
   }
-})();
+};
+const assetHost = hostOf(process.env.NEXT_PUBLIC_ASSET_BASE_URL);
+const cdnHost = hostOf(process.env.NEXT_PUBLIC_CDN_BASE_URL);
 
 const nextConfig = {
   eslint: {
@@ -40,6 +41,7 @@ const nextConfig = {
       // Any CloudFront distribution
       { protocol: 'https', hostname: '*.cloudfront.net' },
       ...(assetHost ? [{ protocol: 'https', hostname: assetHost }] : []),
+      ...(cdnHost && cdnHost !== assetHost ? [{ protocol: 'https', hostname: cdnHost }] : []),
     ],
   },
 };

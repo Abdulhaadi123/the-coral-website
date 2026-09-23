@@ -7,6 +7,9 @@ import { PlayCircle } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { VideoLightbox } from '@/components/VideoLightbox';
 
+/** Re-encode quality for the (very tall) detail image slices — see the note where it's used. */
+const DETAIL_IMAGE_QUALITY = 75;
+
 interface DetailImagePart {
   url: string;
   width: number;
@@ -146,10 +149,12 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             width={part.width}
             height={part.height}
             sizes="100vw"
-            // 100 re-encodes near-lossless for no visible gain; 88 is
-            // indistinguishable at normal viewing distance and meaningfully
-            // smaller — a real difference on a first (uncached) visit.
-            quality={88}
+            // Measured on real uploaded parts: at 88 the re-encode came out *larger*
+            // than the file the client exported (102-104%), so Next just served the
+            // original and saved nothing. At 75 it is ~64-69% of the original with
+            // PSNR 46-47 dB (anything above ~40 dB is visually indistinguishable) —
+            // roughly a third fewer bytes on every detail image, first visit included.
+            quality={DETAIL_IMAGE_QUALITY}
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             onLoad={i === 0 ? () => setFirstPartLoaded(true) : undefined}
