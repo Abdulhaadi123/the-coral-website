@@ -325,7 +325,7 @@ export default function CreateProjectPage() {
           </div>
 
           {/* Full Page Detail Image */}
-          <DetailImagePartsEditor parts={detailImages} onChange={setDetailImages} folder="coral-room/portfolio" />
+          <DetailImagePartsEditor key="new-project" parts={detailImages} onChange={setDetailImages} folder="coral-room/portfolio" />
 
           {/* Project Videos */}
           <VideoListEditor videos={videos} onChange={setVideos} />

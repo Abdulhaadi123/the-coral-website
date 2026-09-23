@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { UploadCloud, Loader2, Trash2, ArrowUp, ArrowDown, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { uploadAdminFile } from '@/lib/uploadClient';
@@ -43,9 +43,20 @@ interface Row extends DetailImagePart {
 let nextKey = 0;
 
 export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ parts, onChange, folder }) => {
-  const [rows, setRows] = useState<Row[]>(() => parts.map((p) => ({ ...p, key: nextKey++, uploading: false })));
+  const [rows, setRows] = useState<Row[]>(() => (parts || []).map((p) => ({ ...p, key: nextKey++, uploading: false })));
   const [showPreview, setShowPreview] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Re-sync local rows whenever the parent passes a new `parts` array
+  // (e.g. on project load, navigating between projects, or reset).
+  useEffect(() => {
+    const currentUrls = rows.filter((r) => !r.uploading && !r.error).map((r) => r.url).join('|');
+    const incomingUrls = (parts || []).map((p) => p.url).join('|');
+
+    if (currentUrls !== incomingUrls) {
+      setRows((parts || []).map((p) => ({ ...p, key: nextKey++, uploading: false })));
+    }
+  }, [parts]);
 
   // Keep the parent's plain url/width/height list in sync with our richer local rows.
   const commit = (next: Row[]) => {

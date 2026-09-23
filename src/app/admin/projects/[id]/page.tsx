@@ -387,7 +387,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           </div>
 
           {/* Full Page Detail Image */}
-          <DetailImagePartsEditor parts={detailImages} onChange={setDetailImages} folder="coral-room/portfolio" />
+          <DetailImagePartsEditor key={id} parts={detailImages} onChange={setDetailImages} folder="coral-room/portfolio" />
 
           {/* Project Videos */}
           <VideoListEditor videos={videos} onChange={setVideos} />
