@@ -10,7 +10,7 @@
  * Can be overridden via NEXT_PUBLIC_MAX_UPLOAD_MB environment variable.
  */
 const configuredMB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB);
-export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 100) * 1024 * 1024;
+export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 12) * 1024 * 1024;
 
 const toMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 

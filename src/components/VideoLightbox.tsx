@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { X, PlayCircle, ArrowLeft, Film, ArrowUpRight } from 'lucide-react';
+import { X, PlayCircle, ArrowLeft, Film } from 'lucide-react';
 import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube';
 
 export interface VideoItem {
@@ -13,11 +12,10 @@ export interface VideoItem {
 interface VideoLightboxProps {
   videos: VideoItem[] | null;
   onClose: () => void;
-  /** When set, the modal offers a way through to the project's detail page. */
   detailsHref?: string;
 }
 
-export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose, detailsHref }) => {
+export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const hasVideos = !!videos && videos.length > 0;
@@ -144,50 +142,25 @@ export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose, d
                 );
               })}
             </div>
-
-            {detailsHref && (
-              <div className="mt-6 pt-5 border-t border-gray-100 flex justify-center">
-                <Link
-                  href={detailsHref}
-                  onClick={(e) => { e.stopPropagation(); onClose(); }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111827] text-white text-sm font-semibold hover:bg-[#1f2937] transition-colors"
-                >
-                  <span>View project details</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       ) : activeVideoId ? (
-        <>
-          <div
-            className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black z-10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0`}
-              title={activeVideo?.title || 'Project video'}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-
-          {detailsHref && (
-            <Link
-              href={detailsHref}
-              onClick={(e) => { e.stopPropagation(); onClose(); }}
-              className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold backdrop-blur-md transition-colors whitespace-nowrap"
-            >
-              <span>View project details</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          )}
-        </>
+        <div
+          className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black z-10"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0`}
+            title={activeVideo?.title || 'Project video'}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
       ) : null}
     </div>
   );
 };
 
 export default VideoLightbox;
+
