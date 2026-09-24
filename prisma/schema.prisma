@@ -23,6 +23,14 @@ model Project {
   // When true the project is hidden from, and blocked for, visitors outside
   // Pakistan (admins always see it). Decided per project in the admin panel.
   pakistanOnly Boolean @default(false)
+  // Optional links to the client's own website, set per project in the admin.
+  // Empty string = the feature is off for that project.
+  //   exploreUrl: adds an "Explore Project" button to the project's video modal
+  //               (only ever shown when the project has at least one video).
+  //   cardLink:   when set, clicking the portfolio card opens this site directly,
+  //               skipping the video modal and the detail page entirely.
+  exploreUrl  String   @default("")
+  cardLink    String   @default("")
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

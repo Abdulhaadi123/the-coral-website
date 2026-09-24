@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, FolderOpen,
-  X, UploadCloud, Check, AlertCircle, Globe2,
+  X, UploadCloud, Check, AlertCircle, Globe2, ExternalLink,
 } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { useCategories } from '@/lib/useCategories';
@@ -12,6 +12,7 @@ import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
 import { DetailImagePartsEditor, DetailImagePart } from '@/components/admin/DetailImagePartsEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
+import { ProjectLinksEditor } from '@/components/admin/ProjectLinksEditor';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 import { uploadAdminFile } from '@/lib/uploadClient';
 
@@ -46,7 +47,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
   );
 }
 
-const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImages: [] as DetailImagePart[], videos: [] as VideoEntry[], pakistanOnly: false };
+const EMPTY_FORM = { title: '', slug: '', category: 'Branding', topBadge: '', tagsInput: '', bg: '#111827', order: '0', image: '', detailImages: [] as DetailImagePart[], videos: [] as VideoEntry[], pakistanOnly: false, exploreUrl: '', cardLink: '' };
 
 export default function AdminProjectsPage() {
   const categories = useCategories();
@@ -106,6 +107,8 @@ export default function AdminProjectsPage() {
         .sort((a: any, b: any) => a.order - b.order)
         .map((v: any) => ({ url: v.url, title: v.title })),
       pakistanOnly: !!p.pakistanOnly,
+      exploreUrl: p.exploreUrl || '',
+      cardLink: p.cardLink || '',
     });
     setFormError('');
     setFormSuccess(false);
@@ -148,6 +151,8 @@ export default function AdminProjectsPage() {
         .map((v, i) => ({ url: v.url.trim(), title: v.title.trim(), order: i })),
       bg: form.bg, order: Number(form.order) || 0,
       pakistanOnly: form.pakistanOnly,
+      exploreUrl: form.exploreUrl.trim(),
+      cardLink: form.cardLink.trim(),
     };
     try {
       const res = await fetch(
@@ -295,6 +300,11 @@ export default function AdminProjectsPage() {
                         <Globe2 className="w-3 h-3" /> PAKISTAN ONLY
                       </span>
                     )}
+                    {p.cardLink && (
+                      <span title={`Card opens ${p.cardLink} directly`} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200 whitespace-nowrap">
+                        <ExternalLink className="w-3 h-3" /> OPENS WEBSITE
+                      </span>
+                    )}
                     {(p.tags || []).slice(0, 2).map((t: string) => (
                       <span key={t} className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium bg-gray-50 border border-gray-200 text-gray-500 whitespace-nowrap">
                         {t}
@@ -356,6 +366,11 @@ export default function AdminProjectsPage() {
                         {p.pakistanOnly && (
                           <span title="Only visitors from Pakistan can see this project" className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#111827] text-[#9FE66F] whitespace-nowrap shrink-0">
                             <Globe2 className="w-3 h-3" /> PK ONLY
+                          </span>
+                        )}
+                        {p.cardLink && (
+                          <span title={`Card opens ${p.cardLink} directly`} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200 whitespace-nowrap shrink-0">
+                            <ExternalLink className="w-3 h-3" /> OPENS SITE
                           </span>
                         )}
                       </div>
@@ -498,6 +513,15 @@ export default function AdminProjectsPage() {
 
           {/* Project Videos */}
           <VideoListEditor videos={form.videos} onChange={v => setField('videos', v)} />
+
+          {/* Website links */}
+          <ProjectLinksEditor
+            exploreUrl={form.exploreUrl}
+            cardLink={form.cardLink}
+            onExploreUrlChange={v => setField('exploreUrl', v)}
+            onCardLinkChange={v => setField('cardLink', v)}
+            hasVideos={form.videos.some(v => v.url.trim() && v.title.trim())}
+          />
 
           {/* Pakistan-only */}
           <PakistanOnlyToggle checked={form.pakistanOnly} onChange={v => setField('pakistanOnly', v)} />

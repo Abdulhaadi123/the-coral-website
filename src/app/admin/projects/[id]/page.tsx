@@ -16,6 +16,7 @@ import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
 import { DetailImagePartsEditor, DetailImagePart } from '@/components/admin/DetailImagePartsEditor';
 import { PakistanOnlyToggle } from '@/components/admin/PakistanOnlyToggle';
+import { ProjectLinksEditor } from '@/components/admin/ProjectLinksEditor';
 import { uploadAdminFile } from '@/lib/uploadClient';
 
 const BG_PRESETS = [
@@ -47,6 +48,8 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
   const [detailImages, setDetailImages] = useState<DetailImagePart[]>([]);
   const [videos, setVideos] = useState<VideoEntry[]>([]);
   const [pakistanOnly, setPakistanOnly] = useState(false);
+  const [exploreUrl, setExploreUrl] = useState('');
+  const [cardLink, setCardLink] = useState('');
 
   const [initialLoading, setInitialLoading] = useState(true);
   const [uploadingThumb, setUploadingThumb] = useState(false);
@@ -76,6 +79,8 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
               .map((d: any) => ({ url: d.url, width: d.width, height: d.height }))
           );
           setPakistanOnly(!!p.pakistanOnly);
+          setExploreUrl(p.exploreUrl || '');
+          setCardLink(p.cardLink || '');
           setVideos(
             (p.videos || [])
               .slice()
@@ -136,6 +141,8 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           bg: bg || '#111827',
           order: Number(order) || 0,
           pakistanOnly,
+          exploreUrl: exploreUrl.trim(),
+          cardLink: cardLink.trim(),
         }),
       });
 
@@ -391,6 +398,15 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
 
           {/* Project Videos */}
           <VideoListEditor videos={videos} onChange={setVideos} />
+
+          {/* Website links */}
+          <ProjectLinksEditor
+            exploreUrl={exploreUrl}
+            cardLink={cardLink}
+            onExploreUrlChange={setExploreUrl}
+            onCardLinkChange={setCardLink}
+            hasVideos={videos.some((v) => v.url.trim() && v.title.trim())}
+          />
 
           {/* Pakistan-only */}
           <PakistanOnlyToggle checked={pakistanOnly} onChange={setPakistanOnly} />

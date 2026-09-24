@@ -13,6 +13,7 @@ import { VideoLightbox, VideoItem } from '@/components/VideoLightbox';
 import { useCategories } from '@/lib/useCategories';
 import { projects } from './data';
 import { assetUrl } from '@/lib/assets';
+import { safeExternalUrl } from '@/lib/externalUrl';
 import { readCachedProjects, writeCachedProjects } from '@/lib/portfolioCache';
 
 const placeholderColors = [
@@ -28,7 +29,7 @@ function PortfolioInner() {
   const categories = useCategories();
   const [filterOpen, setFilterOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [activeProject, setActiveProject] = useState<{ slug: string; videos: VideoItem[] } | null>(null);
+  const [activeProject, setActiveProject] = useState<{ slug: string; videos: VideoItem[]; exploreUrl?: string | null } | null>(null);
 
   // Check localStorage on mount
   useEffect(() => {
@@ -264,21 +265,27 @@ function PortfolioInner() {
 
                   {/* Full Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-                    {filtered.map((project, idx) => (
+                    {filtered.map((project, idx) => {
+                      // Admin can point a project's card straight at the client's website. When set,
+                      // that is all the card does: no video modal, no detail page.
+                      const cardLink = safeExternalUrl(project.cardLink);
+                      return (
                       <div key={project.slug + idx} className="w-full">
                         <Link
-                          href={`/portfolio/${project.slug}`}
+                          href={cardLink ?? `/portfolio/${project.slug}`}
                           scroll={true}
-                          prefetch={true}
+                          prefetch={cardLink ? false : true}
+                          {...(cardLink ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                           className="group block cursor-pointer"
                           // A project with videos opens its video modal from anywhere on the card;
                           // one without goes straight to the detail page. Ctrl/Cmd/middle-click
                           // still open the detail page in a new tab as usual.
                           onClick={(e) => {
+                            if (cardLink) return; // external link: the browser opens it as a normal link
                             if (!project.videos || project.videos.length === 0) return;
                             if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                             e.preventDefault();
-                            setActiveProject({ slug: project.slug, videos: project.videos });
+                            setActiveProject({ slug: project.slug, videos: project.videos, exploreUrl: project.exploreUrl });
                           }}
                         >
                           <div
@@ -317,7 +324,7 @@ function PortfolioInner() {
                               </div>
                             )}
 
-                            {project.videos && project.videos.length > 0 && (
+                            {project.videos && project.videos.length > 0 && !cardLink && (
                               <div
                                 aria-hidden="true"
                                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 pointer-events-none"
@@ -343,7 +350,8 @@ function PortfolioInner() {
                           </p>
                         </Link>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
 
                   {/* Empty state */}
@@ -422,6 +430,7 @@ function PortfolioInner() {
 
       <VideoLightbox
         videos={activeProject?.videos ?? null}
+        exploreUrl={activeProject?.exploreUrl}
         detailsHref={activeProject ? `/portfolio/${activeProject.slug}` : undefined}
         onClose={() => setActiveProject(null)}
       />

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { X, PlayCircle, ArrowLeft, Film } from 'lucide-react';
+import { X, PlayCircle, ArrowLeft, Film, ArrowUpRight } from 'lucide-react';
 import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube';
+import { safeExternalUrl } from '@/lib/externalUrl';
 
 export interface VideoItem {
   url: string;
@@ -13,9 +14,15 @@ interface VideoLightboxProps {
   videos: VideoItem[] | null;
   onClose: () => void;
   detailsHref?: string;
+  /**
+   * The project's own website, set per project in the admin. When present (and a
+   * safe http/https link) an "Explore Project" button is shown in the modal; when
+   * empty nothing is rendered and the modal is exactly as it always was.
+   */
+  exploreUrl?: string | null;
 }
 
-export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose }) => {
+export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose, exploreUrl }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const hasVideos = !!videos && videos.length > 0;
@@ -53,6 +60,36 @@ export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose })
   const showingPicker = activeIndex === null;
   const activeVideo = activeIndex !== null ? videos![activeIndex] : null;
   const activeVideoId = activeVideo ? getYouTubeId(activeVideo.url) : null;
+
+  const exploreHref = safeExternalUrl(exploreUrl);
+
+  // A plain left-click opens the site in a new tab and closes the modal, so the
+  // video does not keep playing (with sound) behind the tab the visitor just
+  // left. Modified / middle clicks fall through to the browser's normal link
+  // behaviour (open in background tab etc.) and leave the modal open.
+  const handleExploreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    window.open(exploreHref!, '_blank', 'noopener,noreferrer');
+    onClose();
+  };
+
+  // Same anatomy as the site's green CTA pills (btn-hover-gradient + arrow-in-circle).
+  const exploreButton = exploreHref ? (
+    <a
+      href={exploreHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={handleExploreClick}
+      className="btn-hover-gradient group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm inline-flex items-center justify-center gap-3 shadow-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+    >
+      <span>Explore Project</span>
+      <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
+        <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+    </a>
+  ) : null;
 
   return (
     <div
@@ -143,19 +180,29 @@ export const VideoLightbox: React.FC<VideoLightboxProps> = ({ videos, onClose })
               })}
             </div>
           </div>
+
+          {/* Footer action bar — only present when the project has an Explore link. */}
+          {exploreButton && (
+            <div className="shrink-0 border-t border-gray-100 bg-white px-6 sm:px-9 py-4 flex justify-center">
+              {exploreButton}
+            </div>
+          )}
         </div>
       ) : activeVideoId ? (
-        <div
-          className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black z-10"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <iframe
-            className="w-full h-full"
-            src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0`}
-            title={activeVideo?.title || 'Project video'}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+        <div className="relative w-full max-w-5xl z-10 flex flex-col items-center gap-4">
+          <div
+            className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              className="w-full h-full"
+              src={`https://www.youtube-nocookie.com/embed/${activeVideoId}?autoplay=1&rel=0`}
+              title={activeVideo?.title || 'Project video'}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          {exploreButton}
         </div>
       ) : null}
     </div>

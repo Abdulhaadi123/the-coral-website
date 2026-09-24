@@ -7,6 +7,7 @@ import {
   MessageSquareQuote,
   Handshake,
   Newspaper,
+  PhoneCall,
   Plus,
   ArrowUpRight,
   Sparkles,
@@ -22,6 +23,7 @@ import {
 import { assetUrl } from '@/lib/assets';
 import { useAdminUser } from '@/components/admin/AdminUserContext';
 import { SECTIONS, SectionKey, hasPermission, isSuper } from '@/lib/permissions';
+import { isDiscoveryLead } from '@/lib/leadSources';
 
 const SECTION_ICONS: Record<SectionKey, React.ComponentType<{ className?: string }>> = {
   projects: FolderKanban,
@@ -41,7 +43,9 @@ export default function AdminDashboardPage() {
 
   const [projectsCount, setProjectsCount] = useState<number | null>(null);
   const [testimonialsCount, setTestimonialsCount] = useState<number | null>(null);
-  const [leadsCount, setLeadsCount] = useState<number | null>(null);
+  // Two different kinds of lead, counted separately: the portfolio gate vs the Book a Discovery Call form.
+  const [portfolioLeadsCount, setPortfolioLeadsCount] = useState<number | null>(null);
+  const [discoveryLeadsCount, setDiscoveryLeadsCount] = useState<number | null>(null);
   const [partnersCount, setPartnersCount] = useState<number | null>(null);
   const [blogCount, setBlogCount] = useState<number | null>(null);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
@@ -82,7 +86,12 @@ export default function AdminDashboardPage() {
             setRecentProjects(d.projects.slice(0, 4));
           }),
         can('testimonials') && load('/api/admin/testimonials', (d) => setTestimonialsCount(d.testimonials.length)),
-        can('leads') && load('/api/admin/leads', (d) => setLeadsCount(d.leads.length)),
+        can('leads') &&
+          load('/api/admin/leads', (d) => {
+            const discovery = d.leads.filter(isDiscoveryLead).length;
+            setDiscoveryLeadsCount(discovery);
+            setPortfolioLeadsCount(d.leads.length - discovery);
+          }),
         can('partners') && load('/api/admin/partners', (d) => setPartnersCount(d.partners.length)),
         can('blog') && load('/api/admin/blog', (d) => setBlogCount(d.posts.length)),
       ]);
@@ -117,9 +126,18 @@ export default function AdminDashboardPage() {
       href: '/admin/leads',
       link: 'View leads',
       label: 'Portfolio Leads',
-      value: leadsCount,
+      value: portfolioLeadsCount,
       Icon: Sparkles,
       tile: 'bg-purple-100 text-purple-600',
+    },
+    {
+      key: 'leads' as const,
+      href: '/admin/leads?tab=discovery',
+      link: 'View leads',
+      label: 'Discovery Call Leads',
+      value: discoveryLeadsCount,
+      Icon: PhoneCall,
+      tile: 'bg-amber-100 text-amber-600',
     },
     {
       key: 'partners' as const,
@@ -231,9 +249,9 @@ export default function AdminDashboardPage() {
       {/* ── Quick Stats Grid ── */}
       {stats.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map(({ key, href, link, label, value, Icon, tile }) => (
+          {stats.map(({ href, link, label, value, Icon, tile }) => (
             <div
-              key={key}
+              key={href}
               className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col justify-between"
             >
               <div className="flex items-center justify-between mb-4">

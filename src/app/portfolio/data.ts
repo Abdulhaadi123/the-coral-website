@@ -9,6 +9,11 @@ export interface ProjectItem {
   image: string | null;
   detailImage?: string | null;
   videos?: { url: string; title: string }[];
+  // Set per project in the admin (DB projects only — the built-in samples have none).
+  /** "Explore Project" button in the video modal. */
+  exploreUrl?: string | null;
+  /** When set, clicking the portfolio card opens this site directly. */
+  cardLink?: string | null;
   bg: string;
 }
 

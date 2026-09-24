@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { sendContactEmail, mailConfigured } from '@/lib/mail';
+import { DISCOVERY_LEAD_SOURCE } from '@/lib/leadSources';
 
 // nodemailer needs the Node runtime — it cannot run on the edge.
 export const runtime = 'nodejs';
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
           name: fullName,
           email: email.toLowerCase(),
           phone: phone || 'Not provided',
-          source: 'book_a_call',
+          source: DISCOVERY_LEAD_SOURCE,
         },
       });
       leadId = lead.id;

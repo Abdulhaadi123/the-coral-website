@@ -29,7 +29,7 @@ export const SECTIONS: SectionDef[] = [
   { key: 'testimonials', label: 'Testimonials', description: 'Manage client reviews', href: '/admin/testimonials' },
   { key: 'partners', label: 'Partner Logos', description: 'Manage the partner logo strip', href: '/admin/partners' },
   { key: 'social', label: 'Social Links', description: 'Manage the footer social icons', href: '/admin/social-links' },
-  { key: 'leads', label: 'Portfolio Leads', description: 'View and delete leads captured by the portfolio gate', href: '/admin/leads' },
+  { key: 'leads', label: 'Leads', description: 'View and delete leads from the portfolio gate and the Book a Discovery Call form', href: '/admin/leads' },
   { key: 'seo', label: 'SEO Settings', description: 'Edit page titles and descriptions, and blog post SEO', href: '/admin/seo' },
   { key: 'sitemap', label: 'Sitemap', description: 'View the auto-generated sitemap', href: '/admin/sitemap' },
 ];

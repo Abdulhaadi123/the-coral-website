@@ -16,9 +16,49 @@ import {
   Check,
 } from 'lucide-react';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
+import { isDiscoveryLead } from '@/lib/leadSources';
+
+/**
+ * The two ways a lead reaches us are stored with a different `source`
+ * (see /api/leads and /api/contact) and are managed separately here:
+ *   - the "Book a Discovery Call" form  -> 'book_a_call'
+ *   - the portfolio access gate         -> everything else ('portfolio_gate')
+ * Treating "everything else" as portfolio means an unexpected/legacy source can
+ * never silently disappear from both lists.
+ */
+const NO_PHONE = 'Not provided'; // what /api/contact stores when the visitor leaves it blank
+
+type LeadTab = 'portfolio' | 'discovery';
+
+const TAB_COPY: Record<
+  LeadTab,
+  { label: string; short: string; subtitle: (n: number) => string; dateHeader: string; emptyTitle: string; emptyHint: string; footerNoun: string; file: string }
+> = {
+  portfolio: {
+    label: 'Portfolio Leads',
+    short: 'Portfolio',
+    subtitle: (n) => `${n} visitor${n !== 1 ? 's' : ''} unlocked portfolio access`,
+    dateHeader: 'Unlocked At',
+    emptyTitle: 'No portfolio leads captured yet.',
+    emptyHint: 'When visitors unlock the portfolio page, their details will appear here in real-time.',
+    footerNoun: 'portfolio leads captured',
+    file: 'portfolio_leads',
+  },
+  discovery: {
+    label: 'Discovery Call Leads',
+    short: 'Discovery Calls',
+    subtitle: (n) => `${n} discovery call request${n !== 1 ? 's' : ''} received`,
+    dateHeader: 'Requested At',
+    emptyTitle: 'No discovery call requests yet.',
+    emptyHint: 'When visitors submit the Book a Discovery Call form, their details will appear here in real-time.',
+    footerNoun: 'discovery call requests received',
+    file: 'discovery_call_leads',
+  },
+};
 
 export default function AdminLeadsPage() {
   const [leads, setLeads] = useState<any[]>([]);
+  const [tab, setTab] = useState<LeadTab>('portfolio');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -45,6 +85,11 @@ export default function AdminLeadsPage() {
     fetchLeads();
   }, []);
 
+  // The dashboard's "Discovery Call Leads" card links here with ?tab=discovery.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('tab') === 'discovery') setTab('discovery');
+  }, []);
+
   const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Are you sure you want to remove lead for "${name}"?`)) return;
     setDeletingId(id);
@@ -64,15 +109,15 @@ export default function AdminLeadsPage() {
 
   // 1-Click Instant CSV / Excel Export
   const exportToCSV = () => {
-    if (leads.length === 0) {
-      alert('No leads available to export.');
+    if (tabLeads.length === 0) {
+      alert(`No ${copy.label.toLowerCase()} available to export.`);
       return;
     }
 
     setDownloading(true);
     try {
       const headers = ['ID', 'Full Name', 'Email Address', 'Phone Number', 'Source', 'Date Created', 'Time Created'];
-      const rows = leads.map((l) => {
+      const rows = tabLeads.map((l) => {
         const d = new Date(l.createdAt);
         const dateStr = d.toISOString().split('T')[0]; // e.g. 2026-08-30
         const timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }); // e.g. 05:23 PM
@@ -95,7 +140,7 @@ export default function AdminLeadsPage() {
       const link = document.createElement('a');
       const today = new Date().toISOString().split('T')[0];
       link.setAttribute('href', url);
-      link.setAttribute('download', `the_coral_room_leads_${today}.csv`);
+      link.setAttribute('download', `the_coral_room_${copy.file}_${today}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -108,7 +153,12 @@ export default function AdminLeadsPage() {
     }
   };
 
-  const filtered = leads.filter((l) => {
+  const portfolioLeads = leads.filter((l) => !isDiscoveryLead(l));
+  const discoveryLeads = leads.filter(isDiscoveryLead);
+  const tabLeads = tab === 'discovery' ? discoveryLeads : portfolioLeads;
+  const copy = TAB_COPY[tab];
+
+  const filtered = tabLeads.filter((l) => {
     const q = search.toLowerCase();
     return (
       !q ||
@@ -140,6 +190,13 @@ export default function AdminLeadsPage() {
 
   const clearSelection = () => setSelected(new Set());
 
+  const switchTab = (next: LeadTab) => {
+    if (next === tab) return;
+    setTab(next);
+    clearSelection(); // never let a bulk action reach rows from the tab that is no longer on screen
+    window.history.replaceState(null, '', next === 'discovery' ? '/admin/leads?tab=discovery' : '/admin/leads');
+  };
+
   const bulkDelete = async () => {
     if (!confirm(`Delete ${selected.size} selected lead(s)? This cannot be undone.`)) return;
     setBulkBusy(true);
@@ -162,16 +219,14 @@ export default function AdminLeadsPage() {
       {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#111827]">Portfolio Leads &amp; Inquiries</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            {leads.length} visitor{leads.length !== 1 ? 's' : ''} unlocked portfolio access
-          </p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#111827]">Leads &amp; Inquiries</h1>
+          <p className="text-sm text-gray-500 mt-1">{copy.subtitle(tabLeads.length)}</p>
         </div>
 
         {/* Action: Export to CSV */}
         <button
           onClick={exportToCSV}
-          disabled={downloading || leads.length === 0}
+          disabled={downloading || tabLeads.length === 0}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm text-white shadow-sm hover:opacity-95 hover:scale-[1.02] active:scale-[0.98] transition-all self-start sm:self-auto cursor-pointer shrink-0 disabled:opacity-50"
           style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
         >
@@ -182,6 +237,36 @@ export default function AdminLeadsPage() {
           )}
           <span>{downloading ? 'Exporting...' : 'Export to CSV / Excel'}</span>
         </button>
+      </div>
+
+      {/* ── Lead type tabs ── */}
+      <div role="tablist" aria-label="Lead type" className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-gray-100/80 w-full sm:w-auto sm:self-start">
+        {(['portfolio', 'discovery'] as LeadTab[]).map((key) => {
+          const active = tab === key;
+          const count = key === 'discovery' ? discoveryLeads.length : portfolioLeads.length;
+          return (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => switchTab(key)}
+              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                active ? 'bg-white text-[#111827] shadow-sm' : 'text-gray-500 hover:text-[#111827]'
+              }`}
+            >
+              <span className="hidden sm:inline">{TAB_COPY[key].label}</span>
+              <span className="sm:hidden">{TAB_COPY[key].short}</span>
+              <span
+                className={`min-w-[22px] px-1.5 py-0.5 rounded-full text-[11px] font-bold text-center ${
+                  active ? 'bg-[#78B249]/15 text-[#467923]' : 'bg-gray-200/80 text-gray-500'
+                }`}
+              >
+                {loading ? '...' : count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* ── Search Bar ── */}
@@ -211,10 +296,10 @@ export default function AdminLeadsPage() {
       ) : filtered.length === 0 ? (
         <div className="bg-white rounded-3xl border border-gray-200 shadow-sm py-24 flex flex-col items-center justify-center gap-3">
           <Inbox className="w-10 h-10 text-gray-300" />
-          <p className="text-sm text-gray-500 font-medium">No leads captured yet.</p>
-          <p className="text-xs text-gray-400">
-            When visitors unlock the portfolio page, their details will appear here in real-time.
+          <p className="text-sm text-gray-500 font-medium">
+            {search.trim() && tabLeads.length > 0 ? 'No leads match your search.' : copy.emptyTitle}
           </p>
+          {!(search.trim() && tabLeads.length > 0) && <p className="text-xs text-gray-400">{copy.emptyHint}</p>}
         </div>
       ) : (
         <>
@@ -271,13 +356,20 @@ export default function AdminLeadsPage() {
                       <Mail className="w-3.5 h-3.5 text-gray-400" />
                       <span className="truncate">{l.email}</span>
                     </a>
-                    <a
-                      href={`tel:${l.phone}`}
-                      className="inline-flex items-center gap-2 text-gray-700 hover:text-[#467923] font-medium"
-                    >
-                      <Phone className="w-3.5 h-3.5 text-gray-400" />
-                      <span>{l.phone}</span>
-                    </a>
+                    {l.phone === NO_PHONE ? (
+                      <span className="inline-flex items-center gap-2 text-gray-400 font-medium">
+                        <Phone className="w-3.5 h-3.5 text-gray-300" />
+                        <span>{NO_PHONE}</span>
+                      </span>
+                    ) : (
+                      <a
+                        href={`tel:${l.phone}`}
+                        className="inline-flex items-center gap-2 text-gray-700 hover:text-[#467923] font-medium"
+                      >
+                        <Phone className="w-3.5 h-3.5 text-gray-400" />
+                        <span>{l.phone}</span>
+                      </a>
+                    )}
                   </div>
                 </div>
               );
@@ -295,7 +387,7 @@ export default function AdminLeadsPage() {
                   <th className="py-4 px-6 w-[220px]">Visitor Name</th>
                   <th className="py-4 px-6 w-[260px]">Email Address</th>
                   <th className="py-4 px-6 w-[190px]">Phone Number</th>
-                  <th className="py-4 px-6">Unlocked At</th>
+                  <th className="py-4 px-6">{copy.dateHeader}</th>
                   <th className="py-4 px-6 text-right w-[80px]">Action</th>
                 </tr>
               </thead>
@@ -334,13 +426,20 @@ export default function AdminLeadsPage() {
 
                       {/* Phone */}
                       <td className="py-3.5 px-6 align-middle">
-                        <a
-                          href={`tel:${l.phone}`}
-                          className="inline-flex items-center gap-2 text-gray-700 hover:text-[#467923] font-medium text-xs hover:underline whitespace-nowrap"
-                        >
-                          <Phone className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                          <span>{l.phone}</span>
-                        </a>
+                        {l.phone === NO_PHONE ? (
+                          <span className="inline-flex items-center gap-2 text-gray-400 font-medium text-xs whitespace-nowrap">
+                            <Phone className="w-3.5 h-3.5 text-gray-300 shrink-0" />
+                            <span>{NO_PHONE}</span>
+                          </span>
+                        ) : (
+                          <a
+                            href={`tel:${l.phone}`}
+                            className="inline-flex items-center gap-2 text-gray-700 hover:text-[#467923] font-medium text-xs hover:underline whitespace-nowrap"
+                          >
+                            <Phone className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                            <span>{l.phone}</span>
+                          </a>
+                        )}
                       </td>
 
                       {/* Date */}
@@ -372,7 +471,7 @@ export default function AdminLeadsPage() {
             </table>
 
             <div className="px-6 py-3.5 border-t border-gray-100 bg-gray-50 text-xs text-gray-500 font-medium">
-              Showing {filtered.length} of {leads.length} total leads captured
+              Showing {filtered.length} of {tabLeads.length} {copy.footerNoun}
             </div>
           </div>
         </>

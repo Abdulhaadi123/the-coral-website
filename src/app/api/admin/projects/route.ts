@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
 import { shouldHidePakistanOnly } from '@/lib/geo';
+import { parseExternalUrl } from '@/lib/externalUrl';
 import { revalidatePath } from 'next/cache';
 
 // The answer depends on who is asking (Pakistan-only projects are hidden from
@@ -51,12 +52,31 @@ export async function POST(req: NextRequest) {
       bg,
       featured,
       pakistanOnly,
+      exploreUrl,
+      cardLink,
       order,
     } = data;
 
     if (!title || !slug || !category || !image) {
       return NextResponse.json(
         { error: 'Title, slug, category, and small thumbnail image are required' },
+        { status: 400 }
+      );
+    }
+
+    // Website links go straight into public <a href>s, so they are validated
+    // (plain http/https only) rather than trusted.
+    const explore = parseExternalUrl(exploreUrl);
+    if (!explore.ok) {
+      return NextResponse.json(
+        { error: 'The "Explore Project" link must be a valid website address (http or https).' },
+        { status: 400 }
+      );
+    }
+    const card = parseExternalUrl(cardLink);
+    if (!card.ok) {
+      return NextResponse.json(
+        { error: 'The card click link must be a valid website address (http or https).' },
         { status: 400 }
       );
     }
@@ -84,6 +104,8 @@ export async function POST(req: NextRequest) {
         bg: bg ? bg.trim() : '#1a1a1a',
         featured: Boolean(featured),
         pakistanOnly: Boolean(pakistanOnly),
+        exploreUrl: explore.url,
+        cardLink: card.url,
         order: Number(order) || 0,
         videos: Array.isArray(videos) && videos.length > 0
           ? {

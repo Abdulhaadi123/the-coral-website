@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
 import { shouldHidePakistanOnly } from '@/lib/geo';
+import { parseExternalUrl } from '@/lib/externalUrl';
 import { revalidatePath } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
@@ -47,8 +48,27 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       bg,
       featured,
       pakistanOnly,
+      exploreUrl,
+      cardLink,
       order,
     } = data;
+
+    // A link that isn't sent is left alone; one sent as '' clears it. Anything
+    // sent is validated (plain http/https only) before it can be stored.
+    const explore = parseExternalUrl(exploreUrl);
+    if (!explore.ok) {
+      return NextResponse.json(
+        { error: 'The "Explore Project" link must be a valid website address (http or https).' },
+        { status: 400 }
+      );
+    }
+    const card = parseExternalUrl(cardLink);
+    if (!card.ok) {
+      return NextResponse.json(
+        { error: 'The card click link must be a valid website address (http or https).' },
+        { status: 400 }
+      );
+    }
 
     const existingProject = await prisma.project.findUnique({
       where: { id: params.id },
@@ -81,6 +101,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
           ...(bg && { bg: bg.trim() }),
           ...(featured !== undefined && { featured: Boolean(featured) }),
           ...(pakistanOnly !== undefined && { pakistanOnly: Boolean(pakistanOnly) }),
+          ...(exploreUrl !== undefined && { exploreUrl: explore.url }),
+          ...(cardLink !== undefined && { cardLink: card.url }),
           ...(order !== undefined && { order: Number(order) }),
         },
       });

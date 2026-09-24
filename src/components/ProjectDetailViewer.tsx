@@ -29,6 +29,9 @@ interface ProjectDetailViewerProps {
     // as a single continuous image on the page (see the render below).
     detailImages?: DetailImagePart[];
     videos?: { url: string; title: string }[];
+    // The project's own website (set in the admin) — shown as an "Explore Project"
+    // button inside the video modal.
+    exploreUrl?: string | null;
   };
 }
 
@@ -105,7 +108,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
   );
 
   const videoLightbox = hasVideos && (
-    <VideoLightbox videos={videoOpen ? project.videos! : null} onClose={() => setVideoOpen(false)} />
+    <VideoLightbox videos={videoOpen ? project.videos! : null} exploreUrl={project.exploreUrl} onClose={() => setVideoOpen(false)} />
   );
 
   // Normalise both possible shapes into one ordered list of slices. A plain
