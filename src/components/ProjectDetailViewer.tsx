@@ -149,11 +149,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             width={part.width}
             height={part.height}
             sizes="100vw"
-            // Measured on real uploaded parts: at 88 the re-encode came out *larger*
-            // than the file the client exported (102-104%), so Next just served the
-            // original and saved nothing. At 75 it is ~64-69% of the original with
-            // PSNR 46-47 dB (anything above ~40 dB is visually indistinguishable) —
-            // roughly a third fewer bytes on every detail image, first visit included.
+            unoptimized
             quality={DETAIL_IMAGE_QUALITY}
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
@@ -190,6 +186,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
             alt={project.title}
             fill
             sizes="(max-width: 1024px) 100vw, 1024px"
+            unoptimized
             quality={88}
             className="object-cover"
           />
