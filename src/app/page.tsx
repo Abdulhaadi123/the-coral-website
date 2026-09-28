@@ -13,13 +13,16 @@ import JournalSection from '@/components/JournalSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import FooterSection from '@/components/FooterSection';
 import { getPageSeo } from '@/lib/seo';
+import { getPartners, getTestimonials } from '@/lib/publicData';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPageSeo('/');
   return { title: seo.title, description: seo.description };
 }
 
-export default function Home() {
+export default async function Home() {
+  const [partners, testimonials] = await Promise.all([getPartners(), getTestimonials()]);
+
   return (
     <main className="min-h-screen bg-white flex flex-col justify-between">
       {/* Top Header Navigation */}
@@ -35,7 +38,7 @@ export default function Home() {
       <WhatWeDoSection />
 
       {/* Partners Section */}
-      <PartnersSection />
+      <PartnersSection partners={partners} />
 
       {/* Process With Depth Section */}
       <ProcessWithDepthSection />
@@ -44,7 +47,7 @@ export default function Home() {
       <FeaturedWorkSection />
 
       {/* Client Testimonials + Certification Partners */}
-      <ClientTestimonialsSection />
+      <ClientTestimonialsSection testimonials={testimonials} />
 
       {/* How It Works Section */}
       <HowItWorksSection />

@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
+import { checkAccess, checkSignedIn } from '@/lib/access';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidateTag } from 'next/cache';
 
-// GET all categories of a given type ("portfolio" | "blog"), default portfolio
+// GET all categories of a given type ("portfolio" | "blog"), default portfolio —
+// admin screens only (public pages get them from the server)
 export async function GET(req: NextRequest) {
   try {
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const type = req.nextUrl.searchParams.get('type') || 'portfolio';
     const categories = await prisma.category.findMany({
       where: { type },
@@ -45,6 +51,8 @@ export async function POST(req: NextRequest) {
         order: (maxOrder._max.order ?? -1) + 1,
       },
     });
+
+    revalidateTag(CACHE_TAGS.categories);
 
     return NextResponse.json({ success: true, category }, { status: 201 });
   } catch (error: any) {

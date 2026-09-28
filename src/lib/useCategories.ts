@@ -8,6 +8,10 @@ export interface Category {
   order: number;
 }
 
+/**
+ * Categories for admin screens. The categories API only answers signed-in
+ * admins; public pages get the same list from the server (lib/publicData).
+ */
 export function useCategories(type: 'portfolio' | 'blog' = 'portfolio') {
   const [categories, setCategories] = useState<Category[]>([]);
 

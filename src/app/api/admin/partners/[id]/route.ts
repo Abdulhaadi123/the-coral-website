@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
-import { revalidatePath } from 'next/cache';
+import { checkAccess, checkSignedIn } from '@/lib/access';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
-// GET single partner
+// GET single partner — admin screens only
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const partner = await prisma.partner.findUnique({
       where: { id: params.id },
     });
@@ -49,6 +53,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
+    revalidateTag(CACHE_TAGS.partners);
     revalidatePath('/');
 
     return NextResponse.json({ success: true, partner: updated });
@@ -68,6 +73,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       where: { id: params.id },
     });
 
+    revalidateTag(CACHE_TAGS.partners);
     revalidatePath('/');
 
     return NextResponse.json({ success: true });

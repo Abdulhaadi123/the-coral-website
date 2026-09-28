@@ -62,6 +62,20 @@ export async function checkAccess(required: SectionKey | SectionKey[]): Promise<
   return null;
 }
 
+/**
+ * Gate for the lists admin screens read (projects, categories, partners,
+ * testimonials): any active signed-in admin, whatever their sections. The
+ * public site doesn't call these — it reads the same data on the server — so
+ * anonymous callers (a copied URL, Postman, another app) get a 401.
+ */
+export async function checkSignedIn(): Promise<NextResponse | null> {
+  const admin = await getCurrentAdmin();
+  if (!admin) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return null;
+}
+
 /** Gate for user-management routes: Super Admins only. */
 export async function requireSuperAdmin(): Promise<{ admin: CurrentAdmin } | { response: NextResponse }> {
   const admin = await getCurrentAdmin();

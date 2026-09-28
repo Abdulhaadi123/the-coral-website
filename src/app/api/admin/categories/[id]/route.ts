@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidateTag } from 'next/cache';
 
 // PUT update category (rename / reorder)
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
@@ -58,6 +60,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       return category;
     });
 
+    // A rename also moved projects to the new name, so the portfolio list changed too.
+    revalidateTag(CACHE_TAGS.categories);
+    revalidateTag(CACHE_TAGS.projects);
+
     return NextResponse.json({ success: true, category: updated });
   } catch (error: any) {
     console.error('Error updating category:', error);
@@ -91,6 +97,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     }
 
     await prisma.category.delete({ where: { id: params.id } });
+
+    revalidateTag(CACHE_TAGS.categories);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

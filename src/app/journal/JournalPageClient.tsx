@@ -9,10 +9,15 @@ import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
 import { assetUrl } from '@/lib/assets';
 import type { PublicBlogPost } from '@/lib/blog';
-import { useCategories } from '@/lib/useCategories';
+import type { Category } from '@/lib/useCategories';
 
-export default function JournalPageClient({ posts }: { posts: PublicBlogPost[] }) {
-  const blogCategories = useCategories('blog');
+export default function JournalPageClient({
+  posts,
+  categories: blogCategories,
+}: {
+  posts: PublicBlogPost[];
+  categories: Category[];
+}) {
   const categories = ['View All', ...blogCategories.map((c) => c.name)];
   const [activeCategory, setActiveCategory] = useState('View All');
   const [currentPage, setCurrentPage] = useState(1);

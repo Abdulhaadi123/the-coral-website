@@ -1,4 +1,6 @@
+import { unstable_cache } from 'next/cache';
 import prisma from '@/lib/db';
+import { CACHE_TAGS, PUBLIC_DATA_REVALIDATE_SECONDS } from '@/lib/publicData';
 
 export interface PageSeoData {
   title: string;
@@ -100,10 +102,20 @@ export const SEO_ROUTES: { path: string; label: string; title: string; descripti
   },
 ];
 
+// Cached like the rest of the public content (see lib/publicData); saving a page
+// in /admin/seo revalidates the tag. /portfolio renders on every request, so
+// without this its metadata would wait on the database each time.
+const readPageSeo = unstable_cache(
+  async (path: string) =>
+    prisma.pageSeo.findUnique({ where: { path }, select: { title: true, description: true } }),
+  ['page-seo'],
+  { tags: [CACHE_TAGS.pageSeo], revalidate: PUBLIC_DATA_REVALIDATE_SECONDS }
+);
+
 /** Page SEO for a static route, read from the database with a safe fallback. */
 export async function getPageSeo(path: string): Promise<PageSeoData> {
   try {
-    const row = await prisma.pageSeo.findUnique({ where: { path } });
+    const row = await readPageSeo(path);
     if (row) return { title: row.title, description: row.description };
   } catch (err) {
     console.error(`Error fetching PageSeo for "${path}":`, err);

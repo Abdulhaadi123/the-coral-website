@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
 import { SOCIAL_PLATFORMS, normalizeSocialUrl, platformLabel } from '@/lib/social';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidateTag } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,6 +57,9 @@ export async function POST(req: NextRequest) {
         order: (maxOrder._max.order ?? -1) + 1,
       },
     });
+
+    // Every page's footer shows these, so this refreshes them all.
+    revalidateTag(CACHE_TAGS.socialLinks);
 
     return NextResponse.json({ success: true, link }, { status: 201 });
   } catch (error: any) {

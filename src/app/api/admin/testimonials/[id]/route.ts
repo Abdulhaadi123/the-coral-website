@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
-import { revalidatePath } from 'next/cache';
+import { checkAccess, checkSignedIn } from '@/lib/access';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
-// GET single testimonial
+// GET single testimonial — admin screens only
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const testimonial = await prisma.testimonial.findUnique({
       where: { id: params.id },
     });
@@ -53,6 +57,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
+    revalidateTag(CACHE_TAGS.testimonials);
     revalidatePath('/');
 
     return NextResponse.json({ success: true, testimonial: updated });
@@ -72,6 +77,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       where: { id: params.id },
     });
 
+    revalidateTag(CACHE_TAGS.testimonials);
     revalidatePath('/');
 
     return NextResponse.json({ success: true });

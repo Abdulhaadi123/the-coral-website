@@ -21,6 +21,12 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    // `next dev` only: the browser loads images straight from the CDN instead
+    // of through the local resizer. The CDN serves portfolio images only to our
+    // own pages (deploy/cloudfront-portfolio-image-guard.js), and the resizer
+    // fetches without a Referer from a laptop's IP, so it would be refused.
+    // Production keeps resizing as below.
+    unoptimized: process.env.NODE_ENV === 'development',
     // Next resizes to the actual rendered dimensions and negotiates
     // AVIF/WebP per-browser — real quality is unchanged, only the wasted
     // (invisible) resolution and bytes are dropped.

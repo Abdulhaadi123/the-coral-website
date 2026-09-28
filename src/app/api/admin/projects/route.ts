@@ -1,32 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
-import { shouldHidePakistanOnly } from '@/lib/geo';
+import { checkAccess, checkSignedIn } from '@/lib/access';
 import { parseExternalUrl } from '@/lib/externalUrl';
-import { revalidatePath } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
-// The answer depends on who is asking (Pakistan-only projects are hidden from
-// visitors abroad), so it must never be cached or prerendered.
+// Admin data: never cached or prerendered.
 export const dynamic = 'force-dynamic';
 
-// GET all projects — Pakistan-only ones are left out for visitors outside Pakistan
-export async function GET(req: NextRequest) {
+// GET all projects — admin screens only (the public portfolio is rendered on the server)
+export async function GET() {
   try {
-    const hidePakistanOnly = await shouldHidePakistanOnly();
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const projects = await prisma.project.findMany({
-      where: hidePakistanOnly ? { pakistanOnly: false } : undefined,
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
       include: {
         videos: { orderBy: { order: 'asc' } },
         detailImages: { orderBy: { order: 'asc' } },
       },
     });
-    // `restricted` tells the portfolio page an empty list is deliberate, so it
-    // doesn't fall back to its built-in sample projects.
-    return NextResponse.json(
-      { success: true, projects, restricted: hidePakistanOnly },
-      { headers: { 'Cache-Control': 'private, no-store' } }
-    );
+    return NextResponse.json({ success: true, projects }, { headers: { 'Cache-Control': 'private, no-store' } });
   } catch (error: any) {
     console.error('Error fetching projects:', error);
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
@@ -134,6 +129,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Revalidate frontend paths for instantaneous live updates
+    revalidateTag(CACHE_TAGS.projects);
     revalidatePath('/portfolio');
     revalidatePath(`/portfolio/${project.slug}`);
     revalidatePath('/');

@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
+import type { TestimonialRow } from '@/lib/publicData';
 
 const staticTestimonials = [
   {
@@ -79,37 +80,29 @@ const staticTestimonials = [
   },
 ];
 
-export const ClientTestimonialsSection: React.FC = () => {
-  const [testimonials, setTestimonials] = useState(staticTestimonials);
+// `rows` are the featured testimonials from the admin panel, read on the server;
+// the built-in set shows whenever there are none (or they couldn't be loaded).
+export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow[] }> = ({ testimonials: rows }) => {
+  const testimonials = useMemo(
+    () =>
+      rows && rows.length > 0
+        ? rows.map((t) => ({
+            quote: t.quote,
+            name: t.name,
+            role: t.role,
+            avatar: t.avatar || null,
+            logo: t.logo || null,
+            logoAlt: t.name,
+            logoWidth: t.logoWidth || 80,
+            logoHeight: t.logoHeight || 32,
+            rating: typeof t.rating === 'number' ? t.rating : 5,
+          }))
+        : staticTestimonials,
+    [rows]
+  );
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = 5;
-
-  useEffect(() => {
-    fetch('/api/admin/testimonials')
-      .then(r => r.json())
-      .then(data => {
-        if (data.success && data.testimonials && data.testimonials.length > 0) {
-          // Filter live/featured and map DB shape to component shape
-          const liveOnly = data.testimonials.filter((t: any) => t.featured !== false);
-          if (liveOnly.length > 0) {
-            const mapped = liveOnly.map((t: any) => ({
-              quote: t.quote,
-              name: t.name,
-              role: t.role,
-              avatar: t.avatar || null,
-              logo: t.logo || null,
-              logoAlt: t.name,
-              logoWidth: t.logoWidth || 80,
-              logoHeight: t.logoHeight || 32,
-              rating: typeof t.rating === 'number' ? t.rating : 5,
-            }));
-            setTestimonials(mapped);
-          }
-        }
-      })
-      .catch(() => {}); // silently fallback to static
-  }, []);
 
   const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? testimonials.length - 1 : i - 1)); };
   const next = () => { setDirection('next'); setActive((i) => (i === testimonials.length - 1 ? 0 : i + 1)); };

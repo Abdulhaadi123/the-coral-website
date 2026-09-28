@@ -1,29 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { SocialIcon } from '@/components/icons/SocialIcon';
 import { DEFAULT_SOCIAL_LINKS, SocialLinkItem } from '@/lib/social';
 
-// Kept for the rest of the visit so client-side page changes paint the
-// saved list immediately instead of flashing the defaults again.
-let cachedLinks: SocialLinkItem[] | null = null;
+// The footer sits inside both server and client pages, so the admin-managed
+// links come down from the root layout (read on the server, see
+// lib/publicData) through context rather than each footer fetching them.
+const SocialLinksContext = createContext<SocialLinkItem[]>(DEFAULT_SOCIAL_LINKS);
+
+export function SocialLinksProvider({ links, children }: { links: SocialLinkItem[]; children: React.ReactNode }) {
+  return <SocialLinksContext.Provider value={links}>{children}</SocialLinksContext.Provider>;
+}
 
 export const FooterSocialLinks: React.FC = () => {
-  // A hard load hydrates from the defaults (matching the server HTML); only
-  // later, client-only mounts can start from the cached admin-managed list.
-  const [links, setLinks] = useState<SocialLinkItem[]>(() => cachedLinks ?? DEFAULT_SOCIAL_LINKS);
-
-  useEffect(() => {
-    fetch('/api/social-links')
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.success && Array.isArray(data.links)) {
-          cachedLinks = data.links;
-          setLinks(data.links);
-        }
-      })
-      .catch(() => {});
-  }, []);
+  const links = useContext(SocialLinksContext);
 
   if (links.length === 0) return null;
 

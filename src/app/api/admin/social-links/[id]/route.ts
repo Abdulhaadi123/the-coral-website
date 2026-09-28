@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
 import { SOCIAL_PLATFORMS, normalizeSocialUrl, platformLabel } from '@/lib/social';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidateTag } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,6 +58,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
+    revalidateTag(CACHE_TAGS.socialLinks);
+
     return NextResponse.json({ success: true, link });
   } catch (error: any) {
     console.error('Error updating social link:', error);
@@ -75,6 +79,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     }
 
     await prisma.socialLink.delete({ where: { id: params.id } });
+    revalidateTag(CACHE_TAGS.socialLinks);
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('Error deleting social link:', error);

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPublishedBlogPosts } from '@/lib/blog';
 import { getPageSeo } from '@/lib/seo';
+import { getCategories } from '@/lib/publicData';
 import JournalPageClient from './JournalPageClient';
 
 export const revalidate = 60;
@@ -11,6 +12,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function JournalPage() {
-  const posts = await getPublishedBlogPosts();
-  return <JournalPageClient posts={posts} />;
+  const [posts, categories] = await Promise.all([getPublishedBlogPosts(), getCategories('blog')]);
+  return <JournalPageClient posts={posts} categories={categories} />;
 }

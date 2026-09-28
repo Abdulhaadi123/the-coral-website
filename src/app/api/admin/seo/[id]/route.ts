@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess } from '@/lib/access';
-import { revalidatePath } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 // PUT update a page's title/description by id
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
@@ -29,6 +30,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
+    revalidateTag(CACHE_TAGS.pageSeo);
     revalidatePath(existing.path);
 
     return NextResponse.json({ success: true, page: updated });

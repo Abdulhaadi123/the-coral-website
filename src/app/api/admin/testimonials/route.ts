@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
-import { revalidatePath } from 'next/cache';
+import { checkAccess, checkSignedIn } from '@/lib/access';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
-// GET all testimonials
+// GET all testimonials — admin screens only (the home page reads them on the server)
 export async function GET(req: NextRequest) {
   try {
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const testimonials = await prisma.testimonial.findMany({
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     });
@@ -47,6 +51,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    revalidateTag(CACHE_TAGS.testimonials);
     revalidatePath('/');
 
     return NextResponse.json({ success: true, testimonial }, { status: 201 });

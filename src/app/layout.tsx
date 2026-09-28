@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque } from 'next/font/google';
 import Script from 'next/script';
+import { SocialLinksProvider } from '@/components/FooterSocialLinks';
+import { getSocialLinks } from '@/lib/publicData';
 import './globals.css';
 
 /** GA4 measurement ID for thecoralroom. */
@@ -42,11 +44,13 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const socialLinks = await getSocialLinks();
+
   return (
     <html lang="en" className={bricolage.variable} suppressHydrationWarning>
       <body className="antialiased selection:bg-[#9FE66F] selection:text-black">
@@ -72,7 +76,7 @@ export default function RootLayout({
           />
         </noscript>
 
-        {children}
+        <SocialLinksProvider links={socialLinks}>{children}</SocialLinksProvider>
 
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">

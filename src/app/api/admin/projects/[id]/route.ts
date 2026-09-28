@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { checkAccess } from '@/lib/access';
-import { shouldHidePakistanOnly } from '@/lib/geo';
+import { checkAccess, checkSignedIn } from '@/lib/access';
 import { parseExternalUrl } from '@/lib/externalUrl';
-import { revalidatePath } from 'next/cache';
+import { CACHE_TAGS } from '@/lib/publicData';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
 
-// GET single project by id
+// GET single project by id — admin screens only (the public detail page reads the database itself)
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    const denied = await checkSignedIn();
+    if (denied) return denied;
+
     const project = await prisma.project.findUnique({
       where: { id: params.id },
       include: {
@@ -18,8 +21,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
-    // A Pakistan-only project simply doesn't exist for visitors abroad.
-    if (!project || (project.pakistanOnly && (await shouldHidePakistanOnly()))) {
+    if (!project) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
 
@@ -148,6 +150,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       });
     });
 
+    revalidateTag(CACHE_TAGS.projects);
     revalidatePath('/portfolio');
     revalidatePath(`/portfolio/${updated.slug}`);
     revalidatePath('/');
@@ -177,6 +180,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       where: { id: params.id },
     });
 
+    revalidateTag(CACHE_TAGS.projects);
     revalidatePath('/portfolio');
     revalidatePath(`/portfolio/${project.slug}`);
     revalidatePath('/');
