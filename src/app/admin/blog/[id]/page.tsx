@@ -11,7 +11,7 @@ import {
   AlertCircle,
   Trash2,
 } from 'lucide-react';
-import { assetUrl } from '@/lib/assets';
+import { adminAssetUrl } from '@/lib/adminAssets';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { uploadAdminFile } from '@/lib/uploadClient';
@@ -285,7 +285,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
               {image ? (
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={assetUrl(image)} alt="Cover preview" className="w-full h-full object-cover" />
+                  <img src={adminAssetUrl(image)} alt="Cover preview" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
                       Change Image

@@ -6,7 +6,7 @@ import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, FolderOpen,
   X, UploadCloud, Check, AlertCircle, Globe2, ExternalLink,
 } from 'lucide-react';
-import { assetUrl } from '@/lib/assets';
+import { adminAssetUrl } from '@/lib/adminAssets';
 import { useCategories } from '@/lib/useCategories';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { VideoListEditor, VideoEntry } from '@/components/admin/VideoListEditor';
@@ -27,7 +27,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
       {url ? (
         <div className="relative aspect-[3/2] rounded-xl overflow-hidden bg-gray-100 border border-gray-200 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={assetUrl(url)} alt="preview" className="w-full h-full object-cover" />
+          <img src={adminAssetUrl(url)} alt="preview" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
               Change Image
@@ -286,7 +286,7 @@ export default function AdminProjectsPage() {
                 <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
                 <div className="w-16 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
+                  <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-[#111827] text-sm truncate">{p.title}</p>
@@ -355,7 +355,7 @@ export default function AdminProjectsPage() {
                     <td className="py-3.5 px-6 align-middle">
                       <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
+                        <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                       </div>
                     </td>
 

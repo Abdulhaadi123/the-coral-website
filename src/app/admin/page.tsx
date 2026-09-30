@@ -20,7 +20,7 @@ import {
   Map as MapIcon,
   Users,
 } from 'lucide-react';
-import { assetUrl } from '@/lib/assets';
+import { adminAssetUrl } from '@/lib/adminAssets';
 import { useAdminUser } from '@/components/admin/AdminUserContext';
 import { SECTIONS, SectionKey, hasPermission, isSuper } from '@/lib/permissions';
 import { isDiscoveryLead } from '@/lib/leadSources';
@@ -340,7 +340,7 @@ export default function AdminDashboardPage() {
                   <div className="relative aspect-[3/2] rounded-xl overflow-hidden bg-gray-100 mb-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={assetUrl(p.image)}
+                      src={adminAssetUrl(p.image)}
                       alt={p.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />

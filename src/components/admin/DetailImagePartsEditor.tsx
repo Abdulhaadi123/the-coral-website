@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { UploadCloud, Loader2, Trash2, ArrowUp, ArrowDown, AlertCircle, Eye, EyeOff } from 'lucide-react';
-import { assetUrl } from '@/lib/assets';
+import { adminAssetUrl } from '@/lib/adminAssets';
 import { uploadAdminFile } from '@/lib/uploadClient';
 
 export interface DetailImagePart {
@@ -131,7 +131,7 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
                   <AlertCircle className="w-4 h-4 text-red-500" />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={assetUrl(row.url)} alt="" className="w-full h-full object-cover" />
+                  <img src={adminAssetUrl(row.url)} alt="" className="w-full h-full object-cover" />
                 )}
               </div>
 
@@ -221,7 +221,7 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   key={row.key}
-                  src={assetUrl(row.url)}
+                  src={adminAssetUrl(row.url)}
                   alt=""
                   style={{ display: 'block', width: '100%', height: 'auto', margin: 0, padding: 0, border: 0 }}
                 />

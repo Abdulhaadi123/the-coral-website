@@ -6,7 +6,7 @@ import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, Newspaper,
   Check, X as XIcon,
 } from 'lucide-react';
-import { assetUrl } from '@/lib/assets';
+import { adminAssetUrl } from '@/lib/adminAssets';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
 import { useCategories } from '@/lib/useCategories';
 
@@ -202,7 +202,7 @@ export default function AdminBlogPage() {
                 <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
                 <div className="w-16 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
+                  <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-[#111827] text-sm truncate">{p.title}</p>
@@ -260,7 +260,7 @@ export default function AdminBlogPage() {
                     <td className="py-3.5 px-6 align-middle">
                       <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={assetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
+                        <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
                       </div>
                     </td>
 
