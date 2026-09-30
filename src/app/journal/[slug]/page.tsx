@@ -79,15 +79,19 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
           </p>
         </FadeIn>
 
-        {/* Hero Banner Image */}
+        {/* Hero Banner Image — sized to the image's own natural ratio (no fixed box), so the
+            whole picture always shows: no cropping, and no leftover letterbox background
+            either. width/height below are just a layout-reservation hint for Next — the
+            w-full/h-auto pair is what actually makes the box follow the real image. */}
         <FadeIn direction="up" delay={0.1}>
-          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[24px] sm:rounded-[36px] overflow-hidden mb-12 sm:mb-16 bg-gray-200 shadow-md">
+          <div className="relative w-full rounded-[24px] sm:rounded-[36px] overflow-hidden mb-12 sm:mb-16 bg-gray-200 shadow-md">
             <Image
               src={assetUrl(post.image)}
               alt={post.title}
-              fill
+              width={1920}
+              height={1080}
               priority
-              className="object-cover"
+              className="w-full h-auto"
               sizes="100vw"
             />
           </div>
@@ -159,13 +163,14 @@ export default async function BlogDetailPage({ params }: { params: { slug: strin
                   href={`/journal/${relatedPost.slug}`}
                   className="bg-[#F9FAFB] hover:bg-[#F3F4F6]/90 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group border border-gray-100/60 block cursor-pointer"
                 >
-                  {/* Image */}
-                  <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
+                  {/* Image — sized to its own natural ratio, no crop and no letterbox. */}
+                  <div className="relative w-full bg-gray-200 overflow-hidden">
                     <Image
                       src={assetUrl(relatedPost.image)}
                       alt={relatedPost.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      width={1600}
+                      height={1000}
+                      className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>

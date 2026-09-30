@@ -23,13 +23,17 @@ export const JournalCardGrid: React.FC<{ posts: PublicBlogPost[] }> = ({ posts }
             href={`/journal/${post.slug}`}
             className={`${idx === active ? 'flex' : 'hidden md:flex'} bg-gray-100/70 rounded-2xl overflow-hidden flex-col justify-between hover:shadow-lg transition-all duration-300 group cursor-pointer`}
           >
-            {/* Card Image */}
-            <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
+            {/* Card Image — sized to the image's own natural ratio (no fixed box), so the
+                whole picture always shows: no cropping, and no leftover letterbox background
+                either. width/height below are just a layout-reservation hint for Next — the
+                w-full/h-auto pair is what actually makes the box follow the real image. */}
+            <div className="relative w-full bg-gray-200 overflow-hidden">
               <Image
                 src={assetUrl(post.image)}
                 alt={post.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                width={1600}
+                height={1000}
+                className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
             </div>

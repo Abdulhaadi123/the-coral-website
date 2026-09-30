@@ -73,16 +73,19 @@ export default function JournalPageClient({
         <FadeIn direction="up" delay={0.1}>
           <Link
             href={`/journal/${featuredPost.slug}`}
-            className="bg-[#F3F4F6]/75 hover:bg-[#F3F4F6] rounded-[24px] sm:rounded-[32px] overflow-hidden flex flex-col md:flex-row items-stretch p-4 sm:p-6 lg:p-8 gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-10 group hover:shadow-xl transition-all duration-300 border border-gray-100 block cursor-pointer"
+            className="bg-[#F3F4F6]/75 hover:bg-[#F3F4F6] rounded-[24px] sm:rounded-[32px] overflow-hidden flex flex-col md:flex-row items-center p-4 sm:p-6 lg:p-8 gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-10 group hover:shadow-xl transition-all duration-300 border border-gray-100 block cursor-pointer"
           >
-            {/* Featured Image */}
-            <div className="relative w-full md:w-1/2 aspect-[16/10] md:aspect-auto md:min-h-[280px] lg:min-h-[320px] rounded-2xl overflow-hidden bg-gray-200 shrink-0">
+            {/* Featured Image — sized to its own natural ratio, no crop and no letterbox
+                (trades the old fixed-height match with the text column for showing the
+                whole picture — width/height are just a layout-reservation hint for Next). */}
+            <div className="relative w-full md:w-1/2 rounded-2xl overflow-hidden bg-gray-200 shrink-0">
               <Image
                 src={assetUrl(featuredPost.image)}
                 alt={featuredPost.title}
-                fill
+                width={1600}
+                height={1000}
                 priority
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
@@ -145,13 +148,14 @@ export default function JournalPageClient({
                 href={`/journal/${post.slug}`}
                 className="bg-[#F9FAFB] hover:bg-[#F3F4F6]/90 rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-300 group border border-gray-100/60 block cursor-pointer"
               >
-                {/* Image */}
-                <div className="relative w-full aspect-[16/10] bg-gray-200 overflow-hidden">
+                {/* Image — sized to its own natural ratio, no crop and no letterbox. */}
+                <div className="relative w-full bg-gray-200 overflow-hidden">
                   <Image
                     src={assetUrl(post.image)}
                     alt={post.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    width={1600}
+                    height={1000}
+                    className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
