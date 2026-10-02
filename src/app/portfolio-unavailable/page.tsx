@@ -48,7 +48,7 @@ export default function PortfolioUnavailablePage() {
           </Link>
           <Link
             href="/book-a-call"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111827] text-white text-sm font-semibold hover:bg-[#1f2937] transition-colors"
+            className="btn-cta inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111827] text-white text-sm font-semibold"
           >
             Book a Discovery Call
           </Link>

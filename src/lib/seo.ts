@@ -87,6 +87,13 @@ export const SEO_ROUTES: { path: string; label: string; title: string; descripti
       'Branding, website, ecommerce, marketing, and optimisation work shaped around each client\'s goals and next stage of growth — browse the case studies.',
   },
   {
+    path: '/about',
+    label: 'About Us',
+    title: 'About Us — Team Behind the Coral Room',
+    description:
+      'Senior people, clear ownership, one shared standard — meet the team shaping your brand, building your website, and growing your digital presence.',
+  },
+  {
     path: '/book-a-call',
     label: 'Book a Call',
     title: 'Book a Discovery Call | The Coral Room',

@@ -295,7 +295,7 @@ export default function OptimisationPage() {
 
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 w-full sm:w-auto"
+                className="btn-cta group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-sm inline-flex items-center justify-center text-center gap-3 whitespace-normal sm:whitespace-nowrap w-full sm:w-auto"
               >
                 <span>Book a Discovery Call</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

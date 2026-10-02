@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { FadeIn } from '@/components/Animated';
-import { assetUrl } from '@/lib/assets';
 
 export const ProcessWithDepthSection: React.FC = () => {
   return (
@@ -55,7 +54,7 @@ export const ProcessWithDepthSection: React.FC = () => {
 
             <Link
               href="/book-a-call"
-              className="group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-transparent hover:border-gray-900 text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 transition-all duration-300 whitespace-normal sm:whitespace-nowrap hover:scale-105 active:scale-95 text-center sm:text-left"
+              className="btn-cta group shrink-0 px-5 sm:px-6 py-3.5 rounded-full border border-transparent text-gray-900 font-semibold text-sm flex items-center justify-center sm:justify-start gap-3 whitespace-normal sm:whitespace-nowrap text-center sm:text-left"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -79,8 +78,10 @@ export const ProcessWithDepthSection: React.FC = () => {
         <div className="relative w-full aspect-video lg:aspect-auto lg:h-full overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={assetUrl('/process-depth.gif')}
+            src="/process-depth.webp"
             alt="The Fourth Dimension process, visualised"
+            loading="lazy"
+            decoding="async"
             /*
               The element is mirrored, so object-position reads inverted: with
               scale-x-[-1], anchoring the image left clips its right edge, and

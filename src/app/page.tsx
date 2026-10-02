@@ -13,7 +13,7 @@ import JournalSection from '@/components/JournalSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import FooterSection from '@/components/FooterSection';
 import { getPageSeo } from '@/lib/seo';
-import { getPartners, getTestimonials } from '@/lib/publicData';
+import { getPartners, getTestimonials, getHomepageVideoUrl } from '@/lib/publicData';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPageSeo('/');
@@ -21,7 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [partners, testimonials] = await Promise.all([getPartners(), getTestimonials()]);
+  const [partners, testimonials, homepageVideoUrl] = await Promise.all([
+    getPartners(),
+    getTestimonials(),
+    getHomepageVideoUrl(),
+  ]);
 
   return (
     <main className="min-h-screen bg-white flex flex-col justify-between">
@@ -32,7 +36,7 @@ export default async function Home() {
       <HeroSection />
 
       {/* Showcase Video Section */}
-      <ShowcaseSection />
+      <ShowcaseSection videoUrl={homepageVideoUrl} />
 
       {/* What We Do Section */}
       <WhatWeDoSection />

@@ -229,7 +229,7 @@ export default function DevelopmentPage() {
               </Link>
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 hover:border-transparent transition-all duration-300 shadow-sm hover:scale-105 active:scale-95"
+                className="btn-cta group w-full sm:w-auto justify-center px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 sm:gap-3 shadow-sm"
               >
                 <span>Book a Discovery Call</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -253,7 +253,7 @@ export default function DevelopmentPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-6 sm:px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="btn-cta group mt-2 px-6 sm:px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-3"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">

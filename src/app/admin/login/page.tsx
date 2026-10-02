@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
           <div className="flex flex-col items-center text-center mb-7 pt-2">
             <Link href="/" className="mb-4 inline-block">
               <Image
-                src="/images/logo.png"
+                src="/images/logo.webp"
                 alt="The Coral Room"
                 width={150}
                 height={45}

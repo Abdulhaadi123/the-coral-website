@@ -19,7 +19,8 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
-import { uploadAdminFile } from '@/lib/uploadClient';
+import { adminAssetUrl } from '@/lib/adminAssets';
+import { uploadAdminFile, UploadTooLargeError } from '@/lib/uploadClient';
 
 function StarRatingSelector({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -79,6 +80,10 @@ export default function AdminTestimonialsPage() {
   const [form, setForm] = useState(EMPTY_TESTIMONIAL);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  // Kept only when the last rejection was an overridable size cap — lets "Upload
+  // anyway" retry the exact same file without asking the admin to re-pick it.
+  const [oversizedAvatar, setOversizedAvatar] = useState<File | null>(null);
+  const [oversizedLogo, setOversizedLogo] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState(false);
@@ -133,17 +138,23 @@ export default function AdminTestimonialsPage() {
   const setField = (key: string, val: any) =>
     setForm((prev) => ({ ...prev, [key]: val }));
 
-  const handleUpload = async (file: File, isAvatar: boolean) => {
+  const handleUpload = async (file: File, isAvatar: boolean, allowOverride = false) => {
     if (isAvatar) setUploadingAvatar(true);
     else setUploadingLogo(true);
     setFormError('');
+    if (isAvatar) setOversizedAvatar(null);
+    else setOversizedLogo(null);
 
     try {
-      const data = await uploadAdminFile(file, 'coral-room/testimonials');
+      const data = await uploadAdminFile(file, 'coral-room/testimonials', { kind: 'image', allowOverride });
       if (isAvatar) setField('avatar', data.url);
       else setField('logo', data.url);
     } catch (err: any) {
       setFormError(err.message || 'Image upload failed');
+      if (err instanceof UploadTooLargeError && err.overridable) {
+        if (isAvatar) setOversizedAvatar(file);
+        else setOversizedLogo(file);
+      }
     } finally {
       if (isAvatar) setUploadingAvatar(false);
       else setUploadingLogo(false);
@@ -567,9 +578,19 @@ export default function AdminTestimonialsPage() {
         {/* Drawer Form (Scrollable) */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-5">
           {formError && (
-            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex flex-wrap items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{formError}</span>
+              {oversizedAvatar && (
+                <button type="button" onClick={() => handleUpload(oversizedAvatar, true, true)} className="font-bold underline hover:no-underline cursor-pointer">
+                  Upload avatar anyway
+                </button>
+              )}
+              {oversizedLogo && (
+                <button type="button" onClick={() => handleUpload(oversizedLogo, false, true)} className="font-bold underline hover:no-underline cursor-pointer">
+                  Upload logo anyway
+                </button>
+              )}
             </div>
           )}
 
@@ -640,7 +661,7 @@ export default function AdminTestimonialsPage() {
                 <div className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 bg-gray-50">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={form.avatar}
+                    src={adminAssetUrl(form.avatar)}
                     alt="avatar"
                     className="w-12 h-12 rounded-full object-cover border border-gray-300 shrink-0"
                   />
@@ -648,7 +669,7 @@ export default function AdminTestimonialsPage() {
                     Change
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/webp"
                       className="hidden"
                       onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], true)}
                     />
@@ -664,9 +685,10 @@ export default function AdminTestimonialsPage() {
                   <span className="text-xs font-semibold text-gray-600">
                     {uploadingAvatar ? 'Uploading...' : 'Upload Avatar'}
                   </span>
+                  <span className="text-[10px] text-gray-400">WebP only, 550KB max</span>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/webp"
                     disabled={uploadingAvatar}
                     className="hidden"
                     onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], true)}
@@ -684,7 +706,7 @@ export default function AdminTestimonialsPage() {
                 <div className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 bg-gray-50">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={form.logo}
+                    src={adminAssetUrl(form.logo)}
                     alt="logo"
                     className="h-9 max-w-[90px] object-contain shrink-0"
                   />
@@ -692,7 +714,7 @@ export default function AdminTestimonialsPage() {
                     Change
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/webp"
                       className="hidden"
                       onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], false)}
                     />
@@ -708,9 +730,10 @@ export default function AdminTestimonialsPage() {
                   <span className="text-xs font-semibold text-gray-600">
                     {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
                   </span>
+                  <span className="text-[10px] text-gray-400">WebP only, 550KB max</span>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/webp"
                     disabled={uploadingLogo}
                     className="hidden"
                     onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], false)}

@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import type { TestimonialRow } from '@/lib/publicData';
+import { viaCdn } from '@/lib/assets';
 
 const staticTestimonials = [
   {
@@ -154,7 +155,7 @@ export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow
                 <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 bg-[#111827] flex items-center justify-center">
                   {item.avatar ? (
                     <Image
-                      src={item.avatar}
+                      src={viaCdn(item.avatar)}
                       alt={item.name}
                       fill
                       className="object-cover object-top"
@@ -175,7 +176,7 @@ export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow
                 {item.logo && (
                   <div className="shrink-0 relative h-9 flex items-center">
                     <Image
-                      src={item.logo}
+                      src={viaCdn(item.logo)}
                       alt={item.logoAlt}
                       width={item.logoWidth}
                       height={item.logoHeight}

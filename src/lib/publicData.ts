@@ -24,7 +24,12 @@ export const CACHE_TAGS = {
   testimonials: 'public-testimonials',
   partners: 'public-partners',
   pageSeo: 'public-page-seo',
+  homepageVideo: 'public-homepage-video',
+  team: 'public-team',
 } as const;
+
+/** Setting.key for the admin-replaceable homepage banner video (src/app/api/admin/homepage-video). */
+export const HOMEPAGE_VIDEO_SETTING_KEY = 'homepage_banner_video';
 
 export const PUBLIC_DATA_REVALIDATE_SECONDS = 3600;
 
@@ -61,6 +66,14 @@ export interface PartnerRow {
   logo: string;
   width: number;
   height: number;
+}
+
+/** A team member shown on the About Us page (client brief item 08). */
+export interface TeamMemberRow {
+  id: string;
+  name: string;
+  designation: string;
+  photo: string | null;
 }
 
 // The cached readers let errors through (nothing is cached for a failed read);
@@ -172,4 +185,34 @@ const readPartners = unstable_cache(
 /** Active partner logos in admin order (empty if none or unavailable, so the marquee keeps its built-in set). */
 export async function getPartners(): Promise<PartnerRow[]> {
   return (await orNull(readPartners, 'partners')) ?? [];
+}
+
+const readHomepageVideoUrl = unstable_cache(
+  async (): Promise<string | null> => {
+    const row = await prisma.setting.findUnique({ where: { key: HOMEPAGE_VIDEO_SETTING_KEY } });
+    return row?.value || null;
+  },
+  ['public-homepage-video'],
+  { tags: [CACHE_TAGS.homepageVideo], revalidate: PUBLIC_DATA_REVALIDATE_SECONDS }
+);
+
+/** Admin-uploaded homepage banner video URL, or null to use the site's built-in default. */
+export async function getHomepageVideoUrl(): Promise<string | null> {
+  return (await orNull(readHomepageVideoUrl, 'homepage banner video')) ?? null;
+}
+
+const readTeamMembers = unstable_cache(
+  async (): Promise<TeamMemberRow[]> =>
+    prisma.teamMember.findMany({
+      where: { active: true },
+      orderBy: [{ order: 'asc' }, { createdAt: 'asc' }],
+      select: { id: true, name: true, designation: true, photo: true },
+    }),
+  ['public-team-members'],
+  { tags: [CACHE_TAGS.team], revalidate: PUBLIC_DATA_REVALIDATE_SECONDS }
+);
+
+/** Active team members in admin order, for the About Us page (empty if none or unavailable). */
+export async function getTeamMembers(): Promise<TeamMemberRow[]> {
+  return (await orNull(readTeamMembers, 'team members')) ?? [];
 }

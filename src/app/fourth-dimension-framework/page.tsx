@@ -65,7 +65,7 @@ export default function FourthDimensionFrameworkPage() {
             {/* CTA Button */}
             <Link
               href="/book-a-call"
-              className="btn-hover-gradient group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm transition-all duration-300 hover:scale-105 active:scale-95"
+              className="btn-cta group inline-flex items-center justify-center max-w-full gap-3 px-7 py-3 rounded-full bg-[#A7F076] text-[#111827] font-semibold text-sm shadow-sm"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

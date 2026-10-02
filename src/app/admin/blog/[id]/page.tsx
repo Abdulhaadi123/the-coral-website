@@ -14,7 +14,7 @@ import {
 import { adminAssetUrl } from '@/lib/adminAssets';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import { CategorySelect } from '@/components/admin/CategorySelect';
-import { uploadAdminFile } from '@/lib/uploadClient';
+import { uploadAdminFile, UploadTooLargeError } from '@/lib/uploadClient';
 
 export default function EditBlogPostPage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -36,6 +36,9 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
+  // Kept only when the last rejection was an overridable size cap — lets "Upload
+  // anyway" retry the exact same file without asking the admin to re-pick it.
+  const [oversizedCover, setOversizedCover] = useState<File | null>(null);
 
   useEffect(() => {
     async function loadPost() {
@@ -66,15 +69,17 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
     loadPost();
   }, [id]);
 
-  const handleCoverUpload = async (file: File) => {
+  const handleCoverUpload = async (file: File, allowOverride = false) => {
     setUploadingCover(true);
     setError('');
+    setOversizedCover(null);
     try {
-      const data = await uploadAdminFile(file, 'coral-room/journal');
+      const data = await uploadAdminFile(file, 'coral-room/journal', { kind: 'image', allowOverride });
       setImage(data.url);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error uploading cover image');
+      if (err instanceof UploadTooLargeError && err.overridable) setOversizedCover(file);
     } finally {
       setUploadingCover(false);
     }
@@ -172,9 +177,18 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       </div>
 
       {error && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2.5">
+        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex flex-wrap items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
           <span>{error}</span>
+          {oversizedCover && (
+            <button
+              type="button"
+              onClick={() => handleCoverUpload(oversizedCover, true)}
+              className="font-bold underline hover:no-underline cursor-pointer"
+            >
+              Upload anyway
+            </button>
+          )}
         </div>
       )}
 
@@ -279,7 +293,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
             <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-4">
               <div>
                 <h2 className="text-sm font-bold text-[#111827]">Cover Image *</h2>
-                <p className="text-xs text-gray-500">Used on cards and the post hero banner (16:9).</p>
+                <p className="text-xs text-gray-500">Used on cards and the post hero banner (16:9). WebP only, 550KB max.</p>
               </div>
 
               {image ? (
@@ -291,7 +305,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
                       Change Image
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="image/webp"
                         className="hidden"
                         onChange={(e) => e.target.files?.[0] && handleCoverUpload(e.target.files[0])}
                       />
@@ -308,9 +322,10 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
                   <span className="text-xs font-semibold text-gray-600">
                     {uploadingCover ? 'Uploading...' : 'Click to upload cover image'}
                   </span>
+                  <span className="text-[10px] text-gray-400">WebP only, 550KB max</span>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/webp"
                     disabled={uploadingCover}
                     className="hidden"
                     onChange={(e) => e.target.files?.[0] && handleCoverUpload(e.target.files[0])}

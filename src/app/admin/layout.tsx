@@ -22,11 +22,17 @@ import {
   Map as MapIcon,
   UserCog,
   Loader2,
+  Film,
+  Contact,
+  Mail,
 } from 'lucide-react';
 import { AdminMe, AdminUserProvider } from '@/components/admin/AdminUserContext';
 import { SECTIONS, SectionKey, canAccessPath, hasPermission, isSuper } from '@/lib/permissions';
 
 const SECTION_ICONS: Record<SectionKey, React.ComponentType<{ className?: string }>> = {
+  homepage: Film,
+  team: Contact,
+  email: Mail,
   projects: FolderKanban,
   categories: Tag,
   blog: Newspaper,
@@ -130,7 +136,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="md:hidden flex items-center justify-between bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-40">
         <Link href="/admin" className="flex items-center gap-2.5">
           <Image
-            src="/images/logo.png"
+            src="/images/logo.webp"
             alt="The Coral Room"
             width={120}
             height={40}
@@ -162,7 +168,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="flex items-center justify-between">
               <Link href="/admin" className="block">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo.webp"
                   alt="The Coral Room"
                   width={140}
                   height={44}

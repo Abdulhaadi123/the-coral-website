@@ -43,7 +43,18 @@ const ASSET_VERSION = '3';
 /** How often to check that the loop is still running, in ms. */
 const WATCHDOG_MS = 2000;
 
-export const ShowcaseSection: React.FC = () => {
+interface ShowcaseSectionProps {
+  /**
+   * Admin-uploaded replacement for the built-in video below (Settings row
+   * "homepage_banner_video", set from /admin/homepage — see src/lib/publicData.ts).
+   * Null/undefined when no override is set, which plays the default instead.
+   * Uploaded videos already get a unique S3 key per upload, so — unlike the
+   * built-in asset — they never need a cache-busting `?v=`.
+   */
+  videoUrl?: string | null;
+}
+
+export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -131,7 +142,7 @@ export const ShowcaseSection: React.FC = () => {
         <div className="relative w-full aspect-[1643/294] overflow-hidden">
           <video
             ref={videoRef}
-            src={`${assetUrl('/WEBSITE.mp4')}?v=${ASSET_VERSION}`}
+            src={videoUrl ? assetUrl(videoUrl) : `${assetUrl('/WEBSITE.mp4')}?v=${ASSET_VERSION}`}
             autoPlay
             loop
             muted

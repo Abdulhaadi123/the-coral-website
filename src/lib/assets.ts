@@ -39,8 +39,32 @@ export const usingRemoteAssets = ASSET_BASE_URL.length > 0;
 /** Where public asset URLs should actually point: the CDN when there is one, else the S3 origin. */
 const PUBLIC_BASE_URL = CDN_BASE_URL || ASSET_BASE_URL;
 
-/** Swap the S3 origin prefix for the CDN's, leaving every other URL untouched. */
-function viaCdn(url: string): string {
+function parseBase(): { origin: string; path: string } {
+  try {
+    const u = new URL(ASSET_BASE_URL);
+    return { origin: u.origin, path: u.pathname.replace(/\/+$/, '') };
+  } catch {
+    return { origin: '', path: '' };
+  }
+}
+const BASE = ASSET_BASE_URL ? parseBase() : { origin: '', path: '' };
+
+/** A direct bucket link: https://<bucket>.s3.<region>.amazonaws.com/<path> */
+const S3_DIRECT_URL = /^https:\/\/[a-z0-9.-]+\.s3[.-][a-z0-9-]+\.amazonaws\.com(\/.*)$/i;
+
+/**
+ * Serve stored URLs through the public asset host, leaving every other URL untouched.
+ *  - Direct bucket links are private (only the CDN may read the bucket), so they 403 in a
+ *    browser; the same path on the asset host works. A few older rows (testimonial company
+ *    logos) were saved that way.
+ *  - With a separate CDN configured, the S3-origin prefix is swapped for the CDN's.
+ * Exported for components that render stored absolute URLs without going through assetUrl().
+ */
+export function viaCdn(url: string): string {
+  const direct = S3_DIRECT_URL.exec(url);
+  if (direct && BASE.origin && BASE.path && direct[1].startsWith(`${BASE.path}/`)) {
+    return BASE.origin + direct[1];
+  }
   if (!CDN_BASE_URL || !ASSET_BASE_URL) return url;
   return url.startsWith(`${ASSET_BASE_URL}/`) ? CDN_BASE_URL + url.slice(ASSET_BASE_URL.length) : url;
 }

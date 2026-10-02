@@ -31,7 +31,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
           <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
               Change Image
-              <input type="file" accept="image/*" className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
+              <input type="file" accept="image/webp" className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
             </label>
           </div>
         </div>
@@ -40,7 +40,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
           {uploading ? <Loader2 className="w-5 h-5 text-[#78B249] animate-spin" /> : <UploadCloud className="w-5 h-5 text-gray-400" />}
           <span className="text-xs font-semibold text-gray-600">{uploading ? 'Uploading...' : 'Click to upload'}</span>
           <span className="text-[10px] text-gray-400">{hint}</span>
-          <input type="file" accept="image/*" disabled={uploading} className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
+          <input type="file" accept="image/webp" disabled={uploading} className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
         </label>
       )}
     </div>
@@ -128,7 +128,7 @@ export default function AdminProjectsPage() {
     setUploadingThumb(true);
     setFormError('');
     try {
-      const data = await uploadAdminFile(file, 'coral-room/portfolio');
+      const data = await uploadAdminFile(file, 'coral-room/portfolio', { kind: 'thumbnail' });
       setField('image', data.url);
     } catch (err: any) {
       setFormError(err.message || 'Upload error');
@@ -501,7 +501,7 @@ export default function AdminProjectsPage() {
             onUpload={f => handleThumbUpload(f)}
             uploading={uploadingThumb}
             label="1. Card Thumbnail Image *"
-            hint="Shown in portfolio grid · PNG / WebP / JPG"
+            hint="Shown in portfolio grid · WebP only, 150KB max"
           />
 
           {/* Detail Image */}

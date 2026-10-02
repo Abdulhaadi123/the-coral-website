@@ -199,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             style={{ width: scrolled ? MARK_LARGE : MARK_SMALL, height: scrolled ? MARK_LARGE : MARK_SMALL }}
           >
             <Image
-              src="/images/logo-mark.png"
+              src="/images/logo-mark.webp"
               alt=""
               fill
               priority
@@ -208,7 +208,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
               style={{ opacity: isDark ? 0 : 1 }}
             />
             <Image
-              src="/images/logo-mark-white.png"
+              src="/images/logo-mark-white.webp"
               alt=""
               fill
               sizes="64px"
@@ -230,7 +230,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
             {/* Fixed width on the images so the wrapper CLIPS them rather than
                 squashing the artwork as it narrows. */}
             <Image
-              src="/images/logo-wordmark.png"
+              src="/images/logo-wordmark.webp"
               alt="The Coral Room"
               width={85}
               height={68}
@@ -239,7 +239,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
               style={{ width: WORDMARK_W, height: WORDMARK_H, opacity: isDark ? 0 : 1 }}
             />
             <Image
-              src="/images/logo-wordmark-white.png"
+              src="/images/logo-wordmark-white.webp"
               alt=""
               width={85}
               height={68}
@@ -270,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
         <div className="flex items-center justify-between px-8 pt-8 pb-6 border-b border-gray-100">
           <Link href="/" onClick={() => setOpen(false)}>
             <Image
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="The Coral Room"
               width={135}
               height={54}
@@ -300,6 +300,18 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           >
             <span>Home</span>
             {pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
+          </Link>
+
+          {/* About Us */}
+          <Link
+            href="/about"
+            onClick={() => setOpen(false)}
+            className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              pathname === '/about' ? 'bg-[#78B249]/15 text-[#467923]' : 'text-gray-700 hover:bg-gray-100 hover:text-[#111827]'
+            }`}
+          >
+            <span>About Us</span>
+            {pathname === '/about' && <span className="w-1.5 h-1.5 rounded-full bg-[#78B249] shrink-0" />}
           </Link>
 
           {/* Fourth Dimension */}
@@ -375,7 +387,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           <Link
             href="/book-a-call"
             onClick={() => setOpen(false)}
-            className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm text-[#111827] transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-95 shadow-sm"
+            className="btn-cta w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm text-[#111827] shadow-sm"
             style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #9FE66F 100%)' }}
           >
             Book a Discovery Call

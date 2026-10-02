@@ -6,6 +6,7 @@ import { Mark, mergeAttributes } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
+import TiptapImage from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import {
   Bold,
@@ -20,11 +21,14 @@ import {
   Quote,
   Link2,
   Link2Off,
+  Image as ImageIcon,
+  Loader2,
   Undo2,
   Redo2,
   Palette,
   RemoveFormatting,
 } from 'lucide-react';
+import { uploadAdminFile } from '@/lib/uploadClient';
 
 const TextStyleColor = Mark.create({
   name: 'textColor',
@@ -89,13 +93,24 @@ export default function RichTextEditor({
   value,
   onChange,
   placeholder,
+  allowImages = false,
+  imageFolder = 'coral-room',
 }: {
   value: string;
   onChange: (html: string) => void;
   placeholder?: string;
+  /** Adds an "insert image" toolbar button (off by default — blog posts use a
+   * separate cover-image field, so this is only turned on for content that
+   * genuinely needs inline images, e.g. email campaigns). */
+  allowImages?: boolean;
+  /** S3 folder uploaded images are filed under when `allowImages` is on. */
+  imageFolder?: string;
 }) {
   const [showColorMenu, setShowColorMenu] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageError, setImageError] = useState('');
   const colorMenuRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // Close color menu on click outside
   useEffect(() => {
@@ -124,6 +139,7 @@ export default function RichTextEditor({
       Placeholder.configure({
         placeholder: placeholder || 'Write the post content here…',
       }),
+      ...(allowImages ? [TiptapImage.configure({ HTMLAttributes: { style: 'max-width:100%;height:auto;' } })] : []),
     ],
     content: value || '',
     editorProps: {
@@ -152,6 +168,26 @@ export default function RichTextEditor({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, value]);
+
+  const handleImageUpload = useCallback(
+    async (file: File) => {
+      if (!editor) return;
+      setUploadingImage(true);
+      setImageError('');
+      try {
+        // Email images must stay full-size public URLs (a recipient's mail
+        // client can't reach our authenticated admin proxy), so this is the
+        // one editor-image path that doesn't go through adminAssetUrl.
+        const uploaded = await uploadAdminFile(file, imageFolder, { kind: 'image' });
+        editor.chain().focus().setImage({ src: uploaded.url, alt: file.name }).run();
+      } catch (err: any) {
+        setImageError(err.message || 'Error uploading image');
+      } finally {
+        setUploadingImage(false);
+      }
+    },
+    [editor, imageFolder]
+  );
 
   const setLink = useCallback(() => {
     if (!editor) return;
@@ -228,6 +264,29 @@ export default function RichTextEditor({
         <ToolbarButton title="Remove Link" disabled={!editor.isActive('link')} onClick={() => editor.chain().focus().unsetLink().run()}>
           <Link2Off className="w-4 h-4" />
         </ToolbarButton>
+
+        {allowImages && (
+          <>
+            <span className="w-px h-5 bg-gray-200 mx-1" />
+            <ToolbarButton
+              title="Insert Image"
+              disabled={uploadingImage}
+              onClick={() => imageInputRef.current?.click()}
+            >
+              {uploadingImage ? <Loader2 className="w-4 h-4 animate-spin" /> : <ImageIcon className="w-4 h-4" />}
+            </ToolbarButton>
+            <input
+              ref={imageInputRef}
+              type="file"
+              accept="image/webp"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files?.[0]) handleImageUpload(e.target.files[0]);
+                e.target.value = '';
+              }}
+            />
+          </>
+        )}
 
         <span className="w-px h-5 bg-gray-200 mx-1" />
 
@@ -306,6 +365,10 @@ export default function RichTextEditor({
           <Redo2 className="w-4 h-4" />
         </ToolbarButton>
       </div>
+
+      {imageError && (
+        <div className="px-4 py-2 text-xs text-red-600 bg-red-50 border-b border-red-100">{imageError}</div>
+      )}
 
       {/* Editable area */}
       <div className="px-4 py-4 max-h-[520px] overflow-y-auto">

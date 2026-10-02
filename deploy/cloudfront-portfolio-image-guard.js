@@ -89,7 +89,10 @@ function handler(event) {
 
   var headers = request.headers;
   if (isOwnSite(refererHost(headers))) return request;
-  if (SERVER_IPS.indexOf(event.viewer.ip) !== -1) return request;
+  // event.viewer only exists on the cloudfront-js-2.0 runtime; guarded so a
+  // wrong runtime selection blocks the request instead of erroring on every
+  // portfolio image.
+  if (event.viewer && SERVER_IPS.indexOf(event.viewer.ip) !== -1) return request;
   if (headers['user-agent'] && PREVIEW_BOTS.test(headers['user-agent'].value)) return request;
 
   return {

@@ -89,6 +89,83 @@ body {
   }
 }
 
+/*
+ * Primary CTA pills — "Book a Discovery Call" and "Collaborate with us" only
+ * (client brief item 11). Every other button keeps .btn-hover-gradient above.
+ *
+ * On hover the brand gradient wipes in from the left (clip-path, so the pill
+ * keeps its rounded ends the whole way), the pill lifts a couple of pixels
+ * with a soft glow, and the label flips to dark ink. The gradient layer
+ * bleeds 1px past the padding box so it also covers the 1px outline of the
+ * outlined variants. Hover styling is gated on (hover: hover) so touch
+ * devices don't get a "stuck" hover after a tap.
+ */
+.btn-cta {
+  --cta-bleed: 0px;
+  --cta-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  isolation: isolate;
+  transition: transform 0.55s var(--cta-ease), box-shadow 0.55s var(--cta-ease),
+    color 0.35s ease, border-color 0.35s ease;
+}
+
+.btn-cta.border {
+  --cta-bleed: 1px;
+}
+
+.btn-cta::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--cta-bleed) * -1);
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #5E9738 0%, #9FE66F 50.48%, #32CEC6 100%);
+  clip-path: inset(0 100% 0 0 round 9999px);
+  transition: clip-path 0.6s var(--cta-ease);
+  pointer-events: none;
+}
+
+.btn-cta:focus-visible {
+  outline: 2px solid #5E9738;
+  outline-offset: 3px;
+  color: #111827;
+  border-color: transparent;
+}
+
+.btn-cta:focus-visible::before {
+  clip-path: inset(0 0 0 0 round 9999px);
+}
+
+@media (hover: hover) {
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    color: #111827;
+    border-color: transparent;
+    box-shadow: 0 14px 28px -12px rgba(50, 206, 198, 0.55),
+      0 6px 12px -6px rgba(94, 151, 56, 0.35);
+  }
+
+  .btn-cta:hover::before {
+    clip-path: inset(0 0 0 0 round 9999px);
+  }
+}
+
+.btn-cta:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.15s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta,
+  .btn-cta::before {
+    transition-duration: 0.01ms;
+  }
+  .btn-cta:hover,
+  .btn-cta:active {
+    transform: none;
+  }
+}
+
 /* Soft Mesh Gradient background for What We Do Section */
 .what-we-do-bg {
   background: 

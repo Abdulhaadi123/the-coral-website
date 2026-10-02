@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { UploadCloud, Loader2, Trash2, ArrowUp, ArrowDown, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { UploadCloud, Loader2, Trash2, ArrowUp, ArrowDown, AlertCircle, Eye, EyeOff, RefreshCw } from 'lucide-react';
 import { adminAssetUrl } from '@/lib/adminAssets';
-import { uploadAdminFile } from '@/lib/uploadClient';
+import { uploadAdminFile, UploadTooLargeError } from '@/lib/uploadClient';
+import { STANDARD_IMAGE_MAX_BYTES } from '@/lib/uploadRules';
 
 export interface DetailImagePart {
   url: string;
@@ -38,6 +39,10 @@ interface Row extends DetailImagePart {
   key: number;
   uploading: boolean;
   error?: string;
+  // Set only when `error` is a size rejection an admin override can get past — the
+  // original File is kept so "Upload anyway" can retry without re-picking it.
+  file?: File;
+  overridable?: boolean;
 }
 
 let nextKey = 0;
@@ -64,6 +69,25 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
     onChange(next.filter((r) => !r.uploading && !r.error).map(({ url, width, height }) => ({ url, width, height })));
   };
 
+  const uploadOne = async (file: File, rowKey: number, current: Row[], allowOverride = false): Promise<Row[]> => {
+    try {
+      const [size, uploaded] = await Promise.all([
+        readImageSize(file),
+        uploadAdminFile(file, folder, { kind: 'image', allowOverride }),
+      ]);
+      return current.map((r) =>
+        r.key === rowKey ? { ...r, url: uploaded.url, ...size, uploading: false, error: undefined, file: undefined, overridable: false } : r
+      );
+    } catch (err: any) {
+      const overridable = err instanceof UploadTooLargeError && err.overridable;
+      return current.map((r) =>
+        r.key === rowKey
+          ? { ...r, uploading: false, error: err?.message || 'Upload failed', file: overridable ? file : undefined, overridable }
+          : r
+      );
+    }
+  };
+
   const handleFiles = async (files: FileList) => {
     const newRows: Row[] = Array.from(files).map(() => ({
       key: nextKey++,
@@ -78,17 +102,21 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
     await Promise.all(
       Array.from(files).map(async (file, i) => {
         const row = newRows[i];
-        try {
-          const [size, uploaded] = await Promise.all([readImageSize(file), uploadAdminFile(file, folder)]);
-          current = current.map((r) => (r.key === row.key ? { ...r, url: uploaded.url, ...size, uploading: false } : r));
-        } catch (err: any) {
-          current = current.map((r) =>
-            r.key === row.key ? { ...r, uploading: false, error: err?.message || 'Upload failed' } : r
-          );
-        }
+        current = await uploadOne(file, row.key, current);
         commit(current);
       })
     );
+  };
+
+  /** Re-tries a rejected part with the 550KB cap raised for this one upload — an
+   * explicit, per-file admin action (client brief item 07's "controlled override"). */
+  const retryWithOverride = async (row: Row) => {
+    if (!row.file) return;
+    const file = row.file;
+    let current = rows.map((r) => (r.key === row.key ? { ...r, uploading: true, error: undefined } : r));
+    setRows(current);
+    current = await uploadOne(file, row.key, current, true);
+    commit(current);
   };
 
   const removeRow = (key: number) => commit(rows.filter((r) => r.key !== key));
@@ -143,7 +171,21 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
                   )}
                 </p>
                 {row.uploading && <p className="text-[11px] text-gray-400">Uploading...</p>}
-                {row.error && <p className="text-[11px] text-red-600">{row.error}</p>}
+                {row.error && (
+                  <p className="text-[11px] text-red-600 flex flex-wrap items-center gap-x-1.5">
+                    <span>{row.error}</span>
+                    {row.overridable && (
+                      <button
+                        type="button"
+                        onClick={() => retryWithOverride(row)}
+                        className="inline-flex items-center gap-1 font-bold text-[#467923] hover:underline cursor-pointer"
+                      >
+                        <RefreshCw className="w-3 h-3" />
+                        Upload anyway
+                      </button>
+                    )}
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center gap-0.5 shrink-0">
@@ -188,11 +230,13 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
         <span className="text-xs font-semibold text-gray-600">
           {readyRows.length > 0 ? 'Add another part' : 'Upload detail image (one file, or several parts)'}
         </span>
-        <span className="text-[10px] text-gray-400">High-res WebP / PNG / JPG — select multiple to add several at once</span>
+        <span className="text-[10px] text-gray-400">
+          WebP only, {Math.round(STANDARD_IMAGE_MAX_BYTES / 1024)}KB max per part — select multiple to add several at once
+        </span>
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/webp"
           multiple
           className="hidden"
           onChange={(e) => {

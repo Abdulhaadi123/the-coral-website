@@ -96,7 +96,7 @@ export const PortfolioGateModal: React.FC<PortfolioGateModalProps> = ({ onUnlock
           {/* Logo */}
           <div className="mb-4">
             <Image
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="The Coral Room"
               width={140}
               height={44}

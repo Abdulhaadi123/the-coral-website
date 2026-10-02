@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
 import { FadeIn } from '@/components/Animated';
-import { SlidersHorizontal, ArrowUpRight, PlayCircle } from 'lucide-react';
+import { SlidersHorizontal, ArrowUpRight } from 'lucide-react';
 import { PortfolioFullLockGate } from '@/components/PortfolioFullLockGate';
 import { VideoLightbox, VideoItem } from '@/components/VideoLightbox';
 import type { Category } from '@/lib/useCategories';
@@ -263,15 +263,6 @@ function PortfolioInner({ projects: projectList, categories }: PortfolioPageClie
                           </div>
                         )}
 
-                        {project.videos && project.videos.length > 0 && !cardLink && (
-                          <div
-                            aria-hidden="true"
-                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110 pointer-events-none"
-                          >
-                            <PlayCircle className="w-8 h-8 text-white" strokeWidth={1.5} />
-                          </div>
-                        )}
-
                         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
                         <div className="absolute bottom-3 left-3 flex gap-1.5 flex-wrap z-10 pointer-events-none">
                           {(project.tags || []).map(tag => (
@@ -353,7 +344,7 @@ function PortfolioInner({ projects: projectList, categories }: PortfolioPageClie
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="btn-cta group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-all duration-300">

@@ -123,6 +123,19 @@ model Partner {
   updatedAt DateTime @updatedAt
 }
 
+model TeamMember {
+  id          String   @id @default(uuid())
+  name        String
+  designation String
+  // Nullable — the About page falls back to a generic placeholder avatar until
+  // an admin uploads a real photo (client brief item 08).
+  photo       String?
+  active      Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model BlogPost {
   id          String   @id @default(uuid())
   slug        String   @unique
@@ -182,4 +195,53 @@ model Setting {
   key       String   @id
   value     String
   updatedAt DateTime @updatedAt
+}
+
+// ── Email Marketing (client brief item 12) ─────────────────────────────────
+
+/** A contact list imported from an uploaded CSV/Excel file. */
+model EmailList {
+  id        String         @id @default(uuid())
+  name      String
+  createdAt DateTime       @default(now())
+  contacts  EmailContact[]
+  campaigns EmailCampaign[]
+}
+
+model EmailContact {
+  id        String    @id @default(uuid())
+  listId    String
+  list      EmailList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  email     String
+  name      String?
+  // False when the address failed format validation at import time — kept
+  // (not dropped) so the admin can see and clean up what was skipped, but
+  // excluded from every send.
+  valid     Boolean   @default(true)
+  createdAt DateTime  @default(now())
+
+  // Guards against the same address being imported twice into one list.
+  @@unique([listId, email])
+}
+
+model EmailCampaign {
+  id          String    @id @default(uuid())
+  subject     String
+  contentHtml String
+  listId      String?
+  // Deleting a list detaches it from any campaign that used it (SetNull)
+  // rather than failing or deleting the campaign — a sent campaign's content
+  // and send history must survive its source list being removed later.
+  list        EmailList? @relation(fields: [listId], references: [id], onDelete: SetNull)
+  // draft | scheduled | sending | sent | failed
+  status      String    @default("draft")
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  // [{ filename, url }] — files/images attached to every email in the send.
+  attachments Json?
+  totalRecipients Int   @default(0)
+  sentCount   Int       @default(0)
+  failedCount Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

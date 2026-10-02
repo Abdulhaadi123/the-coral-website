@@ -39,7 +39,7 @@ export const FooterSection: React.FC = () => {
               <Link
                 href="/book-a-call"
                 style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
-                className="group px-6 py-3 rounded-full text-white font-semibold text-sm sm:text-base flex items-center gap-2 shadow-lg hover:opacity-90 transition-all duration-300"
+                className="btn-cta group px-6 py-3 rounded-full text-white font-semibold text-sm sm:text-base flex items-center gap-2 shadow-lg"
               >
                 <span>Book a Discovery call</span>
               </Link>
@@ -58,12 +58,13 @@ export const FooterSection: React.FC = () => {
             <div className="flex flex-col gap-3">
               <h4 className="font-bold text-white text-sm sm:text-base">Our Work</h4>
               <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Portfolio</Link>
-              <Link href="/fourth-dimension-framework" className="text-gray-400 hover:text-white transition-colors">Fourth Dimension™</Link>
+              <Link href="/fourth-dimension-framework" className="font-bold text-white hover:text-[#9FE66F] transition-colors">Fourth Dimension™</Link>
               <Link href="/marketing-campaigns" className="text-gray-400 hover:text-white transition-colors">Campaigns</Link>
               <Link href="/paid-advertising" className="text-gray-400 hover:text-white transition-colors">Paid Ads</Link>
             </div>
             <div className="flex flex-col gap-3">
               <h4 className="font-bold text-white text-sm sm:text-base">Company</h4>
+              <Link href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link>
               <Link href="/book-a-call" className="text-gray-400 hover:text-white transition-colors">Book a Call</Link>
               <Link href="/seo-search-visibility" className="text-gray-400 hover:text-white transition-colors">SEO Services</Link>
               <Link href="/journal" className="text-gray-400 hover:text-white transition-colors">Journal</Link>
@@ -90,7 +91,7 @@ export const FooterSection: React.FC = () => {
                 <Link
                   href="/book-a-call"
                   style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
-                  className="px-5 py-2.5 rounded-full text-white font-semibold text-xs sm:text-sm hover:opacity-90 transition-all inline-block"
+                  className="btn-cta px-5 py-2.5 rounded-full text-white font-semibold text-xs sm:text-sm inline-block"
                 >
                   Collaborate with us
                 </Link>

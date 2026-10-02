@@ -10,7 +10,10 @@ export type SectionKey =
   | 'social'
   | 'leads'
   | 'seo'
-  | 'sitemap';
+  | 'sitemap'
+  | 'homepage'
+  | 'team'
+  | 'email';
 
 export type AdminRole = 'super' | 'editor';
 
@@ -23,6 +26,9 @@ export interface SectionDef {
 
 /** Every admin area a restricted user can be given, in sidebar order. */
 export const SECTIONS: SectionDef[] = [
+  { key: 'homepage', label: 'Homepage', description: 'Replace, update or remove the homepage banner video', href: '/admin/homepage' },
+  { key: 'team', label: 'Team (About Us)', description: 'Add, edit and remove team members shown on the About Us page', href: '/admin/team' },
+  { key: 'email', label: 'Email Marketing', description: 'Upload contact lists and create, schedule or send email campaigns', href: '/admin/email' },
   { key: 'projects', label: 'Portfolio Projects', description: 'Add, edit and delete portfolio case studies and their videos', href: '/admin/projects' },
   { key: 'categories', label: 'Categories', description: 'Manage portfolio and blog categories', href: '/admin/categories' },
   { key: 'blog', label: 'Blog Posts', description: 'Write, edit, publish and delete journal posts', href: '/admin/blog' },
@@ -65,6 +71,9 @@ export function sanitizePermissions(input: unknown): SectionKey[] {
 
 // Matches are anchored on a path boundary, so "/admin/blogger" never counts as "/admin/blog".
 const PATH_SECTIONS: { prefix: string; section: SectionKey | 'users' }[] = [
+  { prefix: '/admin/homepage', section: 'homepage' },
+  { prefix: '/admin/team', section: 'team' },
+  { prefix: '/admin/email', section: 'email' },
   { prefix: '/admin/projects', section: 'projects' },
   { prefix: '/admin/categories', section: 'categories' },
   { prefix: '/admin/blog', section: 'blog' },

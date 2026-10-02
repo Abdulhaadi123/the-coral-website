@@ -19,6 +19,9 @@ import {
   Share2,
   Map as MapIcon,
   Users,
+  Film,
+  Contact,
+  Mail,
 } from 'lucide-react';
 import { adminAssetUrl } from '@/lib/adminAssets';
 import { useAdminUser } from '@/components/admin/AdminUserContext';
@@ -26,6 +29,9 @@ import { SECTIONS, SectionKey, hasPermission, isSuper } from '@/lib/permissions'
 import { isDiscoveryLead } from '@/lib/leadSources';
 
 const SECTION_ICONS: Record<SectionKey, React.ComponentType<{ className?: string }>> = {
+  homepage: Film,
+  team: Contact,
+  email: Mail,
   projects: FolderKanban,
   categories: Tag,
   blog: Newspaper,

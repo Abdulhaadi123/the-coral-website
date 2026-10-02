@@ -141,7 +141,7 @@ export const HowItWorksSection: React.FC = () => {
           <div className="mt-7">
             <Link
               href="/book-a-call"
-              className="group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center gap-3 shadow-md hover:bg-white transition-all duration-300 hover:scale-105 active:scale-95"
+              className="btn-cta group px-6 py-3 rounded-full bg-[#A7F176] text-[#111827] font-semibold text-sm sm:text-base inline-flex items-center gap-3 shadow-md"
             >
               <span>Book a Discovery Call</span>
               <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

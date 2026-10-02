@@ -20,6 +20,16 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    // geoip-lite reads its bundled .dat files from disk via `__dirname`;
+    // letting webpack bundle/rewrite it (the default) breaks that path
+    // resolution during the build's page-data-collection step. Keeping it as
+    // a real `require()` resolved from node_modules at runtime fixes it.
+    serverComponentsExternalPackages: ['geoip-lite'],
+    // src/instrumentation.ts (starts the email-campaign scheduler on boot)
+    // needs this on Next 14.x — it's stable with no flag from Next 15 on.
+    instrumentationHook: true,
+  },
   images: {
     // `next dev` only: the browser loads images straight from the CDN instead
     // of through the local resizer. The CDN serves portfolio images only to our

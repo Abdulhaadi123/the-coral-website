@@ -5,12 +5,16 @@
 // admin as "Unexpected token 'R' ... is not valid JSON". This turns every failure
 // into a message an admin can act on.
 
-/**
- * Default upload limit for self-hosted server (e.g. Ubuntu VPS).
- * Can be overridden via NEXT_PUBLIC_MAX_UPLOAD_MB environment variable.
- */
-const configuredMB = Number(process.env.NEXT_PUBLIC_MAX_UPLOAD_MB);
-export const MAX_UPLOAD_BYTES = (configuredMB > 0 ? configuredMB : 12) * 1024 * 1024;
+import {
+  MAX_UPLOAD_BYTES,
+  STANDARD_IMAGE_MAX_BYTES,
+  THUMBNAIL_MAX_BYTES,
+  ImageUploadKind,
+  formatBytes,
+  isWebpFile,
+} from './uploadRules';
+
+export { MAX_UPLOAD_BYTES };
 
 const toMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 
@@ -26,15 +30,67 @@ export interface UploadedFile {
   publicId: string;
 }
 
+export interface UploadOptions {
+  /**
+   * 'thumbnail' = the portfolio card image (WebP only, 150KB hard cap, no override).
+   * 'image' = every other image upload site-wide (WebP only, 550KB by default; pass
+   * `allowOverride` to raise that for this one upload). Omit entirely for a non-image
+   * file such as a video, which gets neither rule — only the MAX_UPLOAD_BYTES ceiling.
+   */
+  kind?: ImageUploadKind;
+  /** Admin has explicitly asked to bypass the 550KB cap for this one upload (kind: 'image' only — a thumbnail's cap can't be overridden). */
+  allowOverride?: boolean;
+}
+
+/**
+ * Thrown when a file is rejected for being too large. `overridable` tells the caller
+ * whether re-trying with `{ allowOverride: true }` can get this exact file through —
+ * true for an 'image' over its default 550KB cap, false for anything with a hard
+ * ceiling (a thumbnail's 150KB, or MAX_UPLOAD_BYTES itself even with the override).
+ */
+export class UploadTooLargeError extends Error {
+  overridable: boolean;
+  constructor(message: string, overridable: boolean) {
+    super(message);
+    this.name = 'UploadTooLargeError';
+    this.overridable = overridable;
+  }
+}
+
 /** Uploads one file to the admin upload endpoint; throws an Error with a readable message on any failure. */
-export async function uploadAdminFile(file: File, folder: string): Promise<UploadedFile> {
-  if (file.size > MAX_UPLOAD_BYTES) {
+export async function uploadAdminFile(file: File, folder: string, options: UploadOptions = {}): Promise<UploadedFile> {
+  const { kind, allowOverride = false } = options;
+
+  if (kind && !isWebpFile(file)) {
+    throw new Error(`“${file.name || 'This file'}” must be a WebP image (.webp). Convert it and try again.`);
+  }
+
+  if (kind === 'thumbnail') {
+    if (file.size > THUMBNAIL_MAX_BYTES) {
+      throw new UploadTooLargeError(
+        `“${file.name || 'This file'}” is ${formatBytes(file.size)}. Portfolio thumbnails must be ${formatBytes(THUMBNAIL_MAX_BYTES)} or smaller.`,
+        false
+      );
+    }
+  } else if (kind === 'image') {
+    const cap = allowOverride ? MAX_UPLOAD_BYTES : STANDARD_IMAGE_MAX_BYTES;
+    if (file.size > cap) {
+      throw new UploadTooLargeError(
+        allowOverride
+          ? `“${file.name || 'This file'}” is ${formatBytes(file.size)}, over the server's ${formatBytes(MAX_UPLOAD_BYTES)} ceiling.`
+          : `“${file.name || 'This file'}” is ${formatBytes(file.size)}, over the ${formatBytes(STANDARD_IMAGE_MAX_BYTES)} limit.`,
+        !allowOverride
+      );
+    }
+  } else if (file.size > MAX_UPLOAD_BYTES) {
     throw new Error(tooLargeMessage(file));
   }
 
   const formData = new FormData();
   formData.append('file', file);
   formData.append('folder', folder);
+  if (kind) formData.append('kind', kind);
+  if (allowOverride) formData.append('override', '1');
 
   let res: Response;
   try {

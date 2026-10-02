@@ -103,7 +103,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
     setUploadingThumb(true);
     setError('');
     try {
-      const data = await uploadAdminFile(file, 'coral-room/portfolio');
+      const data = await uploadAdminFile(file, 'coral-room/portfolio', { kind: 'thumbnail' });
       setImage(data.url);
     } catch (err: any) {
       console.error(err);
@@ -349,7 +349,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
           <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-4">
             <div>
               <h2 className="text-sm font-bold text-[#111827]">1. Card Thumbnail Image *</h2>
-              <p className="text-xs text-gray-500">Shown in the Portfolio grid (Aspect ~3:2).</p>
+              <p className="text-xs text-gray-500">Shown in the Portfolio grid (Aspect ~3:2). WebP only, 150KB max.</p>
             </div>
 
             {image ? (
@@ -361,7 +361,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
                     Change Image
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/webp"
                       className="hidden"
                       onChange={(e) =>
                         e.target.files?.[0] && handleThumbUpload(e.target.files[0])
@@ -380,9 +380,10 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
                 <span className="text-xs font-semibold text-gray-600">
                   {uploadingThumb ? 'Uploading...' : 'Click to upload Card Thumbnail'}
                 </span>
+                <span className="text-[10px] text-gray-400">WebP only, 150KB max</span>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/webp"
                   disabled={uploadingThumb}
                   className="hidden"
                   onChange={(e) =>

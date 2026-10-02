@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, UploadCloud, Loader2, Check, AlertCircle } from 'lucide-react';
-import { uploadAdminFile } from '@/lib/uploadClient';
+import { adminAssetUrl } from '@/lib/adminAssets';
+import { uploadAdminFile, UploadTooLargeError } from '@/lib/uploadClient';
 
 export interface PartnerFormValues {
   name: string;
@@ -37,13 +38,17 @@ export default function PartnerForm({ id, initial }: Props) {
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  // Kept only when the last rejection was an overridable size cap — lets "Upload
+  // anyway" retry the exact same file without asking the admin to re-pick it.
+  const [oversizedLogo, setOversizedLogo] = useState<File | null>(null);
 
-  const handleFileUpload = async (file: File) => {
+  const handleFileUpload = async (file: File, allowOverride = false) => {
     setUploading(true);
     setError('');
+    setOversizedLogo(null);
 
     try {
-      const data = await uploadAdminFile(file, 'coral-room/partners');
+      const data = await uploadAdminFile(file, 'coral-room/partners', { kind: 'image', allowOverride });
 
       setLogo(data.url);
 
@@ -60,6 +65,7 @@ export default function PartnerForm({ id, initial }: Props) {
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error uploading logo');
+      if (err instanceof UploadTooLargeError && err.overridable) setOversizedLogo(file);
     } finally {
       setUploading(false);
     }
@@ -120,15 +126,24 @@ export default function PartnerForm({ id, initial }: Props) {
           {isEdit ? 'Edit Partner' : 'Add Partner Logo'}
         </h1>
         <p className="text-sm text-gray-500 mt-1">
-          Logos appear in the scrolling strip on the homepage. Use a transparent PNG or SVG in
+          Logos appear in the scrolling strip on the homepage. Use a transparent WebP in
           white — the strip has a green background.
         </p>
       </div>
 
       {error && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2.5">
+        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex flex-wrap items-center gap-2.5">
           <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
           <span>{error}</span>
+          {oversizedLogo && (
+            <button
+              type="button"
+              onClick={() => handleFileUpload(oversizedLogo, true)}
+              className="font-bold underline hover:no-underline cursor-pointer"
+            >
+              Upload anyway
+            </button>
+          )}
         </div>
       )}
 
@@ -160,13 +175,13 @@ export default function PartnerForm({ id, initial }: Props) {
               {/* Preview sits on the marquee's green so white logos are visible. */}
               <div className="h-16 w-40 rounded-xl bg-[#2ECE9E] flex items-center justify-center p-3 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={logo} alt="Logo preview" className="max-h-full max-w-full object-contain" />
+                <img src={adminAssetUrl(logo)} alt="Logo preview" className="max-h-full max-w-full object-contain" />
               </div>
               <label className="cursor-pointer text-xs font-bold text-[#467923] hover:underline">
                 {uploading ? 'Uploading...' : 'Change Logo'}
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/webp"
                   disabled={uploading}
                   className="hidden"
                   onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])}
@@ -183,9 +198,10 @@ export default function PartnerForm({ id, initial }: Props) {
               <span className="text-xs font-semibold text-gray-600">
                 {uploading ? 'Uploading...' : 'Upload Logo'}
               </span>
+              <span className="text-[10px] text-gray-400">WebP only, 550KB max</span>
               <input
                 type="file"
-                accept="image/*"
+                accept="image/webp"
                 disabled={uploading}
                 className="hidden"
                 onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])}

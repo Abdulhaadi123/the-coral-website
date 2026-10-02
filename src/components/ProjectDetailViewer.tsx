@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { PlayCircle } from 'lucide-react';
+import { PlayCircle, ArrowLeft } from 'lucide-react';
 import { assetUrl } from '@/lib/assets';
 import { VideoLightbox } from '@/components/VideoLightbox';
 
@@ -111,6 +111,21 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
     <VideoLightbox videos={videoOpen ? project.videos! : null} exploreUrl={project.exploreUrl} onClose={() => setVideoOpen(false)} />
   );
 
+  // Client brief item 01: a clear way back to the portfolio grid from any opened
+  // project, instead of relying on the browser's own back button. Goes straight to
+  // /portfolio (not router.back()) so it behaves the same whether someone arrived via
+  // browsing, a shared link, or a fresh tab.
+  const backButton = (
+    <button
+      type="button"
+      onClick={() => router.push('/portfolio')}
+      className="fixed top-5 left-4 sm:top-6 sm:left-6 z-30 flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-[#111827]/90 backdrop-blur-md border border-white/10 text-white text-sm font-semibold shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+    >
+      <ArrowLeft className="w-4 h-4 text-[#A7F176]" />
+      <span>Back to Portfolio</span>
+    </button>
+  );
+
   // Normalise both possible shapes into one ordered list of slices. A plain
   // single detailImage (legacy / static sample data) becomes a one-slice list,
   // so the exact same rendering path below handles it identically to today.
@@ -174,6 +189,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
           />
         ))}
 
+        {backButton}
         {videoButton}
         {videoLightbox}
       </div>
@@ -195,6 +211,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
           />
         </div>
 
+        {backButton}
         {videoButton}
         {videoLightbox}
       </div>
@@ -202,7 +219,8 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
   }
 
   return (
-    <div className="py-32 text-center text-gray-400">
+    <div className="py-32 text-center text-gray-400 relative">
+      {backButton}
       No showcase image available for this project.
     </div>
   );

@@ -323,7 +323,7 @@ export default function MarketingPage() {
               </Link>
               <Link
                 href="/book-a-call"
-                className="btn-hover-gradient group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-between sm:justify-start gap-2.5 hover:border-transparent transition-all duration-300 whitespace-normal sm:whitespace-nowrap shadow-sm hover:scale-105 active:scale-95"
+                className="btn-cta group shrink-0 px-5 sm:px-6 py-3 rounded-full border border-[#111827] text-[#111827] font-semibold text-xs sm:text-sm inline-flex items-center justify-between sm:justify-start gap-2.5 whitespace-normal sm:whitespace-nowrap shadow-sm"
               >
                 <span>Book a Discovery Call</span>
                 <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">
@@ -433,7 +433,7 @@ export default function MarketingPage() {
           </p>
           <Link
             href="/book-a-call"
-            className="group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3 hover:bg-white hover:text-[#111827] transition-all duration-300 hover:scale-105 active:scale-95"
+            className="btn-cta group mt-2 px-7 py-3 rounded-full border border-[#111827] bg-transparent text-[#111827] font-semibold text-sm inline-flex items-center gap-3"
           >
             <span>Book a Discovery Call</span>
             <span className="w-6 h-6 rounded-full border border-[#111827] flex items-center justify-center shrink-0 group-hover:rotate-45 transition-transform duration-300">

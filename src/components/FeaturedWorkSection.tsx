@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animated';
+import { FadeIn } from '@/components/Animated';
 import { assetUrl } from '@/lib/assets';
 import { projects as portfolioProjects } from '@/app/portfolio/data';
 
@@ -50,14 +50,40 @@ const projects = FEATURED.flatMap(({ slug, image }) => {
 export const FeaturedWorkSection: React.FC = () => {
   const router = useRouter();
   const [active, setActive] = useState(0);
-  const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const totalDots = projects.length;
 
-  const prev = () => { setDirection('prev'); setActive((i) => (i === 0 ? projects.length - 1 : i - 1)); };
-  const next = () => { setDirection('next'); setActive((i) => (i === projects.length - 1 ? 0 : i + 1)); };
+  /*
+   * Client brief item 05: arrow navigation used to swap in a fresh 2-card
+   * window (keyed by `${name}-${active}`), which forced React — and the
+   * browser — to mount a brand-new <Image> and start its request from
+   * scratch on every click, which is where the ~2s delay came from.
+   *
+   * Every card is mounted once, up front, in one continuous flex "track";
+   * the arrows/dots only slide that track sideways with a CSS transform.
+   * Once a card's image has loaded it never unmounts, so revisiting it is a
+   * transform, not a new request — and since there are only 8 cards, all of
+   * them are set to load immediately (no `loading="lazy"`) so every neighbour
+   * is already warm in cache well before the user can arrow to it.
+   */
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [step, setStep] = useState(0);
 
-  // Show two cards starting from active (wrap)
-  const visible = [projects[active % projects.length], projects[(active + 1) % projects.length]];
+  const measure = useCallback(() => {
+    const track = trackRef.current;
+    if (!track || track.children.length < 2) return;
+    const first = track.children[0] as HTMLElement;
+    const second = track.children[1] as HTMLElement;
+    setStep(second.offsetLeft - first.offsetLeft);
+  }, []);
+
+  useLayoutEffect(() => {
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [measure]);
+
+  const prev = () => setActive((i) => (i === 0 ? projects.length - 1 : i - 1));
+  const next = () => setActive((i) => (i === projects.length - 1 ? 0 : i + 1));
 
   const handleCardClick = (e: React.MouseEvent, slug: string) => {
     e.preventDefault();
@@ -84,18 +110,26 @@ export const FeaturedWorkSection: React.FC = () => {
       {/* Cards — left-aligned with site grid, 2nd card precisely half cut off on the right */}
       <div className="mt-8 sm:mt-10 w-full overflow-hidden">
         <div className="max-w-[1600px] mx-auto pl-5 sm:pl-8 lg:pl-[13.1%] pr-0">
-          <div className="flex gap-4 sm:gap-6 overflow-visible">
-            {visible.map((project) => (
+          <div
+            ref={trackRef}
+            className="flex gap-4 sm:gap-6 overflow-visible transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${active * step}px)` }}
+          >
+            {projects.map((project, i) => (
               <a
-                key={`${project.name}-${active}`}
+                key={project.slug}
                 href={`/portfolio/${project.slug}`}
                 onClick={(e) => handleCardClick(e, project.slug)}
-                className={`relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[55vw] lg:w-[56vw] max-w-[580px] ${direction === 'next' ? 'animate-slide-from-right' : 'animate-slide-from-left'}`}
+                className="relative group rounded-2xl overflow-hidden bg-black/10 aspect-[4/3] block cursor-pointer flex-shrink-0 w-[85vw] sm:w-[55vw] lg:w-[56vw] max-w-[580px]"
               >
                 <Image
                   src={project.image}
                   alt={`${project.name} branding project`}
                   fill
+                  // Every card is fetched right away (not lazy) — see the note above —
+                  // the first pair also gets `priority` since it's what's visible on load.
+                  priority={i < 2}
+                  loading={i < 2 ? undefined : 'eager'}
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   sizes="(max-width: 768px) 80vw, 480px"
                 />
