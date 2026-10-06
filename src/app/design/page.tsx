@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
@@ -128,11 +129,13 @@ export default function DesignPage() {
 
           {/* Left: Fourth Dimension Graphic */}
           <ScaleIn className="md:col-span-5 flex items-center justify-center" delay={0.1}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/fourth-dimension-graphic.webp"
+              width={587}
+              height={776}
+              sizes="(min-width: 640px) 528px, 370px"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full md:w-[132%] max-w-[449px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="shrink-0 w-full md:w-[132%] max-w-[449px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500 [aspect-ratio:587/776]"
             />
           </ScaleIn>
 

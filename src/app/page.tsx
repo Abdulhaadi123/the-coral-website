@@ -29,6 +29,13 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white flex flex-col justify-between">
+      {/*
+        The "What we do" section just below the hero paints this as a CSS background, which
+        the browser would only discover after the stylesheet is parsed (PageSpeed: "LCP
+        request discovery"). Hinting it here starts the download with the HTML.
+      */}
+      <link rel="preload" as="image" href="/images/cta-banner-bg.webp" fetchPriority="high" />
+
       {/* Top Header Navigation */}
       <Header />
 

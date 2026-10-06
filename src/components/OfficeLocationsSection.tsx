@@ -85,7 +85,7 @@ export const OfficeLocationsSection: React.FC = () => {
             ) : (
               <div className="w-full aspect-[16/9] bg-gray-100 flex flex-col items-center justify-center gap-3 text-center px-6">
                 <MapPin className="w-10 h-10 text-gray-300" />
-                <p className="text-sm text-gray-400 font-medium">Map coming soon</p>
+                <p className="text-sm text-gray-600 font-medium">Map coming soon</p>
               </div>
             )}
             <div className="px-6 sm:px-8 py-5 sm:py-6 flex items-center gap-3">

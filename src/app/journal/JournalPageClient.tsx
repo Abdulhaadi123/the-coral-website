@@ -225,7 +225,7 @@ export default function JournalPageClient({
           >
             4
           </button>
-          <span className="text-gray-400 text-xs px-1 select-none">...</span>
+          <span aria-hidden="true" className="text-gray-400 text-xs px-1 select-none">...</span>
           <button
             onClick={() => setCurrentPage(8)}
             className={`w-8 h-8 rounded-full text-xs font-semibold flex items-center justify-center transition-all duration-200 ${

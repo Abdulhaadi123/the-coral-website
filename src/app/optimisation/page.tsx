@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
@@ -82,7 +83,7 @@ export default function OptimisationPage() {
             className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/60 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
           >
             <div>
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">Conversions</h3>
+              <h2 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">Conversions</h2>
               <p className="text-xs sm:text-sm text-gray-500 font-normal">We test what works</p>
             </div>
             <div className="text-3xl sm:text-5xl font-semibold text-[#111827] tracking-tight">
@@ -95,7 +96,7 @@ export default function OptimisationPage() {
             className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/70 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.08)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] md:-translate-y-2 hover:shadow-2xl"
           >
             <div>
-              <h3 className="text-xl sm:text-3xl font-semibold text-[#111827] mb-1 tracking-tight">Visibility</h3>
+              <h2 className="text-xl sm:text-3xl font-semibold text-[#111827] mb-1 tracking-tight">Visibility</h2>
               <p className="text-xs sm:text-sm text-gray-500 font-normal">We help people find you</p>
             </div>
             <div className="text-3xl sm:text-6xl font-semibold text-[#111827] tracking-tight">
@@ -108,7 +109,7 @@ export default function OptimisationPage() {
             className="aspect-square rounded-[31px] bg-[rgba(255,255,255,0.27)] p-7 sm:p-9 border border-white/60 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
           >
             <div>
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">User Testing</h3>
+              <h2 className="text-xl sm:text-2xl font-semibold text-[#111827] mb-1 tracking-tight">User Testing</h2>
               <p className="text-xs sm:text-sm text-gray-500 font-normal">We detect what is frustrating users</p>
             </div>
             <div className="text-3xl sm:text-5xl font-semibold text-[#111827] tracking-tight">
@@ -244,8 +245,7 @@ export default function OptimisationPage() {
           ].map((card) => (
             <StaggerItem key={card.label} className="flex flex-col gap-4 items-start">
               <div className="w-12 h-12 flex items-center justify-start">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={card.img} alt={card.label} className="w-full h-full object-contain object-left" />
+                <Image src={card.img} alt={card.label} width={48} height={48} className="w-full h-full object-contain object-left" />
               </div>
               <p className="text-sm text-gray-700 leading-snug font-normal w-full">
                 {card.label}
@@ -261,11 +261,13 @@ export default function OptimisationPage() {
 
           {/* Left: 4th Dimension Graphic */}
           <ScaleIn className="md:col-span-5 flex items-center justify-center" delay={0.1}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/fourth-dimension-graphic.webp"
+              width={587}
+              height={776}
+              sizes="(min-width: 640px) 528px, 370px"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full md:w-[132%] max-w-[343px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="shrink-0 w-full md:w-[132%] max-w-[343px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500 [aspect-ratio:587/776]"
             />
           </ScaleIn>
 

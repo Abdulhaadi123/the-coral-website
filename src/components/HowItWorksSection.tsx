@@ -124,7 +124,7 @@ export const HowItWorksSection: React.FC = () => {
   }, []);
 
   return (
-    <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
+    <section data-nav-dark className="w-full bg-[#1B8183] text-white py-20 sm:py-28">
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
 
         {/* ── Left: intro, sticks while the steps scroll past ── */}
@@ -133,7 +133,7 @@ export const HowItWorksSection: React.FC = () => {
             How It Works
           </h2>
 
-          <p className="mt-5 text-sm sm:text-base lg:text-lg text-white/80 leading-relaxed max-w-sm font-normal">
+          <p className="mt-5 text-sm sm:text-base lg:text-lg text-white leading-relaxed max-w-sm font-normal">
             Not sure what your digital presence needs next? We help you find the right starting
             point before the work begins.
           </p>
@@ -187,7 +187,7 @@ export const HowItWorksSection: React.FC = () => {
                   style={{ backgroundColor: 'rgba(255,255,255,0.45)' }}
                 />
 
-                <span className="text-[11px] font-bold tracking-[0.2em] text-teal-100/70 uppercase block mb-3">
+                <span className="text-[11px] font-bold tracking-[0.2em] text-white uppercase block mb-3">
                   {item.step}
                 </span>
 
@@ -197,7 +197,7 @@ export const HowItWorksSection: React.FC = () => {
                   {item.title}
                 </h3>
 
-                <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed max-w-lg">
+                <p className="text-sm sm:text-base text-white leading-relaxed max-w-lg">
                   {item.desc}
                 </p>
               </div>

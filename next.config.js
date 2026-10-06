@@ -30,6 +30,22 @@ const nextConfig = {
     // needs this on Next 14.x — it's stable with no flag from Next 15 on.
     instrumentationHook: true,
   },
+  // Long browser caching for static files served from /public (PageSpeed: "efficient
+  // cache lifetimes"). Next serves /public with max-age=0 by default, so every visit
+  // revalidated every logo and banner. These files are cached for a year, the same as
+  // the optimised copies next/image makes of them (images.minimumCacheTTL below), so
+  // a file in public/ that is replaced must be given a NEW NAME — the video files
+  // already follow this (showcase-desktop-v1.mp4).
+  async headers() {
+    // Production only, so replacing a file while developing still shows up on refresh.
+    if (process.env.NODE_ENV !== 'production') return [];
+    const immutable = [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }];
+    return [
+      { source: '/videos/:path*', headers: immutable },
+      { source: '/images/:path*', headers: immutable },
+      { source: '/process-depth.webp', headers: immutable },
+    ];
+  },
   images: {
     // `next dev` only: the browser loads images straight from the CDN instead
     // of through the local resizer. The CDN serves portfolio images only to our

@@ -392,7 +392,7 @@ export const Header: React.FC<HeaderProps> = ({ dark = false }) => {
           >
             Book a Discovery Call
           </Link>
-          <p className="text-center text-[11px] text-gray-400 mt-4">
+          <p className="text-center text-[11px] text-gray-600 mt-4">
             © {new Date().getFullYear()} The Coral Room. All rights reserved.
           </p>
         </div>

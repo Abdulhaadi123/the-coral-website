@@ -196,7 +196,7 @@ function PortfolioInner({ projects: projectList, categories }: PortfolioPageClie
                     )}
                   </div>
 
-                  <span className="text-xs text-gray-400 font-medium shrink-0">
+                  <span className="text-xs text-gray-600 font-medium shrink-0">
                     Showing {filtered.length} of {projectList.length}
                   </span>
                 </div>
@@ -287,7 +287,7 @@ function PortfolioInner({ projects: projectList, categories }: PortfolioPageClie
               {/* Empty state */}
               {filtered.length === 0 && (
                 <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-                  <p className="text-gray-400 text-sm font-medium">No projects match your filters.</p>
+                  <p className="text-gray-600 text-sm font-medium">No projects match your filters.</p>
                   <button
                     onClick={() => setAppliedTypes([])}
                     className="px-5 py-2 rounded-full border border-gray-300 text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors"

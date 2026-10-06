@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
@@ -19,7 +20,7 @@ export default function DevelopmentPage() {
       <section className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] pt-6 sm:pt-8 lg:pt-10 pb-12 w-full">
         <FadeIn direction="up">
           {/* Category Tag */}
-          <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
+          <span className="text-xs font-bold tracking-widest text-gray-600 uppercase block mb-4">
             WEBSITE DEVELOPMENT
           </span>
 
@@ -49,11 +50,14 @@ export default function DevelopmentPage() {
       {/* Hero Banner Image — Full width with clean rounded corners */}
       <ScaleIn className="w-full pb-0 overflow-hidden" delay={0.1}>
         <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[36px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/images/development-hero.webp"
             alt="Website development mockup preview on laptop"
-            className="w-full h-auto object-cover rounded-[24px] sm:rounded-[36px] transition-transform duration-700"
+            width={3128}
+            height={2348}
+            priority
+            sizes="100vw"
+            className="w-full h-auto object-cover rounded-[24px] sm:rounded-[36px] transition-transform duration-700 [aspect-ratio:3128/2348]"
           />
         </div>
       </ScaleIn>
@@ -169,7 +173,7 @@ export default function DevelopmentPage() {
       </section>
 
       {/* Section 4: Beyond the Code (#21A0A3 background) */}
-      <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-20 sm:py-28">
+      <section data-nav-dark className="w-full bg-[#1B8183] text-white py-20 sm:py-28">
         <FadeIn direction="up" className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col items-center">
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4">
@@ -180,7 +184,7 @@ export default function DevelopmentPage() {
             We do not just turn designs into web pages.
           </p>
 
-          <p className="text-sm sm:text-base text-center text-white/80 max-w-2xl mb-12 sm:mb-20 leading-relaxed font-normal">
+          <p className="text-sm sm:text-base text-center text-white max-w-2xl mb-12 sm:mb-20 leading-relaxed font-normal">
             We build the structure behind your website so it loads fast, works smoothly, supports search, and stays easy to manage after launch.
           </p>
 
@@ -199,11 +203,13 @@ export default function DevelopmentPage() {
 
           {/* Left: Fourth Dimension Graphic */}
           <ScaleIn className="md:col-span-5 flex items-center justify-center" delay={0.1}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/fourth-dimension-graphic.webp"
+              width={587}
+              height={776}
+              sizes="(min-width: 640px) 528px, 370px"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="shrink-0 w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500 [aspect-ratio:587/776]"
             />
           </ScaleIn>
 

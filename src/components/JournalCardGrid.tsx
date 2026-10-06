@@ -46,7 +46,7 @@ export const JournalCardGrid: React.FC<{ posts: PublicBlogPost[] }> = ({ posts }
                   <span className="px-3 py-1 rounded-full bg-gray-200 text-gray-700 text-[11px] font-semibold">
                     {post.badge}
                   </span>
-                  <span className="text-xs text-gray-500 font-medium">
+                  <span className="text-xs text-gray-600 font-medium">
                     {post.date}
                   </span>
                 </div>
@@ -75,17 +75,24 @@ export const JournalCardGrid: React.FC<{ posts: PublicBlogPost[] }> = ({ posts }
       {/* Dots + arrows — mobile only, desktop already shows all posts at once */}
       {posts.length > 1 && (
         <div className="mt-8 flex items-center justify-between md:hidden">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {posts.map((_, i) => (
+              // The dot stays small; the button around it is a 24x24 touch target
+              // (WCAG 2.5.8 / PageSpeed "touch targets").
               <button
                 key={i}
                 type="button"
                 aria-label={`Go to journal post ${i + 1}`}
+                aria-current={i === active ? 'true' : undefined}
                 onClick={() => setActive(i)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === active ? 'w-2.5 h-2.5 bg-[#111827]' : 'w-2 h-2 bg-[#111827]/35 hover:bg-[#111827]/60'
-                }`}
-              />
+                className="group w-6 h-6 flex items-center justify-center"
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    i === active ? 'w-2.5 h-2.5 bg-[#111827]' : 'w-2 h-2 bg-[#111827]/35 group-hover:bg-[#111827]/60'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 

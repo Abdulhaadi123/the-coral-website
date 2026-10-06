@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
@@ -86,11 +87,14 @@ export default function MarketingCampaignsPage() {
       {/* ── Dashboard Image — Full-bleed RIGHT like Figma ── */}
       <div className="w-full overflow-hidden mt-6 sm:mt-10 mb-12 sm:mb-16">
         <ScaleIn delay={0.2} className="flex justify-end">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/images/marketing-campaigns-dashboard.webp"
             alt="Marketing campaigns dashboard — project performance, AI insights, and campaign tracking"
-            className="w-[98%] sm:w-[96%] lg:w-[95%] max-w-none h-auto object-contain object-right"
+            width={2000}
+            height={1501}
+            priority
+            sizes="98vw"
+            className="w-[98%] sm:w-[96%] lg:w-[95%] max-w-none h-auto object-contain object-right [aspect-ratio:2000/1501]"
           />
         </ScaleIn>
       </div>
@@ -104,7 +108,7 @@ export default function MarketingCampaignsPage() {
                 className="h-full flex flex-col gap-3 p-6 rounded-2xl hover:-translate-y-1 transition-transform duration-300"
                 style={{ background: '#B6F28D21' }}
               >
-                <h3 className="text-base font-bold text-[#111827]">{title}</h3>
+                <h2 className="text-base font-bold text-[#111827]">{title}</h2>
                 <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               </div>
             </StaggerItem>

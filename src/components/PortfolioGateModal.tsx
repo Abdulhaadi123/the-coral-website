@@ -210,7 +210,7 @@ export const PortfolioGateModal: React.FC<PortfolioGateModalProps> = ({ onUnlock
         </form>
 
         {/* Security Badge */}
-        <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-1.5 text-[11px] text-gray-400 font-medium">
+        <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-center gap-1.5 text-[11px] text-gray-600 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-[#78B249]" />
           <span>Your details stay private and are only used to share access.</span>
         </div>

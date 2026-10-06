@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
@@ -112,11 +113,14 @@ export default function PaidAdvertisingPage() {
 
           {/* Hero image — inside section, original placement */}
           <ScaleIn delay={0.2} className="relative flex justify-center items-end">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/paid-ads-hero.webp"
               alt="Paid Advertising Dashboard — AdLaunch platform showing campaign performance across Meta, Google, LinkedIn, TikTok, and Snapchat"
-              className="w-full max-w-5xl h-auto object-contain object-bottom hover:scale-[1.01] transition-transform duration-500"
+              width={1024}
+              height={768}
+              priority
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="w-full max-w-5xl h-auto object-contain object-bottom hover:scale-[1.01] transition-transform duration-500 [aspect-ratio:1024/768]"
             />
           </ScaleIn>
         </div>
@@ -226,12 +230,14 @@ export default function PaidAdvertisingPage() {
           {/* Magnet image — exact Figma placement overlapping upper green CTA area */}
           <div className="flex justify-end overflow-hidden">
             <ScaleIn delay={0.2} className="w-full max-w-lg sm:max-w-xl lg:max-w-[740px] -mb-[6%] sm:-mb-[9%]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/images/magnet-hand.webp"
                 alt="Hand holding a horseshoe magnet — attract the right customers"
+                width={893}
+                height={665}
+                sizes="(min-width: 1024px) 740px, (min-width: 640px) 576px, 100vw"
                 style={{ rotate: '7deg', transformOrigin: '35% 55%' }}
-                className="w-full h-auto object-contain object-right ml-auto"
+                className="w-full h-auto object-contain object-right ml-auto [aspect-ratio:893/665]"
               />
             </ScaleIn>
           </div>

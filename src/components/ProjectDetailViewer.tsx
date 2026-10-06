@@ -219,7 +219,7 @@ export const ProjectDetailViewer: React.FC<ProjectDetailViewerProps> = ({ projec
   }
 
   return (
-    <div className="py-32 text-center text-gray-400 relative">
+    <div className="py-32 text-center text-gray-600 relative">
       {backButton}
       No showcase image available for this project.
     </div>

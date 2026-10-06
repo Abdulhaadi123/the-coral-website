@@ -1,18 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque } from 'next/font/google';
-import Script from 'next/script';
 import { SocialLinksProvider } from '@/components/FooterSocialLinks';
 import { getSocialLinks } from '@/lib/publicData';
+import { GTM_ID, META_PIXEL_ID } from '@/lib/tracking';
+import TrackingTags from '@/components/TrackingTags';
 import './globals.css';
-
-/** GA4 measurement ID for thecoralroom. */
-const GA_MEASUREMENT_ID = 'G-KPX4KXFG9B';
-
-/** Google Tag Manager ID. */
-const GTM_ID = 'GTM-NW44F65C';
-
-/** Meta Pixel ID. */
-const META_PIXEL_ID = '1823137129045811';
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -40,8 +32,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default async function RootLayout({
@@ -64,66 +54,21 @@ export default async function RootLayout({
           />
         </noscript>
 
-        {/* Meta Pixel (noscript) */}
-        <noscript>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-            alt=""
-          />
-        </noscript>
+        {/*
+          Meta Pixel (noscript). Written as raw HTML on purpose: as a JSX <img>, React turns
+          it into <link rel="preload" as="image"> in the head, so every visitor with JavaScript
+          still fired this tracking request (PageSpeed: "cache lifetimes", third-party).
+        */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1" alt="" />`,
+          }}
+        />
 
         <SocialLinksProvider links={socialLinks}>{children}</SocialLinksProvider>
 
-        {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${GTM_ID}');
-          `}
-        </Script>
-
-        {/*
-          Google Analytics (gtag.js). next/script with afterInteractive is the
-          App Router equivalent of dropping the snippet in <head>: Next hoists
-          it and loads it once hydration is done, so it does not block first
-          paint. It still runs on every route because the root layout wraps
-          them all.
-        */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
-          `}
-        </Script>
-
-        {/* Meta Pixel */}
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${META_PIXEL_ID}');
-            fbq('track', 'PageView');
-          `}
-        </Script>
+        {/* GTM, GA4 and the Meta Pixel — started on first interaction (or a few seconds after load), see TrackingTags */}
+        <TrackingTags />
       </body>
     </html>
   );

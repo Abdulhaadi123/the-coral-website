@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
@@ -31,7 +32,7 @@ export default function FourthDimensionFrameworkPage() {
         <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
           <FadeIn direction="up">
             {/* Muted Label */}
-            <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">
+            <p className="text-xs font-semibold tracking-widest uppercase text-gray-600 mb-4">
               INSIGHT FIRST. STRATEGY LOCKED. RESULTS TRACKED.
             </p>
 
@@ -78,11 +79,14 @@ export default function FourthDimensionFrameworkPage() {
 
         {/* ── Diagram Graphic (Wider to match Figma exact) ── */}
         <ScaleIn delay={0.2} className="w-full max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] mt-12 sm:mt-16 flex justify-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/images/flowchart.webp"
             alt="The Fourth Dimension Framework Diagram — Discover, Define, Develop, and Drive stages"
-            className="w-full h-auto object-contain drop-shadow-sm scale-[1.20]"
+            width={2520}
+            height={1465}
+            sizes="(min-width: 1600px) 1600px, 100vw"
+            priority
+            className="w-full h-auto object-contain drop-shadow-sm scale-[1.20] [aspect-ratio:2520/1465]"
           />
         </ScaleIn>
       </section>
@@ -416,16 +420,17 @@ export default function FourthDimensionFrameworkPage() {
                   className="group relative rounded-2xl overflow-hidden bg-white border border-gray-200/60 shadow-sm hover:shadow-md transition-all flex flex-col block cursor-pointer"
                 >
                   <div className="w-full aspect-[4/3] overflow-hidden bg-gray-100 relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={img}
                       alt={title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-4 flex flex-col gap-0.5 bg-white">
                     <h3 className="font-bold text-sm text-[#111827] group-hover:text-[#78B249] transition-colors">{title}</h3>
-                    <p className="text-xs text-gray-400 font-medium">{category}</p>
+                    <p className="text-xs text-gray-600 font-medium">{category}</p>
                   </div>
                 </a>
               </StaggerItem>

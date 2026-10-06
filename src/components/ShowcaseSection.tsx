@@ -28,17 +28,22 @@ import { assetUrl } from '@/lib/assets';
 const PLAYBACK_RATE = 1;
 
 /**
- * Cache buster. The S3 object is served `public, max-age=31536000, immutable`, so
- * overwriting the key does not reach anyone whose browser already holds the old
- * cut — they would keep it for a year. Bumping this changes the URL and forces a
- * refetch. S3 ignores the unknown query param and there is no CDN in front of it,
- * so nothing else has to be invalidated.
+ * The built-in banner (client brief item 14, PageSpeed). The original cut
+ * (S3 /WEBSITE.mp4, v3) is 3826x300 and 12 MB, but the banner only ever shows its
+ * centre (object-cover in a 1643:294 box), so it was cropped to exactly that
+ * region — identical on screen — and re-encoded:
  *
- * Bump on every re-encode of the video.
- *   v2 = 22.4s, 0.8x motion-interpolated, 11.6MB   (WEBSITE VIDEO.mp4)
- *   v3 = 46s new cut at 1.0x, no audio, 12MB          (WEBSITE.mp4)
+ *   desktop  1678x300  ~3.0 MB
+ *   phone     840x150  ~1.0 MB
+ *
+ *   ffmpeg -i WEBSITE.mp4 -vf "crop=1678:300:1074:0[,scale=840:150]" -an  *     -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart out.mp4
+ *
+ * They live in /public/videos with a version in the name; next.config.js serves that
+ * folder with a one-year immutable cache, so bump the "-v1" if the cut ever changes.
  */
-const ASSET_VERSION = '3';
+const DESKTOP_SRC = '/videos/showcase-desktop-v1.mp4';
+const MOBILE_SRC = '/videos/showcase-mobile-v1.mp4';
+const POSTER_SRC = '/videos/showcase-poster-v1.webp';
 
 /** How often to check that the loop is still running, in ms. */
 const WATCHDOG_MS = 2000;
@@ -56,6 +61,43 @@ interface ShowcaseSectionProps {
 
 export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  /*
+   * The video is attached only after the page has finished loading (and the browser is
+   * idle), never during it: it used to be fetched immediately and its 12 MB competed
+   * with the text, images and scripts that decide Largest Contentful Paint. Until it
+   * arrives the strip shows the poster frame. Visitors with Data Saver on keep the
+   * poster and never download the video.
+   */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (connection?.saveData) return;
+
+    let cancelled = false;
+    const attach = () => {
+      if (cancelled) return;
+      const phone = window.matchMedia('(max-width: 767px)').matches;
+      const src = videoUrl ? assetUrl(videoUrl) : phone ? MOBILE_SRC : DESKTOP_SRC;
+      if (video.getAttribute('src') !== src) {
+        video.src = src;
+        video.load();
+      }
+    };
+    const schedule = () => {
+      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback;
+      if (idle) idle(attach, { timeout: 3000 });
+      else window.setTimeout(attach, 1200);
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', schedule);
+    };
+  }, [videoUrl]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -142,12 +184,12 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
         <div className="relative w-full aspect-[1643/294] overflow-hidden">
           <video
             ref={videoRef}
-            src={videoUrl ? assetUrl(videoUrl) : `${assetUrl('/WEBSITE.mp4')}?v=${ASSET_VERSION}`}
+            poster={POSTER_SRC}
             autoPlay
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             className="w-full h-full object-cover object-center block"
           />
         </div>

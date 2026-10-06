@@ -170,7 +170,7 @@ export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow
 
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-bold text-[#111827] leading-tight truncate">{item.name}</p>
-                  <p className="text-xs text-gray-500 mt-0.5 leading-snug">{item.role}</p>
+                  <p className="text-xs text-gray-600 mt-0.5 leading-snug">{item.role}</p>
                 </div>
 
                 {item.logo && (
@@ -191,19 +191,26 @@ export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow
 
         {/* Dots + arrows */}
         <div className="mt-10 sm:mt-12 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {Array.from({ length: totalDots }).map((_, i) => (
+              // The dot stays small; the button around it is a 24x24 touch target
+              // (WCAG 2.5.8 / PageSpeed "touch targets").
               <button
                 key={i}
                 type="button"
                 aria-label={`Go to testimonials page ${i + 1}`}
+                aria-current={i === active % totalDots ? 'true' : undefined}
                 onClick={() => setActive(i % testimonials.length)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === active % totalDots
-                    ? 'w-2.5 h-2.5 bg-[#111827]'
-                    : 'w-2 h-2 bg-[#111827]/35 hover:bg-[#111827]/60'
-                }`}
-              />
+                className="group w-6 h-6 flex items-center justify-center"
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    i === active % totalDots
+                      ? 'w-2.5 h-2.5 bg-[#111827]'
+                      : 'w-2 h-2 bg-[#111827]/35 group-hover:bg-[#111827]/60'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -229,7 +236,7 @@ export const ClientTestimonialsSection: React.FC<{ testimonials?: TestimonialRow
 
         {/* Certification Partner badges */}
         <div className="mt-12 sm:mt-20 flex flex-col items-center">
-          <p className="text-xs sm:text-sm font-semibold tracking-wide text-gray-500 uppercase">
+          <p className="text-xs sm:text-sm font-semibold tracking-wide text-gray-600 uppercase">
             Certification Partner
           </p>
 

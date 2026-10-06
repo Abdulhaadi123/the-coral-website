@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -62,11 +62,35 @@ export const FeaturedWorkSection: React.FC = () => {
    * the arrows/dots only slide that track sideways with a CSS transform.
    * Once a card's image has loaded it never unmounts, so revisiting it is a
    * transform, not a new request — and since there are only 8 cards, all of
-   * them are set to load immediately (no `loading="lazy"`) so every neighbour
-   * is already warm in cache well before the user can arrow to it.
+   * them are fetched once the page has finished loading (see `warm` below) so
+   * every neighbour is already in cache well before the user can arrow to it.
+   *
+   * They used to be fetched during page load, two of them as high-priority
+   * preloads, even though this section is several screens down — that competed
+   * with the hero for bandwidth (PageSpeed: LCP, "offscreen images"). Waiting
+   * for load + an idle moment keeps the instant arrow response and gives the
+   * first screen the network to itself.
    */
   const trackRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
+  const [warm, setWarm] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const run = () => {
+      if (!cancelled) setWarm(true);
+    };
+    const schedule = () => {
+      if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 4000 });
+      else setTimeout(run, 2000);
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', schedule);
+    };
+  }, []);
 
   const measure = useCallback(() => {
     const track = trackRef.current;
@@ -96,7 +120,7 @@ export const FeaturedWorkSection: React.FC = () => {
   };
 
   return (
-    <section data-nav-dark className="w-full bg-[#21A0A3] py-14 sm:py-20 overflow-hidden">
+    <section data-nav-dark className="w-full bg-[#1B8183] py-14 sm:py-20 overflow-hidden">
 
       {/* Heading — aligned with Hero & ProcessWithDepthSection */}
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
@@ -126,10 +150,8 @@ export const FeaturedWorkSection: React.FC = () => {
                   src={project.image}
                   alt={`${project.name} branding project`}
                   fill
-                  // Every card is fetched right away (not lazy) — see the note above —
-                  // the first pair also gets `priority` since it's what's visible on load.
-                  priority={i < 2}
-                  loading={i < 2 ? undefined : 'eager'}
+                  // Lazy until the page has loaded, then every card is fetched (see `warm`).
+                  loading={warm ? 'eager' : 'lazy'}
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   sizes="(max-width: 768px) 80vw, 480px"
                 />
@@ -143,7 +165,7 @@ export const FeaturedWorkSection: React.FC = () => {
                 </div>
 
                 <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 z-10">
-                  <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold group-hover:bg-white group-hover:text-[#21A0A3] transition-colors duration-300">
+                  <span className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white text-white text-sm font-semibold group-hover:bg-white group-hover:text-[#1B8183] transition-colors duration-300">
                     <span>View project</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
@@ -158,19 +180,26 @@ export const FeaturedWorkSection: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%]">
         {/* Dots + arrows */}
         <div className="mt-8 sm:mt-10 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {Array.from({ length: totalDots }).map((_, i) => (
+              // The dot stays small; the button around it is a 24x24 touch target
+              // (WCAG 2.5.8 / PageSpeed "touch targets").
               <button
                 key={i}
                 type="button"
                 aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === active % totalDots ? 'true' : undefined}
                 onClick={() => setActive(i % projects.length)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === active % totalDots
-                    ? 'w-2.5 h-2.5 bg-white'
-                    : 'w-2 h-2 bg-white/45 hover:bg-white/70'
-                }`}
-              />
+                className="group w-6 h-6 flex items-center justify-center"
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    i === active % totalDots
+                      ? 'w-2.5 h-2.5 bg-white'
+                      : 'w-2 h-2 bg-white/45 group-hover:bg-white/70'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -179,7 +208,7 @@ export const FeaturedWorkSection: React.FC = () => {
               type="button"
               onClick={prev}
               aria-label="Previous project"
-              className="w-11 h-11 rounded-full border border-white/80 text-white flex items-center justify-center hover:bg-white hover:text-[#21A0A3] transition-colors"
+              className="w-11 h-11 rounded-full border border-white/80 text-white flex items-center justify-center hover:bg-white hover:text-[#1B8183] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
@@ -187,7 +216,7 @@ export const FeaturedWorkSection: React.FC = () => {
               type="button"
               onClick={next}
               aria-label="Next project"
-              className="w-11 h-11 rounded-full border border-white/80 text-white flex items-center justify-center hover:bg-white hover:text-[#21A0A3] transition-colors"
+              className="w-11 h-11 rounded-full border border-white/80 text-white flex items-center justify-center hover:bg-white hover:text-[#1B8183] transition-colors"
             >
               <ArrowRight className="w-4 h-4" />
             </button>

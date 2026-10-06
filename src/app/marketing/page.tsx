@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Header from '@/components/Header';
@@ -20,6 +21,40 @@ import {
   IconApproachTesting,
 } from '@/components/icons/Icons';
 
+/*
+ * The megaphone appears twice — absolutely positioned on tablet/desktop, in flow
+ * on phones — and one of the two is always display:none. A hidden <img> is still
+ * downloaded, so a phone used to fetch the 1000px desktop file as well as its own
+ * (PageSpeed: ~50 KiB of competing bytes ahead of the LCP image). Wrapping each in
+ * a <picture> whose non-matching <source> is a 1px GIF means each viewport
+ * downloads only its own copy, and the browser's preload scanner still finds the
+ * real one straight from the HTML.
+ */
+const BLANK_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
+const desktopMegaphone = getImageProps({
+  src: '/images/marketing-megaphone.webp',
+  alt: 'Marketing Megaphone Illustration',
+  width: 1024,
+  height: 682,
+  sizes: '(min-width: 1024px) 1000px, 860px',
+  loading: 'eager',
+  fetchPriority: 'high',
+  style: { transform: 'scaleX(-1) rotate(2deg)', transformOrigin: 'center center' },
+  className: 'w-full h-auto object-contain drop-shadow-2xl [aspect-ratio:1024/682]',
+}).props;
+
+const mobileMegaphone = getImageProps({
+  src: '/images/marketing-megaphone.webp',
+  alt: 'Marketing Megaphone Illustration',
+  width: 1024,
+  height: 682,
+  loading: 'eager',
+  fetchPriority: 'high',
+  sizes: '280px',
+  className: 'block w-full h-auto object-contain drop-shadow-lg scale-x-[-1] [aspect-ratio:1024/682]',
+}).props;
+
 export default function MarketingPage() {
   return (
     <main className="min-h-screen bg-white text-[#111827] flex flex-col justify-between overflow-x-clip w-full max-w-full">
@@ -32,13 +67,11 @@ export default function MarketingPage() {
         
         {/* Right Megaphone Image — arm cut hidden cleanly off-screen */}
         <div className="hidden sm:block absolute right-[-120px] sm:right-[-170px] md:right-[-210px] lg:right-[-260px] xl:right-[-300px] top-[-10px] sm:top-[-20px] lg:top-[-25px] w-[560px] sm:w-[720px] md:w-[860px] lg:w-[1000px] pointer-events-none z-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/marketing-megaphone.webp"
-            alt="Marketing Megaphone Illustration"
-            style={{ transform: 'scaleX(-1) rotate(2deg)', transformOrigin: 'center center' }}
-            className="w-full h-auto object-contain drop-shadow-2xl"
-          />
+          <picture className="block">
+            <source media="(max-width: 639px)" srcSet={BLANK_PIXEL} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img {...desktopMegaphone} />
+          </picture>
         </div>
 
         {/* Hero Container */}
@@ -46,7 +79,7 @@ export default function MarketingPage() {
           
           {/* Left Content */}
           <FadeIn direction="up" className="max-w-xl md:max-w-2xl lg:max-w-3xl z-10 relative">
-            <span className="text-xs font-bold tracking-widest text-gray-400 uppercase block mb-4">
+            <span className="text-xs font-bold tracking-widest text-gray-600 uppercase block mb-4">
               DIGITAL MARKETING
             </span>
 
@@ -69,12 +102,11 @@ export default function MarketingPage() {
 
           {/* Mobile fallback image */}
           <div className="flex sm:hidden mt-8 justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/marketing-megaphone.webp"
-              alt="Marketing Megaphone Illustration"
-              className="w-full max-w-[280px] sm:max-w-[340px] h-auto object-contain drop-shadow-lg scale-x-[-1]"
-            />
+            <picture className="block w-full max-w-[280px] sm:max-w-[340px]">
+              <source media="(min-width: 640px)" srcSet={BLANK_PIXEL} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img {...mobileMegaphone} />
+            </picture>
           </div>
 
         </section>
@@ -266,7 +298,7 @@ export default function MarketingPage() {
               <StaggerItem key={text} className="flex flex-col gap-4">
                 <div className="w-10 h-10 flex items-center justify-start">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt={text} className="w-full h-full object-contain object-left" />
+                  <Image src={img} alt={text} width={40} height={40} className="w-full h-full object-contain object-left" />
                 </div>
                 <span className="text-sm font-bold text-[#111827] leading-snug max-w-full sm:max-w-[180px]">
                   {text}
@@ -288,11 +320,13 @@ export default function MarketingPage() {
 
           {/* Left: Fourth Dimension Graphic */}
           <ScaleIn className="md:col-span-5 flex items-center justify-center" delay={0.1}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/fourth-dimension-graphic.webp"
+              width={587}
+              height={776}
+              sizes="(min-width: 640px) 528px, 370px"
               alt="Fourth Dimension Framework - Design, Develop, Optimise, Marketing"
-              className="w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+              className="shrink-0 w-full md:w-[132%] max-w-[370px] sm:max-w-[528px] h-auto object-contain drop-shadow-md hover:scale-[1.02] transition-transform duration-500 [aspect-ratio:587/776]"
             />
           </ScaleIn>
 
@@ -379,11 +413,12 @@ export default function MarketingPage() {
                 className="relative group rounded-[21px] overflow-hidden flex flex-col justify-end bg-white/5 aspect-[4/5] sm:aspect-[3/5]"
               >
                 {/* Background Image */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={img}
                   alt={title}
-                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 

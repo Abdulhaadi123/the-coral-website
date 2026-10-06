@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import FooterSection from '@/components/FooterSection';
@@ -59,12 +60,21 @@ export default function SeoSearchVisibilityPage() {
       <section
         data-nav-dark
         className="relative w-full flex flex-col justify-center overflow-hidden -mt-[84px] pt-[108px] pb-16 sm:pt-[116px] sm:pb-20 lg:pt-[124px] lg:pb-24 min-h-[634px] sm:min-h-[734px]"
-        style={{
-          backgroundImage: "url('/images/seo-hero-bg.webp')",
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-        }}
       >
+        {/*
+          Hero photo. It used to be a CSS background, which always downloaded the full-size
+          file (even on a phone) and was only discovered after the stylesheet loaded. As an
+          image it is resized to the screen and preloaded with the HTML (PageSpeed: LCP,
+          image delivery); object-cover/center renders exactly like background-size: cover.
+        */}
+        <Image
+          src="/images/seo-hero-bg.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
@@ -183,7 +193,7 @@ export default function SeoSearchVisibilityPage() {
       </section>
 
       {/* ── Built on Fourth Dimension™ (#21A0A3 Teal BG) ── */}
-      <section data-nav-dark className="w-full bg-[#21A0A3] text-white py-16 sm:py-20">
+      <section data-nav-dark className="w-full bg-[#1B8183] text-white py-16 sm:py-20">
         <FadeIn direction="up" className="max-w-[1600px] mx-auto px-5 sm:px-8 lg:px-[13.1%] flex flex-col gap-8">
           <h2 className="text-2xl sm:text-4xl font-semibold text-white tracking-tight">
             Built on Fourth Dimension™

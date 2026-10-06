@@ -13,8 +13,8 @@ export const FooterSection: React.FC = () => {
           src="/images/footer-bg.webp"
           alt="Coral Room Footer 3D liquid background"
           fill
+          sizes="100vw"
           className="object-cover object-center"
-          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/70" />
       </div>
@@ -49,21 +49,21 @@ export const FooterSection: React.FC = () => {
           {/* Navigation Links Columns */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-white/10 text-xs sm:text-sm">
             <div className="flex flex-col gap-3">
-              <h4 className="font-bold text-white text-sm sm:text-base">Services</h4>
+              <h3 className="font-bold text-white text-sm sm:text-base">Services</h3>
               <Link href="/design" className="text-gray-400 hover:text-white transition-colors">Design</Link>
               <Link href="/development" className="text-gray-400 hover:text-white transition-colors">Development</Link>
               <Link href="/optimisation" className="text-gray-400 hover:text-white transition-colors">Optimisation</Link>
               <Link href="/marketing" className="text-gray-400 hover:text-white transition-colors">Marketing</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <h4 className="font-bold text-white text-sm sm:text-base">Our Work</h4>
+              <h3 className="font-bold text-white text-sm sm:text-base">Our Work</h3>
               <Link href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Portfolio</Link>
               <Link href="/fourth-dimension-framework" className="font-bold text-white hover:text-[#9FE66F] transition-colors">Fourth Dimension™</Link>
               <Link href="/marketing-campaigns" className="text-gray-400 hover:text-white transition-colors">Campaigns</Link>
               <Link href="/paid-advertising" className="text-gray-400 hover:text-white transition-colors">Paid Ads</Link>
             </div>
             <div className="flex flex-col gap-3">
-              <h4 className="font-bold text-white text-sm sm:text-base">Company</h4>
+              <h3 className="font-bold text-white text-sm sm:text-base">Company</h3>
               <Link href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link>
               <Link href="/book-a-call" className="text-gray-400 hover:text-white transition-colors">Book a Call</Link>
               <Link href="/seo-search-visibility" className="text-gray-400 hover:text-white transition-colors">SEO Services</Link>

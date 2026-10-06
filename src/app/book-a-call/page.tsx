@@ -121,7 +121,7 @@ export default function BookACallPage() {
               <h1 className="text-3xl sm:text-4xl font-semibold text-[#111827] mb-3">
                 Book a Discovery Call
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 mb-8 max-w-md leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-600 mb-8 max-w-md leading-relaxed">
                 Tell us what you&apos;re building, fixing, or trying to grow. We&apos;ll review your details and come back with a clear next step.
               </p>
 
@@ -130,10 +130,12 @@ export default function BookACallPage() {
                 {/* Row 1 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-first-name" className="text-xs font-semibold text-gray-700">
                       First name <span className="text-red-400">*</span>
                     </label>
                     <input
+                      id="bc-first-name"
+                      autoComplete="given-name"
                       value={form.firstName}
                       onChange={(e) => setField('firstName', e.target.value)}
                       type="text"
@@ -142,10 +144,12 @@ export default function BookACallPage() {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-last-name" className="text-xs font-semibold text-gray-700">
                       Last name <span className="text-red-400">*</span>
                     </label>
                     <input
+                      id="bc-last-name"
+                      autoComplete="family-name"
                       value={form.lastName}
                       onChange={(e) => setField('lastName', e.target.value)}
                       type="text"
@@ -158,10 +162,12 @@ export default function BookACallPage() {
                 {/* Row 2 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-email" className="text-xs font-semibold text-gray-700">
                       Work email <span className="text-red-400">*</span>
                     </label>
                     <input
+                      id="bc-email"
+                      autoComplete="email"
                       value={form.email}
                       onChange={(e) => setField('email', e.target.value)}
                       type="email"
@@ -170,10 +176,12 @@ export default function BookACallPage() {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-phone" className="text-xs font-semibold text-gray-700">
                       Phone / WhatsApp
                     </label>
                     <input
+                      id="bc-phone"
+                      autoComplete="tel"
                       value={form.phone}
                       onChange={(e) => setField('phone', e.target.value)}
                       type="tel"
@@ -185,10 +193,12 @@ export default function BookACallPage() {
                 {/* Row 3 */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-company" className="text-xs font-semibold text-gray-700">
                       Company or brand name
                     </label>
                     <input
+                      id="bc-company"
+                      autoComplete="organization"
                       value={form.company}
                       onChange={(e) => setField('company', e.target.value)}
                       type="text"
@@ -196,10 +206,12 @@ export default function BookACallPage() {
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-700">
+                    <label htmlFor="bc-website" className="text-xs font-semibold text-gray-700">
                       Website or social link
                     </label>
                     <input
+                      id="bc-website"
+                      autoComplete="url"
                       value={form.website}
                       onChange={(e) => setField('website', e.target.value)}
                       type="text"
@@ -212,10 +224,11 @@ export default function BookACallPage() {
 
                 {/* Textarea */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-700">
+                  <label htmlFor="bc-message" className="text-xs font-semibold text-gray-700">
                     What do you need help with?
                   </label>
                   <textarea
+                      id="bc-message"
                       value={form.message}
                       onChange={(e) => setField('message', e.target.value)}
                     rows={4}
@@ -224,11 +237,11 @@ export default function BookACallPage() {
                 </div>
 
                 {/* Radio */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-gray-700">
+                <fieldset className="flex flex-col gap-2 border-0 p-0 m-0 min-w-0">
+                  <legend className="mb-2 text-xs font-semibold text-gray-700">
                     Do you already have a project brief?
-                  </label>
-                  <p className="text-xs text-gray-400">A few notes, deck, or rough outline is enough.</p>
+                  </legend>
+                  <p className="text-xs text-gray-600">A few notes, deck, or rough outline is enough.</p>
                   <div className="flex items-center gap-6 mt-1">
                     <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
                       <input type="radio" name="brief" value="yes" checked={form.hasBrief === 'yes'} onChange={() => setField('hasBrief', 'yes')} className="accent-[#78B249]" />
@@ -239,7 +252,7 @@ export default function BookACallPage() {
                       No
                     </label>
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Error message */}
                 {error && (
@@ -304,7 +317,7 @@ export default function BookACallPage() {
                   </div>
                   <span className="text-[11px] font-semibold tracking-wider text-gray-600 uppercase">{tag}</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-semibold text-[#111827] mt-2 mb-1.5">{title}</h3>
+                <h2 className="text-base sm:text-lg font-semibold text-[#111827] mt-2 mb-1.5">{title}</h2>
                 <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">{desc}</p>
               </StaggerItem>
             ))}
@@ -326,7 +339,6 @@ export default function BookACallPage() {
               alt="the coral room."
               width={1400}
               height={300}
-              priority
               className="w-full h-auto max-h-[160px] sm:max-h-[220px] object-contain brightness-200 opacity-30 hover:opacity-50 transition-opacity duration-500"
             />
           </div>
