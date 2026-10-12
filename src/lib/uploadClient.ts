@@ -5,6 +5,7 @@
 // admin as "Unexpected token 'R' ... is not valid JSON". This turns every failure
 // into a message an admin can act on.
 
+import { showAdminToast } from './adminToast';
 import {
   MAX_UPLOAD_BYTES,
   STANDARD_IMAGE_MAX_BYTES,
@@ -57,8 +58,23 @@ export class UploadTooLargeError extends Error {
   }
 }
 
-/** Uploads one file to the admin upload endpoint; throws an Error with a readable message on any failure. */
+/**
+ * Uploads one file to the admin upload endpoint; throws an Error with a readable message on any failure.
+ * A failure is also shown as a toast pinned to the screen, so it is seen wherever the admin is scrolled
+ * to — except a size rejection an admin can override, which the form already offers an "Upload anyway" for.
+ */
 export async function uploadAdminFile(file: File, folder: string, options: UploadOptions = {}): Promise<UploadedFile> {
+  try {
+    return await uploadAdminFileUnannounced(file, folder, options);
+  } catch (err) {
+    if (!(err instanceof UploadTooLargeError && err.overridable)) {
+      showAdminToast(err instanceof Error && err.message ? err.message : 'Upload failed. Please try again.');
+    }
+    throw err;
+  }
+}
+
+async function uploadAdminFileUnannounced(file: File, folder: string, options: UploadOptions): Promise<UploadedFile> {
   const { kind, allowOverride = false } = options;
 
   if (kind && !isWebpFile(file)) {

@@ -27,6 +27,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { AdminMe, AdminUserProvider } from '@/components/admin/AdminUserContext';
+import AdminToaster from '@/components/admin/AdminToaster';
 import { SECTIONS, SectionKey, canAccessPath, hasPermission, isSuper } from '@/lib/permissions';
 
 const SECTION_ICONS: Record<SectionKey, React.ComponentType<{ className?: string }>> = {
@@ -265,6 +266,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main className="flex-1 min-h-screen p-6 sm:p-10 max-w-[1600px] mx-auto w-full overflow-x-hidden">
         {children}
       </main>
+      <AdminToaster />
     </div>
     </AdminUserProvider>
   );

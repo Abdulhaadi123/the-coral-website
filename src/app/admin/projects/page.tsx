@@ -18,9 +18,15 @@ import { uploadAdminFile } from '@/lib/uploadClient';
 
 const BG_PRESETS = ['#111827','#1a1a1a','#0d0d0d','#101820','#180818','#1f1208','#1a1a0d','#0f0d00','#0a0a1a','#201010'];
 
-function ImageUploader({ url, onUpload, uploading, label, hint }: {
-  url: string; onUpload: (f: File) => void; uploading: boolean; label: string; hint: string;
+function ImageUploader({ url, onUpload, uploading, label, hint, error }: {
+  url: string; onUpload: (f: File) => void; uploading: boolean; label: string; hint: string; error?: string;
 }) {
+  // Clearing the input afterwards lets the same file be chosen again after a rejection.
+  const pick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const picked = e.target.files?.[0];
+    e.target.value = '';
+    if (picked) onUpload(picked);
+  };
   return (
     <div>
       <p className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">{label}</p>
@@ -31,7 +37,7 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
           <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <label className="cursor-pointer px-4 py-2 bg-white text-xs font-bold rounded-full shadow hover:bg-gray-100">
               Change Image
-              <input type="file" accept="image/webp" className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
+              <input type="file" accept="image/webp" className="hidden" onChange={pick} />
             </label>
           </div>
         </div>
@@ -40,8 +46,14 @@ function ImageUploader({ url, onUpload, uploading, label, hint }: {
           {uploading ? <Loader2 className="w-5 h-5 text-[#78B249] animate-spin" /> : <UploadCloud className="w-5 h-5 text-gray-400" />}
           <span className="text-xs font-semibold text-gray-600">{uploading ? 'Uploading...' : 'Click to upload'}</span>
           <span className="text-[10px] text-gray-400">{hint}</span>
-          <input type="file" accept="image/webp" disabled={uploading} className="hidden" onChange={e => e.target.files?.[0] && onUpload(e.target.files[0])} />
+          <input type="file" accept="image/webp" disabled={uploading} className="hidden" onChange={pick} />
         </label>
+      )}
+      {error && (
+        <p role="alert" className="mt-2 text-xs text-red-600 flex items-start gap-1.5 bg-red-50 border border-red-200 rounded-xl px-3 py-2.5">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-px text-red-500" />
+          <span>{error}</span>
+        </p>
       )}
     </div>
   );
@@ -64,6 +76,7 @@ export default function AdminProjectsPage() {
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [uploadingThumb, setUploadingThumb] = useState(false);
+  const [thumbError, setThumbError] = useState('');
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState(false);
@@ -126,12 +139,12 @@ export default function AdminProjectsPage() {
 
   const handleThumbUpload = async (file: File) => {
     setUploadingThumb(true);
-    setFormError('');
+    setThumbError('');
     try {
       const data = await uploadAdminFile(file, 'coral-room/portfolio', { kind: 'thumbnail' });
       setField('image', data.url);
     } catch (err: any) {
-      setFormError(err.message || 'Upload error');
+      setThumbError(err.message || 'Upload error');
     } finally {
       setUploadingThumb(false);
     }
@@ -500,6 +513,7 @@ export default function AdminProjectsPage() {
             url={form.image}
             onUpload={f => handleThumbUpload(f)}
             uploading={uploadingThumb}
+            error={thumbError}
             label="1. Card Thumbnail Image *"
             hint="Shown in portfolio grid · WebP only, 150KB max"
           />

@@ -52,60 +52,69 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
   const [showPreview, setShowPreview] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Always-current copy of `rows`. Several files can be uploading at once and each one
+  // finishes at its own time; every finish must change only its own row on top of the
+  // LATEST rows. (They used to start from the rows as they were when the batch began, so
+  // whichever upload finished last put every other part back to "Uploading..." for good.)
+  const rowsRef = useRef<Row[]>(rows);
+
   // Re-sync local rows whenever the parent passes a new `parts` array
   // (e.g. on project load, navigating between projects, or reset).
   useEffect(() => {
-    const currentUrls = rows.filter((r) => !r.uploading && !r.error).map((r) => r.url).join('|');
+    const currentUrls = rowsRef.current.filter((r) => !r.uploading && !r.error).map((r) => r.url).join('|');
     const incomingUrls = (parts || []).map((p) => p.url).join('|');
 
     if (currentUrls !== incomingUrls) {
-      setRows((parts || []).map((p) => ({ ...p, key: nextKey++, uploading: false })));
+      const fresh = (parts || []).map((p) => ({ ...p, key: nextKey++, uploading: false }));
+      rowsRef.current = fresh;
+      setRows(fresh);
     }
   }, [parts]);
 
   // Keep the parent's plain url/width/height list in sync with our richer local rows.
   const commit = (next: Row[]) => {
+    rowsRef.current = next;
     setRows(next);
     onChange(next.filter((r) => !r.uploading && !r.error).map(({ url, width, height }) => ({ url, width, height })));
   };
 
-  const uploadOne = async (file: File, rowKey: number, current: Row[], allowOverride = false): Promise<Row[]> => {
+  /** Changes one row on top of the latest rows (a row removed meanwhile is simply skipped). */
+  const patchRow = (key: number, patch: Partial<Row>) =>
+    commit(rowsRef.current.map((r) => (r.key === key ? { ...r, ...patch } : r)));
+
+  const uploadOne = async (file: File, rowKey: number, allowOverride = false) => {
     try {
       const [size, uploaded] = await Promise.all([
         readImageSize(file),
         uploadAdminFile(file, folder, { kind: 'image', allowOverride }),
       ]);
-      return current.map((r) =>
-        r.key === rowKey ? { ...r, url: uploaded.url, ...size, uploading: false, error: undefined, file: undefined, overridable: false } : r
-      );
+      patchRow(rowKey, { url: uploaded.url, ...size, uploading: false, error: undefined, file: undefined, overridable: false });
     } catch (err: any) {
       const overridable = err instanceof UploadTooLargeError && err.overridable;
-      return current.map((r) =>
-        r.key === rowKey
-          ? { ...r, uploading: false, error: err?.message || 'Upload failed', file: overridable ? file : undefined, overridable }
-          : r
-      );
+      patchRow(rowKey, {
+        uploading: false,
+        error: err?.message || 'Upload failed',
+        file: overridable ? file : undefined,
+        overridable,
+      });
     }
   };
 
   const handleFiles = async (files: FileList) => {
-    const newRows: Row[] = Array.from(files).map(() => ({
+    // Copy the picked files out first: the input is cleared right after this is called.
+    const picked = Array.from(files);
+    const newRows: Row[] = picked.map(() => ({
       key: nextKey++,
       url: '',
       width: 0,
       height: 0,
       uploading: true,
     }));
-    let current = [...rows, ...newRows];
-    setRows(current);
+    const withNew = [...rowsRef.current, ...newRows];
+    rowsRef.current = withNew;
+    setRows(withNew);
 
-    await Promise.all(
-      Array.from(files).map(async (file, i) => {
-        const row = newRows[i];
-        current = await uploadOne(file, row.key, current);
-        commit(current);
-      })
-    );
+    await Promise.all(picked.map((file, i) => uploadOne(file, newRows[i].key)));
   };
 
   /** Re-tries a rejected part with the 550KB cap raised for this one upload — an
@@ -113,18 +122,17 @@ export const DetailImagePartsEditor: React.FC<DetailImagePartsEditorProps> = ({ 
   const retryWithOverride = async (row: Row) => {
     if (!row.file) return;
     const file = row.file;
-    let current = rows.map((r) => (r.key === row.key ? { ...r, uploading: true, error: undefined } : r));
-    setRows(current);
-    current = await uploadOne(file, row.key, current, true);
-    commit(current);
+    patchRow(row.key, { uploading: true, error: undefined });
+    await uploadOne(file, row.key, true);
   };
 
-  const removeRow = (key: number) => commit(rows.filter((r) => r.key !== key));
+  const removeRow = (key: number) => commit(rowsRef.current.filter((r) => r.key !== key));
 
   const move = (index: number, dir: -1 | 1) => {
     const target = index + dir;
-    if (target < 0 || target >= rows.length) return;
-    const next = [...rows];
+    const current = rowsRef.current;
+    if (target < 0 || target >= current.length) return;
+    const next = [...current];
     [next[index], next[target]] = [next[target], next[index]];
     commit(next);
   };

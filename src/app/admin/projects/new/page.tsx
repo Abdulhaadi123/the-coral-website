@@ -50,6 +50,7 @@ export default function CreateProjectPage() {
   const [cardLink, setCardLink] = useState('');
 
   const [uploadingThumb, setUploadingThumb] = useState(false);
+  const [thumbError, setThumbError] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -65,13 +66,13 @@ export default function CreateProjectPage() {
 
   const handleThumbUpload = async (file: File) => {
     setUploadingThumb(true);
-    setError('');
+    setThumbError('');
     try {
       const data = await uploadAdminFile(file, 'coral-room/portfolio', { kind: 'thumbnail' });
       setImage(data.url);
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error uploading image');
+      setThumbError(err.message || 'Error uploading image');
     } finally {
       setUploadingThumb(false);
     }
@@ -298,9 +299,11 @@ export default function CreateProjectPage() {
                       type="file"
                       accept="image/webp"
                       className="hidden"
-                      onChange={(e) =>
-                        e.target.files?.[0] && handleThumbUpload(e.target.files[0])
-                      }
+                      onChange={(e) => {
+                        const picked = e.target.files?.[0];
+                        e.target.value = ''; // so choosing the same file again still fires
+                        if (picked) handleThumbUpload(picked);
+                      }}
                     />
                   </label>
                 </div>
@@ -321,11 +324,19 @@ export default function CreateProjectPage() {
                   accept="image/webp"
                   disabled={uploadingThumb}
                   className="hidden"
-                  onChange={(e) =>
-                    e.target.files?.[0] && handleThumbUpload(e.target.files[0])
-                  }
+                  onChange={(e) => {
+                    const picked = e.target.files?.[0];
+                    e.target.value = ''; // so choosing the same file again still fires
+                    if (picked) handleThumbUpload(picked);
+                  }}
                 />
               </label>
+            )}
+            {thumbError && (
+              <p role="alert" className="text-xs text-red-600 flex items-start gap-1.5 bg-red-50 border border-red-200 rounded-xl px-3 py-2.5">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-px text-red-500" />
+                <span>{thumbError}</span>
+              </p>
             )}
           </div>
 
