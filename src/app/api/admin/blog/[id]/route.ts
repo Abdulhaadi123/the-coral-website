@@ -97,7 +97,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 
     if (scheduledAt !== undefined) {
       if (scheduledAt) {
-        finalScheduledAt = new Date(scheduledAt);
+        const parsed = new Date(scheduledAt);
+        if (isNaN(parsed.getTime())) {
+          return NextResponse.json({ error: 'Invalid scheduled date and time' }, { status: 400 });
+        }
+        finalScheduledAt = parsed;
         finalPublished = false;
         finalPublishedAt = finalScheduledAt;
       } else {

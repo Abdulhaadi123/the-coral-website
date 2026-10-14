@@ -28,6 +28,7 @@ export default function AdminBlogPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [catFilter, setCatFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState<'ALL' | 'PUBLISHED' | 'SCHEDULED' | 'DRAFT'>('ALL');
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
@@ -58,10 +59,11 @@ export default function AdminBlogPage() {
   const togglePublished = async (post: any) => {
     setTogglingId(post.id);
     try {
+      const nextPublished = !post.published;
       const res = await fetch(`/api/admin/blog/${post.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ published: !post.published }),
+        body: JSON.stringify({ published: nextPublished, scheduledAt: null }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -76,7 +78,12 @@ export default function AdminBlogPage() {
     const q = search.toLowerCase();
     const ms = !q || p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.badge.toLowerCase().includes(q);
     const mc = catFilter === 'ALL' || p.category.toLowerCase() === catFilter.toLowerCase();
-    return ms && mc;
+    const isSched = !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date();
+    let mst = true;
+    if (statusFilter === 'PUBLISHED') mst = p.published;
+    else if (statusFilter === 'SCHEDULED') mst = isSched;
+    else if (statusFilter === 'DRAFT') mst = !p.published && !isSched;
+    return ms && mc && mst;
   });
 
   const toggleOne = (id: string) => {
@@ -130,7 +137,7 @@ export default function AdminBlogPage() {
         fetch(`/api/admin/blog/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ published }),
+          body: JSON.stringify({ published, scheduledAt: null }),
         })
       ));
       const failed = results.filter(r => !r.ok).length;
@@ -168,10 +175,62 @@ export default function AdminBlogPage() {
           <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search title, category or badge..."
             className="w-full pl-10 pr-4 py-3 rounded-2xl border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#78B249] placeholder:text-gray-400 shadow-sm" />
         </div>
-        <div className="flex flex-wrap gap-2">
+
+        {/* Status Filters */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Status:</span>
+          {(
+            [
+              { id: 'ALL', label: 'All', count: posts.length },
+              { id: 'PUBLISHED', label: 'Published', count: posts.filter(p => p.published).length },
+              {
+                id: 'SCHEDULED',
+                label: 'Scheduled',
+                count: posts.filter(p => !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date()).length,
+              },
+              {
+                id: 'DRAFT',
+                label: 'Drafts',
+                count: posts.filter(p => !p.published && (!p.scheduledAt || new Date(p.scheduledAt) <= new Date())).length,
+              },
+            ] as const
+          ).map(tab => {
+            const active = statusFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setStatusFilter(tab.id)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                  active
+                    ? tab.id === 'SCHEDULED'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : tab.id === 'PUBLISHED'
+                      ? 'bg-green-700 text-white shadow-xs'
+                      : tab.id === 'DRAFT'
+                      ? 'bg-amber-600 text-white shadow-xs'
+                      : 'bg-[#111827] text-white shadow-xs'
+                    : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                    active ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+                  }`}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1">Category:</span>
           {['ALL', ...categories.map(c => c.name)].map(cat => (
             <button key={cat} onClick={() => setCatFilter(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${catFilter === cat ? 'bg-[#111827] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
+              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${catFilter === cat ? 'bg-[#111827] text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'}`}>
               {cat}
             </button>
           ))}

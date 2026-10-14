@@ -4,6 +4,7 @@ import { checkAccess, getCurrentAdmin } from '@/lib/access';
 import { hasPermission } from '@/lib/permissions';
 import { revalidatePath } from 'next/cache';
 import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
+import { publishDueScheduledPosts } from '@/lib/blogScheduler';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,6 +19,13 @@ export async function GET(req: NextRequest) {
     const canManageBlog = hasPermission(admin, 'blog');
     if (!canManageBlog && !hasPermission(admin, 'seo')) {
       return NextResponse.json({ error: 'You do not have permission to do this.' }, { status: 403 });
+    }
+
+    // Auto-promote any scheduled posts whose time has passed
+    try {
+      await publishDueScheduledPosts();
+    } catch (e) {
+      console.error('Error auto-promoting scheduled posts in GET /api/admin/blog:', e);
     }
 
     const posts = await prisma.blogPost.findMany({
@@ -81,8 +89,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isScheduled = Boolean(scheduledAt);
-    const scheduledDate = isScheduled ? new Date(scheduledAt) : null;
+    let scheduledDate: Date | null = null;
+    if (scheduledAt) {
+      const parsed = new Date(scheduledAt);
+      if (isNaN(parsed.getTime())) {
+        return NextResponse.json({ error: 'Invalid scheduled date and time' }, { status: 400 });
+      }
+      scheduledDate = parsed;
+    }
+    const isScheduled = Boolean(scheduledDate);
     const isPublished = isScheduled ? false : (published === undefined ? true : Boolean(published));
 
     const post = await prisma.blogPost.create({
