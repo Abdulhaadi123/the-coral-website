@@ -60,6 +60,7 @@ export async function POST(req: NextRequest) {
       published,
       order,
       publishedAt,
+      scheduledAt,
     } = data;
 
     if (!title || !slug || !description || !image || !contentHtml) {
@@ -80,6 +81,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const isScheduled = Boolean(scheduledAt);
+    const scheduledDate = isScheduled ? new Date(scheduledAt) : null;
+    const isPublished = isScheduled ? false : (published === undefined ? true : Boolean(published));
+
     const post = await prisma.blogPost.create({
       data: {
         title: title.trim(),
@@ -91,9 +96,10 @@ export async function POST(req: NextRequest) {
         image: image.trim(),
         contentHtml,
         featured: Boolean(featured),
-        published: published === undefined ? true : Boolean(published),
+        published: isPublished,
+        scheduledAt: scheduledDate,
         order: Number(order) || 0,
-        ...(publishedAt ? { publishedAt: new Date(publishedAt) } : {}),
+        publishedAt: isScheduled ? scheduledDate! : (publishedAt ? new Date(publishedAt) : new Date()),
       },
     });
 

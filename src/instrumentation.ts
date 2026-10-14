@@ -7,9 +7,14 @@
 export async function register() {
   // Local test servers share the production database; set DISABLE_EMAIL_SCHEDULER=1
   // there so they never claim or fail a live campaign.
-  if (process.env.DISABLE_EMAIL_SCHEDULER === '1') return;
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    const { startEmailScheduler } = await import('@/lib/emailScheduler');
-    startEmailScheduler();
+    if (process.env.DISABLE_EMAIL_SCHEDULER !== '1') {
+      const { startEmailScheduler } = await import('@/lib/emailScheduler');
+      startEmailScheduler();
+    }
+    if (process.env.DISABLE_BLOG_SCHEDULER !== '1') {
+      const { startBlogScheduler } = await import('@/lib/blogScheduler');
+      startBlogScheduler();
+    }
   }
 }

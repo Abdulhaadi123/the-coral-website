@@ -107,6 +107,13 @@ export const SEO_ROUTES: { path: string; label: string; title: string; descripti
     description:
       'Digital tips and tricks to help you improve efficiency, be more productive, and grow your business, from The Coral Room.',
   },
+  {
+    path: '/privacy-policy',
+    label: 'Privacy Policy',
+    title: 'Privacy Policy | The Coral Room',
+    description:
+      'Learn how The Coral Room collects, protects, and manages your personal information and privacy.',
+  },
 ];
 
 // Cached like the rest of the public content (see lib/publicData); saving a page

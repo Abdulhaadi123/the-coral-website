@@ -67,6 +67,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       published,
       order,
       publishedAt,
+      scheduledAt,
     } = data;
 
     const existingPost = await prisma.blogPost.findUnique({
@@ -86,6 +87,26 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       }
     }
 
+    // Determine scheduling logic:
+    // 1) If scheduledAt is explicitly provided as a date string: post is scheduled (published = false)
+    // 2) If scheduledAt is explicitly null: clear schedule
+    // 3) If published is set to true and scheduledAt was not provided: clear schedule
+    let finalScheduledAt: Date | null | undefined = undefined;
+    let finalPublished = published !== undefined ? Boolean(published) : undefined;
+    let finalPublishedAt = publishedAt ? new Date(publishedAt) : undefined;
+
+    if (scheduledAt !== undefined) {
+      if (scheduledAt) {
+        finalScheduledAt = new Date(scheduledAt);
+        finalPublished = false;
+        finalPublishedAt = finalScheduledAt;
+      } else {
+        finalScheduledAt = null;
+      }
+    } else if (published === true) {
+      finalScheduledAt = null;
+    }
+
     const updated = await prisma.blogPost.update({
       where: { id: params.id },
       data: {
@@ -98,9 +119,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         ...(image && { image: image.trim() }),
         ...(contentHtml !== undefined && { contentHtml }),
         ...(featured !== undefined && { featured: Boolean(featured) }),
-        ...(published !== undefined && { published: Boolean(published) }),
+        ...(finalPublished !== undefined && { published: finalPublished }),
+        ...(finalScheduledAt !== undefined && { scheduledAt: finalScheduledAt }),
         ...(order !== undefined && { order: Number(order) }),
-        ...(publishedAt ? { publishedAt: new Date(publishedAt) } : {}),
+        ...(finalPublishedAt ? { publishedAt: finalPublishedAt } : {}),
       },
     });
 

@@ -150,6 +150,7 @@ model BlogPost {
   published   Boolean  @default(true)
   order       Int      @default(0)
   publishedAt DateTime @default(now())
+  scheduledAt DateTime?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

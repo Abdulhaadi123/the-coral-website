@@ -41,28 +41,84 @@ function toPublicPost(post: BlogPostRecord): PublicBlogPost {
 
 /** Published posts for the /journal listing and homepage preview, newest-ordered-first. */
 export async function getPublishedBlogPosts(limit?: number): Promise<PublicBlogPost[]> {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
-    ...(limit ? { take: limit } : {}),
-  });
-  return posts.map(toPublicPost);
+  try {
+    const now = new Date();
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        OR: [
+          { published: true },
+          { published: false, scheduledAt: { lte: now } },
+        ],
+      },
+      orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
+      ...(limit ? { take: limit } : {}),
+    });
+
+    const dueUnpublished = posts.filter((p) => !p.published);
+    if (dueUnpublished.length > 0) {
+      prisma.blogPost
+        .updateMany({
+          where: { id: { in: dueUnpublished.map((p) => p.id) } },
+          data: { published: true },
+        })
+        .catch((e) => console.error('Error auto-promoting scheduled posts:', e));
+    }
+
+    return posts.map(toPublicPost);
+  } catch (err) {
+    console.error('Error in getPublishedBlogPosts:', err);
+    return [];
+  }
 }
 
 /** A single published post by slug, or null if missing/unpublished. */
 export async function getPublishedBlogPostBySlug(slug: string): Promise<PublicBlogPost | null> {
-  const post = await prisma.blogPost.findFirst({
-    where: { slug, published: true },
-  });
-  return post ? toPublicPost(post) : null;
+  try {
+    const now = new Date();
+    const post = await prisma.blogPost.findFirst({
+      where: {
+        slug,
+        OR: [
+          { published: true },
+          { published: false, scheduledAt: { lte: now } },
+        ],
+      },
+    });
+
+    if (post && !post.published) {
+      prisma.blogPost
+        .update({
+          where: { id: post.id },
+          data: { published: true },
+        })
+        .catch((e) => console.error('Error auto-promoting scheduled post:', e));
+    }
+
+    return post ? toPublicPost(post) : null;
+  } catch (err) {
+    console.error(`Error in getPublishedBlogPostBySlug for "${slug}":`, err);
+    return null;
+  }
 }
 
 /** Up to `limit` other published posts, for the "Related Posts" rail. */
 export async function getRelatedBlogPosts(excludeSlug: string, limit = 3): Promise<PublicBlogPost[]> {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true, slug: { not: excludeSlug } },
-    orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
-    take: limit,
-  });
-  return posts.map(toPublicPost);
+  try {
+    const now = new Date();
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        slug: { not: excludeSlug },
+        OR: [
+          { published: true },
+          { published: false, scheduledAt: { lte: now } },
+        ],
+      },
+      orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
+      take: limit,
+    });
+    return posts.map(toPublicPost);
+  } catch (err) {
+    console.error('Error in getRelatedBlogPosts:', err);
+    return [];
+  }
 }

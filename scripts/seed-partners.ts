@@ -36,7 +36,8 @@ async function main() {
   let created = 0;
   let skipped = 0;
 
-  for (const [index, partner] of partners.entries()) {
+  for (let index = 0; index < partners.length; index++) {
+    const partner = partners[index];
     const existing = await prisma.partner.findFirst({ where: { name: partner.name } });
 
     if (existing) {

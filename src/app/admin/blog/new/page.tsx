@@ -9,11 +9,15 @@ import {
   Loader2,
   Check,
   AlertCircle,
+  Calendar,
+  Clock,
 } from 'lucide-react';
 import { adminAssetUrl } from '@/lib/adminAssets';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import { CategorySelect } from '@/components/admin/CategorySelect';
 import { uploadAdminFile, UploadTooLargeError } from '@/lib/uploadClient';
+
+type PublishMode = 'publish' | 'schedule' | 'draft';
 
 export default function CreateBlogPostPage() {
   const router = useRouter();
@@ -25,7 +29,8 @@ export default function CreateBlogPostPage() {
   const [badge, setBadge] = useState('Marketing');
   const [category, setCategory] = useState('Digital Marketing');
   const [order, setOrder] = useState('0');
-  const [published, setPublished] = useState(true);
+  const [publishMode, setPublishMode] = useState<PublishMode>('publish');
+  const [scheduledAt, setScheduledAt] = useState('');
   const [image, setImage] = useState('');
   const [contentHtml, setContentHtml] = useState('');
 
@@ -73,6 +78,18 @@ export default function CreateBlogPostPage() {
       return;
     }
 
+    if (publishMode === 'schedule') {
+      if (!scheduledAt) {
+        setError('Please select a date and time to schedule this post.');
+        return;
+      }
+      const schedTime = new Date(scheduledAt).getTime();
+      if (isNaN(schedTime) || schedTime <= Date.now()) {
+        setError('Scheduled date and time must be in the future.');
+        return;
+      }
+    }
+
     setSaving(true);
     setError('');
 
@@ -89,7 +106,8 @@ export default function CreateBlogPostPage() {
           category,
           image,
           contentHtml,
-          published,
+          published: publishMode === 'publish',
+          scheduledAt: publishMode === 'schedule' ? new Date(scheduledAt).toISOString() : null,
           order: Number(order) || 0,
         }),
       });
@@ -290,38 +308,122 @@ export default function CreateBlogPostPage() {
             </div>
 
             <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-4">
-              <h2 className="text-sm font-bold text-[#111827]">Visibility</h2>
-              <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-sm text-gray-700 font-medium">
-                  {published ? 'Published — live on the site' : 'Draft — hidden from visitors'}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setPublished((v) => !v)}
-                  className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${published ? 'bg-[#78B249]' : 'bg-gray-300'}`}
-                >
-                  <span
-                    className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${published ? 'translate-x-5' : 'translate-x-0'}`}
+              <h2 className="text-sm font-bold text-[#111827]">Publishing &amp; Schedule</h2>
+
+              <div className="flex flex-col gap-2.5">
+                {/* Mode 1: Publish Now */}
+                <label className={`flex items-start gap-3 p-3 rounded-2xl border transition-all cursor-pointer ${publishMode === 'publish' ? 'border-[#78B249] bg-green-50/40 ring-1 ring-[#78B249]/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <input
+                    type="radio"
+                    name="publishMode"
+                    value="publish"
+                    checked={publishMode === 'publish'}
+                    onChange={() => setPublishMode('publish')}
+                    className="mt-0.5 text-[#78B249] focus:ring-[#78B249]"
                   />
-                </button>
-              </label>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-gray-900 block">Publish Immediately</span>
+                    <span className="text-[11px] text-gray-500">Goes live on the website right after saving</span>
+                  </div>
+                </label>
+
+                {/* Mode 2: Schedule */}
+                <label className={`flex items-start gap-3 p-3 rounded-2xl border transition-all cursor-pointer ${publishMode === 'schedule' ? 'border-purple-400 bg-purple-50/40 ring-1 ring-purple-400/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <input
+                    type="radio"
+                    name="publishMode"
+                    value="schedule"
+                    checked={publishMode === 'schedule'}
+                    onChange={() => setPublishMode('schedule')}
+                    className="mt-0.5 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-purple-600" />
+                      <span className="text-xs font-bold text-gray-900">Schedule for Later</span>
+                    </div>
+                    <span className="text-[11px] text-gray-500 block mt-0.5">Auto-publishes automatically at your chosen date &amp; time</span>
+                  </div>
+                </label>
+
+                {publishMode === 'schedule' && (
+                  <div className="p-3.5 bg-purple-50/70 rounded-2xl border border-purple-200 flex flex-col gap-2">
+                    <label className="text-[11px] font-bold text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-purple-700" />
+                      Publish Date &amp; Time *
+                    </label>
+                    <input
+                      type="datetime-local"
+                      required={publishMode === 'schedule'}
+                      value={scheduledAt}
+                      min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)}
+                      onChange={(e) => setScheduledAt(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-purple-300 bg-white text-xs font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <p className="text-[10px] text-purple-700">
+                      The system scheduler will automatically make this post public once this scheduled time arrives.
+                    </p>
+                  </div>
+                )}
+
+                {/* Mode 3: Draft */}
+                <label className={`flex items-start gap-3 p-3 rounded-2xl border transition-all cursor-pointer ${publishMode === 'draft' ? 'border-amber-400 bg-amber-50/40 ring-1 ring-amber-400/30' : 'border-gray-200 hover:border-gray-300'}`}>
+                  <input
+                    type="radio"
+                    name="publishMode"
+                    value="draft"
+                    checked={publishMode === 'draft'}
+                    onChange={() => setPublishMode('draft')}
+                    className="mt-0.5 text-amber-500 focus:ring-amber-400"
+                  />
+                  <div className="flex-1">
+                    <span className="text-xs font-bold text-gray-900 block">Save as Draft</span>
+                    <span className="text-[11px] text-gray-500">Keep hidden from visitors until ready</span>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <button
               type="submit"
               disabled={saving || uploadingCover}
               className="w-full py-4 px-6 rounded-full font-bold text-sm text-white flex items-center justify-center gap-2 shadow-md transition-all duration-300 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
-              style={{ background: 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)' }}
+              style={{
+                background:
+                  publishMode === 'schedule'
+                    ? 'linear-gradient(87.41deg, #8B5CF6 2.16%, #6D28D9 100.81%)'
+                    : 'linear-gradient(87.41deg, #78B249 2.16%, #598323 100.81%)',
+              }}
             >
               {saving ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Publishing Post...</span>
+                  <span>
+                    {publishMode === 'schedule'
+                      ? 'Scheduling Post...'
+                      : publishMode === 'publish'
+                      ? 'Publishing Post...'
+                      : 'Saving Draft...'}
+                  </span>
                 </>
               ) : (
                 <>
-                  <Check className="w-4 h-4" />
-                  <span>{published ? 'Publish Post Live' : 'Save as Draft'}</span>
+                  {publishMode === 'schedule' ? (
+                    <>
+                      <Calendar className="w-4 h-4" />
+                      <span>Schedule Post for Later</span>
+                    </>
+                  ) : publishMode === 'publish' ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>Publish Post Live</span>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>Save as Draft</span>
+                    </>
+                  )}
                 </>
               )}
             </button>

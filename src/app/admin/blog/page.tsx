@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   Plus, Search, Edit2, Trash2, Eye, Loader2, Newspaper,
-  Check, X as XIcon,
+  Check, X as XIcon, Clock, Calendar,
 } from 'lucide-react';
 import { adminAssetUrl } from '@/lib/adminAssets';
 import { BulkActionBar, BulkActionButton, SelectCheckbox } from '@/components/admin/BulkActionBar';
@@ -12,6 +12,15 @@ import { useCategories } from '@/lib/useCategories';
 
 function formatDate(iso: string) {
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(iso));
+}
+
+function formatDateTime(iso: string) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(new Date(iso));
 }
 
 export default function AdminBlogPage() {
@@ -211,9 +220,16 @@ export default function AdminBlogPage() {
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
                       {p.badge || p.category}
                     </span>
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap ${p.published ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
-                      {p.published ? 'Published' : 'Draft'}
-                    </span>
+                    {!p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date() ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap bg-purple-50 text-purple-700 border border-purple-200">
+                        <Clock className="w-3 h-3 text-purple-600" />
+                        Scheduled: {formatDateTime(p.scheduledAt)}
+                      </span>
+                    ) : (
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap ${p.published ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
+                        {p.published ? 'Published' : 'Draft'}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-3 flex gap-2 pt-2.5 border-t border-gray-100">
                     <Link href={`/journal/${p.slug}`} target="_blank"
@@ -245,59 +261,82 @@ export default function AdminBlogPage() {
                   <th className="py-4 px-6 w-[88px]">Image</th>
                   <th className="py-4 px-6 w-[320px]">Title</th>
                   <th className="py-4 px-6 w-[160px]">Category</th>
-                  <th className="py-4 px-6 w-[110px]">Date</th>
-                  <th className="py-4 px-6 w-[110px]">Status</th>
+                  <th className="py-4 px-6 w-[130px]">Date / Schedule</th>
+                  <th className="py-4 px-6 w-[115px]">Status</th>
                   <th className="py-4 px-6 text-right w-[140px]">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {filtered.map(p => (
-                  <tr key={p.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
-                    <td className="py-3.5 px-6 align-middle">
-                      <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
-                    </td>
+                {filtered.map(p => {
+                  const isScheduled = !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date();
+                  return (
+                    <tr key={p.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
+                      <td className="py-3.5 px-6 align-middle">
+                        <SelectCheckbox checked={selected.has(p.id)} onChange={() => toggleOne(p.id)} label={`Select ${p.title}`} />
+                      </td>
 
-                    <td className="py-3.5 px-6 align-middle">
-                      <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
-                      </div>
-                    </td>
+                      <td className="py-3.5 px-6 align-middle">
+                        <div className="w-14 h-11 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={adminAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover" />
+                        </div>
+                      </td>
 
-                    <td className="py-3.5 px-6 align-middle">
-                      <div className="font-bold text-[#111827] text-sm truncate">{p.title}</div>
-                      <div className="text-[11px] text-gray-400 font-mono mt-0.5 truncate">/journal/{p.slug}</div>
-                    </td>
+                      <td className="py-3.5 px-6 align-middle">
+                        <div className="font-bold text-[#111827] text-sm truncate">{p.title}</div>
+                        <div className="text-[11px] text-gray-400 font-mono mt-0.5 truncate">/journal/{p.slug}</div>
+                      </td>
 
-                    <td className="py-3.5 px-6 align-middle">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
-                        {p.badge || p.category || '—'}
-                      </span>
-                    </td>
+                      <td className="py-3.5 px-6 align-middle">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
+                          {p.badge || p.category || '—'}
+                        </span>
+                      </td>
 
-                    <td className="py-3.5 px-6 align-middle text-xs text-gray-500 font-medium whitespace-nowrap">
-                      {formatDate(p.publishedAt)}
-                    </td>
-
-                    <td className="py-3.5 px-6 align-middle">
-                      <button
-                        onClick={() => togglePublished(p)}
-                        disabled={togglingId === p.id}
-                        title={p.published ? 'Click to unpublish' : 'Click to publish'}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold whitespace-nowrap cursor-pointer transition-colors disabled:opacity-50 ${
-                          p.published ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100' : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
-                        }`}
-                      >
-                        {togglingId === p.id ? (
-                          <Loader2 className="w-3 h-3 animate-spin" />
-                        ) : p.published ? (
-                          <Check className="w-3 h-3" />
+                      <td className="py-3.5 px-6 align-middle text-xs font-medium whitespace-nowrap">
+                        {isScheduled ? (
+                          <div className="flex flex-col text-purple-700">
+                            <span className="font-bold text-[10px] uppercase tracking-wide flex items-center gap-1">
+                              <Clock className="w-3 h-3" /> Scheduled
+                            </span>
+                            <span>{formatDateTime(p.scheduledAt)}</span>
+                          </div>
                         ) : (
-                          <XIcon className="w-3 h-3" />
+                          <span className="text-gray-500">{formatDate(p.publishedAt)}</span>
                         )}
-                        {p.published ? 'Published' : 'Draft'}
-                      </button>
-                    </td>
+                      </td>
+
+                      <td className="py-3.5 px-6 align-middle">
+                        <button
+                          onClick={() => togglePublished(p)}
+                          disabled={togglingId === p.id}
+                          title={
+                            isScheduled
+                              ? 'Scheduled to auto-publish. Click to publish live immediately'
+                              : p.published
+                              ? 'Click to unpublish'
+                              : 'Click to publish'
+                          }
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold whitespace-nowrap cursor-pointer transition-colors disabled:opacity-50 ${
+                            isScheduled
+                              ? 'bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100'
+                              : p.published
+                              ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100'
+                              : 'bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100'
+                          }`}
+                        >
+                          {togglingId === p.id ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : isScheduled ? (
+                            <Clock className="w-3 h-3 text-purple-600" />
+                          ) : p.published ? (
+                            <Check className="w-3 h-3" />
+                          ) : (
+                            <XIcon className="w-3 h-3" />
+                          )}
+                          {isScheduled ? 'Scheduled' : p.published ? 'Published' : 'Draft'}
+                        </button>
+                      </td>
 
                     <td className="py-3.5 px-6 align-middle text-right">
                       <div className="flex items-center justify-end gap-1">
@@ -316,7 +355,8 @@ export default function AdminBlogPage() {
                       </div>
                     </td>
                   </tr>
-                ))}
+                );
+              })}
               </tbody>
             </table>
             <div className="px-6 py-3.5 border-t border-gray-100 bg-gray-50 text-xs text-gray-500 font-medium">

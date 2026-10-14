@@ -24,8 +24,14 @@ export interface SitemapEntry {
 export async function getSitemapEntries(): Promise<SitemapEntry[]> {
   let posts: { slug: string; title: string; updatedAt: Date }[] = [];
   try {
+    const now = new Date();
     posts = await prisma.blogPost.findMany({
-      where: { published: true },
+      where: {
+        OR: [
+          { published: true },
+          { published: false, scheduledAt: { lte: now } },
+        ],
+      },
       select: { slug: true, title: true, updatedAt: true },
       orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
     });
