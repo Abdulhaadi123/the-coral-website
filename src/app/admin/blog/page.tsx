@@ -18,9 +18,15 @@ function formatDateTime(iso: string) {
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     day: 'numeric',
+    year: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
   }).format(new Date(iso));
+}
+
+/** A post waiting for its scheduled time — not live yet. */
+function isScheduledPost(p: { published: boolean; scheduledAt?: string | null }): boolean {
+  return !p.published && !!p.scheduledAt && new Date(p.scheduledAt) > new Date();
 }
 
 export default function AdminBlogPage() {
@@ -78,7 +84,7 @@ export default function AdminBlogPage() {
     const q = search.toLowerCase();
     const ms = !q || p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.badge.toLowerCase().includes(q);
     const mc = catFilter === 'ALL' || p.category.toLowerCase() === catFilter.toLowerCase();
-    const isSched = !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date();
+    const isSched = isScheduledPost(p);
     let mst = true;
     if (statusFilter === 'PUBLISHED') mst = p.published;
     else if (statusFilter === 'SCHEDULED') mst = isSched;
@@ -186,12 +192,12 @@ export default function AdminBlogPage() {
               {
                 id: 'SCHEDULED',
                 label: 'Scheduled',
-                count: posts.filter(p => !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date()).length,
+                count: posts.filter(isScheduledPost).length,
               },
               {
                 id: 'DRAFT',
                 label: 'Drafts',
-                count: posts.filter(p => !p.published && (!p.scheduledAt || new Date(p.scheduledAt) <= new Date())).length,
+                count: posts.filter(p => !p.published && !isScheduledPost(p)).length,
               },
             ] as const
           ).map(tab => {
@@ -279,7 +285,7 @@ export default function AdminBlogPage() {
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-700 whitespace-nowrap">
                       {p.badge || p.category}
                     </span>
-                    {!p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date() ? (
+                    {isScheduledPost(p) ? (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap bg-purple-50 text-purple-700 border border-purple-200">
                         <Clock className="w-3 h-3 text-purple-600" />
                         Scheduled: {formatDateTime(p.scheduledAt)}
@@ -327,7 +333,7 @@ export default function AdminBlogPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map(p => {
-                  const isScheduled = !p.published && p.scheduledAt && new Date(p.scheduledAt) > new Date();
+                  const isScheduled = isScheduledPost(p);
                   return (
                     <tr key={p.id} className={`hover:bg-gray-50/70 transition-colors group ${selected.has(p.id) ? 'bg-[#78B249]/5' : ''}`}>
                       <td className="py-3.5 px-6 align-middle">

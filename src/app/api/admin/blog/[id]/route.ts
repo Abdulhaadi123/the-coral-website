@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess, getCurrentAdmin } from '@/lib/access';
 import { hasPermission } from '@/lib/permissions';
-import { revalidatePath } from 'next/cache';
-import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
+import { parseScheduledAt, revalidateBlog } from '@/lib/blogPublishing';
 
 export const dynamic = 'force-dynamic';
 
@@ -87,28 +86,35 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       }
     }
 
-    // Determine scheduling logic:
-    // 1) If scheduledAt is explicitly provided as a date string: post is scheduled (published = false)
-    // 2) If scheduledAt is explicitly null: clear schedule
-    // 3) If published is set to true and scheduledAt was not provided: clear schedule
+    // Scheduling rules:
+    // 1) scheduledAt is a date: the post is scheduled (published = false) and its publish date is that moment.
+    // 2) scheduledAt is null: the schedule is cleared.
+    // 3) scheduledAt is not sent but published is explicitly true/false: the post is being published or
+    //    set to draft by hand, so any schedule it carried is cleared (a draft must never be re-published
+    //    by an old schedule).
     let finalScheduledAt: Date | null | undefined = undefined;
     let finalPublished = published !== undefined ? Boolean(published) : undefined;
     let finalPublishedAt = publishedAt ? new Date(publishedAt) : undefined;
 
     if (scheduledAt !== undefined) {
       if (scheduledAt) {
-        const parsed = new Date(scheduledAt);
-        if (isNaN(parsed.getTime())) {
-          return NextResponse.json({ error: 'Invalid scheduled date and time' }, { status: 400 });
-        }
-        finalScheduledAt = parsed;
+        const parsed = parseScheduledAt(scheduledAt);
+        if (!parsed.ok) return NextResponse.json({ error: parsed.error }, { status: 400 });
+        finalScheduledAt = parsed.date;
         finalPublished = false;
         finalPublishedAt = finalScheduledAt;
       } else {
         finalScheduledAt = null;
       }
-    } else if (published === true) {
+    } else if (published !== undefined) {
       finalScheduledAt = null;
+    }
+
+    // Publishing a post that was scheduled ("publish now") leaves its publish date in the future;
+    // a live post is dated no later than the moment it went live.
+    if (finalPublished ?? existingPost.published) {
+      const candidate = finalPublishedAt ?? existingPost.publishedAt;
+      if (candidate.getTime() > Date.now()) finalPublishedAt = new Date();
     }
 
     const updated = await prisma.blogPost.update({
@@ -130,14 +136,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
-    revalidatePath('/journal');
-    revalidatePath(`/journal/${existingPost.slug}`);
-    revalidatePath(`/journal/${updated.slug}`);
-    revalidatePath('/blog');
-    revalidatePath(`/blog/${existingPost.slug}`);
-    revalidatePath(`/blog/${updated.slug}`);
-    revalidatePath('/');
-    await pingSearchConsoleSitemap();
+    await revalidateBlog([existingPost.slug, updated.slug]);
 
     return NextResponse.json({ success: true, post: updated });
   } catch (error: any) {
@@ -164,12 +163,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       where: { id: params.id },
     });
 
-    revalidatePath('/journal');
-    revalidatePath(`/journal/${post.slug}`);
-    revalidatePath('/blog');
-    revalidatePath(`/blog/${post.slug}`);
-    revalidatePath('/');
-    await pingSearchConsoleSitemap();
+    await revalidateBlog([post.slug]);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {

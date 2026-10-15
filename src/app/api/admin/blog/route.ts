@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { checkAccess, getCurrentAdmin } from '@/lib/access';
 import { hasPermission } from '@/lib/permissions';
-import { revalidatePath } from 'next/cache';
-import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
-import { publishDueScheduledPosts } from '@/lib/blogScheduler';
+import { clampToNow, parseScheduledAt, publishDueAndRevalidate, revalidateBlog } from '@/lib/blogPublishing';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,11 +19,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'You do not have permission to do this.' }, { status: 403 });
     }
 
-    // Auto-promote any scheduled posts whose time has passed
+    // The list must never show a post as "scheduled" after its time has passed.
     try {
-      await publishDueScheduledPosts();
+      await publishDueAndRevalidate();
     } catch (e) {
-      console.error('Error auto-promoting scheduled posts in GET /api/admin/blog:', e);
+      console.error('Error publishing due scheduled posts in GET /api/admin/blog:', e);
     }
 
     const posts = await prisma.blogPost.findMany({
@@ -91,11 +89,9 @@ export async function POST(req: NextRequest) {
 
     let scheduledDate: Date | null = null;
     if (scheduledAt) {
-      const parsed = new Date(scheduledAt);
-      if (isNaN(parsed.getTime())) {
-        return NextResponse.json({ error: 'Invalid scheduled date and time' }, { status: 400 });
-      }
-      scheduledDate = parsed;
+      const parsed = parseScheduledAt(scheduledAt);
+      if (!parsed.ok) return NextResponse.json({ error: parsed.error }, { status: 400 });
+      scheduledDate = parsed.date;
     }
     const isScheduled = Boolean(scheduledDate);
     const isPublished = isScheduled ? false : (published === undefined ? true : Boolean(published));
@@ -114,16 +110,11 @@ export async function POST(req: NextRequest) {
         published: isPublished,
         scheduledAt: scheduledDate,
         order: Number(order) || 0,
-        publishedAt: isScheduled ? scheduledDate! : (publishedAt ? new Date(publishedAt) : new Date()),
+        publishedAt: isScheduled ? scheduledDate! : clampToNow(publishedAt ? new Date(publishedAt) : new Date()),
       },
     });
 
-    revalidatePath('/journal');
-    revalidatePath(`/journal/${post.slug}`);
-    revalidatePath('/blog');
-    revalidatePath(`/blog/${post.slug}`);
-    revalidatePath('/');
-    await pingSearchConsoleSitemap();
+    await revalidateBlog([post.slug]);
 
     return NextResponse.json({ success: true, post }, { status: 201 });
   } catch (error: any) {

@@ -1,4 +1,5 @@
 import prisma from '@/lib/db';
+import { visibleNowWhere } from '@/lib/blogPublishing';
 import { SEO_ROUTES } from '@/lib/seo';
 import { SITE_URL } from '@/lib/site';
 
@@ -24,14 +25,8 @@ export interface SitemapEntry {
 export async function getSitemapEntries(): Promise<SitemapEntry[]> {
   let posts: { slug: string; title: string; updatedAt: Date }[] = [];
   try {
-    const now = new Date();
     posts = await prisma.blogPost.findMany({
-      where: {
-        OR: [
-          { published: true },
-          { published: false, scheduledAt: { lte: now } },
-        ],
-      },
+      where: visibleNowWhere(),
       select: { slug: true, title: true, updatedAt: true },
       orderBy: [{ order: 'asc' }, { publishedAt: 'desc' }],
     });

@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
               Welcome to The Coral Room. Your privacy matters to us. We are committed to handling personal information responsibly and being transparent about how information is collected, used, stored, and shared when you interact with our website and digital services.
             </p>
             <p>
-              This Privacy Policy explains how The Coral Room (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) processes personal information through our website, <a href="https://thecoralroom.co/" target="_blank" rel="noopener noreferrer" className="text-[#305915] underline font-semibold hover:text-black">https://thecoralroom.co/</a>, and in connection with our business activities.
+              This Privacy Policy explains how The Coral Room (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) processes personal information through our website, <a href="https://thecoralroom.co/" className="text-[#305915] underline font-semibold hover:text-black">https://thecoralroom.co/</a>, and in connection with our business activities.
             </p>
             <p className="text-sm sm:text-base text-gray-600">
               By using our website, you acknowledge the privacy practices described in this policy. Where consent is legally required, we will request it separately.
@@ -70,7 +70,7 @@ export default function PrivacyPolicyPage() {
                 Our website provides information about our services, projects, expertise, and opportunities to collaborate with our team.
               </p>
               <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-5 flex flex-col gap-2 text-sm">
-                <div><strong className="text-gray-900">Website:</strong> <a href="https://thecoralroom.co/" target="_blank" rel="noopener noreferrer" className="text-[#305915] underline hover:text-black font-medium">https://thecoralroom.co/</a></div>
+                <div><strong className="text-gray-900">Website:</strong> <a href="https://thecoralroom.co/" className="text-[#305915] underline hover:text-black font-medium">https://thecoralroom.co/</a></div>
                 <div><strong className="text-gray-900">Business Name:</strong> The Coral Room</div>
                 <div><strong className="text-gray-900">Privacy Contact:</strong> <a href="mailto:info@thecoralroom.co" className="text-[#305915] underline hover:text-black font-medium">info@thecoralroom.co</a></div>
                 <div><strong className="text-gray-900">Business Location:</strong> 40-Broadway Commercial, Park View, Lahore, Pakistan</div>
@@ -470,8 +470,8 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-6 flex flex-col gap-2.5 text-sm mb-4">
                 <div className="font-bold text-base text-gray-900">The Coral Room</div>
-                <div><strong className="text-gray-900">Website:</strong> <a href="https://thecoralroom.co/" target="_blank" rel="noopener noreferrer" className="text-[#305915] underline hover:text-black font-medium">https://thecoralroom.co/</a></div>
-                <div><strong className="text-gray-900">Email:</strong> <a href="mailto:info@thecoralroom.com" className="text-[#305915] underline hover:text-black font-medium">info@thecoralroom.com</a></div>
+                <div><strong className="text-gray-900">Website:</strong> <a href="https://thecoralroom.co/" className="text-[#305915] underline hover:text-black font-medium">https://thecoralroom.co/</a></div>
+                <div><strong className="text-gray-900">Email:</strong> <a href="mailto:info@thecoralroom.co" className="text-[#305915] underline hover:text-black font-medium">info@thecoralroom.co</a></div>
                 <div><strong className="text-gray-900">Business Address:</strong> 40-Broadway Commercial, Park View, Lahore, Pakistan</div>
               </div>
               <p className="mb-6">
@@ -510,15 +510,11 @@ export default function PrivacyPolicyPage() {
                   <Mail className="w-4 h-4 text-[#9FE66F] shrink-0 mt-0.5" />
                   <span>info@thecoralroom.co</span>
                 </div>
-                <div className="flex items-start gap-2.5">
-                  <ShieldCheck className="w-4 h-4 text-[#9FE66F] shrink-0 mt-0.5" />
-                  <span>Google Business Profile &amp; Global Privacy Compliant</span>
-                </div>
               </div>
 
               <div className="border-t border-white/10 pt-4">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-gray-400 mb-2">Privacy Contact</h4>
-                <p className="text-sm font-semibold text-white">The Coral Room Privacy Team</p>
+                <p className="text-sm font-semibold text-white">The Coral Room</p>
                 <a
                   href="mailto:info@thecoralroom.co"
                   className="mt-2 inline-flex items-center gap-2 text-xs font-semibold text-[#9FE66F] hover:underline"

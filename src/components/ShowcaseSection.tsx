@@ -61,13 +61,37 @@ interface ShowcaseSectionProps {
 }
 
 export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) => {
+  // An uploaded video that cannot be played (file deleted, unsupported format, URL blocked)
+  // falls back to the built-in banner instead of leaving an empty black strip on the homepage.
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const activeUrl = videoUrl && videoUrl !== failedUrl ? videoUrl : null;
+
+  // Keyed by the video in use, so switching videos starts from a clean slate (fresh <video>,
+  // fresh "ready" state) rather than carrying anything over from the previous one.
+  return (
+    <ShowcaseVideo
+      key={activeUrl ?? 'default'}
+      videoUrl={activeUrl}
+      onSourceError={() => setFailedUrl(activeUrl)}
+    />
+  );
+};
+
+interface ShowcaseVideoProps {
+  videoUrl: string | null;
+  onSourceError: () => void;
+}
+
+const ShowcaseVideo: React.FC<ShowcaseVideoProps> = ({ videoUrl, onSourceError }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isReady, setIsReady] = useState(false);
 
-  // Reset ready state whenever videoUrl changes to ensure a smooth flicker-free crossfade
-  useEffect(() => {
-    setIsReady(false);
-  }, [videoUrl]);
+  /*
+   * The built-in banner shows its poster frame until the video arrives. An uploaded video has
+   * no poster — showing the built-in one would flash the previous banner before the new video —
+   * so it stays hidden (black strip) until it can play, then fades in.
+   */
+  const hasOverride = videoUrl !== null;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -77,7 +101,7 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
 
     let cancelled = false;
     const attach = () => {
-      if (cancelled || !video) return;
+      if (cancelled) return;
       const phone = window.matchMedia('(max-width: 767px)').matches;
       const src = videoUrl ? assetUrl(videoUrl) : phone ? MOBILE_SRC : DESKTOP_SRC;
       if (video.getAttribute('src') !== src) {
@@ -86,27 +110,27 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
       }
     };
 
-    // When an updated video is set, attach immediately so it starts buffering without waiting
-    // for idle timeouts, preventing any stale poster from lingering.
+    // An uploaded video is the page's content, so it starts loading as soon as the page is
+    // interactive. The built-in one waits until the page has loaded and the browser is idle:
+    // it used to compete with the text, images and scripts that decide Largest Contentful Paint.
     if (videoUrl) {
       attach();
-    } else {
-      const schedule = () => {
-        const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback;
-        if (idle) idle(attach, { timeout: 2000 });
-        else window.setTimeout(attach, 800);
-      };
-      if (document.readyState === 'complete') schedule();
-      else window.addEventListener('load', schedule, { once: true });
-
       return () => {
         cancelled = true;
-        window.removeEventListener('load', schedule);
       };
     }
 
+    const schedule = () => {
+      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void }).requestIdleCallback;
+      if (idle) idle(attach, { timeout: 2000 });
+      else window.setTimeout(attach, 800);
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+
     return () => {
       cancelled = true;
+      window.removeEventListener('load', schedule);
     };
   }, [videoUrl]);
 
@@ -115,35 +139,36 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
     if (!video) return;
 
     let disposed = false;
-    let resuming = false;
 
-    const markReady = () => {
-      if (!disposed) setIsReady(true);
-    };
+    /*
+     * play() rejects if it is called while another play() is still settling, and
+     * an unhandled rejection in that case is noise rather than signal. Guarding on
+     * a flag also stops a burst of events (pause + stalled + waiting all firing
+     * together) from queueing several overlapping calls.
+     */
+    let resuming = false;
 
     const resume = () => {
       if (disposed || resuming) return;
       // playbackRate resets on every fresh load, so reassert it alongside play.
       video.playbackRate = PLAYBACK_RATE;
-      if (!video.paused) {
-        markReady();
-        return;
-      }
+      if (!video.paused) return;
 
       resuming = true;
       const attempt = video.play();
       if (attempt && typeof attempt.then === 'function') {
-        attempt
-          .then(() => markReady())
-          .catch(() => {})
-          .finally(() => {
-            resuming = false;
-          });
+        attempt.catch(() => {}).finally(() => {
+          resuming = false;
+        });
       } else {
         resuming = false;
       }
     };
 
+    /*
+     * Belt and braces on top of the `loop` attribute: some browsers fire `ended`
+     * without wrapping when the file is served with a partial range response.
+     */
     const onEnded = () => {
       if (disposed) return;
       try {
@@ -158,14 +183,23 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
       if (document.visibilityState === 'visible') resume();
     };
 
-    const EVENTS = ['loadedmetadata', 'canplay', 'playing', 'pause', 'stalled', 'suspend', 'waiting'] as const;
+    /*
+     * Every event that can leave the element stopped. `pause` is included on
+     * purpose — a pause here means genuinely stopped, not stalled: the files are small
+     * (3 MB / 1 MB) and fully buffered well before the section scrolls into view.
+     */
+    const EVENTS = ['loadedmetadata', 'canplay', 'pause', 'stalled', 'suspend', 'waiting'] as const;
     EVENTS.forEach((type) => video.addEventListener(type, resume));
     video.addEventListener('ended', onEnded);
-    video.addEventListener('playing', markReady);
-    video.addEventListener('loadeddata', markReady);
     document.addEventListener('visibilitychange', onVisibility);
 
+    /*
+     * Last line of defence. Power saving, tab discarding and mobile browsers
+     * pausing offscreen media can all stop playback without firing anything we
+     * listen for, so poll as well. Cheap: one boolean read per tick.
+     */
     const watchdog = window.setInterval(resume, WATCHDOG_MS);
+
     resume();
 
     return () => {
@@ -173,29 +207,27 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ videoUrl }) =>
       window.clearInterval(watchdog);
       EVENTS.forEach((type) => video.removeEventListener(type, resume));
       video.removeEventListener('ended', onEnded);
-      video.removeEventListener('playing', markReady);
-      video.removeEventListener('loadeddata', markReady);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [videoUrl]);
+  }, []);
 
   return (
     <section className="w-full my-6 overflow-hidden">
       <FadeIn direction="up">
-        <div className="relative w-full aspect-[1643/294] overflow-hidden bg-black">
+        <div className={`relative w-full aspect-[1643/294] overflow-hidden${hasOverride ? ' bg-black' : ''}`}>
           <video
-            key={videoUrl || 'default-showcase-video'}
             ref={videoRef}
-            poster={videoUrl ? undefined : POSTER_SRC}
+            poster={hasOverride ? undefined : POSTER_SRC}
             autoPlay
             loop
             muted
             playsInline
-            preload={videoUrl ? 'auto' : 'none'}
-            onPlaying={() => setIsReady(true)}
-            onLoadedData={() => setIsReady(true)}
-            className={`w-full h-full object-cover object-center block transition-opacity duration-700 ease-out ${
-              isReady ? 'opacity-100' : 'opacity-0'
+            preload={hasOverride ? 'auto' : 'none'}
+            onLoadedData={hasOverride ? () => setIsReady(true) : undefined}
+            onPlaying={hasOverride ? () => setIsReady(true) : undefined}
+            onError={hasOverride ? onSourceError : undefined}
+            className={`w-full h-full object-cover object-center block${
+              hasOverride ? ` transition-opacity duration-700 ease-out ${isReady ? 'opacity-100' : 'opacity-0'}` : ''
             }`}
           />
         </div>

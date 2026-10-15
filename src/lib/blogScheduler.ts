@@ -1,60 +1,52 @@
 import cron from 'node-cron';
-import prisma from '@/lib/db';
-import { revalidatePath } from 'next/cache';
+import { internalCronToken, publishDueScheduledPosts } from '@/lib/blogPublishing';
 import { pingSearchConsoleSitemap } from '@/lib/searchConsole';
 
 /**
- * Checks once a minute for blog posts whose scheduled date and time has arrived
- * and automatically publishes them live to the site.
+ * Checks once a minute for blog posts whose scheduled date and time has arrived and
+ * publishes them. Runs inside the long-lived Next.js server process (PM2 on the self-hosted
+ * box), wired in via src/instrumentation.ts, like src/lib/emailScheduler.ts.
  *
- * Runs inside the long-lived Next.js server process (PM2 / production server),
- * wired in via src/instrumentation.ts, matching src/lib/emailScheduler.ts.
+ * The work itself happens in /api/cron/publish-scheduled, called over loopback: refreshing
+ * the cached pages (revalidatePath) only works while a request is being handled, never from
+ * a timer. If that call fails the posts are still published straight from here, and the
+ * pages refresh on their own revalidate interval (at most a minute for the journal).
  */
+
+const ROUTE = '/api/cron/publish-scheduled';
+const STARTUP_DELAY_MS = 15_000; // let the server finish starting before the first catch-up run
+const REQUEST_TIMEOUT_MS = 30_000;
+
 let started = false;
+let running = false;
 
-export async function publishDueScheduledPosts(): Promise<number> {
-  const now = new Date();
+/** This server's own address. Next exposes the port it listens on via PORT / __NEXT_PRIVATE_ORIGIN. */
+function internalOrigin(): string {
+  const origin = process.env.INTERNAL_APP_URL || process.env.__NEXT_PRIVATE_ORIGIN || `http://127.0.0.1:${process.env.PORT || 3000}`;
+  // "localhost" can resolve to ::1 first, which a server bound to IPv4 only never answers.
+  return origin.replace('//localhost', '//127.0.0.1').replace(/\/+$/, '');
+}
+
+async function runCheck(): Promise<void> {
+  if (running) return; // a slow run must not overlap the next tick
+  running = true;
   try {
-    const duePosts = await prisma.blogPost.findMany({
-      where: {
-        published: false,
-        scheduledAt: { lte: now },
-      },
-      select: { id: true, slug: true, title: true, scheduledAt: true },
+    const res = await fetch(`${internalOrigin()}${ROUTE}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${internalCronToken()}` },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
-
-    if (duePosts.length === 0) return 0;
-
-    const ids = duePosts.map((p) => p.id);
-    const result = await prisma.blogPost.updateMany({
-      where: { id: { in: ids } },
-      data: {
-        published: true,
-      },
-    });
-
-    console.log(
-      `[blog-scheduler] Successfully auto-published ${result.count} scheduled post(s):`,
-      duePosts.map((p) => p.title).join(', ')
-    );
-
-    try {
-      revalidatePath('/journal');
-      revalidatePath('/blog');
-      revalidatePath('/');
-      for (const p of duePosts) {
-        revalidatePath(`/journal/${p.slug}`);
-        revalidatePath(`/blog/${p.slug}`);
-      }
-      await pingSearchConsoleSitemap();
-    } catch (revErr) {
-      console.error('[blog-scheduler] Path revalidation error after publishing:', revErr);
-    }
-
-    return result.count;
+    if (!res.ok) throw new Error(`${ROUTE} answered ${res.status}`);
   } catch (err) {
-    console.error('[blog-scheduler] Failed to check/publish due posts:', err);
-    return 0;
+    console.error('[blog-scheduler] Internal call failed — publishing directly:', err);
+    try {
+      const published = await publishDueScheduledPosts();
+      if (published.length > 0) await pingSearchConsoleSitemap();
+    } catch (fallbackErr) {
+      console.error('[blog-scheduler] Failed to publish due posts:', fallbackErr);
+    }
+  } finally {
+    running = false;
   }
 }
 
@@ -62,15 +54,10 @@ export function startBlogScheduler(): void {
   if (started) return;
   started = true;
 
-  // Immediate check on startup in case any posts became due while restarting/offline
-  publishDueScheduledPosts().catch((err) => {
-    console.error('[blog-scheduler] Startup run failed:', err);
-  });
+  // Catch up on posts that became due while the server was restarting or down.
+  setTimeout(() => void runCheck(), STARTUP_DELAY_MS).unref?.();
 
-  // Scheduled check every minute
-  cron.schedule('* * * * *', async () => {
-    await publishDueScheduledPosts();
-  });
+  cron.schedule('* * * * *', () => void runCheck());
 
   console.log('[blog-scheduler] started — checking for due scheduled blog posts every minute.');
 }

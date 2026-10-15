@@ -36,6 +36,11 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
   const [image, setImage] = useState('');
   const [contentHtml, setContentHtml] = useState('');
 
+  // True when the post was visible to visitors as loaded — saving it as a draft or scheduling it
+  // would take it offline, which deserves a confirmation.
+  const [wasLive, setWasLive] = useState(false);
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   const [initialLoading, setInitialLoading] = useState(true);
   const [uploadingCover, setUploadingCover] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -61,13 +66,16 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
           setOrder(String(p.order ?? 0));
           setImage(p.image || '');
           setContentHtml(p.contentHtml || '');
+          setWasLive(Boolean(p.published || (p.scheduledAt && new Date(p.scheduledAt) <= new Date())));
 
           if (p.scheduledAt && !p.published && new Date(p.scheduledAt) > new Date()) {
             setPublishMode('schedule');
             const d = new Date(p.scheduledAt);
             const localIso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
             setScheduledAt(localIso);
-          } else if (p.published) {
+          } else if (p.published || (p.scheduledAt && new Date(p.scheduledAt) <= new Date())) {
+            // Published, or its scheduled time has passed and it is only waiting for the
+            // scheduler's next pass — visitors already see it, so show it as live.
             setPublishMode('publish');
             setScheduledAt('');
           } else {
@@ -115,6 +123,11 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
         setError('Scheduled date and time must be in the future.');
         return;
       }
+    }
+
+    if (wasLive && publishMode !== 'publish') {
+      const outcome = publishMode === 'schedule' ? 'unpublished until the scheduled time' : 'unpublished and kept as a draft';
+      if (!confirm(`This post is live right now. Saving will take it offline — it will be ${outcome}. Continue?`)) return;
     }
 
     setSaving(true);
@@ -419,7 +432,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
                       className="w-full px-3.5 py-2.5 rounded-xl border border-purple-300 bg-white text-xs font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                     <p className="text-[10px] text-purple-700">
-                      The system scheduler will automatically make this post public once this scheduled time arrives.
+                      The post goes live automatically at this time ({timeZone}, your computer&apos;s timezone). Times in the past are not accepted.
                     </p>
                   </div>
                 )}

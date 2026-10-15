@@ -30,6 +30,7 @@ export default function CreateBlogPostPage() {
   const [category, setCategory] = useState('Digital Marketing');
   const [order, setOrder] = useState('0');
   const [publishMode, setPublishMode] = useState<PublishMode>('publish');
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [scheduledAt, setScheduledAt] = useState('');
   const [image, setImage] = useState('');
   const [contentHtml, setContentHtml] = useState('');
@@ -361,7 +362,7 @@ export default function CreateBlogPostPage() {
                       className="w-full px-3.5 py-2.5 rounded-xl border border-purple-300 bg-white text-xs font-medium text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                     <p className="text-[10px] text-purple-700">
-                      The system scheduler will automatically make this post public once this scheduled time arrives.
+                      The post goes live automatically at this time ({timeZone}, your computer&apos;s timezone). Times in the past are not accepted.
                     </p>
                   </div>
                 )}
