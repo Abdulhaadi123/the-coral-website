@@ -27,7 +27,7 @@ export const HeroSection: React.FC = () => {
           {/* No forced nowrap: at these sizes the first line exceeds the content
               box below xl, so it is allowed to wrap rather than overflow. */}
           <span className="block">
-            Digital experiences built to&nbsp;be
+            Digital Marketing Agency
           </span>
           <span
             className="block"
@@ -38,7 +38,7 @@ export const HeroSection: React.FC = () => {
               backgroundClip: 'text',
             }}
           >
-            seen, trusted, and chosen
+            for Ambitious Brands
           </span>
         </h1>
 

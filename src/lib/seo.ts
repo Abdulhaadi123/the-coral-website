@@ -9,7 +9,7 @@ export interface PageSeoData {
 
 /** Falls back to this when a route has no PageSeo row yet (e.g. before seeding). */
 export const DEFAULT_SEO: PageSeoData = {
-  title: 'The Coral Room — Digital experiences built to be seen, trusted, and chosen',
+  title: 'The Coral Room — Digital Marketing Agency for Ambitious Brands',
   description:
     'We help ambitious brands turn scattered clicks into customers through sharper identity, smarter websites, and performance-led marketing.',
 };
@@ -19,7 +19,7 @@ export const SEO_ROUTES: { path: string; label: string; title: string; descripti
   {
     path: '/',
     label: 'Homepage',
-    title: 'The Coral Room — Digital experiences built to be seen, trusted, and chosen',
+    title: 'The Coral Room — Digital Marketing Agency for Ambitious Brands',
     description:
       'We help ambitious brands turn scattered clicks into customers through sharper identity, smarter websites, and performance-led marketing.',
   },
