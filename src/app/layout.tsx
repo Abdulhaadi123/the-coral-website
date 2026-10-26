@@ -13,7 +13,7 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: 'The Coral Room — Digital Marketing Agency for Ambitious Brands',
+  title: 'The Coral Room — Digital experiences built to be seen, trusted, and chosen',
   description: 'We help ambitious brands turn scattered clicks into customers through sharper identity, smarter websites, and performance-led marketing.',
   verification: {
     google: 'HWl6_Pb6rKSfez6wnTKD3dWJ_DVYlnNBDZRbn-6socg',
